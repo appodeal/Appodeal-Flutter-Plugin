@@ -32,8 +32,10 @@ class _MyAppState extends State<MyApp> {
       platformVersion = 'Failed to get platform version.';
     }
 
+    Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
     Appodeal.setAutoCache(Appodeal.BANNER, true);
     Appodeal.setTesting(true);
+
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
