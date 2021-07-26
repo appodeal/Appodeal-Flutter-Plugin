@@ -26,16 +26,12 @@ class AppodealFlutterPlugin: FlutterPlugin, MethodCallHandler {
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    if (call.method == "getPlatformVersion") {
-      result.success("Android ${android.os.Build.VERSION.RELEASE}")
-    } else {
-      result.notImplemented()
-    }
-
     when (call.method) {
       "setTesting" -> setTesting(call, result)
       "getPlatformVersion" -> getPlatformVersion(call, result)
       "setAutoCache" -> setAutoCache(call, result)
+      "setLogLevel" -> setLogLevel(call, result)
+
       else -> result.notImplemented()
     }
   }
@@ -50,6 +46,17 @@ class AppodealFlutterPlugin: FlutterPlugin, MethodCallHandler {
     if (value){
       Appodeal.setTesting(value)
     }
+    result.success(null)
+  }
+
+  private fun setLogLevel(call: MethodCall, result: Result) {
+    val args = call.arguments as Map<*, *>
+    when (args["logLevel"] as Int) {
+        1 -> Appodeal.setLogLevel(Log.LogLevel.debug)
+        2 -> Appodeal.setLogLevel(Log.LogLevel.verbose)
+        else -> Appodeal.setLogLevel(Log.LogLevel.none)
+    }
+
     result.success(null)
   }
 
@@ -72,6 +79,17 @@ class AppodealFlutterPlugin: FlutterPlugin, MethodCallHandler {
 
   private fun getAdType(adId: Int): Int {
     return when (adId) {
+      1 -> Appodeal.BANNER
+      2 -> Appodeal.NATIVE
+      3 -> Appodeal.INTERSTITIAL
+      4 -> Appodeal.REWARDED_VIDEO
+      5 -> Appodeal.NON_SKIPPABLE_VIDEO
+      else -> Appodeal.NONE
+    }
+  }
+
+  private fun getLogLevel(logLevel: Int): Int {
+    return when (logLevel) {
       1 -> Appodeal.BANNER
       2 -> Appodeal.NATIVE
       3 -> Appodeal.INTERSTITIAL
