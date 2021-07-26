@@ -18,6 +18,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await AppodealFlutter.platformVersion, '42');
+    expect(await Appodeal.platformVersion, '42');
   });
 }
