@@ -33,6 +33,23 @@ class _MyAppState extends State<MyApp> {
     Appodeal.setSharedAdsInstanceAcrossActivities(true);
     Appodeal.setTesting(true);
     Appodeal.setSmartBanners(false);
+    Appodeal.setTabletBanners(false);
+    Appodeal.setBannerAnimation(false);
+    Appodeal.setBannerRotation(Appodeal.BANNER_RIGHT, Appodeal.BANNER_LEFT);
+    Appodeal.disableNetwork("admob");
+    Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
+    Appodeal.disableLocationPermissionCheck();
+    Appodeal.disableWriteExternalStoragePermissionCheck();
+
+    Appodeal.setUserId("1");
+    Appodeal.setUserAge(22);
+    Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
+
+    Appodeal.setCustomFilter("customFilter", "customFilter");
+    Appodeal.setCustomFilterBool("setCustomFilterBool", true);
+    Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
+    Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
+
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
