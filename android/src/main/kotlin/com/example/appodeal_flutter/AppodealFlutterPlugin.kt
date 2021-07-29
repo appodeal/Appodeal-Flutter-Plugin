@@ -30,9 +30,17 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "isInitialized" -> isInitialized(call, result)
             "isAutoCacheEnabled" -> isAutoCacheEnabled(call, result)
             "cache" -> cache(call, result)
+            "show" -> show(call, result)
+            "showWithPlacement" -> showWithPlacement(call, result)
+            "hide" -> hide(call, result)
+            "setTriggerOnLoadedOnPrecache" -> setTriggerOnLoadedOnPrecache(call, result)
+            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(call, result)
+            "isLoaded" -> isLoaded(call, result)
+            "isPrecache" -> isPrecache(call, result)
+            "setSmartBanners" -> setSmartBanners(call, result)
+
 
             "setTesting" -> setTesting(call, result)
-            "getPlatformVersion" -> getPlatformVersion(call, result)
             "setAutoCache" -> setAutoCache(call, result)
             "setLogLevel" -> setLogLevel(call, result)
 
@@ -54,23 +62,28 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     }
 
+    private fun getAdType(adId: Int): Int {
+        return when (adId) {
+            1 -> Appodeal.BANNER
+            2 -> Appodeal.BANNER_RIGHT
+            3 -> Appodeal.BANNER_TOP
+            4 -> Appodeal.BANNER_LEFT
+            5 -> Appodeal.BANNER_BOTTOM
+            6 -> Appodeal.NATIVE
+            7 -> Appodeal.INTERSTITIAL
+            8 -> Appodeal.REWARDED_VIDEO
+            9 -> Appodeal.NON_SKIPPABLE_VIDEO
+            else -> Appodeal.NONE
+        }
+    }
+
     private fun initialize(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val appKey = args["appKey"] as String
         @Suppress("UNCHECKED_CAST") val adTypes = args["adTypes"] as List<Int>
         val hasConsent = args["hasConsent"] as Boolean
-
-        if (appKey.isEmpty()) {
-            android.util.Log.d("[AF Plugin]: ", "argument appKey can't be empty or null")
-        }
-
-        if (adTypes.isEmpty()) {
-            android.util.Log.d("[AF Plugin]: ", "argument adTypes can't be empty or null")
-        }
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
-
-        Appodeal.initialize(activity, "appKey", ads, hasConsent)
-
+        Appodeal.initialize(activity, appKey, ads, hasConsent)
         result.success(null)
     }
 
@@ -84,7 +97,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
-
     private fun isInitialized(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val adType = getAdType(args["adType"] as Int)
@@ -97,6 +109,18 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(Appodeal.isAutoCacheEnabled(adType))
     }
 
+    private fun show(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        result.success(Appodeal.show(activity, adType))
+    }
+
+    private fun showWithPlacement(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        val placement = args["placement"] as String
+        result.success(Appodeal.show(activity, adType, placement))
+    }
 
     private fun setTesting(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
@@ -134,22 +158,46 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
-    private fun getPlatformVersion(call: MethodCall, result: Result) {
-        if (call.method == "getPlatformVersion") {
-            result.success("Android ${android.os.Build.VERSION.RELEASE}")
-        } else {
-            result.notImplemented()
-        }
+    private fun hide(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        Appodeal.hide(activity, adType)
+        result.success(null)
     }
 
-    private fun getAdType(adId: Int): Int {
-        return when (adId) {
-            1 -> Appodeal.BANNER
-            2 -> Appodeal.NATIVE
-            3 -> Appodeal.INTERSTITIAL
-            4 -> Appodeal.REWARDED_VIDEO
-            5 -> Appodeal.NON_SKIPPABLE_VIDEO
-            else -> Appodeal.NONE
-        }
+    private fun setTriggerOnLoadedOnPrecache(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        val onLoadedTriggerBoth = args["onLoadedTriggerBoth"] as Boolean
+        Appodeal.setTriggerOnLoadedOnPrecache(adType,onLoadedTriggerBoth)
+        result.success(null)
     }
+
+    private fun setSharedAdsInstanceAcrossActivities(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val onLoadedTriggerBoth = args["sharedAdsInstanceAcrossActivities"] as Boolean
+        Appodeal.setSharedAdsInstanceAcrossActivities(onLoadedTriggerBoth)
+        result.success(null)
+    }
+
+    private fun isLoaded(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        result.success(Appodeal.isLoaded(adType))
+    }
+
+    private fun isPrecache(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        result.success(Appodeal.isPrecache(adType))
+    }
+
+    private fun setSmartBanners(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val smartBannerEnabled = args["smartBannerEnabled"] as Boolean
+        Appodeal.setSmartBanners(smartBannerEnabled)
+        result.success(null)
+    }
+
+
 }
