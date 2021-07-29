@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class Appodeal {
+
   static const BANNER = 1;
   static const BANNER_RIGHT = 2;
   static const BANNER_TOP = 3;
@@ -16,6 +17,10 @@ class Appodeal {
   static const LogLevelNone = 0;
   static const LogLevelDebug = 1;
   static const LogLevelVerbose = 2;
+
+  static const GENDER_OTHER = 0;
+  static const GENDER_MALE = 1;
+  static const GENDER_FEMALE = 2;
 
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
 
@@ -276,16 +281,206 @@ class Appodeal {
     });
   }
 
+  /// <summary>
+  /// Enabling or disabling banners background (Enabled by default).
+  /// See <see cref="Appodeal.setBannerBackground"/> for resulting triggered event.
+  /// <param name="enabled">enabled enabling or disabling banners background (only for iOS platform)</param>
+  /// </summary>
+  /// TODO need to implement
+  //public static void setBannerBackground(bool enabled)
 
+  /// <summary>
+  /// Enabling or disabling 728*90 banners (Disabled by default).
+  /// See <see cref="Appodeal.setTabletBanners"/> for resulting triggered event.
+  /// <param name="enabled">enabled enabling or disabling loading 728*90 banners.</param>
+  /// </summary>
+  static Future<void> setTabletBanners(bool tabletBannerEnabled) async {
+    return _channel.invokeMethod('setTabletBanners', {
+      'tabletBannerEnabled': tabletBannerEnabled,
+    });
+  }
+
+  /// <summary>
+  /// Enabling animation of banners (Enabled by default).
+  /// See <see cref="Appodeal.setBannerAnimation"/> for resulting triggered event.
+  /// <param name="enabled">animate enabling or disabling animations.</param>
+  /// </summary>
+  static Future<void> setBannerAnimation(bool bannerAnimationEnabled) async {
+    return _channel.invokeMethod('setBannerAnimation', {
+      'bannerAnimationEnabled': bannerAnimationEnabled,
+    });
+  }
+
+  /// <summary>
+  /// Setting banners inverse rotation (by default: left = -90, right = 90).
+  /// See <see cref="Appodeal.setBannerRotation"/> for resulting triggered event.
+  /// <param name="leftBannerRotation">leftBannerRotation rotation for Appodeal.BANNER_LEFT.</param>
+  /// <param name="rightBannerRotation">leftBannerRotation rotation for Appodeal.BANNER_RIGHT.</param>
+  /// </summary>
+  static Future<void> setBannerRotation(int leftBannerRotation, int rightBannerRotation) async {
+    return _channel.invokeMethod('setBannerRotation', {
+      'leftBannerRotation': leftBannerRotation,
+      'rightBannerRotation': rightBannerRotation,
+    });
+  }
+
+  /// <summary>
+  /// Tracks in-app purchase information and sends info to our servers for analytics.
+  /// See <see cref="Appodeal.trackInAppPurchase"/> for resulting triggered event.
+  /// <param name="amount">amount of purchase.</param>
+  /// <param name="currency">currency of purchase.</param>
+  /// </summary>
+  static Future<void> trackInAppPurchase(double amount, String currency) async {
+    return _channel.invokeMethod('trackInAppPurchase', {
+      'amount': amount,
+      'currency': currency,
+    });
+  }
+
+  /// <summary>
+  /// Disabling specified network for all ad types.
+  /// See <see cref="Appodeal.disableNetwork"/> for resulting triggered event.
+  /// <param name="network">network name.</param>
+  /// </summary>
+  static Future<void> disableNetwork(String network) async {
+    return _channel.invokeMethod('disableNetwork', {
+      'network': network,
+    });
+  }
+
+  /// <summary>
+  /// Disabling specified network for specified ad types.
+  /// See <see cref="Appodeal.disableNetworkForSpecificAdType"/> for resulting triggered event.
+  /// <param name="network">network name.</param>
+  /// <param name="adTypes">adType type of advertising.</param>
+  /// </summary>
+  static Future<void> disableNetworkForSpecificAdType(String network, int adType) async {
+    return _channel.invokeMethod('disableNetworkForSpecificAdType', {
+      'network': network,
+      'adType': adType,
+    });
+  }
+
+  /// <summary>
+  /// Disabling location permission check only for Android platform.
+  /// See <see cref="Appodeal.disableLocationPermissionCheck"/> for resulting triggered event.
+  /// </summary>
+  static Future<void> disableLocationPermissionCheck() async {
+    return _channel.invokeMethod('disableLocationPermissionCheck');
+  }
+
+  /// <summary>
+  /// Disabling write external storage permission check only for Android platform.
+  /// See <see cref="Appodeal.disableWriteExternalStoragePermissionCheck"/> for resulting triggered event.
+  /// </summary>
+  static Future<void> disableWriteExternalStoragePermissionCheck() async {
+    return _channel.invokeMethod('disableWriteExternalStoragePermissionCheck');
+  }
+
+  /// <summary>
+  /// Set user id.
+  /// See <see cref="Appodeal.setUserId"/> for resulting triggered event.
+  /// <param name="id">user id.</param>
+  /// </summary>
+  static Future<void> setUserId(String userId) async {
+    return _channel.invokeMethod('setUserId', {
+      'userId': userId,
+    });
+  }
+
+  /// <summary>
+  /// Set user age.
+  /// See <see cref="Appodeal.setUserAge"/> for resulting triggered event.
+  /// <param name="age">user gender.</param>
+  /// </summary>
+  static Future<void> setUserAge(int age) async {
+    return _channel.invokeMethod('setUserAge', {
+      'age': age,
+    });
+  }
+
+  /// <summary>
+  /// Set user gender.
+  /// See <see cref="Appodeal.setUserGender"/> for resulting triggered event.
+  /// <param name="gender">user gender.</param>
+  /// </summary>
+  static Future<void> setUserGender(int gender) async {
+    return _channel.invokeMethod('setUserGender', {
+      'gender': gender,
+    });
+  }
+
+  /// <summary>
+  /// Disabling write external storage permission check only for Android platform.
+  /// See <see cref="Appodeal.setTesting"/> for resulting triggered event.
+  /// </summary>
   static Future<void> setTesting(bool testMode) async {
     return _channel.invokeMethod('setTesting', {
       'testMode': testMode,
     });
   }
 
+  /// <summary>
+  /// Set log level. All logs will be written with tag "Appodeal".
+  /// See <see cref="Appodeal.setLogLevel"/> for resulting triggered event.
+  /// <param name="log">logLevel log level .</param>
+  /// </summary>
   static Future<void> setLogLevel(int logLevel) async {
     return _channel.invokeMethod('setLogLevel', {
       'logLevel': logLevel,
     });
   }
+
+  /// <summary>
+  /// Set custom segment filter.
+  /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
+  /// <param name="name">name  name of the filter.</param>
+  /// <param name="value">value filter value.</param>
+  /// </summary>
+  static Future<void> setCustomFilterBool(String name, bool value) async {
+    return _channel.invokeMethod('setCustomFilterBool', {
+      'name': name,
+      'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Set custom segment filter.
+  /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
+  /// <param name="name">name  name of the filter.</param>
+  /// <param name="value">value filter value.</param>
+  /// </summary>
+  static Future<void> setCustomFilterInt(String name, int value) async {
+    return _channel.invokeMethod('setCustomFilterInt', {
+      'name': name,
+      'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Set custom segment filter.
+  /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
+  /// <param name="name">name  name of the filter.</param>
+  /// <param name="value">value filter value.</param>
+  /// </summary>
+  static Future<void> setCustomFilterDouble(String name, double value) async {
+    return _channel.invokeMethod('setCustomFilterDouble', {
+      'name': name,
+      'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Set custom segment filter.
+  /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
+  /// <param name="name">name  name of the filter.</param>
+  /// <param name="value">value filter value.</param>
+  /// </summary>
+  static Future<void> setCustomFilter(String name, String value) async {
+    return _channel.invokeMethod('setCustomFilter', {
+      'name': name,
+      'value': value,
+    });
+  }
+
 }
