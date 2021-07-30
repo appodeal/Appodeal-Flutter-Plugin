@@ -24,7 +24,6 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
     Appodeal.setAutoCache(Appodeal.BANNER, true);
     Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
@@ -45,17 +44,18 @@ class _MyAppState extends State<MyApp> {
     Appodeal.setUserAge(22);
     Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
 
-    Appodeal.setCustomFilter("customFilter", "customFilter");
+    Appodeal.setCustomFilterString("customFilter", "customFilter");
     Appodeal.setCustomFilterBool("setCustomFilterBool", true);
     Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
     Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
 
+    Appodeal.muteVideosIfCallsMuted(true);
+    Appodeal.setChildDirectedTreatment(true);
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
     // setState to update our non-existent appearance.
     if (!mounted) return;
-
   }
 
   @override
@@ -67,6 +67,7 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Appodeal Flutter Demo'),
         ),
         body: Column(children: [
+          //Header
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -103,17 +104,13 @@ class _MyAppState extends State<MyApp> {
                       child: const Text('isInitialized'),
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
                         var isLoaded = await Appodeal.isLoaded(Appodeal.INTERSTITIAL);
-                        Fluttertoast.showToast(msg: 'isLoaded Interstitial - $isLoaded',
-                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1, backgroundColor: Colors.red,
-                            textColor: Colors.white, fontSize: 16.0);
+                        Fluttertoast.showToast(msg: 'isLoaded Interstitial - $isLoaded', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
                       },
                       child: const Text('isLoaded'),
                     ),
@@ -123,7 +120,7 @@ class _MyAppState extends State<MyApp> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
-                      await Appodeal.showWithPlacement(Appodeal.INTERSTITIAL, "default");
+                        await Appodeal.showWithPlacement(Appodeal.INTERSTITIAL, "default");
                       },
                       child: const Text('show'),
                     ),
@@ -151,10 +148,7 @@ class _MyAppState extends State<MyApp> {
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
                         var isInitialized = await Appodeal.isInitialized(Appodeal.REWARDED_VIDEO);
-                        Fluttertoast.showToast(msg: 'isInitialized Rewarded video - $isInitialized',
-                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1, backgroundColor: Colors.red,
-                            textColor: Colors.white, fontSize: 16.0);
+                        Fluttertoast.showToast(msg: 'isInitialized Rewarded video - $isInitialized', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
                       },
                       child: const Text('isInitialized'),
                     ),
@@ -165,10 +159,7 @@ class _MyAppState extends State<MyApp> {
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
                         var isLoaded = await Appodeal.isLoaded(Appodeal.REWARDED_VIDEO);
-                        Fluttertoast.showToast(msg: 'isLoaded Rewarded video - $isLoaded',
-                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1, backgroundColor: Colors.red,
-                            textColor: Colors.white, fontSize: 16.0);
+                        Fluttertoast.showToast(msg: 'isLoaded Rewarded video - $isLoaded', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
                       },
                       child: const Text('isLoaded'),
                     ),
@@ -185,7 +176,6 @@ class _MyAppState extends State<MyApp> {
                   ),
                 ],
               ),
-
             ],
           ),
           //Banner
@@ -207,15 +197,11 @@ class _MyAppState extends State<MyApp> {
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
                         var isInitialized = await Appodeal.isInitialized(Appodeal.BANNER);
-                        Fluttertoast.showToast(msg: 'isInitialized - $isInitialized',
-                            toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1, backgroundColor: Colors.red,
-                            textColor: Colors.white, fontSize: 16.0);
+                        Fluttertoast.showToast(msg: 'isInitialized - $isInitialized', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
                       },
                       child: const Text('isInitialized'),
                     ),
                   ),
-
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: ElevatedButton(
@@ -232,16 +218,15 @@ class _MyAppState extends State<MyApp> {
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
                         await Appodeal.hide(Appodeal.BANNER);
+                        await Appodeal.destroy(Appodeal.INTERSTITIAL);
                       },
                       child: const Text('hide'),
                     ),
                   ),
                 ],
               ),
-
             ],
           ),
-
         ]),
       ),
     );
