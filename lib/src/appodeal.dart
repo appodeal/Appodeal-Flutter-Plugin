@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class Appodeal {
-
   static const BANNER = 1;
   static const BANNER_RIGHT = 2;
   static const BANNER_TOP = 3;
@@ -265,8 +264,8 @@ class Appodeal {
   /// </summary>
   static Future<bool> isPrecache(int adType) async {
     return await _channel.invokeMethod('isPrecache', {
-      'adType': adType,
-    }) ??
+          'adType': adType,
+        }) ??
         false;
   }
 
@@ -476,10 +475,69 @@ class Appodeal {
   /// <param name="name">name  name of the filter.</param>
   /// <param name="value">value filter value.</param>
   /// </summary>
-  static Future<void> setCustomFilter(String name, String value) async {
-    return _channel.invokeMethod('setCustomFilter', {
+  static Future<void> setCustomFilterString(String name, String value) async {
+    return _channel.invokeMethod('setCustomFilterString', {
       'name': name,
       'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Check if ad with specific ad type can be shown with placement.
+  /// See <see cref="Appodeal.canShow"/> for resulting triggered event.
+  /// <param name="adTypes">type of advertising.</param>
+  /// </summary>
+  static Future<bool> canShow(int adType) async {
+    return await _channel.invokeMethod('canShow', {
+          'adType': adType,
+        }) ??
+        false;
+  }
+
+  /// <summary>
+  /// Check if ad with specific ad type can be shown with placement.
+  /// See <see cref="Appodeal.canShow"/> for resulting triggered event.
+  /// <param name="adTypes">type of advertising.</param>
+  /// <param name="placement">placement name.</param>
+  /// </summary>
+  static Future<bool> canShowWithPlacement(int adType, String placement) async {
+    return await _channel.invokeMethod('canShowWithPlacement', {
+      'adType': adType,
+      'placement': placement,
+    }) ??
+        false;
+  }
+
+  /// <summary>
+  /// Mute video if calls muted on device (supports only for Android platform).
+  /// See <see cref="Appodeal.muteVideosIfCallsMuted"/> for resulting triggered event.
+  /// <param name="value">true - mute videos if call volume is 0.</param>
+  /// </summary>
+  static Future<void> muteVideosIfCallsMuted(bool value) async {
+    return _channel.invokeMethod('muteVideosIfCallsMuted', {
+      'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Disables data collection for kids apps.
+  /// See <see cref="Appodeal.setChildDirectedTreatment"/> for resulting triggered event.
+  /// <param name="value">value true to disable data collection for kids apps.</param>
+  /// </summary>
+  static Future<void> setChildDirectedTreatment(bool value) async {
+    return _channel.invokeMethod('setChildDirectedTreatment', {
+      'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Destroy cached ad.
+  /// See <see cref="Appodeal.destroy"/> for resulting triggered event.
+  /// <param name="adTypes">adTypes ad types you want to destroy.</param>
+  /// </summary>
+  static Future<void> destroy(int adType) async {
+    return _channel.invokeMethod('destroy', {
+      'adType': adType,
     });
   }
 
