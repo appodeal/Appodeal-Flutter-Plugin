@@ -12,7 +12,6 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-
 class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
@@ -34,6 +33,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "show" -> show(call, result)
             "showWithPlacement" -> showWithPlacement(call, result)
             "hide" -> hide(call, result)
+            "setAutoCache" -> setAutoCache(call, result)
             "setTriggerOnLoadedOnPrecache" -> setTriggerOnLoadedOnPrecache(call, result)
             "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(call, result)
             "isLoaded" -> isLoaded(call, result)
@@ -52,12 +52,15 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "setUserGender" -> setUserGender(call, result)
             "setTesting" -> setTesting(call, result)
             "setLogLevel" -> setLogLevel(call, result)
-            "setCustomFilter" -> setCustomFilter(call, result)
+            "setCustomFilterString" -> setCustomFilterString(call, result)
             "setCustomFilterInt" -> setCustomFilterInt(call, result)
             "setCustomFilterDouble" -> setCustomFilterDouble(call, result)
             "setCustomFilterBool" -> setCustomFilterBool(call, result)
-
-            "setAutoCache" -> setAutoCache(call, result)
+            "canShow" -> canShow(call, result)
+            "canShowWithPlacement" -> canShowWithPlacement(call, result)
+            "muteVideosIfCallsMuted" -> muteVideosIfCallsMuted(call, result)
+            "setChildDirectedTreatment" -> setChildDirectedTreatment(call, result)
+            "destroy" -> destroy(call, result)
 
             else -> result.notImplemented()
         }
@@ -66,16 +69,15 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
-
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
     }
-
     override fun onDetachedFromActivityForConfigChanges() {}
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
     override fun onDetachedFromActivity() {
 
     }
+
 
     private fun getAdType(adId: Int): Int {
         return when (adId) {
@@ -293,7 +295,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
-    private fun setCustomFilter(call: MethodCall, result: Result) {
+    private fun setCustomFilterString(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val name = args["name"] as String
         val value = args["value"] as String
@@ -325,5 +327,42 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
+    private fun canShow(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        result.success(Appodeal.canShow(adType))
+    }
+
+    private fun canShowWithPlacement(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        val placement = args["placement"] as String
+        result.success(Appodeal.canShow(adType, placement))
+    }
+
+    private fun muteVideosIfCallsMuted(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val value = args["value"] as Boolean
+        if (value) {
+            Appodeal.muteVideosIfCallsMuted(value)
+        }
+        result.success(null)
+    }
+
+    private fun setChildDirectedTreatment(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val value = args["value"] as Boolean
+        if (value) {
+            Appodeal.setChildDirectedTreatment(value)
+        }
+        result.success(null)
+    }
+
+    private fun destroy(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        Appodeal.destroy(adType);
+        result.success(null)
+    }
 
 }
