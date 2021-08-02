@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class Appodeal {
+  static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0";
+
   static const BANNER = 1;
   static const BANNER_RIGHT = 2;
   static const BANNER_TOP = 3;
@@ -502,9 +504,9 @@ class Appodeal {
   /// </summary>
   static Future<bool> canShowWithPlacement(int adType, String placement) async {
     return await _channel.invokeMethod('canShowWithPlacement', {
-      'adType': adType,
-      'placement': placement,
-    }) ??
+          'adType': adType,
+          'placement': placement,
+        }) ??
         false;
   }
 
@@ -540,5 +542,78 @@ class Appodeal {
       'adType': adType,
     });
   }
+
+  /// <summary>
+  /// Add extra data to Appodeal.
+  /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
+  /// <param name="key">associated with value.</param>
+  /// <param name="value">value which will be saved in extra data by key.</param>
+  /// </summary>
+  static Future<void> setExtraDataString(String key, String value) async {
+    return _channel.invokeMethod('setExtraDataString', {
+      'key': key,
+      'value': value,
+    });
+  }
+
+  // <summary>
+  /// Add extra data to Appodeal.
+  /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
+  /// <param name="key">associated with value.</param>
+  /// <param name="value">value which will be saved in extra data by key.</param>
+  /// </summary>
+  static Future<void> setExtraDataInt(String key, int value) async {
+    return _channel.invokeMethod('setExtraDataInt', {
+      'key': key,
+      'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Add extra data to Appodeal.
+  /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
+  /// <param name="key">associated with value.</param>
+  /// <param name="value">value which will be saved in extra data by key.</param>
+  /// </summary>
+  static Future<void> setExtraDataDouble(String key, double value) async {
+    return _channel.invokeMethod('setExtraDataDouble', {
+      'key': key,
+      'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Add extra data to Appodeal.
+  /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
+  /// <param name="key">associated with value.</param>
+  /// <param name="value">value which will be saved in extra data by key.</param>
+  /// </summary>
+  static Future<void> setExtraDataBool(String key, bool value) async {
+    return _channel.invokeMethod('setExtraDataBool', {
+      'key': key,
+      'value': value,
+    });
+  }
+
+  /// <summary>
+  /// Get Flutter plugin version
+  /// See <see cref="Appodeal.getPluginVersion"/> for resulting triggered event.
+  /// </summary>
+  static String getAppodealFlutterPluginVersion() {
+    return APPODEAL_FLUTTER_PLUGIN_VERSION;
+  }
+
+  /// <summary>
+  /// Get predicted ecpm for certain ad type.
+  /// See <see cref="Appodeal.getPredictedEcpm"/> for resulting triggered event.
+  /// <param name="adType">adType type of advertising.</param>
+  /// </summary>
+  static Future<double> getPredictedEcpm(int adType) async {
+    return await _channel.invokeMethod('getPredictedEcpm', {
+          'adType': adType,
+        }) ??
+        0.0;
+  }
+
 
 }
