@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:appodeal_flutter/appodeal_flutter.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,16 @@ class _MyAppState extends State<MyApp> {
 
     Appodeal.muteVideosIfCallsMuted(true);
     Appodeal.setChildDirectedTreatment(true);
+
+
+    Appodeal.setExtraDataBool("setExtraDataBool", true);
+    Appodeal.setExtraDataInt("setExtraDataBool", 123);
+    Appodeal.setExtraDataDouble("setExtraDataBool", 1.2);
+    Appodeal.setExtraDataString("setExtraDataBool", "setExtraDataString");
+
+
+    Appodeal.getPredictedEcpm(Appodeal.INTERSTITIAL);
+
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -218,7 +229,11 @@ class _MyAppState extends State<MyApp> {
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
                         await Appodeal.hide(Appodeal.BANNER);
-                        await Appodeal.destroy(Appodeal.INTERSTITIAL);
+                        var pE =  await Appodeal.getPredictedEcpm(Appodeal.INTERSTITIAL);
+                        Fluttertoast.showToast(msg: 'Appodeal.getPredictedEcpm - $pE'
+                            , toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+
                       },
                       child: const Text('hide'),
                     ),
