@@ -61,6 +61,11 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "muteVideosIfCallsMuted" -> muteVideosIfCallsMuted(call, result)
             "setChildDirectedTreatment" -> setChildDirectedTreatment(call, result)
             "destroy" -> destroy(call, result)
+            "setExtraDataString" -> setExtraDataString(call, result)
+            "setExtraDataInt" -> setExtraDataInt(call, result)
+            "setExtraDataBool" -> setExtraDataBool(call, result)
+            "setExtraDataDouble" -> setExtraDataDouble(call, result)
+            "getPredictedEcpm" -> getPredictedEcpm(call, result)
 
             else -> result.notImplemented()
         }
@@ -77,7 +82,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onDetachedFromActivity() {
 
     }
-
 
     private fun getAdType(adId: Int): Int {
         return when (adId) {
@@ -364,5 +368,47 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         Appodeal.destroy(adType);
         result.success(null)
     }
+
+    private fun setExtraDataString(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val key = args["key"] as String
+        val value = args["value"] as String
+        Appodeal.setExtraData(key, value)
+        result.success(null)
+    }
+
+    private fun setExtraDataDouble(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val key = args["key"] as String
+        val value = args["value"] as Double
+        Appodeal.setExtraData(key, value)
+        result.success(null)
+    }
+
+    private fun setExtraDataInt(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val key = args["key"] as String
+        val value = args["value"] as Int
+        Appodeal.setExtraData(key, value)
+        result.success(null)
+    }
+
+    private fun setExtraDataBool(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val key = args["key"] as String
+        val value = args["value"] as Boolean
+        Appodeal.setExtraData(key, value)
+        result.success(null)
+    }
+
+    private fun getPredictedEcpm(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val adType = getAdType(args["adType"] as Int)
+        result.success(Appodeal.getPredictedEcpm(adType))
+    }
+
+
+
+
 
 }
