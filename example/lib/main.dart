@@ -1,30 +1,28 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:appodeal_flutter/appodeal_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(AppodealDemoApp());
 }
 
-class MyApp extends StatefulWidget {
+class AppodealDemoApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _AppodealDemoAppState createState() => _AppodealDemoAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _AppodealDemoAppState extends State<AppodealDemoApp> {
   String androidAppKey = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f";
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    initialization();
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> initPlatformState() async {
+  Future<void> initialization() async {
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
     Appodeal.setAutoCache(Appodeal.BANNER, true);
     Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
@@ -53,15 +51,12 @@ class _MyAppState extends State<MyApp> {
     Appodeal.muteVideosIfCallsMuted(true);
     Appodeal.setChildDirectedTreatment(true);
 
-
     Appodeal.setExtraDataBool("setExtraDataBool", true);
     Appodeal.setExtraDataInt("setExtraDataBool", 123);
     Appodeal.setExtraDataDouble("setExtraDataBool", 1.2);
     Appodeal.setExtraDataString("setExtraDataBool", "setExtraDataString");
 
-
-    Appodeal.getPredictedEcpm(Appodeal.INTERSTITIAL);
-
+    Appodeal.setUseSafeArea(true);
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -229,11 +224,8 @@ class _MyAppState extends State<MyApp> {
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
                         await Appodeal.hide(Appodeal.BANNER);
-                        var pE =  await Appodeal.getPredictedEcpm(Appodeal.INTERSTITIAL);
-                        Fluttertoast.showToast(msg: 'Appodeal.getPredictedEcpm - $pE'
-                            , toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM,
-                            timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-
+                        var nativeSDKVersion = await Appodeal.getNativeSDKVersion();
+                        Fluttertoast.showToast(msg: 'Appodeal.getNativeSDKVersion - $nativeSDKVersion', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
                       },
                       child: const Text('hide'),
                     ),
