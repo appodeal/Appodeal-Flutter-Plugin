@@ -1,9 +1,20 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flutter/services.dart';
 
+enum RewardedVideoAdEvent {
+  onRewardedVideoLoaded,
+  onRewardedVideoFailedToLoad,
+  onRewardedVideoShown,
+  onRewardedVideoShowFailed,
+  onRewardedVideoFinished,
+}
+
+typedef void RewardedVideoAdListener(RewardedVideoAdEvent event,
+    {String rewardType, int rewardAmount});
+
 class Appodeal {
+
   static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0";
 
   static const BANNER = 1;
@@ -24,7 +35,19 @@ class Appodeal {
   static const GENDER_MALE = 1;
   static const GENDER_FEMALE = 2;
 
-  static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
+  static RewardedVideoAdListener videoListener;
+
+  static const Map<String, RewardedVideoAdEvent> _methodToRewardedVideoAdEvent =
+  const <String, RewardedVideoAdEvent>{
+    'onRewardedVideoLoaded': RewardedVideoAdEvent.onRewardedVideoLoaded,
+    'onRewardedVideoFailedToLoad': RewardedVideoAdEvent.onRewardedVideoFailedToLoad,
+    'onRewardedVideoShown': RewardedVideoAdEvent.onRewardedVideoShown,
+    'onRewardedVideoShowFailed': RewardedVideoAdEvent.onRewardedVideoShowFailed,
+    'onRewardedVideoFinished': RewardedVideoAdEvent.onRewardedVideoFinished,
+  };
+
+
+  static const MethodChannel _appodeal_flutter_channel = const MethodChannel('appodeal_flutter');
 
   /// <summary>
   /// Initializes the relevant (Android or iOS) Appodeal SDK.
@@ -40,7 +63,7 @@ class Appodeal {
   ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC, hasConsent);"/>
   /// </summary>
   static Future<void> initialize(String appKey, List<int> adTypes, bool hasConsent) async {
-    return _channel.invokeMethod('initialize', {'appKey': appKey, 'adTypes': adTypes, 'hasConsent': hasConsent});
+    return _appodeal_flutter_channel.invokeMethod('initialize', {'appKey': appKey, 'adTypes': adTypes, 'hasConsent': hasConsent});
   }
 
   /// <summary>
@@ -49,7 +72,7 @@ class Appodeal {
   /// <param name="adType">adType type of advertising.</param>
   /// </summary>
   static Future<bool> isInitialized(int adType) async {
-    return await _channel.invokeMethod('isInitialized', {
+    return await _appodeal_flutter_channel.invokeMethod('isInitialized', {
           'adType': adType,
         }) ??
         false;
@@ -79,7 +102,7 @@ class Appodeal {
   /// <param name="hasConsent"> this param user has given consent to the processing of personal data relating to him or her. https://www.eugdpr.org/.</param>
   /// </summary>
   static Future<void> updateConsent(bool hasConsent) async {
-    return _channel.invokeMethod('updateConsent', {'hasConsent': hasConsent});
+    return _appodeal_flutter_channel.invokeMethod('updateConsent', {'hasConsent': hasConsent});
   }
 
   /// <summary>
@@ -88,7 +111,7 @@ class Appodeal {
   /// <param name="adType">adType type of advertising.</param>
   /// </summary>
   static Future<bool> isAutoCacheEnabled(int adType) async {
-    return await _channel.invokeMethod('isAutoCacheEnabled', {
+    return await _appodeal_flutter_channel.invokeMethod('isAutoCacheEnabled', {
           'adType': adType,
         }) ??
         false;
@@ -140,7 +163,7 @@ class Appodeal {
   /// <param name="adTypes">adType type of advertising.</param>
   /// </summary>
   static Future<void> cache(int adType) async {
-    return _channel.invokeMethod('cache', {
+    return _appodeal_flutter_channel.invokeMethod('cache', {
       'adType': adType,
     });
   }
@@ -151,7 +174,7 @@ class Appodeal {
   /// <param name="adTypes">adType type of advertising.</param>
   /// </summary>
   static Future<bool> show(int adType) async {
-    return await _channel.invokeMethod('show', {
+    return await _appodeal_flutter_channel.invokeMethod('show', {
           'adType': adType,
         }) ??
         false;
@@ -165,7 +188,7 @@ class Appodeal {
   /// <param name="placement">name of placement.</param>
   /// </summary>
   static Future<bool> showWithPlacement(int adType, String placement) async {
-    return await _channel.invokeMethod('showWithPlacement', {
+    return await _appodeal_flutter_channel.invokeMethod('showWithPlacement', {
           'adType': adType,
           'placement': placement,
         }) ??
@@ -198,7 +221,7 @@ class Appodeal {
   /// <param name="adTypes">adType type of advertising  Appodeal.BANNER</param>
   /// </summary>
   static Future<void> hide(int adType) async {
-    return _channel.invokeMethod('hide', {
+    return _appodeal_flutter_channel.invokeMethod('hide', {
       'adType': adType,
     });
   }
@@ -224,7 +247,7 @@ class Appodeal {
   /// <param name="autoCache">true to use auto cache, false to not.</param>
   /// </summary>
   static Future<void> setAutoCache(int adType, bool autoCache) async {
-    return _channel.invokeMethod('setAutoCache', {
+    return _appodeal_flutter_channel.invokeMethod('setAutoCache', {
       'adType': adType,
       'autoCache': autoCache,
     });
@@ -238,7 +261,7 @@ class Appodeal {
   ///                         false - onLoaded will trigger only when normal ad was loaded (default).</param>
   /// </summary>
   static Future<void> setTriggerOnLoadedOnPrecache(int adType, bool onLoadedTriggerBoth) async {
-    return _channel.invokeMethod('setTriggerOnLoadedOnPrecache', {
+    return _appodeal_flutter_channel.invokeMethod('setTriggerOnLoadedOnPrecache', {
       'adType': adType,
       'onLoadedTriggerBoth': onLoadedTriggerBoth,
     });
@@ -250,7 +273,7 @@ class Appodeal {
   /// <param name="sharedAdsInstanceAcrossActivities">enabling or disabling shared ads instance across activities.</param>
   /// </summary>
   static Future<void> setSharedAdsInstanceAcrossActivities(bool sharedAdsInstanceAcrossActivities) async {
-    return _channel.invokeMethod('setSharedAdsInstanceAcrossActivities', {
+    return _appodeal_flutter_channel.invokeMethod('setSharedAdsInstanceAcrossActivities', {
       'sharedAdsInstanceAcrossActivities': sharedAdsInstanceAcrossActivities,
     });
   }
@@ -261,7 +284,7 @@ class Appodeal {
   /// <param name="adTypes">adType type of advertising </param>
   /// </summary>
   static Future<bool> isLoaded(int adType) async {
-    return await _channel.invokeMethod('isLoaded', {
+    return await _appodeal_flutter_channel.invokeMethod('isLoaded', {
           'adType': adType,
         }) ??
         false;
@@ -273,7 +296,7 @@ class Appodeal {
   /// <param name="adTypes">adType type of advertising. Currently supported only for interstitials. </param>
   /// </summary>
   static Future<bool> isPrecache(int adType) async {
-    return await _channel.invokeMethod('isPrecache', {
+    return await _appodeal_flutter_channel.invokeMethod('isPrecache', {
           'adType': adType,
         }) ??
         false;
@@ -285,7 +308,7 @@ class Appodeal {
   /// <param name="enabled">enabled enabling or disabling loading smart banners.</param>
   /// </summary>
   static Future<void> setSmartBanners(bool smartBannerEnabled) async {
-    return _channel.invokeMethod('setSmartBanners', {
+    return _appodeal_flutter_channel.invokeMethod('setSmartBanners', {
       'smartBannerEnabled': smartBannerEnabled,
     });
   }
@@ -304,7 +327,7 @@ class Appodeal {
   /// <param name="enabled">enabled enabling or disabling loading 728*90 banners.</param>
   /// </summary>
   static Future<void> setTabletBanners(bool tabletBannerEnabled) async {
-    return _channel.invokeMethod('setTabletBanners', {
+    return _appodeal_flutter_channel.invokeMethod('setTabletBanners', {
       'tabletBannerEnabled': tabletBannerEnabled,
     });
   }
@@ -315,7 +338,7 @@ class Appodeal {
   /// <param name="enabled">animate enabling or disabling animations.</param>
   /// </summary>
   static Future<void> setBannerAnimation(bool bannerAnimationEnabled) async {
-    return _channel.invokeMethod('setBannerAnimation', {
+    return _appodeal_flutter_channel.invokeMethod('setBannerAnimation', {
       'bannerAnimationEnabled': bannerAnimationEnabled,
     });
   }
@@ -327,7 +350,7 @@ class Appodeal {
   /// <param name="rightBannerRotation">leftBannerRotation rotation for Appodeal.BANNER_RIGHT.</param>
   /// </summary>
   static Future<void> setBannerRotation(int leftBannerRotation, int rightBannerRotation) async {
-    return _channel.invokeMethod('setBannerRotation', {
+    return _appodeal_flutter_channel.invokeMethod('setBannerRotation', {
       'leftBannerRotation': leftBannerRotation,
       'rightBannerRotation': rightBannerRotation,
     });
@@ -340,7 +363,7 @@ class Appodeal {
   /// <param name="currency">currency of purchase.</param>
   /// </summary>
   static Future<void> trackInAppPurchase(double amount, String currency) async {
-    return _channel.invokeMethod('trackInAppPurchase', {
+    return _appodeal_flutter_channel.invokeMethod('trackInAppPurchase', {
       'amount': amount,
       'currency': currency,
     });
@@ -352,7 +375,7 @@ class Appodeal {
   /// <param name="network">network name.</param>
   /// </summary>
   static Future<void> disableNetwork(String network) async {
-    return _channel.invokeMethod('disableNetwork', {
+    return _appodeal_flutter_channel.invokeMethod('disableNetwork', {
       'network': network,
     });
   }
@@ -364,7 +387,7 @@ class Appodeal {
   /// <param name="adTypes">adType type of advertising.</param>
   /// </summary>
   static Future<void> disableNetworkForSpecificAdType(String network, int adType) async {
-    return _channel.invokeMethod('disableNetworkForSpecificAdType', {
+    return _appodeal_flutter_channel.invokeMethod('disableNetworkForSpecificAdType', {
       'network': network,
       'adType': adType,
     });
@@ -376,7 +399,7 @@ class Appodeal {
   /// </summary>
   static Future<void> disableLocationPermissionCheck() async {
     if (Platform.isAndroid) {
-      return _channel.invokeMethod('disableLocationPermissionCheck');
+      return _appodeal_flutter_channel.invokeMethod('disableLocationPermissionCheck');
     }
   }
 
@@ -386,7 +409,7 @@ class Appodeal {
   /// </summary>
   static Future<void> disableWriteExternalStoragePermissionCheck() async {
     if (Platform.isAndroid) {
-      return _channel.invokeMethod('disableWriteExternalStoragePermissionCheck');
+      return _appodeal_flutter_channel.invokeMethod('disableWriteExternalStoragePermissionCheck');
     }
   }
 
@@ -396,7 +419,7 @@ class Appodeal {
   /// <param name="id">user id.</param>
   /// </summary>
   static Future<void> setUserId(String userId) async {
-    return _channel.invokeMethod('setUserId', {
+    return _appodeal_flutter_channel.invokeMethod('setUserId', {
       'userId': userId,
     });
   }
@@ -407,7 +430,7 @@ class Appodeal {
   /// <param name="age">user gender.</param>
   /// </summary>
   static Future<void> setUserAge(int age) async {
-    return _channel.invokeMethod('setUserAge', {
+    return _appodeal_flutter_channel.invokeMethod('setUserAge', {
       'age': age,
     });
   }
@@ -418,7 +441,7 @@ class Appodeal {
   /// <param name="gender">user gender.</param>
   /// </summary>
   static Future<void> setUserGender(int gender) async {
-    return _channel.invokeMethod('setUserGender', {
+    return _appodeal_flutter_channel.invokeMethod('setUserGender', {
       'gender': gender,
     });
   }
@@ -429,7 +452,7 @@ class Appodeal {
   /// See <see cref="Appodeal.setTesting"/> for resulting triggered event.
   /// </summary>
   static Future<void> setTesting(bool testMode) async {
-    return _channel.invokeMethod('setTesting', {
+    return _appodeal_flutter_channel.invokeMethod('setTesting', {
       'testMode': testMode,
     });
   }
@@ -440,7 +463,7 @@ class Appodeal {
   /// <param name="log">logLevel log level .</param>
   /// </summary>
   static Future<void> setLogLevel(int logLevel) async {
-    return _channel.invokeMethod('setLogLevel', {
+    return _appodeal_flutter_channel.invokeMethod('setLogLevel', {
       'logLevel': logLevel,
     });
   }
@@ -452,7 +475,7 @@ class Appodeal {
   /// <param name="value">value filter value.</param>
   /// </summary>
   static Future<void> setCustomFilterBool(String name, bool value) async {
-    return _channel.invokeMethod('setCustomFilterBool', {
+    return _appodeal_flutter_channel.invokeMethod('setCustomFilterBool', {
       'name': name,
       'value': value,
     });
@@ -465,7 +488,7 @@ class Appodeal {
   /// <param name="value">value filter value.</param>
   /// </summary>
   static Future<void> setCustomFilterInt(String name, int value) async {
-    return _channel.invokeMethod('setCustomFilterInt', {
+    return _appodeal_flutter_channel.invokeMethod('setCustomFilterInt', {
       'name': name,
       'value': value,
     });
@@ -478,7 +501,7 @@ class Appodeal {
   /// <param name="value">value filter value.</param>
   /// </summary>
   static Future<void> setCustomFilterDouble(String name, double value) async {
-    return _channel.invokeMethod('setCustomFilterDouble', {
+    return _appodeal_flutter_channel.invokeMethod('setCustomFilterDouble', {
       'name': name,
       'value': value,
     });
@@ -491,7 +514,7 @@ class Appodeal {
   /// <param name="value">value filter value.</param>
   /// </summary>
   static Future<void> setCustomFilterString(String name, String value) async {
-    return _channel.invokeMethod('setCustomFilterString', {
+    return _appodeal_flutter_channel.invokeMethod('setCustomFilterString', {
       'name': name,
       'value': value,
     });
@@ -503,7 +526,7 @@ class Appodeal {
   /// <param name="adTypes">type of advertising.</param>
   /// </summary>
   static Future<bool> canShow(int adType) async {
-    return await _channel.invokeMethod('canShow', {
+    return await _appodeal_flutter_channel.invokeMethod('canShow', {
           'adType': adType,
         }) ??
         false;
@@ -516,7 +539,7 @@ class Appodeal {
   /// <param name="placement">placement name.</param>
   /// </summary>
   static Future<bool> canShowWithPlacement(int adType, String placement) async {
-    return await _channel.invokeMethod('canShowWithPlacement', {
+    return await _appodeal_flutter_channel.invokeMethod('canShowWithPlacement', {
           'adType': adType,
           'placement': placement,
         }) ??
@@ -529,7 +552,7 @@ class Appodeal {
   /// <param name="value">true - mute videos if call volume is 0.</param>
   /// </summary>
   static Future<void> muteVideosIfCallsMuted(bool value) async {
-    return _channel.invokeMethod('muteVideosIfCallsMuted', {
+    return _appodeal_flutter_channel.invokeMethod('muteVideosIfCallsMuted', {
       'value': value,
     });
   }
@@ -540,7 +563,7 @@ class Appodeal {
   /// <param name="value">value true to disable data collection for kids apps.</param>
   /// </summary>
   static Future<void> setChildDirectedTreatment(bool value) async {
-    return _channel.invokeMethod('setChildDirectedTreatment', {
+    return _appodeal_flutter_channel.invokeMethod('setChildDirectedTreatment', {
       'value': value,
     });
   }
@@ -551,7 +574,7 @@ class Appodeal {
   /// <param name="adTypes">adTypes ad types you want to destroy.</param>
   /// </summary>
   static Future<void> destroy(int adType) async {
-    return _channel.invokeMethod('destroy', {
+    return _appodeal_flutter_channel.invokeMethod('destroy', {
       'adType': adType,
     });
   }
@@ -563,7 +586,7 @@ class Appodeal {
   /// <param name="value">value which will be saved in extra data by key.</param>
   /// </summary>
   static Future<void> setExtraDataString(String key, String value) async {
-    return _channel.invokeMethod('setExtraDataString', {
+    return _appodeal_flutter_channel.invokeMethod('setExtraDataString', {
       'key': key,
       'value': value,
     });
@@ -576,7 +599,7 @@ class Appodeal {
   /// <param name="value">value which will be saved in extra data by key.</param>
   /// </summary>
   static Future<void> setExtraDataInt(String key, int value) async {
-    return _channel.invokeMethod('setExtraDataInt', {
+    return _appodeal_flutter_channel.invokeMethod('setExtraDataInt', {
       'key': key,
       'value': value,
     });
@@ -589,7 +612,7 @@ class Appodeal {
   /// <param name="value">value which will be saved in extra data by key.</param>
   /// </summary>
   static Future<void> setExtraDataDouble(String key, double value) async {
-    return _channel.invokeMethod('setExtraDataDouble', {
+    return _appodeal_flutter_channel.invokeMethod('setExtraDataDouble', {
       'key': key,
       'value': value,
     });
@@ -602,7 +625,7 @@ class Appodeal {
   /// <param name="value">value which will be saved in extra data by key.</param>
   /// </summary>
   static Future<void> setExtraDataBool(String key, bool value) async {
-    return _channel.invokeMethod('setExtraDataBool', {
+    return _appodeal_flutter_channel.invokeMethod('setExtraDataBool', {
       'key': key,
       'value': value,
     });
@@ -614,7 +637,7 @@ class Appodeal {
   /// </summary>
   ///
   static Future<String> getNativeSDKVersion() async {
-    return await _channel.invokeMethod('getNativeSDKVersion', {}) ?? "0";
+    return await _appodeal_flutter_channel.invokeMethod('getNativeSDKVersion', {}) ?? "0";
   }
 
   /// <summary>
@@ -631,7 +654,7 @@ class Appodeal {
   /// <param name="adType">adType type of advertising.</param>
   /// </summary>
   static Future<double> getPredictedEcpm(int adType) async {
-    return await _channel.invokeMethod('getPredictedEcpm', {
+    return await _appodeal_flutter_channel.invokeMethod('getPredictedEcpm', {
           'adType': adType,
         }) ??
         0.0;
@@ -643,8 +666,37 @@ class Appodeal {
   /// </summary>
   ///
   static Future<void> setUseSafeArea(bool value) async {
-    return _channel.invokeMethod('setUseSafeArea', {
+    return _appodeal_flutter_channel.invokeMethod('setUseSafeArea', {
       'value': value,
     });
   }
+
+
+
+  static void setRewardedVideoCallbacks(){
+    _appodeal_flutter_channel.setMethodCallHandler(_handleMethod);
+  }
+
+  static Future<dynamic> _handleMethod(MethodCall call) {
+    final Map<dynamic, dynamic> argumentsMap = call.arguments;
+    final RewardedVideoAdEvent rewardedEvent =
+    _methodToRewardedVideoAdEvent[call.method];
+    if (rewardedEvent != null) {
+      if (videoListener != null) {
+        if (rewardedEvent == RewardedVideoAdEvent.onRewardedVideoFinished && argumentsMap != null) {
+          videoListener(rewardedEvent,
+              rewardType: argumentsMap['rewardType'],
+              rewardAmount: argumentsMap['rewardAmount']);
+        } else {
+          videoListener(rewardedEvent);
+        }
+      }
+    }
+
+    return new Future<Null>(null);
+  }
+
+
+
+
 }
