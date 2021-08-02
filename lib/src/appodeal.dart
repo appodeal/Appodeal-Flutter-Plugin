@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/services.dart';
 
@@ -156,6 +157,13 @@ class Appodeal {
         false;
   }
 
+
+  /// <summary>
+  /// Show advertising.
+  /// See <see cref="Appodeal.show"/> for resulting triggered event.
+  /// <param name="adTypes">adType type of advertising.</param>
+  /// <param name="placement">name of placement.</param>
+  /// </summary>
   static Future<bool> showWithPlacement(int adType, String placement) async {
     return await _channel.invokeMethod('showWithPlacement', {
           'adType': adType,
@@ -367,7 +375,9 @@ class Appodeal {
   /// See <see cref="Appodeal.disableLocationPermissionCheck"/> for resulting triggered event.
   /// </summary>
   static Future<void> disableLocationPermissionCheck() async {
-    return _channel.invokeMethod('disableLocationPermissionCheck');
+    if (Platform.isAndroid) {
+      return _channel.invokeMethod('disableLocationPermissionCheck');
+    }
   }
 
   /// <summary>
@@ -375,7 +385,9 @@ class Appodeal {
   /// See <see cref="Appodeal.disableWriteExternalStoragePermissionCheck"/> for resulting triggered event.
   /// </summary>
   static Future<void> disableWriteExternalStoragePermissionCheck() async {
-    return _channel.invokeMethod('disableWriteExternalStoragePermissionCheck');
+    if (Platform.isAndroid) {
+      return _channel.invokeMethod('disableWriteExternalStoragePermissionCheck');
+    }
   }
 
   /// <summary>
@@ -412,7 +424,8 @@ class Appodeal {
   }
 
   /// <summary>
-  /// Disabling write external storage permission check only for Android platform.
+  /// Enabling test mode.
+  //  In test mode test ads will be shown and debug data will be written to logcat.
   /// See <see cref="Appodeal.setTesting"/> for resulting triggered event.
   /// </summary>
   static Future<void> setTesting(bool testMode) async {
