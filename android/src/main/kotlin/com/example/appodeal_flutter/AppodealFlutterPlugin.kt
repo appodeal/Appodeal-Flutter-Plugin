@@ -66,6 +66,8 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "setExtraDataBool" -> setExtraDataBool(call, result)
             "setExtraDataDouble" -> setExtraDataDouble(call, result)
             "getPredictedEcpm" -> getPredictedEcpm(call, result)
+            "getNativeSDKVersion" -> getNativeSDKVersion(result)
+            "setUseSafeArea" -> setUseSafeArea(call,result)
 
             else -> result.notImplemented()
         }
@@ -167,7 +169,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val args = call.arguments as Map<*, *>
         val adType = getAdType(args["adType"] as Int)
         val autoCache = args["autoCache"] as Boolean
-
         Appodeal.setAutoCache(adType, autoCache)
         result.success(null)
     }
@@ -406,6 +407,18 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val adType = getAdType(args["adType"] as Int)
         result.success(Appodeal.getPredictedEcpm(adType))
     }
+
+    private fun getNativeSDKVersion(result: Result) {
+        result.success(Appodeal.getVersion())
+    }
+
+    private fun setUseSafeArea(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val value = args["value"] as Boolean
+        Appodeal.setUseSafeArea(value)
+        result.success(null)
+    }
+
 
 
 
