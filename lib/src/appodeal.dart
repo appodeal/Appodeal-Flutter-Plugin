@@ -596,6 +596,15 @@ class Appodeal {
   }
 
   /// <summary>
+  /// Get native SDK version
+  /// See <see cref="Appodeal.getNativeSDKVersion"/> for resulting triggered event.
+  /// </summary>
+  ///
+  static Future<String> getNativeSDKVersion() async {
+    return await _channel.invokeMethod('getNativeSDKVersion', {}) ?? "0";
+  }
+
+  /// <summary>
   /// Get Flutter plugin version
   /// See <see cref="Appodeal.getPluginVersion"/> for resulting triggered event.
   /// </summary>
@@ -615,5 +624,14 @@ class Appodeal {
         0.0;
   }
 
-
+  /// <summary>
+  /// Set use safe area.
+  /// See <see cref="Appodeal.setUseSafeArea"/> for resulting triggered event.
+  /// </summary>
+  ///
+  static Future<void> setUseSafeArea(bool value) async {
+    return _channel.invokeMethod('setUseSafeArea', {
+      'value': value,
+    });
+  }
 }
