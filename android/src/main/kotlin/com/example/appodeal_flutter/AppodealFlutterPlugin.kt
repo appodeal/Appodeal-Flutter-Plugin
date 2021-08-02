@@ -3,6 +3,7 @@ package com.example.appodeal_flutter
 import android.app.Activity
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
+import com.appodeal.ads.RewardedVideoCallbacks
 import com.appodeal.ads.UserSettings
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
@@ -67,7 +68,8 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "setExtraDataDouble" -> setExtraDataDouble(call, result)
             "getPredictedEcpm" -> getPredictedEcpm(call, result)
             "getNativeSDKVersion" -> getNativeSDKVersion(result)
-            "setUseSafeArea" -> setUseSafeArea(call,result)
+            "setUseSafeArea" -> setUseSafeArea(call, result)
+
 
             else -> result.notImplemented()
         }
@@ -254,7 +256,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun disableNetwork(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val network = args["network"] as String
-        Appodeal.disableNetwork(activity, network);
+        Appodeal.disableNetwork(activity, network)
         result.success(null)
     }
 
@@ -262,7 +264,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val args = call.arguments as Map<*, *>
         val network = args["network"] as String
         val adType = getAdType(args["adType"] as Int)
-        Appodeal.disableNetwork(activity, network, adType);
+        Appodeal.disableNetwork(activity, network, adType)
         result.success(null)
     }
 
@@ -279,14 +281,14 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun setUserId(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val userId = args["userId"] as String
-        Appodeal.setUserId(userId);
+        Appodeal.setUserId(userId)
         result.success(null)
     }
 
     private fun setUserAge(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val age = args["age"] as Int
-        Appodeal.setUserAge(age);
+        Appodeal.setUserAge(age)
         result.success(null)
     }
 
@@ -366,7 +368,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun destroy(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val adType = getAdType(args["adType"] as Int)
-        Appodeal.destroy(adType);
+        Appodeal.destroy(adType)
         result.success(null)
     }
 
@@ -418,10 +420,5 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         Appodeal.setUseSafeArea(value)
         result.success(null)
     }
-
-
-
-
-
 
 }
