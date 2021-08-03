@@ -12,9 +12,11 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
+
 class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
+    private lateinit var result: Result;
     private lateinit var activity: Activity
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
@@ -69,7 +71,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getNativeSDKVersion" -> getNativeSDKVersion(result)
             "setUseSafeArea" -> setUseSafeArea(call, result)
 
-
             else -> result.notImplemented()
         }
     }
@@ -107,6 +108,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         @Suppress("UNCHECKED_CAST") val adTypes = args["adTypes"] as List<Int>
         val hasConsent = args["hasConsent"] as Boolean
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
+        setCallbacks()
         Appodeal.initialize(activity, appKey, ads, hasConsent)
         result.success(null)
     }
@@ -418,6 +420,13 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val value = args["value"] as Boolean
         Appodeal.setUseSafeArea(value)
         result.success(null)
+    }
+
+    private fun setCallbacks() {
+//        Appodeal.setBannerCallbacks(bannerCallback(channel))
+        Appodeal.setInterstitialCallbacks(interstitialCallback(channel))
+//        Appodeal.setRewardedVideoCallbacks(rewardedCallback(channel))
+//        Appodeal.setNonSkippableVideoCallbacks(nonSkippableCallback(channel))
     }
 
 }
