@@ -58,16 +58,18 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
     Appodeal.setUseSafeArea(true);
 
-    // Defining the callbacks
-    //Appodeal.setBannerCallback((event) => print('Banner ad triggered the event $event'));
-    Appodeal.setInterstitialCallback((event) =>
-        Fluttertoast.showToast(msg: 'Interstitial ad triggered the event $event',
-        toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0)
+    Appodeal.setBannerCallback(
+      (onBannerLoaded, height, isPrecache) => {showToast('BannerCallback - $onBannerLoaded height - $height isPrecache - $isPrecache')},
+      (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')},
+      (onBannerShown) => {showToast('BannerCallback - $onBannerShown')},
+      (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')},
+      (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
+      (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')}
     );
 
-    // Appodeal.setRewardCallback((event) => print('Reward ad triggered the event $event'));
-    // Appodeal.setNonSkippableCallback((event) => print('Non-skippable ad triggered the event $event'));
+    Appodeal.setInterstitialCallback((event) => Fluttertoast.showToast(msg: 'InterstitialCallback - $event', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0));
+
+    Appodeal.setRewardCallback((event) => Fluttertoast.showToast(msg: 'RewardCallback - $event', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0));
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -248,5 +250,9 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
         ]),
       ),
     );
+  }
+
+  void showToast(String message){
+    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
   }
 }
