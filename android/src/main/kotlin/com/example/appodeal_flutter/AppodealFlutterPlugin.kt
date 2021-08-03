@@ -3,7 +3,6 @@ package com.example.appodeal_flutter
 import android.app.Activity
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
-import com.appodeal.ads.RewardedVideoCallbacks
 import com.appodeal.ads.UserSettings
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
