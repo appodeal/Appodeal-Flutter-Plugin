@@ -77,14 +77,14 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
+
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
     }
+
     override fun onDetachedFromActivityForConfigChanges() {}
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
-    override fun onDetachedFromActivity() {
-
-    }
+    override fun onDetachedFromActivity() {}
 
     private fun getAdType(adId: Int): Int {
         return when (adId) {
@@ -422,10 +422,10 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun setCallbacks() {
-//        Appodeal.setBannerCallbacks(bannerCallback(channel))
-        Appodeal.setInterstitialCallbacks(interstitialCallback(channel))
-//        Appodeal.setRewardedVideoCallbacks(rewardedCallback(channel))
-//        Appodeal.setNonSkippableVideoCallbacks(nonSkippableCallback(channel))
+        Appodeal.setBannerCallbacks(BannerCallbacks(channel))
+        Appodeal.setInterstitialCallbacks(InterstitialCallbacks(channel))
+        Appodeal.setRewardedVideoCallbacks(RewardedVideoCallbacks(channel))
+        Appodeal.setNonSkippableVideoCallbacks(NonSkippableVideoCallbacks(channel))
     }
 
 }
