@@ -16,7 +16,6 @@ import io.flutter.plugin.common.MethodChannel.Result
 class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
-    private lateinit var result: Result;
     private lateinit var activity: Activity
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
