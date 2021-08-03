@@ -2,17 +2,6 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
 
-enum RewardedVideoAdEvent {
-  onRewardedVideoLoaded,
-  onRewardedVideoFailedToLoad,
-  onRewardedVideoShown,
-  onRewardedVideoShowFailed,
-  onRewardedVideoFinished,
-}
-
-typedef void RewardedVideoAdListener(RewardedVideoAdEvent event,
-    {String rewardType, int rewardAmount});
-
 class Appodeal {
 
   static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0";
@@ -665,7 +654,6 @@ class Appodeal {
     });
   }
 
-  // region - Callbacks
   static void _setCallbacks() {
     _channel.setMethodCallHandler((call) {
       if (call.method.startsWith('onBanner')) {
@@ -681,30 +669,18 @@ class Appodeal {
     });
   }
 
-  /// Define a callback to track banner ad events.
-  ///
-  /// It receives a function [callback] with parameter `event` of type `String.
   static void setBannerCallback(Function(String event) callback) {
     _bannerCallback = callback;
   }
 
-  /// Define a callback to track interstitial ad events.
-  ///
-  /// It receives a function [callback] with parameter `event` of type `String.
   static void setInterstitialCallback(Function(String event) callback) {
     _interstitialCallback = callback;
   }
 
-  /// Define a callback to track reward ad events.
-  ///
-  /// It receives a function [callback] with parameter `event` of type `String.
   static void setRewardCallback(Function(String event) callback) {
     _rewardCallback = callback;
   }
 
-  /// Define a callback to track non-skippable ad events.
-  ///
-  /// It receives a function [callback] with parameter `event` of type `String.
   static void setNonSkippableCallback(Function(String event) callback) {
     _nonSkippableCallback = callback;
   }
