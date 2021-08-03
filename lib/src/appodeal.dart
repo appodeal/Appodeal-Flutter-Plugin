@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/services.dart';
 
 class Appodeal {
-
   static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0";
 
   static const BANNER = 1;
@@ -24,11 +24,19 @@ class Appodeal {
   static const GENDER_MALE = 1;
   static const GENDER_FEMALE = 2;
 
-  static Function(String) _bannerCallback;
+  static Function(String, int, bool) _onBannerLoaded;
+  static Function(String event) _onBannerFailedToLoad;
+  static Function(String event) _onBannerShown;
+  static Function(String event) _onBannerShowFailed;
+  static Function(String event) _onBannerClicked;
+  static Function(String event) _onBannerExpired;
+
+
+
   static Function(String) _interstitialCallback;
   static Function(String) _rewardCallback;
   static Function(String) _nonSkippableCallback;
-  
+
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
 
   /// <summary>
@@ -162,7 +170,6 @@ class Appodeal {
         }) ??
         false;
   }
-
 
   /// <summary>
   /// Show advertising.
@@ -656,9 +663,23 @@ class Appodeal {
 
   static void _setCallbacks() {
     _channel.setMethodCallHandler((call) {
-      if (call.method.startsWith('onBanner')) {
-        _bannerCallback?.call(call.method);
-      } else if (call.method.startsWith('onInterstitial')) {
+      if (call.method.startsWith('onBannerLoaded')) {
+        _onBannerLoaded?.call(call.method, call.arguments['height'], call.arguments['isPrecache']);
+      } else if (call.method.startsWith('onBannerFailedToLoad')) {
+        _onBannerFailedToLoad?.call(call.method);
+      } else if (call.method.startsWith('onBannerShown')) {
+        _onBannerShown?.call(call.method);
+      } else if (call.method.startsWith('onBannerShowFailed')) {
+        _onBannerShowFailed?.call(call.method);
+      } else if (call.method.startsWith('onBannerClicked')) {
+        _onBannerClicked?.call(call.method);
+      } else if (call.method.startsWith('onBannerExpired')) {
+        _onBannerExpired?.call(call.method);
+      }
+
+
+
+      else if (call.method.startsWith('onInterstitial')) {
         _interstitialCallback?.call(call.method);
       } else if (call.method.startsWith('onRewarded')) {
         _rewardCallback?.call(call.method);
@@ -669,8 +690,20 @@ class Appodeal {
     });
   }
 
-  static void setBannerCallback(Function(String event) callback) {
-    _bannerCallback = callback;
+  static void setBannerCallback(
+    Function(String event, int bannerHeight, bool isPrecache) onBannerLoaded,
+    Function(String event) onBannerFailedToLoad,
+    Function(String event) onBannerShown,
+    Function(String event) onBannerShowFailed,
+    Function(String event) onBannerClicked,
+    Function(String event) onBannerExpired,
+  ) {
+    _onBannerLoaded = onBannerLoaded;
+    _onBannerFailedToLoad = onBannerFailedToLoad;
+    _onBannerShown = onBannerShown;
+    _onBannerShowFailed = onBannerShowFailed;
+    _onBannerClicked = onBannerClicked;
+    _onBannerExpired = onBannerExpired;
   }
 
   static void setInterstitialCallback(Function(String event) callback) {
