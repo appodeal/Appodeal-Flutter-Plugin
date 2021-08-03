@@ -58,12 +58,16 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
     Appodeal.setUseSafeArea(true);
 
-    Appodeal.setRewardedVideoCallbacks();
+    // Defining the callbacks
+    //Appodeal.setBannerCallback((event) => print('Banner ad triggered the event $event'));
+    Appodeal.setInterstitialCallback((event) =>
+        Fluttertoast.showToast(msg: 'Interstitial ad triggered the event $event',
+        toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0)
+    );
 
-    Appodeal.videoListener =
-        (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
-          print("RewardedVideoAd event $event");
-        };
+    // Appodeal.setRewardCallback((event) => print('Reward ad triggered the event $event'));
+    // Appodeal.setNonSkippableCallback((event) => print('Non-skippable ad triggered the event $event'));
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
