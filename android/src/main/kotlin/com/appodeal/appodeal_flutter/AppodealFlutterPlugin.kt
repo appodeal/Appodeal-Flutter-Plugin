@@ -4,9 +4,6 @@ import android.app.Activity
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.UserSettings
-import com.example.appodeal_flutter.BannerCallbacks
-import com.example.appodeal_flutter.InterstitialCallbacks
-import com.example.appodeal_flutter.NonSkippableVideoCallbacks
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
