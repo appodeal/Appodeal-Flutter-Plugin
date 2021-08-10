@@ -6,7 +6,7 @@ import io.flutter.plugin.common.MethodChannel
 fun InterstitialCallbacks(channel: MethodChannel): InterstitialCallbacks {
     return object : InterstitialCallbacks {
         override fun onInterstitialLoaded(isPrecache: Boolean) {
-            channel.invokeMethod("onInterstitialLoaded",  mapOf(
+            channel.invokeMethod("onInterstitialLoaded", mapOf(
                     "isPrecache" to isPrecache
             ))
         }
