@@ -29,7 +29,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
     Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
     Appodeal.setSharedAdsInstanceAcrossActivities(true);
-    Appodeal.setTesting(true);
+    //Appodeal.setTesting(true);
     Appodeal.setSmartBanners(false);
     Appodeal.setTabletBanners(false);
     Appodeal.setBannerAnimation(false);
@@ -58,29 +58,22 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
     Appodeal.setUseSafeArea(true);
 
-    Appodeal.setBannerCallback(
-            (onBannerLoaded, height, isPrecache) => {showToast('BannerCallback - $onBannerLoaded height - $height isPrecache - $isPrecache')},
-            (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')},
-            (onBannerShown) => {showToast('BannerCallback - $onBannerShown')},
-            (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')},
-            (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
-            (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')}
+    Appodeal.setBannerCallback((onBannerLoaded, height, isPrecache) => {showToast('BannerCallback - $onBannerLoaded height - $height isPrecache - $isPrecache')}, (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')}, (onBannerShown) => {showToast('BannerCallback - $onBannerShown')}, (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')}, (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
+        (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')});
+
+    Appodeal.setInterstitialCallback((onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')}, (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')}, (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')}, (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
+        (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')}, (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')}, (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
+
+    Appodeal.setRewardedVideoCallback(
+      (onRewardedVideoLoaded, isPrecache) => {showToast('RewardedVideoCallback - $onRewardedVideoLoaded isPrecache - $isPrecache')},
+      (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
+      (onRewardedVideoShown) => {showToast('RewardedVideoCallback - $onRewardedVideoShown')},
+      (onRewardedVideoShowFailed) => {showToast('RewardedVideoCallback - $onRewardedVideoShowFailed')},
+      (onRewardedVideoFinished, amount, reward) => {showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward')},
+      (onRewardedVideoClosed, isFinished) => {showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished')},
+      (onRewardedVideoExpired) => {showToast('RewardedVideoCallback - $onRewardedVideoExpired')},
+      (onRewardedVideoClicked) => {showToast('RewardedVideoCallback - $onRewardedVideoClicked')},
     );
-
-    Appodeal.setInterstitialCallback(
-            (onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')},
-            (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')},
-            (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')},
-            (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
-            (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')},
-            (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')},
-            (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
-
-
-    Appodeal.setRewardCallback((event) =>
-        Fluttertoast.showToast(msg: 'RewardCallback -'
-            ' $event', toastLength: Toast.LENGTH_SHORT, gravity:
-        ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0));
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -263,7 +256,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     );
   }
 
-  void showToast(String message){
+  void showToast(String message) {
     Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
   }
 }
