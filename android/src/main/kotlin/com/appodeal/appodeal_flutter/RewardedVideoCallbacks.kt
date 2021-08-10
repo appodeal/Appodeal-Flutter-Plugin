@@ -6,7 +6,9 @@ import io.flutter.plugin.common.MethodChannel
 fun RewardedVideoCallbacks(channel: MethodChannel): RewardedVideoCallbacks {
     return object : RewardedVideoCallbacks {
         override fun onRewardedVideoLoaded(isPrecache: Boolean) {
-            channel.invokeMethod("onRewardedVideoLoaded", null)
+            channel.invokeMethod("onRewardedVideoLoaded", mapOf(
+                    "isPrecache" to isPrecache
+            ))
         }
 
         override fun onRewardedVideoFailedToLoad() {
@@ -22,11 +24,16 @@ fun RewardedVideoCallbacks(channel: MethodChannel): RewardedVideoCallbacks {
         }
 
         override fun onRewardedVideoFinished(amount: Double, reward: String?) {
-            channel.invokeMethod("onRewardedVideoFinished", null)
+            channel.invokeMethod("onRewardedVideoFinished", mapOf(
+                    "amount" to amount,
+                    "reward" to reward
+            ))
         }
 
         override fun onRewardedVideoClosed(isFinished: Boolean) {
-            channel.invokeMethod("onRewardedVideoClosed", null)
+            channel.invokeMethod("onRewardedVideoClosed", mapOf(
+                    "isFinished" to isFinished
+            ))
         }
 
         override fun onRewardedVideoExpired() {
