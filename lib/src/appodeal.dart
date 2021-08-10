@@ -40,10 +40,17 @@ class Appodeal {
   static Function(String event) ?_onInterstitialClosed;
   static Function(String event) ?_onInterstitialExpired;
 
+  static Function(String event, bool isPrecache) ?_onNonSkippableVideoLoaded;
+  static Function(String event) ?_onNonSkippableVideoFailedToLoad;
+  static Function(String event) ?_onNonSkippableVideoShown;
+  static Function(String event) ?_onNonSkippableVideoShowFailed;
+  static Function(String event, bool finished) ?_onNonSkippableVideoFinished;
+  static Function(String event) ?_onNonSkippableVideoClosed;
+  static Function(String event) ?_onNonSkippableVideoExpired;
+
 
 
   static Function(String) ?_rewardCallback;
-  static Function(String) ?_nonSkippableCallback;
 
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
 
@@ -697,11 +704,24 @@ class Appodeal {
         _onInterstitialClosed?.call(call.method);
       } else if (call.method.startsWith('onInterstitialExpired')) {
         _onInterstitialExpired?.call(call.method);
+      } else if (call.method.startsWith('onNonSkippableVideoLoaded')) {
+        _onNonSkippableVideoLoaded?.call(call.method, call.arguments['isPrecache']);
+      } else if (call.method.startsWith('onNonSkippableVideoFailedToLoad')) {
+        _onNonSkippableVideoFailedToLoad?.call(call.method);
+      } else if (call.method.startsWith('onNonSkippableVideoShown')) {
+        _onNonSkippableVideoShown?.call(call.method);
+      } else if (call.method.startsWith('onNonSkippableVideoShowFailed')) {
+        _onNonSkippableVideoShowFailed?.call(call.method);
+      } else if (call.method.startsWith('onNonSkippableVideoFinished')) {
+        _onNonSkippableVideoFinished?.call(call.method, call.arguments['isFinished']);
+      } else if (call.method.startsWith('onNonSkippableVideoClosed')) {
+        _onNonSkippableVideoClosed?.call(call.method);
+      } else if (call.method.startsWith('onNonSkippableVideoExpired')) {
+        _onNonSkippableVideoExpired?.call(call.method);
 
       } else if (call.method.startsWith('onRewarded')) {
         _rewardCallback?.call(call.method);
-      } else if (call.method.startsWith('onNonSkippable')) {
-        _nonSkippableCallback?.call(call.method);
+
       }
     });
   }
@@ -740,11 +760,27 @@ class Appodeal {
     _onInterstitialExpired = onInterstitialExpired;
   }
 
+  static void setNonSkippableCallback(
+      Function(String event, bool isPrecache) onNonSkippableVideoLoaded,
+      Function(String event) onNonSkippableVideoFailedToLoad,
+      Function(String event) onNonSkippableVideoShown,
+      Function(String event) onNonSkippableVideoShowFailed,
+      Function(String event, bool finished) onNonSkippableVideoFinished,
+      Function(String event) onNonSkippableVideoClosed,
+      Function(String event) onNonSkippableVideoExpired,
+      ){
+    _onNonSkippableVideoLoaded = onNonSkippableVideoLoaded;
+    _onNonSkippableVideoFailedToLoad = onNonSkippableVideoFailedToLoad;
+    _onNonSkippableVideoShown = onNonSkippableVideoShown;
+    _onNonSkippableVideoShowFailed = onNonSkippableVideoShowFailed;
+    _onNonSkippableVideoFinished = onNonSkippableVideoFinished;
+    _onNonSkippableVideoClosed = onNonSkippableVideoClosed;
+    _onNonSkippableVideoExpired = onNonSkippableVideoExpired;
+  }
+
   static void setRewardCallback(Function(String event) callback) {
     _rewardCallback = callback;
   }
 
-  static void setNonSkippableCallback(Function(String event) callback) {
-    _nonSkippableCallback = callback;
-  }
+
 }
