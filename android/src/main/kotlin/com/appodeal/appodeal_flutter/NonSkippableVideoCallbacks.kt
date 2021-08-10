@@ -1,4 +1,4 @@
-package com.example.appodeal_flutter
+package com.appodeal.appodeal_flutter
 
 import com.appodeal.ads.NonSkippableVideoCallbacks
 import io.flutter.plugin.common.MethodChannel
