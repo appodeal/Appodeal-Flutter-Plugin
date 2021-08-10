@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 class Appodeal {
+
   static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0";
 
   static const BANNER = 1;
@@ -24,15 +25,23 @@ class Appodeal {
   static const GENDER_MALE = 1;
   static const GENDER_FEMALE = 2;
 
-  static Function(String, int, bool) ?_onBannerLoaded;
+  static Function(String event, int bannerHeight, bool isPrecache) ?_onBannerLoaded;
   static Function(String event) ?_onBannerFailedToLoad;
   static Function(String event) ?_onBannerShown;
   static Function(String event) ?_onBannerShowFailed;
   static Function(String event) ?_onBannerClicked;
   static Function(String event) ?_onBannerExpired;
 
+  static Function(String event, bool isPrecache) ?_onInterstitialLoaded;
+  static Function(String event) ?_onInterstitialFailedToLoad;
+  static Function(String event) ?_onInterstitialShown;
+  static Function(String event) ?_onInterstitialShowFailed;
+  static Function(String event) ?_onInterstitialClicked;
+  static Function(String event) ?_onInterstitialClosed;
+  static Function(String event) ?_onInterstitialExpired;
 
-  static Function(String) ?_interstitialCallback;
+
+
   static Function(String) ?_rewardCallback;
   static Function(String) ?_nonSkippableCallback;
 
@@ -674,13 +683,21 @@ class Appodeal {
         _onBannerClicked?.call(call.method);
       } else if (call.method.startsWith('onBannerExpired')) {
         _onBannerExpired?.call(call.method);
-      }
+      } else if (call.method.startsWith('onInterstitialLoaded')) {
+        _onInterstitialLoaded?.call(call.method, call.arguments['isPrecache']);
+      } else if (call.method.startsWith('onInterstitialFailedToLoad')) {
+        _onInterstitialFailedToLoad?.call(call.method);
+      } else if (call.method.startsWith('onInterstitialShown')) {
+        _onInterstitialShown?.call(call.method);
+      } else if (call.method.startsWith('onInterstitialShowFailed')) {
+        _onInterstitialShowFailed?.call(call.method);
+      } else if (call.method.startsWith('onInterstitialClicked')) {
+        _onInterstitialClicked?.call(call.method);
+      } else if (call.method.startsWith('onInterstitialClosed')) {
+        _onInterstitialClosed?.call(call.method);
+      } else if (call.method.startsWith('onInterstitialExpired')) {
+        _onInterstitialExpired?.call(call.method);
 
-
-
-
-      else if (call.method.startsWith('onInterstitial')) {
-        _interstitialCallback?.call(call.method);
       } else if (call.method.startsWith('onRewarded')) {
         _rewardCallback?.call(call.method);
       } else if (call.method.startsWith('onNonSkippable')) {
@@ -705,8 +722,22 @@ class Appodeal {
     _onBannerExpired = onBannerExpired;
   }
 
-  static void setInterstitialCallback(Function(String event) callback) {
-    _interstitialCallback = callback;
+  static void setInterstitialCallback(
+      Function(String event, bool isPrecache) onInterstitialLoaded,
+      Function(String event) onInterstitialFailedToLoad,
+      Function(String event) onInterstitialShown,
+      Function(String event) onInterstitialShowFailed,
+      Function(String event) onInterstitialClicked,
+      Function(String event) onInterstitialClosed,
+      Function(String event) onInterstitialExpired
+      ) {
+    _onInterstitialLoaded = onInterstitialLoaded;
+    _onInterstitialFailedToLoad = onInterstitialFailedToLoad;
+    _onInterstitialShown = onInterstitialShown;
+    _onInterstitialShowFailed = onInterstitialShowFailed;
+    _onInterstitialClicked = onInterstitialClicked;
+    _onInterstitialClosed = onInterstitialClosed;
+    _onInterstitialExpired = onInterstitialExpired;
   }
 
   static void setRewardCallback(Function(String event) callback) {
