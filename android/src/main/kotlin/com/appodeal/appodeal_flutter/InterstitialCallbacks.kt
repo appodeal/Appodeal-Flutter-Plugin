@@ -1,4 +1,4 @@
-package com.example.appodeal_flutter
+package com.appodeal.appodeal_flutter
 
 import com.appodeal.ads.InterstitialCallbacks
 import io.flutter.plugin.common.MethodChannel
@@ -6,7 +6,9 @@ import io.flutter.plugin.common.MethodChannel
 fun InterstitialCallbacks(channel: MethodChannel): InterstitialCallbacks {
     return object : InterstitialCallbacks {
         override fun onInterstitialLoaded(isPrecache: Boolean) {
-            channel.invokeMethod("onInterstitialLoaded", isPrecache)
+            channel.invokeMethod("onInterstitialLoaded",  mapOf(
+                    "isPrecache" to isPrecache
+            ))
         }
 
         override fun onInterstitialFailedToLoad() {
