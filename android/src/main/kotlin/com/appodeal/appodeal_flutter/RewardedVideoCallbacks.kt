@@ -21,11 +21,11 @@ fun RewardedVideoCallbacks(channel: MethodChannel): RewardedVideoCallbacks {
             channel.invokeMethod("onRewardedVideoShowFailed", null)
         }
 
-        override fun onRewardedVideoFinished(p0: Double, p1: String?) {
+        override fun onRewardedVideoFinished(amount: Double, reward: String?) {
             channel.invokeMethod("onRewardedVideoFinished", null)
         }
 
-        override fun onRewardedVideoClosed(p0: Boolean) {
+        override fun onRewardedVideoClosed(isFinished: Boolean) {
             channel.invokeMethod("onRewardedVideoClosed", null)
         }
 
