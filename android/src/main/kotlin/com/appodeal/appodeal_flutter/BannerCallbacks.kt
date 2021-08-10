@@ -6,7 +6,7 @@ import io.flutter.plugin.common.MethodChannel
 fun BannerCallbacks(channel: MethodChannel): BannerCallbacks {
     return object : BannerCallbacks {
         override fun onBannerLoaded(height: Int, isPrecache: Boolean) {
-            channel.invokeMethod("onBannerLoaded",  mapOf(
+            channel.invokeMethod("onBannerLoaded", mapOf(
                     "height" to height,
                     "isPrecache" to isPrecache
             ))
