@@ -67,9 +67,20 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
             (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')}
     );
 
-    Appodeal.setInterstitialCallback((event) => Fluttertoast.showToast(msg: 'InterstitialCallback - $event', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0));
+    Appodeal.setInterstitialCallback(
+            (onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')},
+            (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')},
+            (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')},
+            (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
+            (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')},
+            (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')},
+            (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
 
-    Appodeal.setRewardCallback((event) => Fluttertoast.showToast(msg: 'RewardCallback - $event', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0));
+
+    Appodeal.setRewardCallback((event) =>
+        Fluttertoast.showToast(msg: 'RewardCallback -'
+            ' $event', toastLength: Toast.LENGTH_SHORT, gravity:
+        ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0));
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
