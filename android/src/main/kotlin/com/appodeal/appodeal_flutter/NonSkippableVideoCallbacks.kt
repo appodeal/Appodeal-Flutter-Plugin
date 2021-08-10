@@ -6,7 +6,9 @@ import io.flutter.plugin.common.MethodChannel
 fun NonSkippableVideoCallbacks(channel: MethodChannel): NonSkippableVideoCallbacks {
     return object : NonSkippableVideoCallbacks {
         override fun onNonSkippableVideoLoaded(isPrecache: Boolean) {
-            channel.invokeMethod("onNonSkippableVideoLoaded", null)
+            channel.invokeMethod("onNonSkippableVideoLoaded",  mapOf(
+                    "isPrecache" to isPrecache
+            ))
         }
 
         override fun onNonSkippableVideoFailedToLoad() {
@@ -25,8 +27,10 @@ fun NonSkippableVideoCallbacks(channel: MethodChannel): NonSkippableVideoCallbac
             channel.invokeMethod("onNonSkippableVideoFinished", null)
         }
 
-        override fun onNonSkippableVideoClosed(p0: Boolean) {
-            channel.invokeMethod("onNonSkippableVideoClosed", null)
+        override fun onNonSkippableVideoClosed(isFinished: Boolean) {
+            channel.invokeMethod("onNonSkippableVideoLoaded",  mapOf(
+                    "isFinished" to isFinished
+            ))
         }
 
         override fun onNonSkippableVideoExpired() {
