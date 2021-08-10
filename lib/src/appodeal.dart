@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 class Appodeal {
-
   static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0";
 
   static const BANNER = 1;
@@ -25,32 +24,37 @@ class Appodeal {
   static const GENDER_MALE = 1;
   static const GENDER_FEMALE = 2;
 
-  static Function(String event, int bannerHeight, bool isPrecache) ?_onBannerLoaded;
-  static Function(String event) ?_onBannerFailedToLoad;
-  static Function(String event) ?_onBannerShown;
-  static Function(String event) ?_onBannerShowFailed;
-  static Function(String event) ?_onBannerClicked;
-  static Function(String event) ?_onBannerExpired;
+  static Function(String event, int bannerHeight, bool isPrecache)? _onBannerLoaded;
+  static Function(String event)? _onBannerFailedToLoad;
+  static Function(String event)? _onBannerShown;
+  static Function(String event)? _onBannerShowFailed;
+  static Function(String event)? _onBannerClicked;
+  static Function(String event)? _onBannerExpired;
 
-  static Function(String event, bool isPrecache) ?_onInterstitialLoaded;
-  static Function(String event) ?_onInterstitialFailedToLoad;
-  static Function(String event) ?_onInterstitialShown;
-  static Function(String event) ?_onInterstitialShowFailed;
-  static Function(String event) ?_onInterstitialClicked;
-  static Function(String event) ?_onInterstitialClosed;
-  static Function(String event) ?_onInterstitialExpired;
+  static Function(String event, bool isPrecache)? _onInterstitialLoaded;
+  static Function(String event)? _onInterstitialFailedToLoad;
+  static Function(String event)? _onInterstitialShown;
+  static Function(String event)? _onInterstitialShowFailed;
+  static Function(String event)? _onInterstitialClicked;
+  static Function(String event)? _onInterstitialClosed;
+  static Function(String event)? _onInterstitialExpired;
 
-  static Function(String event, bool isPrecache) ?_onNonSkippableVideoLoaded;
-  static Function(String event) ?_onNonSkippableVideoFailedToLoad;
-  static Function(String event) ?_onNonSkippableVideoShown;
-  static Function(String event) ?_onNonSkippableVideoShowFailed;
-  static Function(String event, bool finished) ?_onNonSkippableVideoFinished;
-  static Function(String event) ?_onNonSkippableVideoClosed;
-  static Function(String event) ?_onNonSkippableVideoExpired;
+  static Function(String event, bool isPrecache)? _onNonSkippableVideoLoaded;
+  static Function(String event)? _onNonSkippableVideoFailedToLoad;
+  static Function(String event)? _onNonSkippableVideoShown;
+  static Function(String event)? _onNonSkippableVideoShowFailed;
+  static Function(String event, bool finished)? _onNonSkippableVideoFinished;
+  static Function(String event)? _onNonSkippableVideoClosed;
+  static Function(String event)? _onNonSkippableVideoExpired;
 
-
-
-  static Function(String) ?_rewardCallback;
+  static Function(String event, bool isPrecache)? _onRewardedVideoLoaded;
+  static Function(String event)? _onRewardedVideoFailedToLoad;
+  static Function(String event)? _onRewardedVideoShown;
+  static Function(String event)? _onRewardedVideoShowFailed;
+  static Function(String event, double amount, String reward)? _onRewardedVideoFinished;
+  static Function(String event, bool isFinished)? _onRewardedVideoClosed;
+  static Function(String event)? _onRewardedVideoExpired;
+  static Function(String event)? _onRewardedVideoClicked;
 
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
 
@@ -79,8 +83,8 @@ class Appodeal {
   /// </summary>
   static Future<bool> isInitialized(int adType) async {
     return await _channel.invokeMethod('isInitialized', {
-      'adType': adType,
-    }) ??
+          'adType': adType,
+        }) ??
         false;
   }
 
@@ -118,8 +122,8 @@ class Appodeal {
   /// </summary>
   static Future<bool> isAutoCacheEnabled(int adType) async {
     return await _channel.invokeMethod('isAutoCacheEnabled', {
-      'adType': adType,
-    }) ??
+          'adType': adType,
+        }) ??
         false;
   }
 
@@ -181,8 +185,8 @@ class Appodeal {
   /// </summary>
   static Future<bool> show(int adType) async {
     return await _channel.invokeMethod('show', {
-      'adType': adType,
-    }) ??
+          'adType': adType,
+        }) ??
         false;
   }
 
@@ -194,9 +198,9 @@ class Appodeal {
   /// </summary>
   static Future<bool> showWithPlacement(int adType, String placement) async {
     return await _channel.invokeMethod('showWithPlacement', {
-      'adType': adType,
-      'placement': placement,
-    }) ??
+          'adType': adType,
+          'placement': placement,
+        }) ??
         false;
   }
 
@@ -290,8 +294,8 @@ class Appodeal {
   /// </summary>
   static Future<bool> isLoaded(int adType) async {
     return await _channel.invokeMethod('isLoaded', {
-      'adType': adType,
-    }) ??
+          'adType': adType,
+        }) ??
         false;
   }
 
@@ -302,8 +306,8 @@ class Appodeal {
   /// </summary>
   static Future<bool> isPrecache(int adType) async {
     return await _channel.invokeMethod('isPrecache', {
-      'adType': adType,
-    }) ??
+          'adType': adType,
+        }) ??
         false;
   }
 
@@ -532,8 +536,8 @@ class Appodeal {
   /// </summary>
   static Future<bool> canShow(int adType) async {
     return await _channel.invokeMethod('canShow', {
-      'adType': adType,
-    }) ??
+          'adType': adType,
+        }) ??
         false;
   }
 
@@ -545,9 +549,9 @@ class Appodeal {
   /// </summary>
   static Future<bool> canShowWithPlacement(int adType, String placement) async {
     return await _channel.invokeMethod('canShowWithPlacement', {
-      'adType': adType,
-      'placement': placement,
-    }) ??
+          'adType': adType,
+          'placement': placement,
+        }) ??
         false;
   }
 
@@ -660,8 +664,8 @@ class Appodeal {
   /// </summary>
   static Future<double> getPredictedEcpm(int adType) async {
     return await _channel.invokeMethod('getPredictedEcpm', {
-      'adType': adType,
-    }) ??
+          'adType': adType,
+        }) ??
         0.0;
   }
 
@@ -718,22 +722,34 @@ class Appodeal {
         _onNonSkippableVideoClosed?.call(call.method);
       } else if (call.method.startsWith('onNonSkippableVideoExpired')) {
         _onNonSkippableVideoExpired?.call(call.method);
-
-      } else if (call.method.startsWith('onRewarded')) {
-        _rewardCallback?.call(call.method);
-
+      } else if (call.method.startsWith('onRewardedVideoLoaded')) {
+        _onRewardedVideoLoaded?.call(call.method, call.arguments['isPrecache']);
+      } else if (call.method.startsWith('onRewardedVideoFailedToLoad')) {
+        _onRewardedVideoFailedToLoad?.call(call.method);
+      } else if (call.method.startsWith('onRewardedVideoShown')) {
+        _onRewardedVideoShown?.call(call.method);
+      } else if (call.method.startsWith('onRewardedVideoShowFailed')) {
+        _onRewardedVideoShowFailed?.call(call.method);
+      } else if (call.method.startsWith('onRewardedVideoFinished')) {
+        _onRewardedVideoFinished?.call(call.method, call.arguments['amount'], call.arguments['reward']);
+      } else if (call.method.startsWith('onRewardedVideoClosed')) {
+        _onRewardedVideoClosed?.call(call.method, call.arguments['isFinished']);
+      } else if (call.method.startsWith('onRewardedVideoExpired')) {
+        _onRewardedVideoExpired?.call(call.method);
+      } else if (call.method.startsWith('onRewardedVideoClicked')) {
+        _onRewardedVideoClicked?.call(call.method);
       }
     });
   }
 
   static void setBannerCallback(
-      Function(String event, int bannerHeight, bool isPrecache) onBannerLoaded,
-      Function(String event) onBannerFailedToLoad,
-      Function(String event) onBannerShown,
-      Function(String event) onBannerShowFailed,
-      Function(String event) onBannerClicked,
-      Function(String event) onBannerExpired,
-      ) {
+    Function(String event, int bannerHeight, bool isPrecache) onBannerLoaded,
+    Function(String event) onBannerFailedToLoad,
+    Function(String event) onBannerShown,
+    Function(String event) onBannerShowFailed,
+    Function(String event) onBannerClicked,
+    Function(String event) onBannerExpired,
+  ) {
     _onBannerLoaded = onBannerLoaded;
     _onBannerFailedToLoad = onBannerFailedToLoad;
     _onBannerShown = onBannerShown;
@@ -742,15 +758,7 @@ class Appodeal {
     _onBannerExpired = onBannerExpired;
   }
 
-  static void setInterstitialCallback(
-      Function(String event, bool isPrecache) onInterstitialLoaded,
-      Function(String event) onInterstitialFailedToLoad,
-      Function(String event) onInterstitialShown,
-      Function(String event) onInterstitialShowFailed,
-      Function(String event) onInterstitialClicked,
-      Function(String event) onInterstitialClosed,
-      Function(String event) onInterstitialExpired
-      ) {
+  static void setInterstitialCallback(Function(String event, bool isPrecache) onInterstitialLoaded, Function(String event) onInterstitialFailedToLoad, Function(String event) onInterstitialShown, Function(String event) onInterstitialShowFailed, Function(String event) onInterstitialClicked, Function(String event) onInterstitialClosed, Function(String event) onInterstitialExpired) {
     _onInterstitialLoaded = onInterstitialLoaded;
     _onInterstitialFailedToLoad = onInterstitialFailedToLoad;
     _onInterstitialShown = onInterstitialShown;
@@ -761,14 +769,14 @@ class Appodeal {
   }
 
   static void setNonSkippableCallback(
-      Function(String event, bool isPrecache) onNonSkippableVideoLoaded,
-      Function(String event) onNonSkippableVideoFailedToLoad,
-      Function(String event) onNonSkippableVideoShown,
-      Function(String event) onNonSkippableVideoShowFailed,
-      Function(String event, bool finished) onNonSkippableVideoFinished,
-      Function(String event) onNonSkippableVideoClosed,
-      Function(String event) onNonSkippableVideoExpired,
-      ){
+    Function(String event, bool isPrecache) onNonSkippableVideoLoaded,
+    Function(String event) onNonSkippableVideoFailedToLoad,
+    Function(String event) onNonSkippableVideoShown,
+    Function(String event) onNonSkippableVideoShowFailed,
+    Function(String event, bool finished) onNonSkippableVideoFinished,
+    Function(String event) onNonSkippableVideoClosed,
+    Function(String event) onNonSkippableVideoExpired,
+  ) {
     _onNonSkippableVideoLoaded = onNonSkippableVideoLoaded;
     _onNonSkippableVideoFailedToLoad = onNonSkippableVideoFailedToLoad;
     _onNonSkippableVideoShown = onNonSkippableVideoShown;
@@ -778,9 +786,14 @@ class Appodeal {
     _onNonSkippableVideoExpired = onNonSkippableVideoExpired;
   }
 
-  static void setRewardCallback(Function(String event) callback) {
-    _rewardCallback = callback;
+  static void setRewardedVideoCallback(Function(String event, bool isPrecache) onRewardedVideoLoaded, Function(String event) onRewardedVideoFailedToLoad, Function(String event) onRewardedVideoShown, Function(String event) onRewardedVideoShowFailed, Function(String event, double amount, String reward) onRewardedVideoFinished, Function(String event, bool isFinished) onRewardedVideoClosed, Function(String event) onRewardedVideoExpired, Function(String event) onRewardedVideoClicked) {
+    _onRewardedVideoLoaded = onRewardedVideoLoaded;
+    _onRewardedVideoFailedToLoad = onRewardedVideoFailedToLoad;
+    _onRewardedVideoShown = onRewardedVideoShown;
+    _onRewardedVideoShowFailed = onRewardedVideoShowFailed;
+    _onRewardedVideoFinished = onRewardedVideoFinished;
+    _onRewardedVideoClosed = onRewardedVideoClosed;
+    _onRewardedVideoExpired = onRewardedVideoExpired;
+    _onRewardedVideoClicked = onRewardedVideoClicked;
   }
-
-
 }
