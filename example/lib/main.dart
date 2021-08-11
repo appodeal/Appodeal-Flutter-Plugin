@@ -23,57 +23,57 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
   }
 
   Future<void> initialization() async {
-    Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
-    Appodeal.setAutoCache(Appodeal.BANNER, true);
-    Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
-    Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
-    Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
-    Appodeal.setSharedAdsInstanceAcrossActivities(true);
-    //Appodeal.setTesting(true);
-    Appodeal.setSmartBanners(false);
-    Appodeal.setTabletBanners(false);
-    Appodeal.setBannerAnimation(false);
-    Appodeal.setBannerRotation(Appodeal.BANNER_RIGHT, Appodeal.BANNER_LEFT);
-    Appodeal.disableNetwork("admob");
-    Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
-    Appodeal.disableLocationPermissionCheck();
-    Appodeal.disableWriteExternalStoragePermissionCheck();
-
-    Appodeal.setUserId("1");
-    Appodeal.setUserAge(22);
-    Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
-
-    Appodeal.setCustomFilterString("customFilter", "customFilter");
-    Appodeal.setCustomFilterBool("setCustomFilterBool", true);
-    Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
-    Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
-
-    Appodeal.muteVideosIfCallsMuted(true);
-    Appodeal.setChildDirectedTreatment(true);
-
-    Appodeal.setExtraDataBool("setExtraDataBool", true);
-    Appodeal.setExtraDataInt("setExtraDataBool", 123);
-    Appodeal.setExtraDataDouble("setExtraDataBool", 1.2);
-    Appodeal.setExtraDataString("setExtraDataBool", "setExtraDataString");
-
-    Appodeal.setUseSafeArea(true);
-
-    Appodeal.setBannerCallback((onBannerLoaded, height, isPrecache) => {showToast('BannerCallback - $onBannerLoaded height - $height isPrecache - $isPrecache')}, (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')}, (onBannerShown) => {showToast('BannerCallback - $onBannerShown')}, (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')}, (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
-        (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')});
-
-    Appodeal.setInterstitialCallback((onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')}, (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')}, (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')}, (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
-        (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')}, (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')}, (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
-
-    Appodeal.setRewardedVideoCallback(
-      (onRewardedVideoLoaded, isPrecache) => {showToast('RewardedVideoCallback - $onRewardedVideoLoaded isPrecache - $isPrecache')},
-      (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
-      (onRewardedVideoShown) => {showToast('RewardedVideoCallback - $onRewardedVideoShown')},
-      (onRewardedVideoShowFailed) => {showToast('RewardedVideoCallback - $onRewardedVideoShowFailed')},
-      (onRewardedVideoFinished, amount, reward) => {showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward')},
-      (onRewardedVideoClosed, isFinished) => {showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished')},
-      (onRewardedVideoExpired) => {showToast('RewardedVideoCallback - $onRewardedVideoExpired')},
-      (onRewardedVideoClicked) => {showToast('RewardedVideoCallback - $onRewardedVideoClicked')},
-    );
+    // Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
+    // Appodeal.setAutoCache(Appodeal.BANNER, true);
+    // Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
+    // Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
+    // Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
+    // Appodeal.setSharedAdsInstanceAcrossActivities(true);
+    // Appodeal.setTesting(true);
+    // Appodeal.setSmartBanners(false);
+    // Appodeal.setTabletBanners(false);
+    // Appodeal.setBannerAnimation(false);
+    // Appodeal.setBannerRotation(Appodeal.BANNER_RIGHT, Appodeal.BANNER_LEFT);
+    // Appodeal.disableNetwork("admob");
+    // Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
+    // Appodeal.disableLocationPermissionCheck();
+    // Appodeal.disableWriteExternalStoragePermissionCheck();
+    //
+    // Appodeal.setUserId("1");
+    // Appodeal.setUserAge(22);
+    // Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
+    //
+    // Appodeal.setCustomFilterString("customFilter", "customFilter");
+    // Appodeal.setCustomFilterBool("setCustomFilterBool", true);
+    // Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
+    // Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
+    //
+    // Appodeal.muteVideosIfCallsMuted(true);
+    // Appodeal.setChildDirectedTreatment(true);
+    //
+    // Appodeal.setExtraDataBool("setExtraDataBool", true);
+    // Appodeal.setExtraDataInt("setExtraDataBool", 123);
+    // Appodeal.setExtraDataDouble("setExtraDataBool", 1.2);
+    // Appodeal.setExtraDataString("setExtraDataBool", "setExtraDataString");
+    //
+    // Appodeal.setUseSafeArea(true);
+    //
+    // Appodeal.setBannerCallback((onBannerLoaded, height, isPrecache) => {showToast('BannerCallback - $onBannerLoaded height - $height isPrecache - $isPrecache')}, (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')}, (onBannerShown) => {showToast('BannerCallback - $onBannerShown')}, (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')}, (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
+    //     (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')});
+    //
+    // Appodeal.setInterstitialCallback((onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')}, (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')}, (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')}, (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
+    //     (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')}, (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')}, (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
+    //
+    // Appodeal.setRewardedVideoCallback(
+    //   (onRewardedVideoLoaded, isPrecache) => {showToast('RewardedVideoCallback - $onRewardedVideoLoaded isPrecache - $isPrecache')},
+    //   (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
+    //   (onRewardedVideoShown) => {showToast('RewardedVideoCallback - $onRewardedVideoShown')},
+    //   (onRewardedVideoShowFailed) => {showToast('RewardedVideoCallback - $onRewardedVideoShowFailed')},
+    //   (onRewardedVideoFinished, amount, reward) => {showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward')},
+    //   (onRewardedVideoClosed, isFinished) => {showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished')},
+    //   (onRewardedVideoExpired) => {showToast('RewardedVideoCallback - $onRewardedVideoExpired')},
+    //   (onRewardedVideoClicked) => {showToast('RewardedVideoCallback - $onRewardedVideoClicked')},
+    // );
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
