@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:appodeal_flutter/appodeal_flutter.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class AppodealDemoApp extends StatefulWidget {
 }
 
 class _AppodealDemoAppState extends State<AppodealDemoApp> {
-  String androidAppKey = "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f";
+  String androidAppKey = Platform.isAndroid ? "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f" : "ae8558d35fbf2175d3e23ff61df138e27d3cd8efe1e789c4";
 
   @override
   void initState() {
@@ -23,7 +24,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
   }
 
   Future<void> initialization() async {
-    // Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
+     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
     // Appodeal.setAutoCache(Appodeal.BANNER, true);
     // Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
     // Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
@@ -251,6 +252,56 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
               ),
             ],
           ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Center(child: Text('Test Panel')),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                      onPressed: () async {
+                        var isInitialized = await Appodeal.isInitialized(Appodeal.BANNER);
+                        Fluttertoast.showToast(msg: 'isInitialized - $isInitialized', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+                      },
+                      child: const Text('isInitialized'),
+                    ),
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(4.0),
+                  //   child: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                  //     onPressed: () async {
+                  //       Appodeal.show(Appodeal.BANNER_BOTTOM);
+                  //     },
+                  //     child: const Text('show'),
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(4.0),
+                  //   child: ElevatedButton(
+                  //     style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                  //     onPressed: () async {
+                  //       await Appodeal.hide(Appodeal.BANNER);
+                  //       var nativeSDKVersion = await Appodeal.getNativeSDKVersion();
+                  //       Fluttertoast.showToast(msg: 'Appodeal.getNativeSDKVersion - $nativeSDKVersion', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+                  //     },
+                  //     child: const Text('hide'),
+                  //   ),
+                  // ),
+                ],
+              ),
+            ],
+          ),
+
         ]),
       ),
     );
