@@ -13,7 +13,13 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         switch call.method {
         case "initialize": initialize(call, result)
         case "updateConsent": updateConsent(call, result)
+        case "isInitialized": isInitialized(call, result)
+        case "isAutoCacheEnabled": isAutoCacheEnabled(call, result)
+        case "show": show(call, result)
             
+            
+            
+        case "setTesting": setTesting(call, result)
         case "setLogLevel": setLogLevel(call, result)
             
         default: result(FlutterMethodNotImplemented)
@@ -25,9 +31,11 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let args = call.arguments as! [String: Any]
         
         let appKey = args["appKey"] as! String
-        let adType = args["adTypes"] as! [Int]   
+        let types = args["adTypes"] as! [Int]
         let hasConsent = args["hasConsent"] as! Bool
-        let adTypes = AppodealAdType(rawValue: adType.reduce(0) { $0 | getAdType(adId: $1).rawValue })
+       
+       
+        let adTypes = AppodealAdType(rawValue: types.reduce(0) { $0 | getAdType(adId: $1).rawValue })
         
         //setCallbacks()
         
@@ -39,9 +47,34 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     private func updateConsent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let hasConsent = args["hasConsent"] as! Bool
-        if (hasConsent) {
-            Appodeal.updateConsent(hasConsent)
-        }
+        Appodeal.updateConsent(hasConsent)
+        result(nil)
+    }
+    
+    
+    private func isInitialized(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let adType = getAdType(adId: args["adType"] as! Int)
+        result(Appodeal.isInitalized(for:adType))
+    }
+    
+    private func isAutoCacheEnabled(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let adType = getAdType(adId: args["adType"] as! Int)
+        result(Appodeal.isAutocacheEnabled(_:adType))
+    }
+    
+    private func show(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+        result(Appodeal.showAd(getShowStyle(adId: args["adType"] as! Int), rootViewController: rootViewController))
+    }
+    
+    
+    private func setTesting(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let testMode = args["testMode"] as! Bool
+        Appodeal.setTestingEnabled(testMode)
         result(nil)
     }
     
@@ -59,26 +92,31 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
     
-    
-    
-    
-    
     private func getAdType(adId: Int) -> AppodealAdType {
         switch adId {
         case 1: return .banner
-        case 2: return .nativeAd
-        case 3: return .interstitial
-        case 4: return .rewardedVideo
-        case 5: return .nonSkippableVideo
+        case 2: return .banner
+        case 3: return .banner
+        case 4: return .banner
+        case 5: return .banner
+        case 6: return .nativeAd
+        case 7: return .interstitial
+        case 8: return .rewardedVideo
+        case 9: return.nonSkippableVideo
         default: return AppodealAdType(rawValue: 0)
         }
     }
     
-    private func getShowStyle(adType: AppodealAdType) -> AppodealShowStyle {
-        switch adType {
-        case .interstitial: return .interstitial
-        case .rewardedVideo: return .rewardedVideo
-        case .nonSkippableVideo: return .nonSkippableVideo
+    private func getShowStyle(adId: Int) -> AppodealShowStyle {
+        switch adId {
+        case 1: return .bannerBottom
+        case 2: return .bannerRight
+        case 3: return .bannerTop
+        case 4: return .bannerLeft
+        case 5: return .bannerBottom
+        case 7: return .interstitial
+        case 8: return .rewardedVideo
+        case 9: return.nonSkippableVideo
         default: return AppodealShowStyle(rawValue: 0)
         }
     }
