@@ -15,7 +15,7 @@ class AppodealDemoApp extends StatefulWidget {
 }
 
 class _AppodealDemoAppState extends State<AppodealDemoApp> {
-  String androidAppKey = Platform.isAndroid ? "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f" : "ae8558d35fbf2175d3e23ff61df138e27d3cd8efe1e789c4";
+  String androidAppKey = Platform.isAndroid ? "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f" : "466de0d625e01e8811c588588a42a55970bc7c132649eede";
 
   @override
   void initState() {
@@ -25,12 +25,12 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
   Future<void> initialization() async {
      Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
+     Appodeal.setTesting(true);
     // Appodeal.setAutoCache(Appodeal.BANNER, true);
     // Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
     // Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
     // Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
     // Appodeal.setSharedAdsInstanceAcrossActivities(true);
-    // Appodeal.setTesting(true);
     // Appodeal.setSmartBanners(false);
     // Appodeal.setTabletBanners(false);
     // Appodeal.setBannerAnimation(false);
@@ -269,10 +269,10 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
-                        var isInitialized = await Appodeal.isInitialized(Appodeal.BANNER);
-                        Fluttertoast.showToast(msg: 'isInitialized - $isInitialized', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+                        var autocache = await Appodeal.isAutoCacheEnabled(Appodeal.INTERSTITIAL);
+                        showToast('AutoCacheEnabled - $autocache');
                       },
-                      child: const Text('isInitialized'),
+                      child: const Text('UpdateConsent'),
                     ),
                   ),
                   // Padding(
