@@ -16,11 +16,33 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "isInitialized": isInitialized(call, result)
         case "isAutoCacheEnabled": isAutoCacheEnabled(call, result)
         case "show": show(call, result)
-            
-            
-            
+        case "showWithPlacement": showWithPlacement(call, result)
         case "setTesting": setTesting(call, result)
         case "setLogLevel": setLogLevel(call, result)
+        case "setAutoCache": setAutoCache(call, result)
+        case "cache": cache(call, result)
+        case "hide": hide(call, result)
+        case "setTriggerOnLoadedOnPrecache": setTriggerOnLoadedOnPrecache(call, result)
+        case "isLoaded": isLoaded(call, result)
+        case "isPrecache": isPrecache(call, result)
+        case "setSmartBanners": setSmartBanners(call, result)
+        case "setTabletBanners": setTabletBanners(call, result)
+        case "setBannerAnimation": setBannerAnimation(call, result)
+        case "setBannerRotation": setBannerRotation(call, result)
+        case "trackInAppPurchase": trackInAppPurchase(call, result)
+        case "disableNetwork": disableNetwork(call, result)
+        case "disableNetworkForSpecificAdType": disableNetworkForSpecificAdType(call, result)
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
         default: result(FlutterMethodNotImplemented)
         }
@@ -33,8 +55,8 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let appKey = args["appKey"] as! String
         let types = args["adTypes"] as! [Int]
         let hasConsent = args["hasConsent"] as! Bool
-       
-       
+        
+        
         let adTypes = AppodealAdType(rawValue: types.reduce(0) { $0 | getAdType(adId: $1).rawValue })
         
         //setCallbacks()
@@ -70,6 +92,12 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(Appodeal.showAd(getShowStyle(adId: args["adType"] as! Int), rootViewController: rootViewController))
     }
     
+    private func showWithPlacement(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+        let placement = args["placement"] as! String
+        result(Appodeal.showAd(getShowStyle(adId: args["adType"] as! Int), forPlacement: placement, rootViewController: rootViewController))
+    }
     
     private func setTesting(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
@@ -89,6 +117,102 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         default:
             Appodeal.setLogLevel(APDLogLevel.off)
         }
+        result(nil)
+    }
+    
+    private func setAutoCache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let adType = getAdType(adId: args["adType"] as! Int)
+        let autoCache = args["autoCache"] as! Bool
+        Appodeal.setAutocache(autoCache, types: adType)
+        result(nil)
+    }
+    
+    private func cache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let adType = getAdType(adId: args["adType"] as! Int)
+        Appodeal.cacheAd(adType)
+        result(nil)
+    }
+    
+    private func hide(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        Appodeal.hideBanner();
+        result(nil)
+    }
+    
+    private func setTriggerOnLoadedOnPrecache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let onLoadedTriggerBoth = args["onLoadedTriggerBoth"] as! Bool
+        Appodeal.setTriggerPrecacheCallbacks(onLoadedTriggerBoth)
+        result(nil)
+    }
+    
+    private func isLoaded(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        result(Appodeal.isReadyForShow(with:getShowStyle(adId: args["adType"] as! Int)))
+    }
+    
+    private func isPrecache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let adType = getAdType(adId: args["adType"] as! Int)
+        result(Appodeal.isPrecacheAd(_:adType))
+    }
+    
+    private func setSmartBanners(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let smartBannerEnabled = args["smartBannerEnabled"] as! Bool
+        Appodeal.setSmartBannersEnabled(smartBannerEnabled)
+        result(nil)
+    }
+    
+    private func setTabletBanners(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let tabletBannerEnabled = args["tabletBannerEnabled"] as! Bool
+    
+        if (tabletBannerEnabled) {
+            Appodeal.setPreferredBannerAdSize(kAppodealUnitSize_728x90)
+        }else {
+            Appodeal.setPreferredBannerAdSize(kAPDAdSize320x50)
+        }
+        
+        result(nil)
+    }
+    
+    private func setBannerAnimation(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let bannerAnimationEnabled = args["bannerAnimationEnabled"] as! Bool
+        Appodeal.setBannerAnimationEnabled(bannerAnimationEnabled)
+        result(nil)
+    }
+    
+    private func setBannerRotation(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let leftBannerRotation = args["leftBannerRotation"] as! Int
+        let rightBannerRotation = args["rightBannerRotation"] as! Int
+        Appodeal.setBannerLeftRotationAngleDegrees(CGFloat(leftBannerRotation), rightRotationAngleDegrees: CGFloat(rightBannerRotation))
+        result(nil)
+    }
+    
+    private func trackInAppPurchase(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let amount = args["amount"] as! Double
+        let currency = args["currency"] as! String
+        Appodeal.track(inAppPurchase: NSNumber.init(value: amount), currency: currency)
+        result(nil)
+    }
+    
+    private func disableNetwork(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let network = args["network"] as! String
+        Appodeal.disableNetwork(network)
+        result(nil)
+    }
+    
+    private func disableNetworkForSpecificAdType(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let network = args["network"] as! String
+        let adType = getAdType(adId: args["adType"] as! Int)
+        Appodeal.disableNetwork(for: adType, name: network)
         result(nil)
     }
     
