@@ -32,6 +32,12 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "trackInAppPurchase": trackInAppPurchase(call, result)
         case "disableNetwork": disableNetwork(call, result)
         case "disableNetworkForSpecificAdType": disableNetworkForSpecificAdType(call, result)
+        case "setUserId": setUserId(call, result)
+        case "setUserAge": setUserAge(call, result)
+        case "setUserGender": setUserGender(call, result)
+        case "setCustomFilterString": setCustomFilterString(call, result)
+            
+            
             
             
             
@@ -213,6 +219,48 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let network = args["network"] as! String
         let adType = getAdType(adId: args["adType"] as! Int)
         Appodeal.disableNetwork(for: adType, name: network)
+        result(nil)
+    }
+    
+    private func setUserId(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let userId = args["userId"] as! String
+        Appodeal.setUserId(userId)
+        result(nil)
+    }
+    
+    private func setUserAge(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let age = args["age"] as! Int
+        Appodeal.setUserAge(UInt(age))
+        result(nil)
+    }
+    
+    private func setUserGender(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let age = args["gender"] as! Int
+        switch age {
+        case 0:
+            Appodeal.setUserGender(AppodealUserGender.other)
+        case 1:
+            Appodeal.setUserGender(AppodealUserGender.male)
+        case 2:
+            Appodeal.setUserGender(AppodealUserGender.female)
+        default:
+            Appodeal.setUserGender(AppodealUserGender.other)
+        }
+        result(nil)
+    }
+    
+    private func setCustomFilterString(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let name = args["name"] as! String
+        let value = args["value"] as! String
+        let customFilters: [AnyHashable: Any] = [
+            name: "name",
+            value: "value",
+        ]
+        Appodeal.setCustomState(customFilters)
         result(nil)
     }
     
