@@ -37,14 +37,14 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setBannerRotation(Appodeal.BANNER_RIGHT, Appodeal.BANNER_LEFT);
     Appodeal.disableNetwork("admob");
     Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
-    // Appodeal.disableLocationPermissionCheck();
-    // Appodeal.disableWriteExternalStoragePermissionCheck();
-    //
-    // Appodeal.setUserId("1");
-    // Appodeal.setUserAge(22);
-    // Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
-    //
-    // Appodeal.setCustomFilterString("customFilter", "customFilter");
+    Appodeal.disableLocationPermissionCheck();
+    Appodeal.disableWriteExternalStoragePermissionCheck();
+
+    Appodeal.setUserId("1");
+    Appodeal.setUserAge(22);
+    Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
+
+     Appodeal.setCustomFilterString("key", "value");
     // Appodeal.setCustomFilterBool("setCustomFilterBool", true);
     // Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
     // Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
