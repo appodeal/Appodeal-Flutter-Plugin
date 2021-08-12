@@ -277,14 +277,16 @@ class Appodeal {
   }
 
   /// <summary>
-  /// Enabling shared ads instance across activities (disabled by default).
+  /// Enabling shared ads instance across activities, supports only on Android platform. (disabled by default).
   /// See <see cref="Appodeal.setSharedAdsInstanceAcrossActivities"/> for resulting triggered event.
   /// <param name="sharedAdsInstanceAcrossActivities">enabling or disabling shared ads instance across activities.</param>
   /// </summary>
   static Future<void> setSharedAdsInstanceAcrossActivities(bool sharedAdsInstanceAcrossActivities) async {
-    return _channel.invokeMethod('setSharedAdsInstanceAcrossActivities', {
-      'sharedAdsInstanceAcrossActivities': sharedAdsInstanceAcrossActivities,
-    });
+    if (Platform.isAndroid){
+      _channel.invokeMethod('setSharedAdsInstanceAcrossActivities', {
+        'sharedAdsInstanceAcrossActivities': sharedAdsInstanceAcrossActivities,
+      });
+    }
   }
 
   /// <summary>
