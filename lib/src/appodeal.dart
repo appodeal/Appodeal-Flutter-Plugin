@@ -563,9 +563,10 @@ class Appodeal {
   /// <param name="value">true - mute videos if call volume is 0.</param>
   /// </summary>
   static Future<void> muteVideosIfCallsMuted(bool value) async {
+    if(Platform.isAndroid){
     return _channel.invokeMethod('muteVideosIfCallsMuted', {
       'value': value,
-    });
+    });}
   }
 
   /// <summary>
@@ -585,9 +586,11 @@ class Appodeal {
   /// <param name="adTypes">adTypes ad types you want to destroy.</param>
   /// </summary>
   static Future<void> destroy(int adType) async {
-    return _channel.invokeMethod('destroy', {
-      'adType': adType,
-    });
+   if(Platform.isAndroid){
+     return _channel.invokeMethod('destroy', {
+       'adType': adType,
+     });
+   }
   }
 
   /// <summary>
@@ -677,9 +680,11 @@ class Appodeal {
   /// </summary>
   ///
   static Future<void> setUseSafeArea(bool value) async {
-    return _channel.invokeMethod('setUseSafeArea', {
-      'value': value,
-    });
+    if(Platform.isAndroid){
+      return _channel.invokeMethod('setUseSafeArea', {
+        'value': value,
+      });
+    }
   }
 
   static void _setCallbacks() {
