@@ -36,7 +36,18 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "setUserAge": setUserAge(call, result)
         case "setUserGender": setUserGender(call, result)
         case "setCustomFilterString": setCustomFilterString(call, result)
-            
+        case "setCustomFilterBool": setCustomFilterBool(call, result)
+        case "setCustomFilterInt": setCustomFilterInt(call, result)
+        case "setCustomFilterDouble": setCustomFilterDouble(call, result)
+        case "canShow": canShow(call, result)
+        case "canShowWithPlacement": canShow(call, result)
+        case "setChildDirectedTreatment": setChildDirectedTreatment(call, result)
+        case "setExtraDataString": setExtraDataString(call, result)
+        case "setExtraDataDouble": setExtraDataDouble(call, result)
+        case "setExtraDataInt": setExtraDataInt(call, result)
+        case "setExtraDataBool": setExtraDataBool(call, result)
+        case "getPredictedEcpm": getPredictedEcpm(call, result)
+        case "getNativeSDKVersion": getNativeSDKVersion(call, result)
             
             
             
@@ -254,15 +265,133 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private func setCustomFilterString(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let name = args["name"] as! String
+        let key = args["name"] as! String
         let value = args["value"] as! String
         let customFilters: [AnyHashable: Any] = [
-            name: "name",
-            value: "value",
+            "key": key as String,
+            "value": value as String,
         ]
         Appodeal.setCustomState(customFilters)
         result(nil)
     }
+    
+    private func setCustomFilterBool(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let name = args["name"] as! String
+        let value = args["value"] as! Bool
+        let customFilters: [AnyHashable: Any] = [
+            "key" : name as String,
+            "value" : value as Bool,
+        ]
+        Appodeal.setCustomState(customFilters)
+        result(nil)
+    }
+    
+    private func setCustomFilterInt(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let name = args["name"] as! String
+        let value = args["value"] as! Int
+        let customFilters: [AnyHashable: Any] = [
+            "key" : name as String,
+            "value" : value as Int,
+        ]
+        Appodeal.setCustomState(customFilters)
+        result(nil)
+    }
+    
+    private func setCustomFilterDouble(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let name = args["name"] as! String
+        let value = args["value"] as! Double
+        let customFilters: [AnyHashable: Any] = [
+            "key" : name as String,
+            "value" : value as Double,
+        ]
+        Appodeal.setCustomState(customFilters)
+        result(nil)
+    }
+    
+    private func canShow(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let adType = getAdType(adId: args["adType"] as! Int)
+        result(Appodeal.canShow(adType, forPlacement: "default"))
+    }
+    
+    private func canShowWithPlacement(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let adType = getAdType(adId: args["adType"] as! Int)
+        let placement = args["placement"] as! String
+        result(Appodeal.canShow(adType, forPlacement: placement))
+    }
+    
+    private func setChildDirectedTreatment(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let value = args["value"] as! Bool
+        Appodeal.setChildDirectedTreatment(value)
+        result(nil)
+    }
+    
+    
+    private func setExtraDataString(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let key = args["key"] as! String
+        let value = args["value"] as! String
+        let customFilters: [String: Any] = [
+            "key" : key as String,
+            "value" : value as String,
+        ]
+        Appodeal.setExtras(customFilters)
+        result(nil)
+    }
+    
+    private func setExtraDataDouble(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let key = args["key"] as! String
+        let value = args["value"] as! Double
+        let customFilters: [String: Any] = [
+            "key" : key as String,
+            "value" : value as Double,
+        ]
+        Appodeal.setExtras(customFilters)
+        result(nil)
+    }
+    
+    private func setExtraDataInt(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let key = args["key"] as! String
+        let value = args["value"] as! Int
+        let customFilters: [String: Any] = [
+            "key" : key as String,
+            "value" : value as Int,
+        ]
+        Appodeal.setExtras(customFilters)
+        result(nil)
+    }
+    
+    private func setExtraDataBool(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let key = args["key"] as! String
+        let value = args["value"] as! Bool
+        let customFilters: [String: Any] = [
+            "key" : key as String,
+            "value" : value as Bool,
+        ]
+        Appodeal.setExtras(customFilters)
+        result(nil)
+    }
+    
+    private func getPredictedEcpm(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let adType = getAdType(adId: args["adType"] as! Int)
+        result(Appodeal.predictedEcpm(for: adType))
+    }
+    
+    
+    private func getNativeSDKVersion(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(Appodeal.getVersion())
+    }
+    
+    
     
     private func getAdType(adId: Int) -> AppodealAdType {
         switch adId {
