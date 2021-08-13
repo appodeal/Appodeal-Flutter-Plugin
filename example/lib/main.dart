@@ -27,7 +27,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
     Appodeal.setTesting(true);
     Appodeal.setAutoCache(Appodeal.BANNER, true);
-    Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
+    Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
     Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
     Appodeal.setSharedAdsInstanceAcrossActivities(true);
@@ -45,17 +45,17 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
 
      Appodeal.setCustomFilterString("key", "value");
-    // Appodeal.setCustomFilterBool("setCustomFilterBool", true);
-    // Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
-    // Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
-    //
-    // Appodeal.muteVideosIfCallsMuted(true);
-    // Appodeal.setChildDirectedTreatment(true);
-    //
-    // Appodeal.setExtraDataBool("setExtraDataBool", true);
-    // Appodeal.setExtraDataInt("setExtraDataBool", 123);
-    // Appodeal.setExtraDataDouble("setExtraDataBool", 1.2);
-    // Appodeal.setExtraDataString("setExtraDataBool", "setExtraDataString");
+     Appodeal.setCustomFilterBool("key", true);
+     Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
+     Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
+
+     Appodeal.muteVideosIfCallsMuted(true);
+     Appodeal.setChildDirectedTreatment(true);
+
+      Appodeal.setExtraDataBool("setExtraDataBool", true);
+      Appodeal.setExtraDataInt("setExtraDataInt", 123);
+      Appodeal.setExtraDataDouble("setExtraDataDouble", 1.2);
+      Appodeal.setExtraDataString("setExtraDataString", "value");
     //
     // Appodeal.setUseSafeArea(true);
     //
@@ -304,9 +304,10 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
-                        Appodeal.trackInAppPurchase(1.0, "purchase");
+                        var getNativeSDKVersion = await Appodeal.getNativeSDKVersion() ;
+                        showToast("getNativeSDKVersion - $getNativeSDKVersion");
                       },
-                      child: const Text('trackInAppPurchase'),
+                      child: const Text('getNativeSDKVersion'),
                     ),
                   ),
                   // Padding(
