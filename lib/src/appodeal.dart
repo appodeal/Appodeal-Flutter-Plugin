@@ -58,6 +58,7 @@ class Appodeal {
 
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
 
+
   /// <summary>
   /// Initializes the relevant (Android or iOS) Appodeal SDK.
   /// See <see cref="Appodeal.initialize"/> for resulting triggered event.
