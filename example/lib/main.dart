@@ -25,7 +25,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
   Future<void> initialization() async {
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
-    Appodeal.setTesting(true);
+    Appodeal.setTesting(false);
     Appodeal.setAutoCache(Appodeal.BANNER, true);
     Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
@@ -44,27 +44,33 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setUserAge(22);
     Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
 
-     Appodeal.setCustomFilterString("key", "value");
-     Appodeal.setCustomFilterBool("key", true);
-     Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
-     Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
+    Appodeal.setCustomFilterString("key", "value");
+    Appodeal.setCustomFilterBool("key", true);
+    Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
+    Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
 
-     Appodeal.muteVideosIfCallsMuted(true);
-     Appodeal.setChildDirectedTreatment(true);
+    Appodeal.muteVideosIfCallsMuted(true);
+    Appodeal.setChildDirectedTreatment(true);
 
-      Appodeal.setExtraDataBool("setExtraDataBool", true);
-      Appodeal.setExtraDataInt("setExtraDataInt", 123);
-      Appodeal.setExtraDataDouble("setExtraDataDouble", 1.2);
-      Appodeal.setExtraDataString("setExtraDataString", "value");
-    //
-    // Appodeal.setUseSafeArea(true);
-    //
+    Appodeal.setExtraDataBool("setExtraDataBool", true);
+    Appodeal.setExtraDataInt("setExtraDataInt", 123);
+    Appodeal.setExtraDataDouble("setExtraDataDouble", 1.2);
+    Appodeal.setExtraDataString("setExtraDataString", "value");
+
+    Appodeal.setUseSafeArea(true);
+
     // Appodeal.setBannerCallback((onBannerLoaded, height, isPrecache) => {showToast('BannerCallback - $onBannerLoaded height - $height isPrecache - $isPrecache')}, (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')}, (onBannerShown) => {showToast('BannerCallback - $onBannerShown')}, (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')}, (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
     //     (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')});
     //
-    // Appodeal.setInterstitialCallback((onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')}, (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')}, (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')}, (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
-    //     (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')}, (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')}, (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
-    //
+    Appodeal.setInterstitialCallback(
+            (onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')},
+            (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')},
+            (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')},
+            (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
+            (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')},
+            (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')},
+            (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
+
     // Appodeal.setRewardedVideoCallback(
     //   (onRewardedVideoLoaded, isPrecache) => {showToast('RewardedVideoCallback - $onRewardedVideoLoaded isPrecache - $isPrecache')},
     //   (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
@@ -233,7 +239,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                       onPressed: () async {
                         Appodeal.show(Appodeal.BANNER_BOTTOM);
                       },
-                      child: const Text('show bottom'),
+                      child: const Text('bottom'),
                     ),
                   ),
                   Padding(
@@ -260,7 +266,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                       onPressed: () async {
                         Appodeal.show(Appodeal.BANNER_LEFT);
                       },
-                      child: const Text('show left'),
+                      child: const Text('left'),
                     ),
                   ),
                   Padding(
@@ -270,7 +276,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                       onPressed: () async {
                         Appodeal.show(Appodeal.BANNER_RIGHT);
                       },
-                      child: const Text('show right'),
+                      child: const Text('right'),
                     ),
                   ),
                   Padding(
@@ -280,7 +286,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                       onPressed: () async {
                         Appodeal.show(Appodeal.BANNER_TOP);
                       },
-                      child: const Text('show top'),
+                      child: const Text('top'),
                     ),
                   ),
                 ],
@@ -304,7 +310,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                       onPressed: () async {
-                        var getNativeSDKVersion = await Appodeal.getNativeSDKVersion() ;
+                        var getNativeSDKVersion = await Appodeal.getNativeSDKVersion();
                         showToast("getNativeSDKVersion - $getNativeSDKVersion");
                       },
                       child: const Text('getNativeSDKVersion'),
