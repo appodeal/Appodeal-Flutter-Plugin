@@ -3,10 +3,13 @@ import UIKit
 import Appodeal
 
 public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
+    
+    internal var channel: FlutterMethodChannel?
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
         let instance = SwiftAppodealFlutterPlugin()
-        registrar.addMethodCallDelegate(instance, channel: channel)
+        instance.channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
+        registrar.addMethodCallDelegate(instance, channel: instance.channel!)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -48,38 +51,18 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "setExtraDataBool": setExtraDataBool(call, result)
         case "getPredictedEcpm": getPredictedEcpm(call, result)
         case "getNativeSDKVersion": getNativeSDKVersion(call, result)
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
         default: result(FlutterMethodNotImplemented)
         }
     }
     
-    
     private func initialize(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        
         let appKey = args["appKey"] as! String
         let types = args["adTypes"] as! [Int]
         let hasConsent = args["hasConsent"] as! Bool
-        
-        
         let adTypes = AppodealAdType(rawValue: types.reduce(0) { $0 | getAdType(adId: $1).rawValue })
-        
-        //setCallbacks()
-        
+        setCallbacks()
         Appodeal.initialize(withApiKey: appKey, types: adTypes, hasConsent: hasConsent)
-        
         result(nil)
     }
     
@@ -185,7 +168,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     private func setTabletBanners(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let tabletBannerEnabled = args["tabletBannerEnabled"] as! Bool
-    
+        
         if (tabletBannerEnabled) {
             Appodeal.setPreferredBannerAdSize(kAppodealUnitSize_728x90)
         }else {
@@ -389,6 +372,12 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private func getNativeSDKVersion(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         result(Appodeal.getVersion())
+    }
+    
+    private func setCallbacks() {
+        Appodeal.setInterstitialDelegate(self)
+        //            Appodeal.setRewardedVideoDelegate(self)
+        //            Appodeal.setNonSkippableVideoDelegate(self)
     }
     
     
