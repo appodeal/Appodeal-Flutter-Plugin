@@ -1,5 +1,5 @@
 //
-//  InterstitialDelegate.swift
+//  AppodealInterstitialDelegate.swift
 //  appodeal_flutter
 //
 //  Created by Artyom Kul on 13.08.21.
