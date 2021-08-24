@@ -390,7 +390,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case 6: return .nativeAd
         case 7: return .interstitial
         case 8: return .rewardedVideo
-        case 9: return.nonSkippableVideo
         default: return AppodealAdType(rawValue: 0)
         }
     }
@@ -404,7 +403,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case 5: return .bannerBottom
         case 7: return .interstitial
         case 8: return .rewardedVideo
-        case 9: return.nonSkippableVideo
         default: return AppodealShowStyle(rawValue: 0)
         }
     }
