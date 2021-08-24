@@ -14,7 +14,6 @@ class Appodeal {
   static const NATIVE = 6;
   static const INTERSTITIAL = 7;
   static const REWARDED_VIDEO = 8;
-  static const NON_SKIPPABLE = 9;
 
   static const LogLevelNone = 0;
   static const LogLevelDebug = 1;
@@ -39,14 +38,6 @@ class Appodeal {
   static Function(String event)? _onInterstitialClosed;
   static Function(String event)? _onInterstitialExpired;
 
-  static Function(String event, bool isPrecache)? _onNonSkippableVideoLoaded;
-  static Function(String event)? _onNonSkippableVideoFailedToLoad;
-  static Function(String event)? _onNonSkippableVideoShown;
-  static Function(String event)? _onNonSkippableVideoShowFailed;
-  static Function(String event, bool finished)? _onNonSkippableVideoFinished;
-  static Function(String event)? _onNonSkippableVideoClosed;
-  static Function(String event)? _onNonSkippableVideoExpired;
-
   static Function(String event, bool isPrecache)? _onRewardedVideoLoaded;
   static Function(String event)? _onRewardedVideoFailedToLoad;
   static Function(String event)? _onRewardedVideoShown;
@@ -57,7 +48,6 @@ class Appodeal {
   static Function(String event)? _onRewardedVideoClicked;
 
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
-
 
   /// <summary>
   /// Initializes the relevant (Android or iOS) Appodeal SDK.
@@ -129,46 +119,6 @@ class Appodeal {
   }
 
   /// <summary>
-  /// Set Interstitial ads callbacks
-  /// See <see cref="Appodeal.setInterstitialCallbacks"/> for resulting triggered event.
-  /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/IInterstitialAdListener.</param>
-  /// </summary>
-  /// TODO Need to implement
-  //public static void setInterstitialCallbacks(IInterstitialAdListener listener)
-
-  /// <summary>
-  /// Set Interstitial ads callbacks
-  /// See <see cref="Appodeal.setNonSkippableVideoCallbacks"/> for resulting triggered event.
-  /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/INonSkippableVideoAdListener.</param>
-  /// </summary>
-  /// TODO Need to implement
-  //public static void setNonSkippableVideoCallbacks(INonSkippableVideoAdListener listener)
-
-  /// <summary>
-  /// Set Interstitial ads callbacks
-  /// See <see cref="Appodeal.setRewardedVideoCallbacks"/> for resulting triggered event.
-  /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/IRewardedVideoAdListener.</param>
-  /// </summary>
-  ///  TODO Need to implement
-  //public static void setRewardedVideoCallbacks(IRewardedVideoAdListener listener)
-
-  /// <summary>
-  /// Set Interstitial ads callbacks
-  /// See <see cref="Appodeal.setBannerCallbacks"/> for resulting triggered event.
-  /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/IBannerAdListener.</param>
-  /// </summary>
-  ///  TODO Need to implement
-  //public static void setBannerCallbacks(IBannerAdListener listener)
-
-  /// <summary>
-  /// Set Interstitial ads callbacks
-  /// See <see cref="Appodeal.setMrecCallbacks"/> for resulting triggered event.
-  /// <param name="listener">callbacks implementation of Appodeal/Common/Appodeal/IMrecAdListener.</param>
-  /// </summary>
-  /// TODO Need to implement
-  //public static void setMrecCallbacks(IMrecAdListener listener)
-
-  /// <summary>
   /// Start caching ads.
   /// See <see cref="Appodeal.cache"/> for resulting triggered event.
   /// <param name="adTypes">adType type of advertising.</param>
@@ -216,16 +166,6 @@ class Appodeal {
   //public static bool showBannerView(int YAxis, int XGravity, string placement)
 
   /// <summary>
-  /// Show mrec view.
-  /// See <see cref="Appodeal.showMrecView"/> for resulting triggered event.
-  /// <param name="YAxis">y position for mrec view.</param>
-  /// <param name="XGravity">x position for mrec view.</param>
-  /// <param name="placement">type of advertising you want to show.</param>
-  /// </summary>
-  /// TODO Need to implement
-  //public static bool showMrecView(int YAxis, int XGravity, string placement)
-
-  /// <summary>
   /// Hide advertising.
   /// See <see cref="Appodeal.hide"/> for resulting triggered event.
   /// <param name="adTypes">adType type of advertising  Appodeal.BANNER</param>
@@ -242,13 +182,6 @@ class Appodeal {
   /// </summary>
   /// TODO Need to implement
   //public static void hideBannerView()
-
-  /// <summary>
-  /// Hide Mrec view.
-  /// See <see cref="Appodeal.hideMrecView"/> for resulting triggered event.
-  /// </summary>
-  /// TODO Need to implement
-  //public static void hideMrecView()
 
   /// <summary>
   /// Start or stop auto caching new ads when current ads was shown..
@@ -324,14 +257,6 @@ class Appodeal {
       'smartBannerEnabled': smartBannerEnabled,
     });
   }
-
-  /// <summary>
-  /// Enabling or disabling banners background (Enabled by default).
-  /// See <see cref="Appodeal.setBannerBackground"/> for resulting triggered event.
-  /// <param name="enabled">enabled enabling or disabling banners background (only for iOS platform)</param>
-  /// </summary>
-  /// TODO need to implement
-  //public static void setBannerBackground(bool enabled)
 
   /// <summary>
   /// Enabling or disabling 728*90 banners (Disabled by default).
@@ -716,21 +641,7 @@ class Appodeal {
         _onInterstitialClosed?.call(call.method);
       } else if (call.method.startsWith('onInterstitialExpired')) {
         _onInterstitialExpired?.call(call.method);
-      } else if (call.method.startsWith('onNonSkippableVideoLoaded')) {
-        _onNonSkippableVideoLoaded?.call(call.method, call.arguments['isPrecache']);
-      } else if (call.method.startsWith('onNonSkippableVideoFailedToLoad')) {
-        _onNonSkippableVideoFailedToLoad?.call(call.method);
-      } else if (call.method.startsWith('onNonSkippableVideoShown')) {
-        _onNonSkippableVideoShown?.call(call.method);
-      } else if (call.method.startsWith('onNonSkippableVideoShowFailed')) {
-        _onNonSkippableVideoShowFailed?.call(call.method);
-      } else if (call.method.startsWith('onNonSkippableVideoFinished')) {
-        _onNonSkippableVideoFinished?.call(call.method, call.arguments['isFinished']);
-      } else if (call.method.startsWith('onNonSkippableVideoClosed')) {
-        _onNonSkippableVideoClosed?.call(call.method);
-      } else if (call.method.startsWith('onNonSkippableVideoExpired')) {
-        _onNonSkippableVideoExpired?.call(call.method);
-      } else if (call.method.startsWith('onRewardedVideoLoaded')) {
+      }  else if (call.method.startsWith('onRewardedVideoLoaded')) {
         _onRewardedVideoLoaded?.call(call.method, call.arguments['isPrecache']);
       } else if (call.method.startsWith('onRewardedVideoFailedToLoad')) {
         _onRewardedVideoFailedToLoad?.call(call.method);
@@ -750,7 +661,10 @@ class Appodeal {
     });
   }
 
-  static void setBannerCallback(
+  /// <summary>
+  /// Set Interstitial ads callbacks
+  /// See <see cref="Appodeal.setBannerCallbacks"/> for resulting triggered event.
+  static void setBannerCallbacks(
     Function(String event, bool isPrecache) onBannerLoaded,
     Function(String event) onBannerFailedToLoad,
     Function(String event) onBannerShown,
@@ -765,7 +679,10 @@ class Appodeal {
     _onBannerExpired = onBannerExpired;
   }
 
-  static void setInterstitialCallback(
+  /// <summary>
+  /// Set Interstitial ads callbacks
+  /// See <see cref="Appodeal.setInterstitialCallbacks"/> for resulting triggered event.
+  static void setInterstitialCallbacks(
       Function(String event, bool isPrecache) onInterstitialLoaded,
       Function(String event) onInterstitialFailedToLoad,
       Function(String event) onInterstitialShown,
@@ -782,25 +699,17 @@ class Appodeal {
     _onInterstitialExpired = onInterstitialExpired;
   }
 
-  static void setNonSkippableCallback(
-    Function(String event, bool isPrecache) onNonSkippableVideoLoaded,
-    Function(String event) onNonSkippableVideoFailedToLoad,
-    Function(String event) onNonSkippableVideoShown,
-    Function(String event) onNonSkippableVideoShowFailed,
-    Function(String event, bool finished) onNonSkippableVideoFinished,
-    Function(String event) onNonSkippableVideoClosed,
-    Function(String event) onNonSkippableVideoExpired,
-  ) {
-    _onNonSkippableVideoLoaded = onNonSkippableVideoLoaded;
-    _onNonSkippableVideoFailedToLoad = onNonSkippableVideoFailedToLoad;
-    _onNonSkippableVideoShown = onNonSkippableVideoShown;
-    _onNonSkippableVideoShowFailed = onNonSkippableVideoShowFailed;
-    _onNonSkippableVideoFinished = onNonSkippableVideoFinished;
-    _onNonSkippableVideoClosed = onNonSkippableVideoClosed;
-    _onNonSkippableVideoExpired = onNonSkippableVideoExpired;
-  }
-
-  static void setRewardedVideoCallback(Function(String event, bool isPrecache) onRewardedVideoLoaded, Function(String event) onRewardedVideoFailedToLoad, Function(String event) onRewardedVideoShown, Function(String event) onRewardedVideoShowFailed, Function(String event, double amount, String reward) onRewardedVideoFinished, Function(String event, bool isFinished) onRewardedVideoClosed, Function(String event) onRewardedVideoExpired, Function(String event) onRewardedVideoClicked) {
+  /// <summary>
+  /// Set Rewarded video ads callbacks
+  /// See <see cref="Appodeal.setRewardedVideoCallbacks"/> for resulting triggered event.
+  static void setRewardedVideoCallbacks(
+      Function(String event, bool isPrecache) onRewardedVideoLoaded,
+      Function(String event) onRewardedVideoFailedToLoad,
+      Function(String event) onRewardedVideoShown,
+      Function(String event) onRewardedVideoShowFailed,
+      Function(String event, double amount, String reward) onRewardedVideoFinished,
+      Function(String event, bool isFinished) onRewardedVideoClosed,
+      Function(String event) onRewardedVideoExpired, Function(String event) onRewardedVideoClicked) {
     _onRewardedVideoLoaded = onRewardedVideoLoaded;
     _onRewardedVideoFailedToLoad = onRewardedVideoFailedToLoad;
     _onRewardedVideoShown = onRewardedVideoShown;
