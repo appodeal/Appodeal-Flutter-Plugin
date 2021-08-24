@@ -24,7 +24,7 @@ class Appodeal {
   static const GENDER_MALE = 1;
   static const GENDER_FEMALE = 2;
 
-  static Function(String event, int bannerHeight, bool isPrecache)? _onBannerLoaded;
+  static Function(String event, bool isPrecache)? _onBannerLoaded;
   static Function(String event)? _onBannerFailedToLoad;
   static Function(String event)? _onBannerShown;
   static Function(String event)? _onBannerShowFailed;
@@ -691,7 +691,7 @@ class Appodeal {
   static void _setCallbacks() {
     _channel.setMethodCallHandler((call) async {
       if (call.method.startsWith('onBannerLoaded')) {
-        _onBannerLoaded?.call(call.method, call.arguments['height'], call.arguments['isPrecache']);
+        _onBannerLoaded?.call(call.method, call.arguments['isPrecache']);
       } else if (call.method.startsWith('onBannerFailedToLoad')) {
         _onBannerFailedToLoad?.call(call.method);
       } else if (call.method.startsWith('onBannerShown')) {
@@ -751,13 +751,12 @@ class Appodeal {
   }
 
   static void setBannerCallback(
-    Function(String event, int bannerHeight, bool isPrecache) onBannerLoaded,
+    Function(String event, bool isPrecache) onBannerLoaded,
     Function(String event) onBannerFailedToLoad,
     Function(String event) onBannerShown,
     Function(String event) onBannerShowFailed,
     Function(String event) onBannerClicked,
-    Function(String event) onBannerExpired,
-  ) {
+    Function(String event) onBannerExpired) {
     _onBannerLoaded = onBannerLoaded;
     _onBannerFailedToLoad = onBannerFailedToLoad;
     _onBannerShown = onBannerShown;
@@ -766,7 +765,14 @@ class Appodeal {
     _onBannerExpired = onBannerExpired;
   }
 
-  static void setInterstitialCallback(Function(String event, bool isPrecache) onInterstitialLoaded, Function(String event) onInterstitialFailedToLoad, Function(String event) onInterstitialShown, Function(String event) onInterstitialShowFailed, Function(String event) onInterstitialClicked, Function(String event) onInterstitialClosed, Function(String event) onInterstitialExpired) {
+  static void setInterstitialCallback(
+      Function(String event, bool isPrecache) onInterstitialLoaded,
+      Function(String event) onInterstitialFailedToLoad,
+      Function(String event) onInterstitialShown,
+      Function(String event) onInterstitialShowFailed,
+      Function(String event) onInterstitialClicked,
+      Function(String event) onInterstitialClosed,
+      Function(String event) onInterstitialExpired) {
     _onInterstitialLoaded = onInterstitialLoaded;
     _onInterstitialFailedToLoad = onInterstitialFailedToLoad;
     _onInterstitialShown = onInterstitialShown;
