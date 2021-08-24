@@ -709,7 +709,8 @@ class Appodeal {
       Function(String event) onRewardedVideoShowFailed,
       Function(String event, double amount, String reward) onRewardedVideoFinished,
       Function(String event, bool isFinished) onRewardedVideoClosed,
-      Function(String event) onRewardedVideoExpired, Function(String event) onRewardedVideoClicked) {
+      Function(String event) onRewardedVideoExpired,
+      Function(String event) onRewardedVideoClicked) {
     _onRewardedVideoLoaded = onRewardedVideoLoaded;
     _onRewardedVideoFailedToLoad = onRewardedVideoFailedToLoad;
     _onRewardedVideoShown = onRewardedVideoShown;
