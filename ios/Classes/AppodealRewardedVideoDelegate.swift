@@ -18,7 +18,7 @@ extension SwiftAppodealFlutterPlugin: AppodealRewardedVideoDelegate {
     }
     
     
-    public  func rewardedVideoDidFailToLoadAd() {
+    public func rewardedVideoDidFailToLoadAd() {
         channel?.invokeMethod("onRewardedVideoFailedToLoad", arguments: nil)
     }
     
@@ -27,25 +27,34 @@ extension SwiftAppodealFlutterPlugin: AppodealRewardedVideoDelegate {
     }
     
     
-    public   func rewardedVideoDidPresent() {
+    public func rewardedVideoDidPresent() {
         channel?.invokeMethod("onRewardedVideoShown", arguments: nil)
     }
     
     
-    public   func rewardedVideoWillDismissAndWasFullyWatched(_ wasFullyWatched: Bool) {
+    public func rewardedVideoWillDismissAndWasFullyWatched(_ wasFullyWatched: Bool) {
         let args: [String: Any] = [
             "isFinished": wasFullyWatched
         ]
         channel?.invokeMethod("onRewardedVideoClosed", arguments: args)
     }
     
-    
     public  func rewardedVideoDidFinish(_ rewardAmount: Float, name rewardName: String?) {
-        let args: [String: Any] = [
-            "amount": rewardAmount,
-            "reward": rewardName as Any
-        ]
-        channel?.invokeMethod("onRewardedVideoFinished", arguments: args)
+        if(rewardName != nil){
+            let args: [String: Any] = [
+                "amount": rewardAmount,
+                "reward": rewardName as Any
+            ]
+            channel?.invokeMethod("onRewardedVideoFinished", arguments: args)
+        }else {
+            let args: [String: Any] = [
+                "amount": 0.0,
+                "reward": "empty"
+            ]
+            channel?.invokeMethod("onRewardedVideoFinished", arguments: args)
+        }
+        
+       
     }
     
     
