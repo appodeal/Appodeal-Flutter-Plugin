@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:appodeal_flutter/appodeal_flutter.dart';
@@ -15,7 +16,7 @@ class AppodealDemoApp extends StatefulWidget {
 }
 
 class _AppodealDemoAppState extends State<AppodealDemoApp> {
-  String androidAppKey = Platform.isAndroid ? "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f" : "466de0d625e01e8811c588588a42a55970bc7c132649eede";
+  String appKey = Platform.isAndroid ? "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f" : "466de0d625e01e8811c588588a42a55970bc7c132649eede";
 
   @override
   void initState() {
@@ -25,7 +26,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
   Future<void> initialization() async {
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
-    Appodeal.setTesting(true);
+    Appodeal.setTesting(false);
     Appodeal.setAutoCache(Appodeal.BANNER, true);
     Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
@@ -81,8 +82,8 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
       (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
       (onRewardedVideoShown) => {showToast('RewardedVideoCallback - $onRewardedVideoShown')},
       (onRewardedVideoShowFailed) => {showToast('RewardedVideoCallback - $onRewardedVideoShowFailed')},
-      (onRewardedVideoFinished, amount, reward) => {showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward')},
-      (onRewardedVideoClosed, isFinished) => {showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished')},
+      (onRewardedVideoFinished, amount, reward) => {showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward'),},
+      (onRewardedVideoClosed, isFinished) => {showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished'),},
       (onRewardedVideoExpired) => {showToast('RewardedVideoCallback - $onRewardedVideoExpired')},
       (onRewardedVideoClicked) => {showToast('RewardedVideoCallback - $onRewardedVideoClicked')},
     );
@@ -109,7 +110,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                 onPressed: () {
-                  Appodeal.initialize(androidAppKey, [Appodeal.BANNER], false);
+                  Appodeal.initialize(appKey, [Appodeal.REWARDED_VIDEO], false);
                 },
                 child: const Text('Initialize'),
               ),
