@@ -376,6 +376,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private func setCallbacks() {
         Appodeal.setInterstitialDelegate(self)
+        Appodeal.setBannerDelegate(self)
         //            Appodeal.setRewardedVideoDelegate(self)
         //            Appodeal.setNonSkippableVideoDelegate(self)
     }
