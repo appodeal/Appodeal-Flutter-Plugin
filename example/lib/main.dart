@@ -59,7 +59,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
     Appodeal.setUseSafeArea(true);
 
-    Appodeal.setBannerCallback(
+    Appodeal.setBannerCallbacks(
             (onBannerLoaded, isPrecache) => {showToast('BannerCallback - $onBannerLoaded  isPrecache - $isPrecache')},
             (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')},
             (onBannerShown) => {showToast('BannerCallback - $onBannerShown')},
@@ -67,7 +67,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
             (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
             (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')});
 
-    Appodeal.setInterstitialCallback(
+    Appodeal.setInterstitialCallbacks(
             (onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')},
             (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')},
             (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')},
@@ -76,16 +76,16 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
             (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')},
             (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
 
-    // Appodeal.setRewardedVideoCallback(
-    //   (onRewardedVideoLoaded, isPrecache) => {showToast('RewardedVideoCallback - $onRewardedVideoLoaded isPrecache - $isPrecache')},
-    //   (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
-    //   (onRewardedVideoShown) => {showToast('RewardedVideoCallback - $onRewardedVideoShown')},
-    //   (onRewardedVideoShowFailed) => {showToast('RewardedVideoCallback - $onRewardedVideoShowFailed')},
-    //   (onRewardedVideoFinished, amount, reward) => {showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward')},
-    //   (onRewardedVideoClosed, isFinished) => {showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished')},
-    //   (onRewardedVideoExpired) => {showToast('RewardedVideoCallback - $onRewardedVideoExpired')},
-    //   (onRewardedVideoClicked) => {showToast('RewardedVideoCallback - $onRewardedVideoClicked')},
-    // );
+    Appodeal.setRewardedVideoCallbacks(
+      (onRewardedVideoLoaded, isPrecache) => {showToast('RewardedVideoCallback - $onRewardedVideoLoaded isPrecache - $isPrecache')},
+      (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
+      (onRewardedVideoShown) => {showToast('RewardedVideoCallback - $onRewardedVideoShown')},
+      (onRewardedVideoShowFailed) => {showToast('RewardedVideoCallback - $onRewardedVideoShowFailed')},
+      (onRewardedVideoFinished, amount, reward) => {showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward')},
+      (onRewardedVideoClosed, isFinished) => {showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished')},
+      (onRewardedVideoExpired) => {showToast('RewardedVideoCallback - $onRewardedVideoExpired')},
+      (onRewardedVideoClicked) => {showToast('RewardedVideoCallback - $onRewardedVideoClicked')},
+    );
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
