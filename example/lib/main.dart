@@ -25,7 +25,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
   Future<void> initialization() async {
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
-    Appodeal.setTesting(false);
+    Appodeal.setTesting(true);
     Appodeal.setAutoCache(Appodeal.BANNER, true);
     Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
@@ -59,9 +59,14 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
     Appodeal.setUseSafeArea(true);
 
-    // Appodeal.setBannerCallback((onBannerLoaded, height, isPrecache) => {showToast('BannerCallback - $onBannerLoaded height - $height isPrecache - $isPrecache')}, (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')}, (onBannerShown) => {showToast('BannerCallback - $onBannerShown')}, (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')}, (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
-    //     (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')});
-    //
+    Appodeal.setBannerCallback(
+            (onBannerLoaded, isPrecache) => {showToast('BannerCallback - $onBannerLoaded  isPrecache - $isPrecache')},
+            (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')},
+            (onBannerShown) => {showToast('BannerCallback - $onBannerShown')},
+            (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')},
+            (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
+            (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')});
+
     Appodeal.setInterstitialCallback(
             (onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')},
             (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')},
@@ -104,7 +109,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
                 onPressed: () {
-                  Appodeal.initialize(androidAppKey, [Appodeal.REWARDED_VIDEO, Appodeal.INTERSTITIAL, Appodeal.BANNER], false);
+                  Appodeal.initialize(androidAppKey, [Appodeal.BANNER], false);
                 },
                 child: const Text('Initialize'),
               ),
