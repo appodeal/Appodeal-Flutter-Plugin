@@ -3,10 +3,10 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-class AppodealBannerView extends StatelessWidget {
+class AppodealMrec extends StatelessWidget {
   final Map<String, dynamic> _args = {};
 
-  AppodealBannerView({String? placementName}) {
+  AppodealMrec({String? placementName}) {
     this._args["placementName"] = placementName;
   }
 
