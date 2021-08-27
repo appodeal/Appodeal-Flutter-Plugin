@@ -56,7 +56,6 @@ extension SwiftAppodealFlutterPlugin: AppodealRewardedVideoDelegate {
         
     }
     
-    
     public func rewardedVideoDidClick() {
         channel?.invokeMethod("onRewardedVideoClicked", arguments: nil)
     }
