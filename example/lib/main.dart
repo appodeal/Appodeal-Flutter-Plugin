@@ -1,13 +1,18 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:appodeal_flutter/appodeal_flutter.dart';
+import 'package:appodeal_flutter_example/Banner.dart';
+import 'package:appodeal_flutter_example/RewardedVideo.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'Interstitial.dart';
+
 void main() {
-  runApp(AppodealDemoApp());
+  runApp(MaterialApp(
+    home: AppodealDemoApp(),
+  ));
 }
 
 class AppodealDemoApp extends StatefulWidget {
@@ -26,16 +31,15 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
   Future<void> initialization() async {
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
-    Appodeal.setTesting(false);
-    Appodeal.setAutoCache(Appodeal.BANNER, true);
-    Appodeal.setAutoCache(Appodeal.INTERSTITIAL, true);
-    Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, true);
+    Appodeal.setTesting(true);
+    Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
+    Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
     Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
     Appodeal.setSharedAdsInstanceAcrossActivities(true);
     Appodeal.setSmartBanners(false);
     Appodeal.setTabletBanners(false);
     Appodeal.setBannerAnimation(false);
-    Appodeal.setBannerRotation(Appodeal.BANNER_RIGHT, Appodeal.BANNER_LEFT);
+    Appodeal.setBannerRotation(90, 90);
     Appodeal.disableNetwork("admob");
     Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
     Appodeal.disableLocationPermissionCheck();
@@ -60,33 +64,9 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
     Appodeal.setUseSafeArea(true);
 
-    Appodeal.setBannerCallbacks(
-            (onBannerLoaded, isPrecache) => {showToast('BannerCallback - $onBannerLoaded  isPrecache - $isPrecache')},
-            (onBannerFailedToLoad) => {showToast('BannerCallback - $onBannerFailedToLoad')},
-            (onBannerShown) => {showToast('BannerCallback - $onBannerShown')},
-            (onBannerShowFailed) => {showToast('BannerCallback - $onBannerShowFailed')},
-            (onBannerClicked) => {showToast('BannerCallback - $onBannerClicked')},
-            (onBannerExpired) => {showToast('BannerCallback - $onBannerExpired')});
 
-    Appodeal.setInterstitialCallbacks(
-            (onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')},
-            (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')},
-            (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')},
-            (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
-            (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')},
-            (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')},
-            (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
 
-    Appodeal.setRewardedVideoCallbacks(
-      (onRewardedVideoLoaded, isPrecache) => {showToast('RewardedVideoCallback - $onRewardedVideoLoaded isPrecache - $isPrecache')},
-      (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
-      (onRewardedVideoShown) => {showToast('RewardedVideoCallback - $onRewardedVideoShown')},
-      (onRewardedVideoShowFailed) => {showToast('RewardedVideoCallback - $onRewardedVideoShowFailed')},
-      (onRewardedVideoFinished, amount, reward) => {showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward'),},
-      (onRewardedVideoClosed, isFinished) => {showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished'),},
-      (onRewardedVideoExpired) => {showToast('RewardedVideoCallback - $onRewardedVideoExpired')},
-      (onRewardedVideoClicked) => {showToast('RewardedVideoCallback - $onRewardedVideoClicked')},
-    );
+    Appodeal.initialize(appKey, [Appodeal.REWARDED_VIDEO, Appodeal.INTERSTITIAL, Appodeal.BANNER], false);
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -107,244 +87,55 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                onPressed: () {
-                  Appodeal.initialize(appKey, [Appodeal.REWARDED_VIDEO], false);
-                },
-                child: const Text('Initialize'),
+              Padding(
+                padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8.0, bottom: 4.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => InterstitialPage()),
+                    );
+                  },
+                  child: const Text('INTERSTITIAL'),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RewardedVideoPage()),
+                    );
+                  },
+                  child: const Text('REWARDED VIDEO'),
+                ),
               ),
             ],
           ),
           //Interstitial
-          Column(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(child: Text('Interstitial')),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        var isInitialized = await Appodeal.isInitialized(Appodeal.INTERSTITIAL);
-                        Fluttertoast.showToast(msg: 'isInitialized Interstitial - $isInitialized', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-                      },
-                      child: const Text('isInitialized'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        var isLoaded = await Appodeal.isLoaded(Appodeal.INTERSTITIAL);
-                        Fluttertoast.showToast(msg: 'isLoaded Interstitial - $isLoaded', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-                      },
-                      child: const Text('isLoaded'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        await Appodeal.showWithPlacement(Appodeal.INTERSTITIAL, "default");
-                      },
-                      child: const Text('show'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          //Rewarded video
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(child: Text('Rewarded video')),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        var isInitialized = await Appodeal.isInitialized(Appodeal.REWARDED_VIDEO);
-                        Fluttertoast.showToast(msg: 'isInitialized Rewarded video - $isInitialized', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-                      },
-                      child: const Text('isInitialized'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        var isLoaded = await Appodeal.isLoaded(Appodeal.REWARDED_VIDEO);
-                        Fluttertoast.showToast(msg: 'isLoaded Rewarded video - $isLoaded', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-                      },
-                      child: const Text('isLoaded'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        await Appodeal.show(Appodeal.REWARDED_VIDEO);
-                      },
-                      child: const Text('show'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          //Banner
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(child: Text('Banner')),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        var isInitialized = await Appodeal.isInitialized(Appodeal.BANNER);
-                        showToast('isInitialized - $isInitialized');
-                      },
-                      child: const Text('isInitialized'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        Appodeal.show(Appodeal.BANNER_BOTTOM);
-                      },
-                      child: const Text('bottom'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        await Appodeal.hide(Appodeal.BANNER);
-                        var nativeSDKVersion = await Appodeal.getNativeSDKVersion();
-                        Fluttertoast.showToast(msg: 'Appodeal.getNativeSDKVersion - $nativeSDKVersion', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-                      },
-                      child: const Text('hide'),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        Appodeal.show(Appodeal.BANNER_LEFT);
-                      },
-                      child: const Text('left'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        Appodeal.show(Appodeal.BANNER_RIGHT);
-                      },
-                      child: const Text('right'),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        Appodeal.show(Appodeal.BANNER_TOP);
-                      },
-                      child: const Text('top'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Center(child: Text('Test Panel')),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                      onPressed: () async {
-                        var getNativeSDKVersion = await Appodeal.getNativeSDKVersion();
-                        showToast("getNativeSDKVersion - $getNativeSDKVersion");
-                      },
-                      child: const Text('getNativeSDKVersion'),
-                    ),
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(4.0),
-                  //   child: ElevatedButton(
-                  //     style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                  //     onPressed: () async {
-                  //       Appodeal.show(Appodeal.BANNER_BOTTOM);
-                  //     },
-                  //     child: const Text('show'),
-                  //   ),
-                  // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(4.0),
-                  //   child: ElevatedButton(
-                  //     style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
-                  //     onPressed: () async {
-                  //       await Appodeal.hide(Appodeal.BANNER);
-                  //       var nativeSDKVersion = await Appodeal.getNativeSDKVersion();
-                  //       Fluttertoast.showToast(msg: 'Appodeal.getNativeSDKVersion - $nativeSDKVersion', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
-                  //     },
-                  //     child: const Text('hide'),
-                  //   ),
-                  // ),
-                ],
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BannerPage()),
+                    );
+                  },
+                  child: const Text('BANNER'),
+                ),
               ),
             ],
           ),
