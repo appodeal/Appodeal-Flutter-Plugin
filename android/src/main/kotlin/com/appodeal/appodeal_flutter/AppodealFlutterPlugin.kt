@@ -18,6 +18,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
     private lateinit var activity: Activity
+    private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "appodeal_flutter")
@@ -81,6 +82,16 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
+
+        pluginBinding.platformViewRegistry.registerViewFactory(
+                "com.appodeal.appodeal/banner_view",
+                AppodealBannerView(activity, pluginBinding.binaryMessenger)
+        )
+
+        pluginBinding.platformViewRegistry.registerViewFactory(
+                "com.appodeal.appodeal/mrec_view",
+                AppodealMrecView(activity, pluginBinding.binaryMessenger)
+        )
     }
 
     override fun onDetachedFromActivityForConfigChanges() {}
@@ -97,7 +108,8 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
           6 -> Appodeal.NATIVE
           7 -> Appodeal.INTERSTITIAL
           8 -> Appodeal.REWARDED_VIDEO
-          9 -> Appodeal.NON_SKIPPABLE_VIDEO
+          9 -> Appodeal.MREC
+
             else -> Appodeal.NONE
         }
     }
