@@ -392,6 +392,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case 6: return .nativeAd
         case 7: return .interstitial
         case 8: return .rewardedVideo
+        case 9: return .MREC
         default: return AppodealAdType(rawValue: 0)
         }
     }
