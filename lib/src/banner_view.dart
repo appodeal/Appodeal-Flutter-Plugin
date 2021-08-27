@@ -22,7 +22,7 @@ class AppodealBannerView extends StatelessWidget {
               creationParamsCodec: const StandardMessageCodec(),
             )
           : AndroidView(
-              viewType: 'com.appoeal.appodeal/banner_view',
+              viewType: 'com.appodeal.appodeal/banner_view',
               creationParams: this._args,
               creationParamsCodec: const StandardMessageCodec(),
             ),
