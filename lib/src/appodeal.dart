@@ -4,7 +4,8 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 class Appodeal {
-  static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0";
+
+  static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0.0";
 
   static const BANNER = 1;
   static const BANNER_RIGHT = 2;
@@ -216,7 +217,7 @@ class Appodeal {
   /// <param name="sharedAdsInstanceAcrossActivities">enabling or disabling shared ads instance across activities.</param>
   /// </summary>
   static Future<void> setSharedAdsInstanceAcrossActivities(bool sharedAdsInstanceAcrossActivities) async {
-    if (Platform.isAndroid){
+    if (Platform.isAndroid) {
       _channel.invokeMethod('setSharedAdsInstanceAcrossActivities', {
         'sharedAdsInstanceAcrossActivities': sharedAdsInstanceAcrossActivities,
       });
@@ -489,10 +490,11 @@ class Appodeal {
   /// <param name="value">true - mute videos if call volume is 0.</param>
   /// </summary>
   static Future<void> muteVideosIfCallsMuted(bool value) async {
-    if(Platform.isAndroid){
-    return _channel.invokeMethod('muteVideosIfCallsMuted', {
-      'value': value,
-    });}
+    if (Platform.isAndroid) {
+      return _channel.invokeMethod('muteVideosIfCallsMuted', {
+        'value': value,
+      });
+    }
   }
 
   /// <summary>
@@ -512,11 +514,11 @@ class Appodeal {
   /// <param name="adTypes">adTypes ad types you want to destroy.</param>
   /// </summary>
   static Future<void> destroy(int adType) async {
-   if(Platform.isAndroid){
-     return _channel.invokeMethod('destroy', {
-       'adType': adType,
-     });
-   }
+    if (Platform.isAndroid) {
+      return _channel.invokeMethod('destroy', {
+        'adType': adType,
+      });
+    }
   }
 
   /// <summary>
@@ -606,7 +608,7 @@ class Appodeal {
   /// </summary>
   ///
   static Future<void> setUseSafeArea(bool value) async {
-    if(Platform.isAndroid){
+    if (Platform.isAndroid) {
       return _channel.invokeMethod('setUseSafeArea', {
         'value': value,
       });
@@ -641,7 +643,7 @@ class Appodeal {
         _onInterstitialClosed?.call(call.method);
       } else if (call.method.startsWith('onInterstitialExpired')) {
         _onInterstitialExpired?.call(call.method);
-      }  else if (call.method.startsWith('onRewardedVideoLoaded')) {
+      } else if (call.method.startsWith('onRewardedVideoLoaded')) {
         _onRewardedVideoLoaded?.call(call.method, call.arguments['isPrecache']);
       } else if (call.method.startsWith('onRewardedVideoFailedToLoad')) {
         _onRewardedVideoFailedToLoad?.call(call.method);
@@ -664,13 +666,7 @@ class Appodeal {
   /// <summary>
   /// Set Interstitial ads callbacks
   /// See <see cref="Appodeal.setBannerCallbacks"/> for resulting triggered event.
-  static void setBannerCallbacks(
-    Function(String event, bool isPrecache) onBannerLoaded,
-    Function(String event) onBannerFailedToLoad,
-    Function(String event) onBannerShown,
-    Function(String event) onBannerShowFailed,
-    Function(String event) onBannerClicked,
-    Function(String event) onBannerExpired) {
+  static void setBannerCallbacks(Function(String event, bool isPrecache) onBannerLoaded, Function(String event) onBannerFailedToLoad, Function(String event) onBannerShown, Function(String event) onBannerShowFailed, Function(String event) onBannerClicked, Function(String event) onBannerExpired) {
     _onBannerLoaded = onBannerLoaded;
     _onBannerFailedToLoad = onBannerFailedToLoad;
     _onBannerShown = onBannerShown;
@@ -682,14 +678,7 @@ class Appodeal {
   /// <summary>
   /// Set Interstitial ads callbacks
   /// See <see cref="Appodeal.setInterstitialCallbacks"/> for resulting triggered event.
-  static void setInterstitialCallbacks(
-      Function(String event, bool isPrecache) onInterstitialLoaded,
-      Function(String event) onInterstitialFailedToLoad,
-      Function(String event) onInterstitialShown,
-      Function(String event) onInterstitialShowFailed,
-      Function(String event) onInterstitialClicked,
-      Function(String event) onInterstitialClosed,
-      Function(String event) onInterstitialExpired) {
+  static void setInterstitialCallbacks(Function(String event, bool isPrecache) onInterstitialLoaded, Function(String event) onInterstitialFailedToLoad, Function(String event) onInterstitialShown, Function(String event) onInterstitialShowFailed, Function(String event) onInterstitialClicked, Function(String event) onInterstitialClosed, Function(String event) onInterstitialExpired) {
     _onInterstitialLoaded = onInterstitialLoaded;
     _onInterstitialFailedToLoad = onInterstitialFailedToLoad;
     _onInterstitialShown = onInterstitialShown;
@@ -702,15 +691,7 @@ class Appodeal {
   /// <summary>
   /// Set Rewarded video ads callbacks
   /// See <see cref="Appodeal.setRewardedVideoCallbacks"/> for resulting triggered event.
-  static void setRewardedVideoCallbacks(
-      Function(String event, bool isPrecache) onRewardedVideoLoaded,
-      Function(String event) onRewardedVideoFailedToLoad,
-      Function(String event) onRewardedVideoShown,
-      Function(String event) onRewardedVideoShowFailed,
-      Function(String event, double amount, String reward) onRewardedVideoFinished,
-      Function(String event, bool isFinished) onRewardedVideoClosed,
-      Function(String event) onRewardedVideoExpired,
-      Function(String event) onRewardedVideoClicked) {
+  static void setRewardedVideoCallbacks(Function(String event, bool isPrecache) onRewardedVideoLoaded, Function(String event) onRewardedVideoFailedToLoad, Function(String event) onRewardedVideoShown, Function(String event) onRewardedVideoShowFailed, Function(String event, double amount, String reward) onRewardedVideoFinished, Function(String event, bool isFinished) onRewardedVideoClosed, Function(String event) onRewardedVideoExpired, Function(String event) onRewardedVideoClicked) {
     _onRewardedVideoLoaded = onRewardedVideoLoaded;
     _onRewardedVideoFailedToLoad = onRewardedVideoFailedToLoad;
     _onRewardedVideoShown = onRewardedVideoShown;
