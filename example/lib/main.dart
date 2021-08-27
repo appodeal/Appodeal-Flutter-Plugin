@@ -46,7 +46,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
     Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
     Appodeal.setSharedAdsInstanceAcrossActivities(true);
-    //Appodeal.setSmartBanners(false);
+    Appodeal.setSmartBanners(false);
     Appodeal.setTabletBanners(false);
     Appodeal.setBannerAnimation(false);
     Appodeal.setBannerRotation(90, 90);
