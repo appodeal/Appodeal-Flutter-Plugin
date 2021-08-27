@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:appodeal_flutter/appodeal_flutter.dart';
 import 'package:appodeal_flutter_example/Banner.dart';
+import 'package:appodeal_flutter_example/BannerVIew.dart';
+import 'package:appodeal_flutter_example/MrecView.dart';
 import 'package:appodeal_flutter_example/RewardedVideo.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -27,6 +29,14 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
   void initState() {
     super.initState();
     initialization();
+
+    Appodeal.setBannerCallbacks(
+            (event, isPrecache) => showToast('$event - isPrecache - $isPrecache'),
+            (event) => showToast('$event'),
+            (event) => showToast('$event'),
+            (event) => showToast('$event'),
+            (event) => showToast('$event'),
+            (event) => showToast('$event'));
   }
 
   Future<void> initialization() async {
@@ -36,7 +46,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
     Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
     Appodeal.setSharedAdsInstanceAcrossActivities(true);
-    Appodeal.setSmartBanners(false);
+    //Appodeal.setSmartBanners(false);
     Appodeal.setTabletBanners(false);
     Appodeal.setBannerAnimation(false);
     Appodeal.setBannerRotation(90, 90);
@@ -66,7 +76,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
 
 
-    Appodeal.initialize(appKey, [Appodeal.REWARDED_VIDEO, Appodeal.INTERSTITIAL, Appodeal.BANNER], false);
+    Appodeal.initialize(appKey, [Appodeal.REWARDED_VIDEO, Appodeal.INTERSTITIAL, Appodeal.BANNER, Appodeal.MREC], false);
 
     // If the widget was removed from the tree while the asynchronous platform
     // message was in flight, we want to discard the reply rather than calling
@@ -135,6 +145,42 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                     );
                   },
                   child: const Text('BANNER'),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => BannerViewPage()),
+                    );
+                  },
+                  child: const Text('BANNER VIEW'),
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MrecViewPage()),
+                    );
+                  },
+                  child: const Text('MREC VIEW'),
                 ),
               ),
             ],
