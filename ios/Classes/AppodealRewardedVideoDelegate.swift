@@ -54,7 +54,6 @@ extension SwiftAppodealFlutterPlugin: AppodealRewardedVideoDelegate {
             channel?.invokeMethod("onRewardedVideoFinished", arguments: args)
         }
         
-       
     }
     
     
