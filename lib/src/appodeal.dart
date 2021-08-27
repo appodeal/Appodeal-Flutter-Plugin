@@ -15,6 +15,7 @@ class Appodeal {
   static const NATIVE = 6;
   static const INTERSTITIAL = 7;
   static const REWARDED_VIDEO = 8;
+  static const MREC = 9;
 
   static const LogLevelNone = 0;
   static const LogLevelDebug = 1;
