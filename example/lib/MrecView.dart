@@ -21,7 +21,6 @@ class _MrecViewPageState extends State<MrecViewPage> {
       isShow = false;
     });
 
-    Appodeal.setBannerCallbacks((event, isPrecache) => showToast('$event - isPrecache - $isPrecache'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'));
   }
 
   @override
