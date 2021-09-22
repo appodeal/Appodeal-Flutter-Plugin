@@ -10,7 +10,6 @@ class MrecViewPage extends StatefulWidget {
 }
 
 class _MrecViewPageState extends State<MrecViewPage> {
-
   bool isShow = false;
 
   @override
@@ -21,6 +20,7 @@ class _MrecViewPageState extends State<MrecViewPage> {
       isShow = false;
     });
 
+    Appodeal.setMrecCallbacks((event, isPrecache) => showToast('$event - isPrecache - $isPrecache'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'));
   }
 
   @override
