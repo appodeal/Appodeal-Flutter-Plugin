@@ -12,8 +12,7 @@ extension SwiftAppodealFlutterPlugin: AppodealBannerDelegate {
     
     public func bannerDidLoadAdIsPrecache(_ precache: Bool) {
         let args: [String: Any] = [
-            "isPrecache": precache
-        ]
+            "isPrecache": precache]
         channel?.invokeMethod("onBannerLoaded", arguments: args)
     }
     
