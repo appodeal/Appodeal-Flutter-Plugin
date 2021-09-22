@@ -21,7 +21,7 @@ class AppodealBannerView(private val activity: Activity, private val messenger: 
         private val arguments = args as Map<*, *>
         private val placementName = arguments["placementName"] as? String
         private val bannerView = Appodeal.getBannerView(activity)
-        private val channel = MethodChannel(messenger, "com.appodeal.appodeal/banner_view_$id")
+        private val channel = MethodChannel(messenger, "com.appodeal/bannerview_$id")
 
         init {
             if (placementName != null) {
