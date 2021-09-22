@@ -10,6 +10,7 @@ import Flutter
 import Foundation
 
 class AppodealMrecView: NSObject, FlutterPlatformViewFactory {
+    
     var instance: SwiftAppodealFlutterPlugin
 
     init(instance: SwiftAppodealFlutterPlugin) {
@@ -29,7 +30,7 @@ class AppodealMrecView: NSObject, FlutterPlatformViewFactory {
         FlutterStandardMessageCodec.sharedInstance()
     }
 
-    class AppodealMrecView: NSObject, FlutterPlatformView {
+    class AppodealMrecView: NSObject, FlutterPlatformView, APDBannerViewDelegate {
         var instance: SwiftAppodealFlutterPlugin
         var placementName: String?
 
@@ -40,11 +41,43 @@ class AppodealMrecView: NSObject, FlutterPlatformViewFactory {
 
         func view() -> UIView {
             let mrec = APDMRECView()
+            mrec?.delegate = self;
             mrec?.placement = placementName
             mrec?.frame = CGRect(x: 0, y: 0, width: 300, height: 250)
             mrec?.loadAd()
 
             return mrec ?? UIView()
+        }
+        
+        func bannerViewDidLoadAd(_ bannerView: APDBannerView, isPrecache precache: Bool) {
+            let args: [String: Any] = ["isPrecache": precache]
+            if (bannerView.adSize == kAPDAdSize300x250) {
+                instance.channel?.invokeMethod("onMrecLoaded", arguments: args)
+            }
+        }
+        
+        func bannerViewDidShow(_ bannerView: APDBannerView) {
+            if (bannerView.adSize == kAPDAdSize300x250) {
+                instance.channel?.invokeMethod("onMrecShown", arguments: nil)
+            }
+        }
+        
+        func bannerViewExpired(_ bannerView: APDBannerView) {
+            if (bannerView.adSize == kAPDAdSize300x250) {
+                instance.channel?.invokeMethod("onMrecExpired", arguments: nil)
+            }
+        }
+        
+        func bannerViewDidInteract(_ bannerView: APDBannerView) {
+            if (bannerView.adSize == kAPDAdSize300x250) {
+                instance.channel?.invokeMethod("onMrecClicked", arguments: nil)
+            }
+        }
+        
+        func bannerView(_ bannerView: APDBannerView, didFailToLoadAdWithError error: Error) {
+            if (bannerView.adSize == kAPDAdSize300x250) {
+                instance.channel?.invokeMethod("onMrecFailedToLoad", arguments: nil)
+            }
         }
     }
 }
