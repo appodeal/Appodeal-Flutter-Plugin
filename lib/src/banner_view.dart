@@ -6,13 +6,13 @@ import 'package:flutter/widgets.dart';
 class AppodealBannerView extends StatelessWidget {
   final Map<String, dynamic> _args = {};
 
-  AppodealBannerView({String? placementName}) {
-    this._args["placementName"] = placementName;
+  AppodealBannerView({Key? key, String? placementName}) : super(key: key) {
+    _args["placementName"] = placementName;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 320,
       height: 50,
       child: Platform.isIOS
