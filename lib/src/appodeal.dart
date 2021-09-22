@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 class Appodeal {
-
   static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0.0";
 
   static const BANNER = 1;
@@ -31,6 +30,13 @@ class Appodeal {
   static Function(String event)? _onBannerShowFailed;
   static Function(String event)? _onBannerClicked;
   static Function(String event)? _onBannerExpired;
+
+  static Function(String event, bool isPrecache)? _onMrecLoaded;
+  static Function(String event)? _onMrecFailedToLoad;
+  static Function(String event)? _onMrecShown;
+  static Function(String event)? _onMrecShowFailed;
+  static Function(String event)? _onMrecClicked;
+  static Function(String event)? _onMrecExpired;
 
   static Function(String event, bool isPrecache)? _onInterstitialLoaded;
   static Function(String event)? _onInterstitialFailedToLoad;
@@ -630,6 +636,18 @@ class Appodeal {
         _onBannerClicked?.call(call.method);
       } else if (call.method.startsWith('onBannerExpired')) {
         _onBannerExpired?.call(call.method);
+      } else if (call.method.startsWith('onMrecLoaded')) {
+        _onMrecLoaded?.call(call.method, call.arguments['isPrecache']);
+      } else if (call.method.startsWith('onMrecFailedToLoad')) {
+        _onMrecFailedToLoad?.call(call.method);
+      } else if (call.method.startsWith('onMrecShown')) {
+        _onMrecShown?.call(call.method);
+      } else if (call.method.startsWith('onMrecShowFailed')) {
+        _onMrecShowFailed?.call(call.method);
+      } else if (call.method.startsWith('onMrecClicked')) {
+        _onMrecClicked?.call(call.method);
+      } else if (call.method.startsWith('onMrecExpired')) {
+        _onMrecExpired?.call(call.method);
       } else if (call.method.startsWith('onInterstitialLoaded')) {
         _onInterstitialLoaded?.call(call.method, call.arguments['isPrecache']);
       } else if (call.method.startsWith('onInterstitialFailedToLoad')) {
@@ -665,15 +683,31 @@ class Appodeal {
   }
 
   /// <summary>
-  /// Set Interstitial ads callbacks
+  /// Set Banner ads callbacks
   /// See <see cref="Appodeal.setBannerCallbacks"/> for resulting triggered event.
-  static void setBannerCallbacks(Function(String event, bool isPrecache) onBannerLoaded, Function(String event) onBannerFailedToLoad, Function(String event) onBannerShown, Function(String event) onBannerShowFailed, Function(String event) onBannerClicked, Function(String event) onBannerExpired) {
+  static void setBannerCallbacks(Function(String event, bool isPrecache) onBannerLoaded,
+      Function(String event) onBannerFailedToLoad, Function(String event) onBannerShown,
+      Function(String event) onBannerShowFailed, Function(String event) onBannerClicked,
+      Function(String event) onBannerExpired) {
     _onBannerLoaded = onBannerLoaded;
     _onBannerFailedToLoad = onBannerFailedToLoad;
     _onBannerShown = onBannerShown;
     _onBannerShowFailed = onBannerShowFailed;
     _onBannerClicked = onBannerClicked;
     _onBannerExpired = onBannerExpired;
+  }
+
+  /// <summary>
+  /// Set Interstitial ads callbacks
+  /// See <see cref="Appodeal.setMrecCallbacks"/> for resulting triggered event.
+  static void setMrecCallbacks(Function(String event, bool isPrecache) onMrecLoaded, Function(String event) onMrecFailedToLoad, Function(String event) onMrecShown,
+      Function(String event) onMrecShowFailed, Function(String event) onMrecClicked, Function(String event) onMrecExpired) {
+    _onMrecLoaded = onMrecLoaded;
+    _onMrecFailedToLoad = onMrecFailedToLoad;
+    _onMrecShown = onMrecShown;
+    _onMrecShowFailed = onMrecShowFailed;
+    _onMrecClicked = onMrecClicked;
+    _onMrecExpired = onMrecExpired;
   }
 
   /// <summary>
