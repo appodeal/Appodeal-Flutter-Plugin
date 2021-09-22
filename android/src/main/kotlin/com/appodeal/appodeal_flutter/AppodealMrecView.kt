@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package com.appodeal.appodeal_flutter
 
 import android.app.Activity
@@ -16,12 +18,14 @@ class AppodealMrecView(private val activity: Activity, private val messenger: Bi
     override fun create(context: Context?, viewId: Int, args: Any?): PlatformView =
             AppodealMrecView(activity, messenger, viewId, args)
 
+    @Suppress("SpellCheckingInspection")
     class AppodealMrecView(activity: Activity, messenger: BinaryMessenger, id: Int, args: Any?) :
             PlatformView, MethodChannel.MethodCallHandler {
+
         private val arguments = args as Map<*, *>
         private val placementName = arguments["placementName"] as? String
         private val mrecView = Appodeal.getMrecView(activity)
-        private val channel = MethodChannel(messenger, "com.appodeal.appodeal/mrec_view_$id")
+        private val channel = MethodChannel(messenger, "com.appodeal/mrec_$id")
 
         init {
             if (placementName != null) {
