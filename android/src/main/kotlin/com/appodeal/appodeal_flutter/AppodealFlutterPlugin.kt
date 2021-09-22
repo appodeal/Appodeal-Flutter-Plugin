@@ -13,7 +13,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "SpellCheckingInspection")
 class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private lateinit var channel: MethodChannel
@@ -439,6 +439,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         Appodeal.setInterstitialCallbacks(InterstitialCallbacks(channel))
         Appodeal.setRewardedVideoCallbacks(RewardedVideoCallbacks(channel))
         Appodeal.setNonSkippableVideoCallbacks(NonSkippableVideoCallbacks(channel))
+        Appodeal.setMrecCallbacks(MrecCallbacks(channel));
     }
-
 }
