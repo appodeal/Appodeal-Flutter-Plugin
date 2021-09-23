@@ -21,6 +21,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        pluginBinding = flutterPluginBinding;
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "appodeal_flutter")
         channel.setMethodCallHandler(this)
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
@@ -84,12 +85,12 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         activity = binding.activity
 
         pluginBinding.platformViewRegistry.registerViewFactory(
-                "plugins.com.appodeal.appodeal/banner",
+                "com.appodeal.appodeal_flutter/bannerview",
                 AppodealBannerView(activity, pluginBinding.binaryMessenger)
         )
 
         pluginBinding.platformViewRegistry.registerViewFactory(
-                "plugins.com.appodeal.appodeal/mrec",
+                "com.appodeal.appodeal_flutter/mrecview",
                 AppodealMrecView(activity, pluginBinding.binaryMessenger)
         )
     }
