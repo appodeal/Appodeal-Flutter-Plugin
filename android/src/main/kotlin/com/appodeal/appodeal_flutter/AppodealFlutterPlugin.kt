@@ -1,9 +1,13 @@
 package com.appodeal.appodeal_flutter
 
 import android.app.Activity
+import android.util.Log
+import android.util.Log.DEBUG
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.UserSettings
+import com.appodeal.appodeal_flutter.BuildConfig.DEBUG
+import com.explorestack.consent.ConsentManager
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -29,49 +33,52 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
-          "initialize" -> initialize(call, result)
-          "updateConsent" -> updateConsent(call, result)
-          "isInitialized" -> isInitialized(call, result)
-          "isAutoCacheEnabled" -> isAutoCacheEnabled(call, result)
-          "cache" -> cache(call, result)
-          "show" -> show(call, result)
-          "showWithPlacement" -> showWithPlacement(call, result)
-          "hide" -> hide(call, result)
-          "setAutoCache" -> setAutoCache(call, result)
-          "setTriggerOnLoadedOnPrecache" -> setTriggerOnLoadedOnPrecache(call, result)
-          "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(call, result)
-          "isLoaded" -> isLoaded(call, result)
-          "isPrecache" -> isPrecache(call, result)
-          "setSmartBanners" -> setSmartBanners(call, result)
-          "setTabletBanners" -> setTabletBanners(call, result)
-          "setBannerAnimation" -> setBannerAnimation(call, result)
-          "setBannerRotation" -> setBannerRotation(call, result)
-          "trackInAppPurchase" -> trackInAppPurchase(call, result)
-          "disableNetwork" -> disableNetwork(call, result)
-          "disableNetworkForSpecificAdType" -> disableNetworkForSpecificAdType(call, result)
-          "disableLocationPermissionCheck" -> disableLocationPermissionCheck(result)
-          "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(result)
-          "setUserId" -> setUserId(call, result)
-          "setUserAge" -> setUserAge(call, result)
-          "setUserGender" -> setUserGender(call, result)
-          "setTesting" -> setTesting(call, result)
-          "setLogLevel" -> setLogLevel(call, result)
-          "setCustomFilterString" -> setCustomFilterString(call, result)
-          "setCustomFilterInt" -> setCustomFilterInt(call, result)
-          "setCustomFilterDouble" -> setCustomFilterDouble(call, result)
-          "setCustomFilterBool" -> setCustomFilterBool(call, result)
-          "canShow" -> canShow(call, result)
-          "canShowWithPlacement" -> canShowWithPlacement(call, result)
-          "muteVideosIfCallsMuted" -> muteVideosIfCallsMuted(call, result)
-          "setChildDirectedTreatment" -> setChildDirectedTreatment(call, result)
-          "destroy" -> destroy(call, result)
-          "setExtraDataString" -> setExtraDataString(call, result)
-          "setExtraDataInt" -> setExtraDataInt(call, result)
-          "setExtraDataBool" -> setExtraDataBool(call, result)
-          "setExtraDataDouble" -> setExtraDataDouble(call, result)
-          "getPredictedEcpm" -> getPredictedEcpm(call, result)
-          "getNativeSDKVersion" -> getNativeSDKVersion(result)
-          "setUseSafeArea" -> setUseSafeArea(call, result)
+            "initialize" -> initialize(call, result)
+            "updateConsent" -> updateConsent(call, result)
+            "isInitialized" -> isInitialized(call, result)
+            "isAutoCacheEnabled" -> isAutoCacheEnabled(call, result)
+            "cache" -> cache(call, result)
+            "show" -> show(call, result)
+            "showWithPlacement" -> showWithPlacement(call, result)
+            "hide" -> hide(call, result)
+            "setAutoCache" -> setAutoCache(call, result)
+            "setTriggerOnLoadedOnPrecache" -> setTriggerOnLoadedOnPrecache(call, result)
+            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(call, result)
+            "isLoaded" -> isLoaded(call, result)
+            "isPrecache" -> isPrecache(call, result)
+            "setSmartBanners" -> setSmartBanners(call, result)
+            "setTabletBanners" -> setTabletBanners(call, result)
+            "setBannerAnimation" -> setBannerAnimation(call, result)
+            "setBannerRotation" -> setBannerRotation(call, result)
+            "trackInAppPurchase" -> trackInAppPurchase(call, result)
+            "disableNetwork" -> disableNetwork(call, result)
+            "disableNetworkForSpecificAdType" -> disableNetworkForSpecificAdType(call, result)
+            "disableLocationPermissionCheck" -> disableLocationPermissionCheck(result)
+            "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(result)
+            "setUserId" -> setUserId(call, result)
+            "setUserAge" -> setUserAge(call, result)
+            "setUserGender" -> setUserGender(call, result)
+            "setTesting" -> setTesting(call, result)
+            "setLogLevel" -> setLogLevel(call, result)
+            "setCustomFilterString" -> setCustomFilterString(call, result)
+            "setCustomFilterInt" -> setCustomFilterInt(call, result)
+            "setCustomFilterDouble" -> setCustomFilterDouble(call, result)
+            "setCustomFilterBool" -> setCustomFilterBool(call, result)
+            "canShow" -> canShow(call, result)
+            "canShowWithPlacement" -> canShowWithPlacement(call, result)
+            "muteVideosIfCallsMuted" -> muteVideosIfCallsMuted(call, result)
+            "setChildDirectedTreatment" -> setChildDirectedTreatment(call, result)
+            "destroy" -> destroy(call, result)
+            "setExtraDataString" -> setExtraDataString(call, result)
+            "setExtraDataInt" -> setExtraDataInt(call, result)
+            "setExtraDataBool" -> setExtraDataBool(call, result)
+            "setExtraDataDouble" -> setExtraDataDouble(call, result)
+            "getPredictedEcpm" -> getPredictedEcpm(call, result)
+            "getNativeSDKVersion" -> getNativeSDKVersion(result)
+            "setUseSafeArea" -> setUseSafeArea(call, result)
+
+
+            "setStorage" -> setStorage(call, result)
 
             else -> result.notImplemented()
         }
@@ -101,19 +108,29 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun getAdType(adId: Int): Int {
         return when (adId) {
-          1 -> Appodeal.BANNER
-          2 -> Appodeal.BANNER_RIGHT
-          3 -> Appodeal.BANNER_TOP
-          4 -> Appodeal.BANNER_LEFT
-          5 -> Appodeal.BANNER_BOTTOM
-          6 -> Appodeal.NATIVE
-          7 -> Appodeal.INTERSTITIAL
-          8 -> Appodeal.REWARDED_VIDEO
-          9 -> Appodeal.MREC
+            1 -> Appodeal.BANNER
+            2 -> Appodeal.BANNER_RIGHT
+            3 -> Appodeal.BANNER_TOP
+            4 -> Appodeal.BANNER_LEFT
+            5 -> Appodeal.BANNER_BOTTOM
+            6 -> Appodeal.NATIVE
+            7 -> Appodeal.INTERSTITIAL
+            8 -> Appodeal.REWARDED_VIDEO
+            9 -> Appodeal.MREC
 
             else -> Appodeal.NONE
         }
     }
+
+    private fun setStorage(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        when (args["storage"] as Int) {
+            0 -> ConsentManager.getInstance(activity).storage = ConsentManager.Storage.NONE
+            1 -> ConsentManager.getInstance(activity).storage = ConsentManager.Storage.SHARED_PREFERENCE
+        }
+        result.success(null)
+    }
+
 
     private fun initialize(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
@@ -173,8 +190,8 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun setLogLevel(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         when (args["logLevel"] as Int) {
-          1 -> Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.debug)
-          2 -> Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose)
+            1 -> Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.debug)
+            2 -> Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose)
             else -> Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.none)
         }
 
@@ -309,9 +326,9 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun setUserGender(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         when (args["gender"] as Int) {
-          0 -> Appodeal.setUserGender(UserSettings.Gender.OTHER)
-          1 -> Appodeal.setUserGender(UserSettings.Gender.MALE)
-          2 -> Appodeal.setUserGender(UserSettings.Gender.FEMALE)
+            0 -> Appodeal.setUserGender(UserSettings.Gender.OTHER)
+            1 -> Appodeal.setUserGender(UserSettings.Gender.MALE)
+            2 -> Appodeal.setUserGender(UserSettings.Gender.FEMALE)
         }
         result.success(null)
     }
