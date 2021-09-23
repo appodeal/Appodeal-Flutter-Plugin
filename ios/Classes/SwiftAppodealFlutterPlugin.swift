@@ -10,8 +10,8 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let instance = SwiftAppodealFlutterPlugin()
         instance.channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
         registrar.addMethodCallDelegate(instance, channel: instance.channel!)
-        registrar.register(AppodealBannerView(instance: instance), withId: "com.appodeal/bannerview")
-        registrar.register(AppodealMrecView(instance: instance), withId: "com.appodeal/mrec")
+        registrar.register(AppodealBannerView(instance: instance), withId: "com.appodeal.appodeal_flutter/bannerview")
+        registrar.register(AppodealMrecView(instance: instance), withId: "com.appodeal.appodeal_flutter/mrecview")
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
