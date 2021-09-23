@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class BannerViewPage extends StatefulWidget {
+  const BannerViewPage({Key? key}) : super(key: key);
   @override
   _BannerViewPageState createState() => _BannerViewPageState();
 }
@@ -21,7 +22,13 @@ class _BannerViewPageState extends State<BannerViewPage> {
       isShow = false;
     });
 
-    Appodeal.setBannerCallbacks((event, isPrecache) => showToast('$event - isPrecache - $isPrecache'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'), (event) => showToast('$event'));
+    Appodeal.setBannerCallbacks(
+            (event, isPrecache) => showToast('$event - isPrecache - $isPrecache'),
+            (event) => showToast('$event'),
+            (event) => showToast('$event'),
+            (event) => showToast('$event'),
+            (event) => showToast('$event'),
+            (event) => showToast('$event'));
   }
 
   @override
@@ -81,7 +88,8 @@ class _BannerViewPageState extends State<BannerViewPage> {
   }
 
   static void showToast(String message) {
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
     log(message);
   }
 }
