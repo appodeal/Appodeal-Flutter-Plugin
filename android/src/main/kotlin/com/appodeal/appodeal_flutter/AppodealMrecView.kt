@@ -25,7 +25,7 @@ class AppodealMrecView(private val activity: Activity, private val messenger: Bi
         private val arguments = args as Map<*, *>
         private val placementName = arguments["placementName"] as? String
         private val mrecView = Appodeal.getMrecView(activity)
-        private val channel = MethodChannel(messenger, "com.appodeal.appodeal_flutter/bannerview$id")
+        private val channel = MethodChannel(messenger, "com.appodeal.appodeal_flutter/bannerview_$id")
 
         init {
             if (placementName != null) {
