@@ -51,4 +51,5 @@ dependencies {
     //noinspection GradleDynamicVersion
     implementation 'com.appodeal.ads:sdk:2.10.2.+'
     implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.5.10"
+    implementation "com.explorestack:consent:1.0.3"
 }
