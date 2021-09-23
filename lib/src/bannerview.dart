@@ -17,17 +17,17 @@ class AppodealBannerView extends StatelessWidget {
       height: 50,
       child: Platform.isIOS
           ? UiKitView(
-        key: UniqueKey(),
-        viewType: 'com.appodeal.appodeal_flutter/bannerview',
-        creationParams: _args,
-        creationParamsCodec: const StandardMessageCodec(),
-      )
+              key: UniqueKey(),
+              viewType: 'com.appodeal.appodeal_flutter/bannerview',
+              creationParams: _args,
+              creationParamsCodec: const StandardMessageCodec(),
+            )
           : AndroidView(
-        key: UniqueKey(),
-        viewType: 'com.appodeal.appodeal_flutter/bannerview',
-        creationParams: _args,
-        creationParamsCodec: const StandardMessageCodec(),
-      ),
+              key: UniqueKey(),
+              viewType: 'com.appodeal.appodeal_flutter/bannerview',
+              creationParams: _args,
+              creationParamsCodec: const StandardMessageCodec(),
+            ),
     );
   }
 }
