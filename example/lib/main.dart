@@ -185,6 +185,21 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
               ),
             ],
           ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    ConsentManager.setStorage(Storage.NONE);
+                  },
+                  child: const Text('Set Storage'),
+                ),
+              ),
+            ],
+          ),
         ]),
       ),
     );
