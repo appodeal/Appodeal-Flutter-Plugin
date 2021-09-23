@@ -84,12 +84,12 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         activity = binding.activity
 
         pluginBinding.platformViewRegistry.registerViewFactory(
-                "com.appodeal/bannerview",
+                "plugins.com.appodeal.appodeal/banner",
                 AppodealBannerView(activity, pluginBinding.binaryMessenger)
         )
 
         pluginBinding.platformViewRegistry.registerViewFactory(
-                "com.appodeal/mrec",
+                "plugins.com.appodeal.appodeal/mrec",
                 AppodealMrecView(activity, pluginBinding.binaryMessenger)
         )
     }
