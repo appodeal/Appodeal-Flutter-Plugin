@@ -4,12 +4,12 @@ import 'dart:io';
 import 'package:appodeal_flutter/appodeal_flutter.dart';
 import 'package:appodeal_flutter_example/Banner.dart';
 import 'package:appodeal_flutter_example/BannerVIew.dart';
+import 'package:appodeal_flutter_example/Interstitial.dart';
 import 'package:appodeal_flutter_example/MrecView.dart';
 import 'package:appodeal_flutter_example/RewardedVideo.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'Interstitial.dart';
 
 void main() {
   runApp(MaterialApp(
