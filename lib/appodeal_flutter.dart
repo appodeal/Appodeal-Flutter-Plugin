@@ -1,3 +1,3 @@
 export 'src/appodeal.dart';
-export 'src/banner_view.dart';
-export 'src/mrec_view.dart';
+export 'src/bannerview.dart';
+export 'src/mrecview.dart';
