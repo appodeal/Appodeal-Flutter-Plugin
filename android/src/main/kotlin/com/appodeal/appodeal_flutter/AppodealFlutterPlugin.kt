@@ -2,12 +2,12 @@ package com.appodeal.appodeal_flutter
 
 import android.app.Activity
 import android.util.Log
-import android.util.Log.DEBUG
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.UserSettings
-import com.appodeal.appodeal_flutter.BuildConfig.DEBUG
+import com.explorestack.consent.ConsentInfoUpdateListener
 import com.explorestack.consent.ConsentManager
+import com.explorestack.consent.Vendor
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
@@ -79,6 +79,9 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
 
             "setStorage" -> setStorage(call, result)
+            "setCustomVendor" -> setCustomVendor(call, result)
+            "requestConsentInfoUpdate" -> requestConsentInfoUpdate(call, result)
+            "getCustomVendor" -> getCustomVendor(call, result)
 
             else -> result.notImplemented()
         }
@@ -87,7 +90,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
-
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
 
@@ -101,7 +103,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 AppodealMrecView(activity, pluginBinding.binaryMessenger)
         )
     }
-
     override fun onDetachedFromActivityForConfigChanges() {}
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
     override fun onDetachedFromActivity() {}
@@ -122,6 +123,12 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
+    private fun requestConsentInfoUpdate(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        ConsentManager.getInstance(activity).requestConsentInfoUpdate(args["appKey"] as String, ConsentInfoUpdateListener(channel))
+        result.success(null)
+    }
+
     private fun setStorage(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         when (args["storage"] as Int) {
@@ -131,6 +138,31 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
+    private fun getCustomVendor(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        Log.d("UTILS", ConsentManager.getInstance(activity).getCustomVendor(args["bundle"] as String)?.toJSONObject().toString())
+        result.success(ConsentManager.getInstance(activity).getCustomVendor(args["bundle"] as String)?.toJSONObject().toString())
+    }
+
+    private fun setCustomVendor(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val name = args["name"] as String
+        val bundle = args["bundle"] as String
+        val policyUrl = args["policyUrl"] as String
+        val purposeIds = listOf(args["purposeIds"])
+        val featureIds = listOf(args["featureIds"])
+        val legitimateInterestPurposeIds = listOf(args["legitimateInterestPurposeIds"])
+
+
+        ConsentManager.getInstance(activity)
+                .setCustomVendor(Vendor.Builder(name, bundle, policyUrl)
+                        .setPurposeIds(purposeIds as MutableList<Int>)
+                        .setFeatureIds(featureIds as MutableList<Int>)
+                        .setLegitimateInterestPurposeIds(legitimateInterestPurposeIds as MutableList<Int>)
+                        .build())
+
+        result.success(null)
+    }
 
     private fun initialize(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
