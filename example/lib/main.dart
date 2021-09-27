@@ -37,6 +37,13 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
             (event) => showToast('$event'),
             (event) => showToast('$event'),
             (event) => showToast('$event'));
+
+    ConsentManager.setConsentInfoUpdateListener(
+            (event, consent) => showToast('$event consent - $consent'),
+            (event, error) => showToast('$event error - $error')
+    );
+
+
   }
 
   Future<void> initialization() async {
@@ -193,7 +200,13 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    ConsentManager.setStorage(Storage.NONE);
+                    var list = [1,2,3,4,5];
+                    Vendor vendor = new Vendor("name", "com.appodeal.test", "policyUrl", list, list, list);
+                    ConsentManager.setCustomVendor(vendor);
+                    ConsentManager.requestConsentInfoUpdate(appKey);
+                     var vendor1 = ConsentManager.getCustomVendor("com.appodeal.test");
+                    showToast('vendor - $vendor1');
+                    print('vendor - $vendor1');
                   },
                   child: const Text('Set Storage'),
                 ),
