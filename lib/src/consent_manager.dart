@@ -130,8 +130,6 @@ class ConsentManager {
     return zone;
   }
 
-
-
   static Future<Status> getConsentStatus() async {
     var consentZoneType = await _channel.invokeMethod('getConsentStatus');
     Status status = Status.UNKNOWN;
@@ -140,19 +138,23 @@ class ConsentManager {
         status = Status.UNKNOWN;
         break;
       case 1:
-        status = Status.GDPR;
+        status = Status.PERSONALIZED;
         break;
       case 2:
-        status = Status.CCPA;
+        status = Status.PARTLY_PERSONALIZED;
         break;
       case 3:
-        status = Status.CCPA;
+        status = Status.NON_PERSONALIZED;
         break;
       default:
         status = Status.UNKNOWN;
         break;
     }
     return status;
+  }
+
+  static Future<String> getConsent() async {
+    return await _channel.invokeMethod('getConsent');
   }
 
   static void _setConsentInfoUpdateListener() {
