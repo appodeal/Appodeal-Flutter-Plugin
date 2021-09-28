@@ -10,6 +10,8 @@ import 'package:appodeal_flutter_example/RewardedVideo.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'ConsentManager.dart';
+
 
 void main() {
   runApp(MaterialApp(
@@ -37,13 +39,6 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
             (event) => showToast('$event'),
             (event) => showToast('$event'),
             (event) => showToast('$event'));
-
-    ConsentManager.setConsentInfoUpdateListener(
-            (event, consent) => showToast('$event consent - $consent'),
-            (event, error) => showToast('$event error - $error')
-    );
-
-
   }
 
   Future<void> initialization() async {
@@ -80,8 +75,6 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setExtraDataString("setExtraDataString", "value");
 
     Appodeal.setUseSafeArea(true);
-
-
 
     Appodeal.initialize(appKey, [Appodeal.REWARDED_VIDEO, Appodeal.INTERSTITIAL, Appodeal.BANNER, Appodeal.MREC], false);
 
@@ -200,15 +193,12 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var list = [1,2,3,4,5];
-                    Vendor vendor = new Vendor("name", "com.appodeal.test", "policyUrl", list, list, list);
-                    ConsentManager.setCustomVendor(vendor);
-                    ConsentManager.requestConsentInfoUpdate(appKey);
-                     var vendor1 = ConsentManager.getCustomVendor("com.appodeal.test");
-                    showToast('vendor - $vendor1');
-                    print('vendor - $vendor1');
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ConsentManagerPage()),
+                    );
                   },
-                  child: const Text('Set Storage'),
+                  child: const Text('CONSENT MANAGER'),
                 ),
               ),
             ],
