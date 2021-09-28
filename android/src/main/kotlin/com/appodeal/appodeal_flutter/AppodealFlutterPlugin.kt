@@ -76,7 +76,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getNativeSDKVersion" -> getNativeSDKVersion(result)
             "setUseSafeArea" -> setUseSafeArea(call, result)
 
-
             "setStorage" -> setStorage(call, result)
             "setCustomVendor" -> setCustomVendor(call, result)
             "requestConsentInfoUpdate" -> requestConsentInfoUpdate(call, result)
@@ -84,6 +83,8 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getStorage" -> getStorage(result)
             "shouldShowConsentDialog" -> shouldShowConsentDialog(result)
             "getConsentZone" -> getConsentZone(result)
+            "getConsentStatus" -> getConsentStatus(result)
+            "getConsent" -> getConsent(result)
 
             else -> result.notImplemented()
         }
@@ -147,6 +148,21 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             else -> 0
         }
         result.success(consentZoneType)
+    }
+
+    private fun getConsentStatus(result: Result) {
+        val consentStatusType: Int = when (ConsentManager.getInstance(activity).consentStatus) {
+            Consent.Status.UNKNOWN -> 0
+            Consent.Status.PERSONALIZED -> 1
+            Consent.Status.PARTLY_PERSONALIZED -> 2
+            Consent.Status.NON_PERSONALIZED -> 3
+            else -> 0
+        }
+        result.success(consentStatusType)
+    }
+
+    private fun getConsent(result: Result) {
+        result.success(ConsentManager.getInstance(activity).consent?.toJSONObject().toString())
     }
 
     private fun requestConsentInfoUpdate(call: MethodCall, result: Result) {
