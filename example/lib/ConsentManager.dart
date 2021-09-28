@@ -82,7 +82,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var vendor = await ConsentManager.getCustomVendor("com.appodeal.test");
                     showToast('Vendor - $vendor');
@@ -95,7 +95,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var storage = await ConsentManager.getStorage();
                     showToast('Vendor - $storage');
@@ -108,7 +108,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var shouldShow = await ConsentManager.shouldShowConsentDialog();
                     showToast('SHOULD SHOW? - $shouldShow');
@@ -121,7 +121,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var zone = await ConsentManager.getConsentZone();
                     showToast('Zone - $zone');
@@ -129,7 +129,32 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                   child: const Text('GET ZONE'),
                 ),
               ],
-            )
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    var status = await ConsentManager.getConsentStatus();
+                    showToast('Status - $status');
+                  },
+                  child: const Text('GET STATUS'),
+                ),
+              ],
+            ), Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    var consent = await ConsentManager.getConsent();
+                    showToast('Status - $consent');
+                  },
+                  child: const Text('GET CONSENT'),
+                ),
+              ],
+            ),
             //Interstitial
           ]),
         ),
