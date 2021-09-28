@@ -1,11 +1,10 @@
 package com.appodeal.appodeal_flutter
 
 import android.app.Activity
-import android.util.Log
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.UserSettings
-import com.explorestack.consent.ConsentInfoUpdateListener
+import com.explorestack.consent.Consent
 import com.explorestack.consent.ConsentManager
 import com.explorestack.consent.Vendor
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -82,6 +81,9 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "setCustomVendor" -> setCustomVendor(call, result)
             "requestConsentInfoUpdate" -> requestConsentInfoUpdate(call, result)
             "getCustomVendor" -> getCustomVendor(call, result)
+            "getStorage" -> getStorage(result)
+            "shouldShowConsentDialog" -> shouldShowConsentDialog(result)
+            "getConsentZone" -> getConsentZone(result)
 
             else -> result.notImplemented()
         }
@@ -90,6 +92,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
     }
+
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         activity = binding.activity
 
@@ -103,8 +106,11 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                 AppodealMrecView(activity, pluginBinding.binaryMessenger)
         )
     }
+
     override fun onDetachedFromActivityForConfigChanges() {}
+
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
+
     override fun onDetachedFromActivity() {}
 
     private fun getAdType(adId: Int): Int {
@@ -123,10 +129,39 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         }
     }
 
+    private fun shouldShowConsentDialog(result: Result) {
+        val shouldShowType: Int = when (ConsentManager.getInstance(activity).shouldShowConsentDialog().toString()) {
+            Consent.ShouldShow.UNKNOWN.toString() -> 0
+            Consent.ShouldShow.TRUE.toString() -> 1
+            Consent.ShouldShow.FALSE.toString() -> 2
+            else -> 0
+        }
+        result.success(shouldShowType)
+    }
+
+    private fun getConsentZone(result: Result) {
+        val consentZoneType: Int = when (ConsentManager.getInstance(activity).consentZone) {
+            Consent.Zone.UNKNOWN -> 0
+            Consent.Zone.GDPR -> 1
+            Consent.Zone.CCPA -> 2
+            else -> 0
+        }
+        result.success(consentZoneType)
+    }
+
     private fun requestConsentInfoUpdate(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         ConsentManager.getInstance(activity).requestConsentInfoUpdate(args["appKey"] as String, ConsentInfoUpdateListener(channel))
         result.success(null)
+    }
+
+    private fun getStorage(result: Result) {
+        val storageType: Int = when (ConsentManager.getInstance(activity).storage) {
+            ConsentManager.Storage.NONE -> 0
+            ConsentManager.Storage.SHARED_PREFERENCE -> 1
+            else -> 0
+        }
+        result.success(storageType)
     }
 
     private fun setStorage(call: MethodCall, result: Result) {
@@ -140,7 +175,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun getCustomVendor(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        Log.d("UTILS", ConsentManager.getInstance(activity).getCustomVendor(args["bundle"] as String)?.toJSONObject().toString())
         result.success(ConsentManager.getInstance(activity).getCustomVendor(args["bundle"] as String)?.toJSONObject().toString())
     }
 
@@ -489,6 +523,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         Appodeal.setInterstitialCallbacks(InterstitialCallbacks(channel))
         Appodeal.setRewardedVideoCallbacks(RewardedVideoCallbacks(channel))
         Appodeal.setNonSkippableVideoCallbacks(NonSkippableVideoCallbacks(channel))
-        Appodeal.setMrecCallbacks(MrecCallbacks(channel));
+        Appodeal.setMrecCallbacks(MrecCallbacks(channel))
     }
 }
