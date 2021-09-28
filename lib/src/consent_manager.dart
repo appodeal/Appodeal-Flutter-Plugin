@@ -51,7 +51,7 @@ class ConsentManager {
   }
 
   static Future<void> disableAppTrackingTransparencyRequest() async {
-    if(Platform.isIOS){
+    if (Platform.isIOS) {
       return _channel.invokeMethod('disableAppTrackingTransparencyRequest');
     }
   }
@@ -73,6 +73,88 @@ class ConsentManager {
     return await _channel.invokeMethod('getCustomVendor', {'bundle': bundle});
   }
 
+  static Future<Storage> getStorage() async {
+    int getStorageType = await _channel.invokeMethod('getStorage');
+    Storage storage;
+    switch (getStorageType) {
+      case 0:
+        storage = Storage.NONE;
+        break;
+      case 1:
+        storage = Storage.SHARED_PREFERENCE;
+        break;
+      default:
+        storage = Storage.NONE;
+        break;
+    }
+    return storage;
+  }
+
+  static Future<ShouldShow> shouldShowConsentDialog() async {
+    var getShouldShowType = await _channel.invokeMethod('shouldShowConsentDialog');
+    ShouldShow shouldShow = ShouldShow.UNKNOWN;
+    switch (getShouldShowType) {
+      case 0:
+        shouldShow = ShouldShow.UNKNOWN;
+        break;
+      case 1:
+        shouldShow = ShouldShow.TRUE;
+        break;
+      case 2:
+        shouldShow = ShouldShow.FALSE;
+        break;
+      default:
+        shouldShow = ShouldShow.UNKNOWN;
+        break;
+    }
+    return shouldShow;
+  }
+
+  static Future<Zone> getConsentZone() async {
+    var consentZoneType = await _channel.invokeMethod('getConsentZone');
+    Zone zone = Zone.UNKNOWN;
+    switch (consentZoneType) {
+      case 0:
+        zone = Zone.UNKNOWN;
+        break;
+      case 1:
+        zone = Zone.GDPR;
+        break;
+      case 2:
+        zone = Zone.CCPA;
+        break;
+      default:
+        zone = Zone.UNKNOWN;
+        break;
+    }
+    return zone;
+  }
+
+
+
+  static Future<Status> getConsentStatus() async {
+    var consentZoneType = await _channel.invokeMethod('getConsentStatus');
+    Status status = Status.UNKNOWN;
+    switch (consentZoneType) {
+      case 0:
+        status = Status.UNKNOWN;
+        break;
+      case 1:
+        status = Status.GDPR;
+        break;
+      case 2:
+        status = Status.CCPA;
+        break;
+      case 3:
+        status = Status.CCPA;
+        break;
+      default:
+        status = Status.UNKNOWN;
+        break;
+    }
+    return status;
+  }
+
   static void _setConsentInfoUpdateListener() {
     _channel.setMethodCallHandler((call) async {
       if (call.method.startsWith('onConsentInfoUpdated')) {
@@ -83,8 +165,7 @@ class ConsentManager {
     });
   }
 
-  static void setConsentInfoUpdateListener(Function(String event, String consent) onConsentInfoUpdated,
-      Function(String event, String error) onFailedToUpdateConsentInfo) {
+  static void setConsentInfoUpdateListener(Function(String event, String consent) onConsentInfoUpdated, Function(String event, String error) onFailedToUpdateConsentInfo) {
     _onConsentInfoUpdated = onConsentInfoUpdated;
     _onFailedToUpdateConsentInfo = onFailedToUpdateConsentInfo;
   }
