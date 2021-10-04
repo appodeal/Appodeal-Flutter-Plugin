@@ -9,9 +9,7 @@ fun MrecCallbacks(channel: MethodChannel): MrecCallbacks {
     return object : MrecCallbacks {
 
         override fun onMrecLoaded(isPrecache: Boolean) {
-            channel.invokeMethod("onMrecLoaded", mapOf(
-                    "isPrecache" to isPrecache
-            ))
+            channel.invokeMethod("onMrecLoaded", mapOf("isPrecache" to isPrecache))
         }
 
         override fun onMrecFailedToLoad() {
@@ -34,4 +32,5 @@ fun MrecCallbacks(channel: MethodChannel): MrecCallbacks {
             channel.invokeMethod("onMrecExpired", null)
         }
 
-    }}
+    }
+}
