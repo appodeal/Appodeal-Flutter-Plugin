@@ -164,16 +164,6 @@ class Appodeal {
   }
 
   /// <summary>
-  /// Show banner view.
-  /// See <see cref="Appodeal.showBannerView"/> for resulting triggered event.
-  /// <param name="YAxis">y position for banner view.</param>
-  /// <param name="XGravity">x position for banner view.</param>
-  /// <param name="placement">type of advertising you want to show.</param>
-  /// </summary>
-  ///  TODO Need to implement
-  //public static bool showBannerView(int YAxis, int XGravity, string placement)
-
-  /// <summary>
   /// Hide advertising.
   /// See <see cref="Appodeal.hide"/> for resulting triggered event.
   /// <param name="adTypes">adType type of advertising  Appodeal.BANNER</param>
@@ -183,13 +173,6 @@ class Appodeal {
       'adType': adType,
     });
   }
-
-  /// <summary>
-  /// Hide Banner View.
-  /// See <see cref="Appodeal.hideBannerView"/> for resulting triggered event.
-  /// </summary>
-  /// TODO Need to implement
-  //public static void hideBannerView()
 
   /// <summary>
   /// Start or stop auto caching new ads when current ads was shown..
