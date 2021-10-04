@@ -1,5 +1,6 @@
 package com.appodeal.appodeal_flutter
 
+import android.util.Log
 import com.explorestack.consent.Consent
 import com.explorestack.consent.ConsentFormListener
 import com.explorestack.consent.exception.ConsentManagerException
@@ -12,8 +13,8 @@ fun ConsentFormListener(channel: MethodChannel): ConsentFormListener {
         }
 
         override fun onConsentFormError(error: ConsentManagerException?) {
-            channel.invokeMethod("onConsentFormError",
-                    "error" to error?.toString())
+            channel.invokeMethod("onConsentFormError", mapOf(
+                    "error" to error?.toString()))
 
         }
 
@@ -22,8 +23,9 @@ fun ConsentFormListener(channel: MethodChannel): ConsentFormListener {
         }
 
         override fun onConsentFormClosed(consent: Consent?) {
-            channel.invokeMethod("onConsentFormClosed",
-                    "consent" to consent.toString())
+            channel.invokeMethod("onConsentFormClosed", mapOf(
+                    "consent" to consent?.toJSONObject().toString()
+            ))
         }
     }
 }
