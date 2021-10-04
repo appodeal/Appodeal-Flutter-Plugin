@@ -5,6 +5,7 @@ import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.UserSettings
 import com.explorestack.consent.Consent
+import com.explorestack.consent.ConsentForm
 import com.explorestack.consent.ConsentManager
 import com.explorestack.consent.Vendor
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -22,6 +23,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private lateinit var activity: Activity
     private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
+    private lateinit var consentForm: ConsentForm
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         pluginBinding = flutterPluginBinding;
@@ -85,6 +87,11 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getConsentZone" -> getConsentZone(result)
             "getConsentStatus" -> getConsentStatus(result)
             "getConsent" -> getConsent(result)
+            "loadConsentForm" -> loadConsentForm(result)
+            "showAsActivityConsentForm" -> showAsActivityConsentForm(result)
+            "showAsDialogConsentForm" -> showAsDialogConsentForm(result)
+            "consentFormIsLoaded" -> consentFormIsLoaded(result)
+            "consentFormIsShowing" -> consentFormIsShowing(result)
 
             else -> result.notImplemented()
         }
@@ -163,6 +170,32 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun getConsent(result: Result) {
         result.success(ConsentManager.getInstance(activity).consent?.toJSONObject().toString())
+    }
+
+    private fun consentFormIsShowing(result: Result){
+        result.success(consentForm.isShowing);
+    }
+
+    private fun consentFormIsLoaded(result: Result){
+        result.success(consentForm.isLoaded);
+    }
+
+    private fun showAsDialogConsentForm(result: Result){
+        consentForm.showAsDialog();
+        result.success(null);
+    }
+
+    private fun showAsActivityConsentForm(result: Result){
+        consentForm.showAsActivity();
+        result.success(null);
+    }
+
+    private fun loadConsentForm(result: Result){
+        consentForm = ConsentForm.Builder(activity)
+                .withListener(ConsentFormListener(channel))
+                .build()
+        consentForm.load()
+        result.success(null)
     }
 
     private fun requestConsentInfoUpdate(call: MethodCall, result: Result) {
