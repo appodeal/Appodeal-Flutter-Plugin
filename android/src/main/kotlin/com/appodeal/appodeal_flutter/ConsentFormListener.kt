@@ -1,6 +1,5 @@
 package com.appodeal.appodeal_flutter
 
-import android.util.Log
 import com.explorestack.consent.Consent
 import com.explorestack.consent.ConsentFormListener
 import com.explorestack.consent.exception.ConsentManagerException
