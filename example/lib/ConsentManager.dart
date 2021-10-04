@@ -5,8 +5,6 @@ import 'package:appodeal_flutter/appodeal_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'main.dart';
-
 class ConsentManagerPage extends StatefulWidget {
   @override
   _ConsentManagerState createState() => _ConsentManagerState();
@@ -18,21 +16,30 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
     super.initState();
 
     ConsentManager.setConsentInfoUpdateListener(
-            (event, consent) => showToast('$event consent - $consent'),
-            (event, error) => showToast('$event error - $error')
-    );
+        (event, consent) => {
+              showToast('$event'),
+              print('$event consent - $consent'),
+            },
+        (event, error) =>
+            {showToast('$event error'), print('$event error - $error')});
 
     ConsentManager.setConsentFormListener(
-            (event) => showToast('$event'),
-            (event, error) => showToast('$event error - $error'),
-            (event) => showToast('$event'),
-            (event, consent) => showToast('$event consent - $consent'));
-
+      (event) => showToast('$event'),
+      (event, error) =>
+          {showToast('$event error'), print('$event error - $error')},
+      (event) => showToast('$event'),
+      (event, consent) => {
+        showToast('$event'),
+        print('$event consent - $consent'),
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    String appKey = Platform.isAndroid ? "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f" : "466de0d625e01e8811c588588a42a55970bc7c132649eede";
+    String appKey = Platform.isAndroid
+        ? "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f"
+        : "466de0d625e01e8811c588588a42a55970bc7c132649eede";
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -52,9 +59,17 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
-                    ConsentManager.setCustomVendor("name", "com.appodeal.test", "policyUrl",  [1,2,3,4,5],  [1,2,3,4,5],  [1,2,3,4,5]);
+                    ConsentManager.setCustomVendor(
+                        "name",
+                        "com.appodeal.test",
+                        "policyUrl",
+                        [1, 2, 3, 4, 5],
+                        [1, 2, 3, 4, 5],
+                        [1, 2, 3, 4, 5]);
                   },
                   child: const Text('SET VENDOR'),
                 ),
@@ -64,7 +79,9 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     ConsentManager.setStorage(Storage.SHARED_PREFERENCE);
                   },
@@ -76,7 +93,9 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     ConsentManager.requestConsentInfoUpdate(appKey);
                   },
@@ -88,9 +107,12 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var vendor = await ConsentManager.getCustomVendor("com.appodeal.test");
+                    var vendor = await ConsentManager.getCustomVendor(
+                        "com.appodeal.test");
                     showToast('Vendor - $vendor');
                   },
                   child: const Text('GET VENDOR'),
@@ -101,7 +123,9 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var storage = await ConsentManager.getStorage();
                     showToast('Vendor - $storage');
@@ -114,9 +138,12 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var shouldShow = await ConsentManager.shouldShowConsentDialog();
+                    var shouldShow =
+                        await ConsentManager.shouldShowConsentDialog();
                     showToast('SHOULD SHOW? - $shouldShow');
                   },
                   child: const Text('SHOULD SHOW?'),
@@ -127,7 +154,9 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var zone = await ConsentManager.getConsentZone();
                     showToast('Zone - $zone');
@@ -140,7 +169,9 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var status = await ConsentManager.getConsentStatus();
                     showToast('Status - $status');
@@ -148,14 +179,17 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                   child: const Text('GET STATUS'),
                 ),
               ],
-            ), Row(
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var consent = await ConsentManager.getConsent();
-                    showToast('Status - $consent');
+                    print('Status - $consent');
                   },
                   child: const Text('GET CONSENT'),
                 ),
@@ -165,7 +199,9 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     ConsentManager.loadConsentForm();
                   },
@@ -177,7 +213,9 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     ConsentManager.showAsActivityConsentForm();
                   },
@@ -189,7 +227,9 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     ConsentManager.showAsDialogConsentForm();
                   },
@@ -201,23 +241,12 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isLoaded = await ConsentManager.consentFormIsLoaded();
                     showToast('isLoaded - $isLoaded');
-                  },
-                  child: const Text('FORM IS LOADED?'),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
-                  onPressed: () async {
-                    var isShowing = await ConsentManager.consentFormIsShowing();
-                    showToast('isShowing - $isShowing');
                   },
                   child: const Text('FORM IS LOADED?'),
                 ),
@@ -231,7 +260,14 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
   }
 
   static void showToast(String message) {
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
     log(message);
   }
 }
