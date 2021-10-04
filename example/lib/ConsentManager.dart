@@ -22,6 +22,12 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
             (event, error) => showToast('$event error - $error')
     );
 
+    ConsentManager.setConsentFormListener(
+            (event) => showToast('$event'),
+            (event, error) => showToast('$event error - $error'),
+            (event) => showToast('$event'),
+            (event, consent) => showToast('$event consent - $consent'));
+
   }
 
   @override
@@ -48,7 +54,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () {
-                    ConsentManager.setCustomVendor(new Vendor("name", "com.appodeal.test", "policyUrl",  [1,2,3,4,5],  [1,2,3,4,5],  [1,2,3,4,5]));
+                    ConsentManager.setCustomVendor("name", "com.appodeal.test", "policyUrl",  [1,2,3,4,5],  [1,2,3,4,5],  [1,2,3,4,5]);
                   },
                   child: const Text('SET VENDOR'),
                 ),
@@ -152,6 +158,68 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                     showToast('Status - $consent');
                   },
                   child: const Text('GET CONSENT'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    ConsentManager.loadConsentForm();
+                  },
+                  child: const Text('LOAD CONSENT FORM'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    ConsentManager.showAsActivityConsentForm();
+                  },
+                  child: const Text('SHOW AS ACTIVITY'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    ConsentManager.showAsDialogConsentForm();
+                  },
+                  child: const Text('SHOW AS DIALOG'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    var isLoaded = await ConsentManager.consentFormIsLoaded();
+                    showToast('isLoaded - $isLoaded');
+                  },
+                  child: const Text('FORM IS LOADED?'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    var isShowing = await ConsentManager.consentFormIsShowing();
+                    showToast('isShowing - $isShowing');
+                  },
+                  child: const Text('FORM IS LOADED?'),
                 ),
               ],
             ),
