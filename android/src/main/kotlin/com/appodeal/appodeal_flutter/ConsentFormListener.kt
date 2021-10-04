@@ -13,7 +13,7 @@ fun ConsentFormListener(channel: MethodChannel): ConsentFormListener {
 
         override fun onConsentFormError(error: ConsentManagerException?) {
             channel.invokeMethod("onConsentFormError",
-                    "consent" to error?.toString())
+                    "error" to error?.toString())
 
         }
 
@@ -23,7 +23,7 @@ fun ConsentFormListener(channel: MethodChannel): ConsentFormListener {
 
         override fun onConsentFormClosed(consent: Consent?) {
             channel.invokeMethod("onConsentFormClosed",
-                    "consent" to consent?.toJSONObject().toString())
+                    "consent" to consent.toString())
         }
     }
 }
