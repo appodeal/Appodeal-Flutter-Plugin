@@ -23,7 +23,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var channel: MethodChannel
     private lateinit var activity: Activity
     private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
-    private lateinit var consentForm: ConsentForm
+    private var consentForm: ConsentForm? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         pluginBinding = flutterPluginBinding;
@@ -173,28 +173,36 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun consentFormIsShowing(result: Result){
-        result.success(consentForm.isShowing);
+        if (consentForm != null){
+            result.success(consentForm?.isShowing);
+        }else {
+            result.success(false);
+        }
     }
 
     private fun consentFormIsLoaded(result: Result){
-        result.success(consentForm.isLoaded);
+        if (consentForm != null){
+            result.success(consentForm?.isLoaded);
+        }else {
+            result.success(false);
+        }
     }
 
     private fun showAsDialogConsentForm(result: Result){
-        consentForm.showAsDialog();
+        consentForm?.showAsDialog()
         result.success(null);
     }
 
     private fun showAsActivityConsentForm(result: Result){
-        consentForm.showAsActivity();
-        result.success(null);
+        consentForm?.showAsActivity()
+        result.success(null)
     }
 
     private fun loadConsentForm(result: Result){
         consentForm = ConsentForm.Builder(activity)
                 .withListener(ConsentFormListener(channel))
                 .build()
-        consentForm.load()
+        consentForm?.load()
         result.success(null)
     }
 
