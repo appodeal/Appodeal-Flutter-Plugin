@@ -172,33 +172,33 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(ConsentManager.getInstance(activity).consent?.toJSONObject().toString())
     }
 
-    private fun consentFormIsShowing(result: Result){
-        if (consentForm != null){
+    private fun consentFormIsShowing(result: Result) {
+        if (consentForm != null) {
             result.success(consentForm?.isShowing);
-        }else {
+        } else {
             result.success(false);
         }
     }
 
-    private fun consentFormIsLoaded(result: Result){
-        if (consentForm != null){
+    private fun consentFormIsLoaded(result: Result) {
+        if (consentForm != null) {
             result.success(consentForm?.isLoaded);
-        }else {
+        } else {
             result.success(false);
         }
     }
 
-    private fun showAsDialogConsentForm(result: Result){
+    private fun showAsDialogConsentForm(result: Result) {
         consentForm?.showAsDialog()
         result.success(null);
     }
 
-    private fun showAsActivityConsentForm(result: Result){
+    private fun showAsActivityConsentForm(result: Result) {
         consentForm?.showAsActivity()
         result.success(null)
     }
 
-    private fun loadConsentForm(result: Result){
+    private fun loadConsentForm(result: Result) {
         consentForm = ConsentForm.Builder(activity)
                 .withListener(ConsentFormListener(channel))
                 .build()
