@@ -17,22 +17,22 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
     super.initState();
 
     ConsentManager.setConsentInfoUpdateListener(
-        (event, consent) => {
-              showToast('$event'),
-              print('$event consent - $consent'),
+        (onConsentInfoUpdated, consent) => {
+              showToast('$onConsentInfoUpdated'),
+              print('$onConsentInfoUpdated consent - $consent'),
               initialization(consent)
             },
-        (event, error) =>
-            {showToast('$event error'), print('$event error - $error')});
+        (onFailedToUpdateConsentInfo, error) =>
+            {showToast('$onFailedToUpdateConsentInfo error'), print('$onFailedToUpdateConsentInfo error - $error')});
 
     ConsentManager.setConsentFormListener(
-      (event) => showToast('$event'),
-      (event, error) =>
-          {showToast('$event error'), print('$event error - $error')},
-      (event) => showToast('$event'),
-      (event, consent) => {
-        showToast('$event'),
-        print('$event consent - $consent'),
+      (onConsentFormLoaded) => showToast('$onConsentFormLoaded'),
+      (onConsentFormError, error) =>
+          {showToast('$onConsentFormError error'), print('$onConsentFormError error - $error')},
+      (onConsentFormOpened) => showToast('$onConsentFormOpened'),
+      (onConsentFormClosed, consent) => {
+        showToast('$onConsentFormClosed'),
+        print('$onConsentFormClosed consent - $consent'),
       },
     );
   }
