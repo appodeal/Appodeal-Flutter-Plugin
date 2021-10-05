@@ -24,9 +24,10 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private lateinit var activity: Activity
     private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
     private var consentForm: ConsentForm? = null
+    private var consent: Consent? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        pluginBinding = flutterPluginBinding;
+        pluginBinding = flutterPluginBinding
         channel = MethodChannel(flutterPluginBinding.binaryMessenger, "appodeal_flutter")
         channel.setMethodCallHandler(this)
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
@@ -35,6 +36,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "initialize" -> initialize(call, result)
+            "initializeWithConsent" -> initializeWithConsent(call, result)
             "updateConsent" -> updateConsent(call, result)
             "isInitialized" -> isInitialized(call, result)
             "isAutoCacheEnabled" -> isAutoCacheEnabled(call, result)
@@ -44,7 +46,10 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "hide" -> hide(call, result)
             "setAutoCache" -> setAutoCache(call, result)
             "setTriggerOnLoadedOnPrecache" -> setTriggerOnLoadedOnPrecache(call, result)
-            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(call, result)
+            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(
+                call,
+                result
+            )
             "isLoaded" -> isLoaded(call, result)
             "isPrecache" -> isPrecache(call, result)
             "setSmartBanners" -> setSmartBanners(call, result)
@@ -55,7 +60,9 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "disableNetwork" -> disableNetwork(call, result)
             "disableNetworkForSpecificAdType" -> disableNetworkForSpecificAdType(call, result)
             "disableLocationPermissionCheck" -> disableLocationPermissionCheck(result)
-            "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(result)
+            "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(
+                result
+            )
             "setUserId" -> setUserId(call, result)
             "setUserAge" -> setUserAge(call, result)
             "setUserGender" -> setUserGender(call, result)
@@ -105,13 +112,13 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         activity = binding.activity
 
         pluginBinding.platformViewRegistry.registerViewFactory(
-                "com.appodeal.appodeal_flutter/bannerview",
-                AppodealBannerView(activity, pluginBinding.binaryMessenger)
+            "com.appodeal.appodeal_flutter/bannerview",
+            AppodealBannerView(activity, pluginBinding.binaryMessenger)
         )
 
         pluginBinding.platformViewRegistry.registerViewFactory(
-                "com.appodeal.appodeal_flutter/mrecview",
-                AppodealMrecView(activity, pluginBinding.binaryMessenger)
+            "com.appodeal.appodeal_flutter/mrecview",
+            AppodealMrecView(activity, pluginBinding.binaryMessenger)
         )
     }
 
@@ -138,12 +145,13 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun shouldShowConsentDialog(result: Result) {
-        val shouldShowType: Int = when (ConsentManager.getInstance(activity).shouldShowConsentDialog().toString()) {
-            Consent.ShouldShow.UNKNOWN.toString() -> 0
-            Consent.ShouldShow.TRUE.toString() -> 1
-            Consent.ShouldShow.FALSE.toString() -> 2
-            else -> 0
-        }
+        val shouldShowType: Int =
+            when (ConsentManager.getInstance(activity).shouldShowConsentDialog().toString()) {
+                Consent.ShouldShow.UNKNOWN.toString() -> 0
+                Consent.ShouldShow.TRUE.toString() -> 1
+                Consent.ShouldShow.FALSE.toString() -> 2
+                else -> 0
+            }
         result.success(shouldShowType)
     }
 
@@ -174,23 +182,23 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun consentFormIsShowing(result: Result) {
         if (consentForm != null) {
-            result.success(consentForm?.isShowing);
+            result.success(consentForm?.isShowing)
         } else {
-            result.success(false);
+            result.success(false)
         }
     }
 
     private fun consentFormIsLoaded(result: Result) {
         if (consentForm != null) {
-            result.success(consentForm?.isLoaded);
+            result.success(consentForm?.isLoaded)
         } else {
-            result.success(false);
+            result.success(false)
         }
     }
 
     private fun showAsDialogConsentForm(result: Result) {
         consentForm?.showAsDialog()
-        result.success(null);
+        result.success(null)
     }
 
     private fun showAsActivityConsentForm(result: Result) {
@@ -200,15 +208,16 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun loadConsentForm(result: Result) {
         consentForm = ConsentForm.Builder(activity)
-                .withListener(ConsentFormListener(channel))
-                .build()
+            .withListener(ConsentFormListener(channel))
+            .build()
         consentForm?.load()
         result.success(null)
     }
 
     private fun requestConsentInfoUpdate(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        ConsentManager.getInstance(activity).requestConsentInfoUpdate(args["appKey"] as String, ConsentInfoUpdateListener(channel))
+        ConsentManager.getInstance(activity)
+            .requestConsentInfoUpdate(args["appKey"] as String, ConsentInfoUpdateListener(channel))
         result.success(null)
     }
 
@@ -225,14 +234,18 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val args = call.arguments as Map<*, *>
         when (args["storage"] as Int) {
             0 -> ConsentManager.getInstance(activity).storage = ConsentManager.Storage.NONE
-            1 -> ConsentManager.getInstance(activity).storage = ConsentManager.Storage.SHARED_PREFERENCE
+            1 -> ConsentManager.getInstance(activity).storage =
+                ConsentManager.Storage.SHARED_PREFERENCE
         }
         result.success(null)
     }
 
     private fun getCustomVendor(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        result.success(ConsentManager.getInstance(activity).getCustomVendor(args["bundle"] as String)?.toJSONObject().toString())
+        result.success(
+            ConsentManager.getInstance(activity).getCustomVendor(args["bundle"] as String)
+                ?.toJSONObject().toString()
+        )
     }
 
     private fun setCustomVendor(call: MethodCall, result: Result) {
@@ -246,11 +259,13 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
 
         ConsentManager.getInstance(activity)
-                .setCustomVendor(Vendor.Builder(name, bundle, policyUrl)
-                        .setPurposeIds(purposeIds as MutableList<Int>)
-                        .setFeatureIds(featureIds as MutableList<Int>)
-                        .setLegitimateInterestPurposeIds(legitimateInterestPurposeIds as MutableList<Int>)
-                        .build())
+            .setCustomVendor(
+                Vendor.Builder(name, bundle, policyUrl)
+                    .setPurposeIds(purposeIds as MutableList<Int>)
+                    .setFeatureIds(featureIds as MutableList<Int>)
+                    .setLegitimateInterestPurposeIds(legitimateInterestPurposeIds as MutableList<Int>)
+                    .build()
+            )
 
         result.success(null)
     }
@@ -263,6 +278,20 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
         setCallbacks()
         Appodeal.initialize(activity, appKey, ads, hasConsent)
+        result.success(null)
+    }
+
+    private fun initializeWithConsent(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val appKey = args["appKey"] as String
+        @Suppress("UNCHECKED_CAST") val adTypes = args["adTypes"] as List<Int>
+        val consentString = args["consent"] as String
+        val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
+        setCallbacks()
+        if (consentString.isNotEmpty()) {
+            consent = ConsentManager.getInstance(activity).consent
+            Appodeal.initialize(activity, appKey, ads, consent!!)
+        }
         result.success(null)
     }
 
