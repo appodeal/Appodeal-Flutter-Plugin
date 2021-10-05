@@ -2,15 +2,15 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:appodeal_flutter/appodeal_flutter.dart';
-import 'package:appodeal_flutter_example/Banner.dart';
-import 'package:appodeal_flutter_example/BannerVIew.dart';
+import 'package:appodeal_flutter_example/banner.dart';
+import 'package:appodeal_flutter_example/banner_view.dart';
 import 'package:appodeal_flutter_example/Interstitial.dart';
-import 'package:appodeal_flutter_example/MrecView.dart';
-import 'package:appodeal_flutter_example/RewardedVideo.dart';
+import 'package:appodeal_flutter_example/mrec_view.dart';
+import 'package:appodeal_flutter_example/rewarded_video.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'ConsentManager.dart';
+import 'consent_manager.dart';
 
 
 void main() {
@@ -75,7 +75,6 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setExtraDataString("setExtraDataString", "value");
 
     Appodeal.setUseSafeArea(true);
-
     Appodeal.initialize(appKey, [Appodeal.REWARDED_VIDEO, Appodeal.INTERSTITIAL, Appodeal.BANNER, Appodeal.MREC], false);
 
     // If the widget was removed from the tree while the asynchronous platform
