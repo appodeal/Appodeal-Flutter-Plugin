@@ -16,21 +16,19 @@ class _InterstitialPageState extends State<InterstitialPage> {
 
     Appodeal.setInterstitialCallbacks(
         (onInterstitialLoaded, isPrecache) => {
-              showToast(
-                  'InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')
-            },
+              showToast('$onInterstitialLoaded isPrecache - $isPrecache')},
         (onInterstitialFailedToLoad) =>
-            {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')},
+            {showToast('$onInterstitialFailedToLoad')},
         (onInterstitialShown) =>
-            {showToast('InterstitialCallBack - $onInterstitialShown')},
+            {showToast('$onInterstitialShown')},
         (onInterstitialShowFailed) =>
-            {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
+            {showToast('$onInterstitialShowFailed')},
         (onInterstitialClicked) =>
-            {showToast('InterstitialCallBack - $onInterstitialClicked')},
+            {showToast('$onInterstitialClicked')},
         (onInterstitialClosed) =>
-            {showToast('InterstitialCallBack - $onInterstitialClosed')},
+            {showToast('$onInterstitialClosed')},
         (onInterstitialExpired) =>
-            {showToast('InterstitialCallBack - $onInterstitialExpired')});
+            {showToast('$onInterstitialExpired')});
   }
 
   @override
