@@ -6,12 +6,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class BannerViewPage extends StatefulWidget {
   const BannerViewPage({Key? key}) : super(key: key);
+
   @override
   _BannerViewPageState createState() => _BannerViewPageState();
 }
 
 class _BannerViewPageState extends State<BannerViewPage> {
-
   bool isShow = false;
 
   @override
@@ -23,12 +23,13 @@ class _BannerViewPageState extends State<BannerViewPage> {
     });
 
     Appodeal.setBannerCallbacks(
-            (event, isPrecache) => showToast('$event - isPrecache - $isPrecache'),
-            (event) => showToast('$event'),
-            (event) => showToast('$event'),
-            (event) => showToast('$event'),
-            (event) => showToast('$event'),
-            (event) => showToast('$event'));
+        (onBannerLoaded, isPrecache) =>
+            showToast('$onBannerLoaded - isPrecache - $isPrecache'),
+        (onBannerFailedToLoad) => showToast('$onBannerFailedToLoad'),
+        (onBannerShown) => showToast('$onBannerShown'),
+        (onBannerShowFailed) => showToast('$onBannerShowFailed'),
+        (onBannerClicked) => showToast('$onBannerClicked'),
+        (onBannerExpired) => showToast('$onBannerExpired'));
   }
 
   @override
@@ -51,7 +52,9 @@ class _BannerViewPageState extends State<BannerViewPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     setState(() {
                       isShow = true;
@@ -65,7 +68,9 @@ class _BannerViewPageState extends State<BannerViewPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     setState(() {
                       isShow = false;
@@ -78,7 +83,9 @@ class _BannerViewPageState extends State<BannerViewPage> {
             //Header
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Visibility(visible: isShow, child: AppodealBannerView(placementName: "default")),
+              child: Visibility(
+                  visible: isShow,
+                  child: AppodealBannerView(placementName: "default")),
             ),
             //Interstitial
           ]),
@@ -88,8 +95,14 @@ class _BannerViewPageState extends State<BannerViewPage> {
   }
 
   static void showToast(String message) {
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
     log(message);
   }
 }
