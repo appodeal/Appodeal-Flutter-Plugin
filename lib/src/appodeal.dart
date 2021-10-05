@@ -87,13 +87,13 @@ class Appodeal {
         false;
   }
 
-  //**
+
   /// <summary>
   /// Initializes the relevant (Android or iOS) Appodeal SDK.
   /// See <see cref="Appodeal.initialize"/> for resulting triggered event.
   /// <param name="appKey">Appodeal app key you received when you created an app.</param>
   /// <param name="adTypes">Type of advertising you want to initialize.</param>
-  /// <param name="consent">Consent info object from Stack ConsentManager SDK.</param>
+  /// <param name="consent">Consent string from ConsentManager SDK.</param>
   ///
   ///  To initialize only interstitials use <see cref="Appodeal.initialize(appKey, Appodeal.INTERSTITIAL, consent);"/>
   ///  To initialize only banners use <see cref="Appodeal.initialize(appKey, Appodeal.BANNER, consent);"/>
@@ -101,9 +101,11 @@ class Appodeal {
   ///  To initialize only non-skippable video use <see cref="Appodeal.initialize(appKey, Appodeal.NON_SKIPPABLE_VIDEO, consent);"/>
   ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC, consent);"/>
   /// </summary>
-  // TODO Need to implement
-  // public static void initialize(string appKey, int adTypes, Consent consent)
-  // */
+   static Future<void>  initializeWithConsent(String appKey, int adTypes, String consent){
+     _setCallbacks();
+     return _channel.invokeMethod('initializeWithConsent', {'appKey': appKey, 'adTypes': adTypes, 'consent': consent});
+   }
+
 
   /// <summary>
   /// Update consent value for ad networks in Appodeal SDK
