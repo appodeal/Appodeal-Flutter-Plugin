@@ -14,8 +14,23 @@ class _InterstitialPageState extends State<InterstitialPage> {
   void initState() {
     super.initState();
 
-    Appodeal.setInterstitialCallbacks((onInterstitialLoaded, isPrecache) => {showToast('InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')}, (onInterstitialFailedToLoad) => {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')}, (onInterstitialShown) => {showToast('InterstitialCallBack - $onInterstitialShown')}, (onInterstitialShowFailed) => {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
-        (onInterstitialClicked) => {showToast('InterstitialCallBack - $onInterstitialClicked')}, (onInterstitialClosed) => {showToast('InterstitialCallBack - $onInterstitialClosed')}, (onInterstitialExpired) => {showToast('InterstitialCallBack - $onInterstitialExpired')});
+    Appodeal.setInterstitialCallbacks(
+        (onInterstitialLoaded, isPrecache) => {
+              showToast(
+                  'InterstitialCallBack - $onInterstitialLoaded isPrecache - $isPrecache')
+            },
+        (onInterstitialFailedToLoad) =>
+            {showToast('InterstitialCallBack - $onInterstitialFailedToLoad')},
+        (onInterstitialShown) =>
+            {showToast('InterstitialCallBack - $onInterstitialShown')},
+        (onInterstitialShowFailed) =>
+            {showToast('InterstitialCallBack - $onInterstitialShowFailed')},
+        (onInterstitialClicked) =>
+            {showToast('InterstitialCallBack - $onInterstitialClicked')},
+        (onInterstitialClosed) =>
+            {showToast('InterstitialCallBack - $onInterstitialClosed')},
+        (onInterstitialExpired) =>
+            {showToast('InterstitialCallBack - $onInterstitialExpired')});
   }
 
   @override
@@ -24,7 +39,7 @@ class _InterstitialPageState extends State<InterstitialPage> {
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('Interstitial'),
+          title: Text('Interstitial'),
           automaticallyImplyLeading: true,
           leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -39,7 +54,9 @@ class _InterstitialPageState extends State<InterstitialPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.cache(Appodeal.INTERSTITIAL);
                   },
@@ -51,7 +68,9 @@ class _InterstitialPageState extends State<InterstitialPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.show(Appodeal.INTERSTITIAL);
                   },
@@ -63,9 +82,12 @@ class _InterstitialPageState extends State<InterstitialPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isCanShow = await Appodeal.canShow(Appodeal.INTERSTITIAL);
+                    var isCanShow =
+                        await Appodeal.canShow(Appodeal.INTERSTITIAL);
                     showToast('Interstitial canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
@@ -76,9 +98,11 @@ class _InterstitialPageState extends State<InterstitialPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20)),
                   onPressed: () async {
-                    var isInitialized = await Appodeal.isInitialized(Appodeal.INTERSTITIAL);
+                    var isInitialized =
+                        await Appodeal.isInitialized(Appodeal.INTERSTITIAL);
                     showToast('Interstitial isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
@@ -93,7 +117,14 @@ class _InterstitialPageState extends State<InterstitialPage> {
   }
 
   static void showToast(String message) {
-    Fluttertoast.showToast(msg: message, toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.red, textColor: Colors.white, fontSize: 16.0);
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
     log(message);
   }
 }
