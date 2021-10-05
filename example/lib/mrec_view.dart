@@ -21,12 +21,12 @@ class _MrecViewPageState extends State<MrecViewPage> {
     });
 
     Appodeal.setMrecCallbacks(
-            (event, isPrecache) => showToast('$event - isPrecache - $isPrecache'),
-            (event) => showToast('$event'),
-            (event) => showToast('$event'),
-            (event) => showToast('$event'),
-            (event) => showToast('$event'),
-            (event) => showToast('$event'));
+            (onMrecLoaded, isPrecache) => showToast('$onMrecLoaded - isPrecache - $isPrecache'),
+            (onMrecFailedToLoad) => showToast('$onMrecFailedToLoad'),
+            (onMrecShown) => showToast('$onMrecShown'),
+            (onMrecShowFailed) => showToast('$onMrecShowFailed'),
+            (onMrecClicked) => showToast('$onMrecClicked'),
+            (onMrecExpired) => showToast('$onMrecExpired'));
   }
 
   @override
