@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:appodeal_flutter/appodeal_flutter.dart';
+import 'package:appodeal_flutter_example/main.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -19,7 +20,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
         (event, consent) => {
               showToast('$event'),
               print('$event consent - $consent'),
-
+              initialization(consent)
             },
         (event, error) =>
             {showToast('$event error'), print('$event error - $error')});
@@ -35,6 +36,49 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
       },
     );
   }
+
+  Future<void> initialization(String consent) async {
+    Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
+    Appodeal.setTesting(true);
+    Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
+    Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
+    Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
+    Appodeal.setSharedAdsInstanceAcrossActivities(true);
+    Appodeal.setSmartBanners(false);
+    Appodeal.setTabletBanners(false);
+    Appodeal.setBannerAnimation(false);
+    Appodeal.setBannerRotation(90, 90);
+    Appodeal.disableNetwork("admob");
+    Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
+    Appodeal.disableLocationPermissionCheck();
+    Appodeal.disableWriteExternalStoragePermissionCheck();
+
+    Appodeal.setUserId("1");
+    Appodeal.setUserAge(22);
+    Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
+
+    Appodeal.setCustomFilterString("key", "value");
+    Appodeal.setCustomFilterBool("key", true);
+    Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
+    Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
+
+    Appodeal.muteVideosIfCallsMuted(true);
+    Appodeal.setChildDirectedTreatment(true);
+
+    Appodeal.setExtraDataBool("setExtraDataBool", true);
+    Appodeal.setExtraDataInt("setExtraDataInt", 123);
+    Appodeal.setExtraDataDouble("setExtraDataDouble", 1.2);
+    Appodeal.setExtraDataString("setExtraDataString", "value");
+
+    Appodeal.setUseSafeArea(true);
+    Appodeal.initializeWithConsent(AppodealDemoApp.appKey, [Appodeal.REWARDED_VIDEO, Appodeal.INTERSTITIAL, Appodeal.BANNER, Appodeal.MREC], consent);
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+  }
+
 
   @override
   Widget build(BuildContext context) {
