@@ -19,6 +19,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
         (event, consent) => {
               showToast('$event'),
               print('$event consent - $consent'),
+
             },
         (event, error) =>
             {showToast('$event error'), print('$event error - $error')});
