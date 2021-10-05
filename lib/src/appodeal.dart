@@ -24,36 +24,36 @@ class Appodeal {
   static const GENDER_MALE = 1;
   static const GENDER_FEMALE = 2;
 
-  static Function(String event, bool isPrecache)? _onBannerLoaded;
-  static Function(String event)? _onBannerFailedToLoad;
-  static Function(String event)? _onBannerShown;
-  static Function(String event)? _onBannerShowFailed;
-  static Function(String event)? _onBannerClicked;
-  static Function(String event)? _onBannerExpired;
+  static Function(String onBannerLoaded, bool isPrecache)? _onBannerLoaded;
+  static Function(String onBannerFailedToLoad)? _onBannerFailedToLoad;
+  static Function(String onBannerShown)? _onBannerShown;
+  static Function(String onBannerShowFailed)? _onBannerShowFailed;
+  static Function(String onBannerClicked)? _onBannerClicked;
+  static Function(String onBannerExpired)? _onBannerExpired;
 
-  static Function(String event, bool isPrecache)? _onMrecLoaded;
-  static Function(String event)? _onMrecFailedToLoad;
-  static Function(String event)? _onMrecShown;
-  static Function(String event)? _onMrecShowFailed;
-  static Function(String event)? _onMrecClicked;
-  static Function(String event)? _onMrecExpired;
+  static Function(String onMrecLoaded, bool isPrecache)? _onMrecLoaded;
+  static Function(String onMrecFailedToLoad)? _onMrecFailedToLoad;
+  static Function(String onMrecShown)? _onMrecShown;
+  static Function(String onMrecShowFailed)? _onMrecShowFailed;
+  static Function(String onMrecClicked)? _onMrecClicked;
+  static Function(String onMrecExpired)? _onMrecExpired;
 
-  static Function(String event, bool isPrecache)? _onInterstitialLoaded;
-  static Function(String event)? _onInterstitialFailedToLoad;
-  static Function(String event)? _onInterstitialShown;
-  static Function(String event)? _onInterstitialShowFailed;
-  static Function(String event)? _onInterstitialClicked;
-  static Function(String event)? _onInterstitialClosed;
-  static Function(String event)? _onInterstitialExpired;
+  static Function(String onInterstitialLoaded, bool isPrecache)? _onInterstitialLoaded;
+  static Function(String onInterstitialFailedToLoad)? _onInterstitialFailedToLoad;
+  static Function(String onInterstitialShown)? _onInterstitialShown;
+  static Function(String onInterstitialShowFailed)? _onInterstitialShowFailed;
+  static Function(String onInterstitialClicked)? _onInterstitialClicked;
+  static Function(String onInterstitialClosed)? _onInterstitialClosed;
+  static Function(String onInterstitialExpired)? _onInterstitialExpired;
 
-  static Function(String event, bool isPrecache)? _onRewardedVideoLoaded;
-  static Function(String event)? _onRewardedVideoFailedToLoad;
-  static Function(String event)? _onRewardedVideoShown;
-  static Function(String event)? _onRewardedVideoShowFailed;
-  static Function(String event, double amount, String reward)? _onRewardedVideoFinished;
-  static Function(String event, bool isFinished)? _onRewardedVideoClosed;
-  static Function(String event)? _onRewardedVideoExpired;
-  static Function(String event)? _onRewardedVideoClicked;
+  static Function(String onRewardedVideoLoaded, bool isPrecache)? _onRewardedVideoLoaded;
+  static Function(String onRewardedVideoFailedToLoad)? _onRewardedVideoFailedToLoad;
+  static Function(String onRewardedVideoShown)? _onRewardedVideoShown;
+  static Function(String onRewardedVideoShowFailed)? _onRewardedVideoShowFailed;
+  static Function(String onRewardedVideoFinished, double amount, String reward)? _onRewardedVideoFinished;
+  static Function(String onRewardedVideoClosed, bool isFinished)? _onRewardedVideoClosed;
+  static Function(String onRewardedVideoExpired)? _onRewardedVideoExpired;
+  static Function(String onRewardedVideoClicked)? _onRewardedVideoClicked;
 
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
 
@@ -101,7 +101,7 @@ class Appodeal {
   ///  To initialize only non-skippable video use <see cref="Appodeal.initialize(appKey, Appodeal.NON_SKIPPABLE_VIDEO, consent);"/>
   ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC, consent);"/>
   /// </summary>
-   static Future<void>  initializeWithConsent(String appKey, int adTypes, String consent){
+   static Future<void>  initializeWithConsent(String appKey, List<int> adTypes, String consent){
      _setCallbacks();
      return _channel.invokeMethod('initializeWithConsent', {'appKey': appKey, 'adTypes': adTypes, 'consent': consent});
    }
