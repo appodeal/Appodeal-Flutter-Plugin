@@ -28,14 +28,10 @@ class AppodealDemoApp extends StatefulWidget {
 }
 
 class _AppodealDemoAppState extends State<AppodealDemoApp> {
+
   @override
   void initState() {
     super.initState();
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
   }
 
   Future<void> initialization() async {
@@ -53,24 +49,19 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
     Appodeal.disableLocationPermissionCheck();
     Appodeal.disableWriteExternalStoragePermissionCheck();
-
     Appodeal.setUserId("1");
     Appodeal.setUserAge(22);
     Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
-
     Appodeal.setCustomFilterString("key", "value");
     Appodeal.setCustomFilterBool("key", true);
     Appodeal.setCustomFilterInt("setCustomFilterInt", 123);
     Appodeal.setCustomFilterDouble("setCustomFilterDouble", 2.1);
-
     Appodeal.muteVideosIfCallsMuted(true);
     Appodeal.setChildDirectedTreatment(true);
-
     Appodeal.setExtraDataBool("setExtraDataBool", true);
     Appodeal.setExtraDataInt("setExtraDataInt", 123);
     Appodeal.setExtraDataDouble("setExtraDataDouble", 1.2);
     Appodeal.setExtraDataString("setExtraDataString", "value");
-
     Appodeal.setUseSafeArea(true);
     Appodeal.initialize(
         AppodealDemoApp.appKey,
@@ -102,7 +93,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
-                  onPressed: () async {
+                  onPressed: () {
                     initialization();
                   },
                   child: const Text('INITIALIZATION'),
