@@ -15,22 +15,25 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
   @override
   void initState() {
     super.initState();
-
     ConsentManager.setConsentInfoUpdateListener(
         (onConsentInfoUpdated, consent) => {
               showToast('$onConsentInfoUpdated'),
               print('$onConsentInfoUpdated consent - $consent'),
-              initialization(consent)
             },
-        (onFailedToUpdateConsentInfo, error) =>
-            {showToast('$onFailedToUpdateConsentInfo error'), print('$onFailedToUpdateConsentInfo error - $error')});
+        (onFailedToUpdateConsentInfo, error) => {
+              showToast('$onFailedToUpdateConsentInfo error'),
+              print('$onFailedToUpdateConsentInfo error - $error')
+            });
 
     ConsentManager.setConsentFormListener(
       (onConsentFormLoaded) => showToast('$onConsentFormLoaded'),
-      (onConsentFormError, error) =>
-          {showToast('$onConsentFormError error'), print('$onConsentFormError error - $error')},
+      (onConsentFormError, error) => {
+        showToast('$onConsentFormError error'),
+        print('$onConsentFormError error - $error')
+      },
       (onConsentFormOpened) => showToast('$onConsentFormOpened'),
       (onConsentFormClosed, consent) => {
+        initialization(consent),
         showToast('$onConsentFormClosed'),
         print('$onConsentFormClosed consent - $consent'),
       },
@@ -71,20 +74,23 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
     Appodeal.setExtraDataString("setExtraDataString", "value");
 
     Appodeal.setUseSafeArea(true);
-    Appodeal.initializeWithConsent(AppodealDemoApp.appKey, [Appodeal.REWARDED_VIDEO, Appodeal.INTERSTITIAL, Appodeal.BANNER, Appodeal.MREC], consent);
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
+    Appodeal.initializeWithConsent(
+        AppodealDemoApp.appKey,
+        [
+          Appodeal.REWARDED_VIDEO,
+          Appodeal.INTERSTITIAL,
+          Appodeal.BANNER,
+          Appodeal.MREC
+        ],
+        consent);
   }
-
 
   @override
   Widget build(BuildContext context) {
     String appKey = Platform.isAndroid
         ? "fee50c333ff3825fd6ad6d38cff78154de3025546d47a84f"
         : "466de0d625e01e8811c588588a42a55970bc7c132649eede";
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
