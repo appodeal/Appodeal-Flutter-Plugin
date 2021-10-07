@@ -17,7 +17,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
     super.initState();
     ConsentManager.setConsentInfoUpdateListener(
         (onConsentInfoUpdated, consent) => {
-              showToast('$onConsentInfoUpdated'),
+              showToast('$onConsentInfoUpdated consent - $consent'),
               print('$onConsentInfoUpdated consent - $consent'),
             },
         (onFailedToUpdateConsentInfo, error) => {
@@ -240,7 +240,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var consent = await ConsentManager.getConsent();
-                    print('Status - $consent');
+                    print('Consent - $consent');
                   },
                   child: const Text('GET CONSENT'),
                 ),
