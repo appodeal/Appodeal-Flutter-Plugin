@@ -1,6 +1,8 @@
 import Flutter
 import UIKit
 import Appodeal
+import StackConsentManager.Private
+import AVFoundation
 
 public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
@@ -53,9 +55,197 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "setExtraDataBool": setExtraDataBool(call, result)
         case "getPredictedEcpm": getPredictedEcpm(call, result)
         case "getNativeSDKVersion": getNativeSDKVersion(call, result)
+            
+        case "setStorage": setStorage(call,result)
+        case "setCustomVendor": setCustomVendor(call,result)
+        case "getCustomVendor": getCustomVendor(call, result)
+        case "getStorage": getStorage(result)
+        case "shouldShowConsentDialog": shouldShowConsentDialog(result)
+        case "getConsentZone": getConsentZone(result)
+        case "getConsentStatus": getConsentStatus(result)
+        case "getConsent": getConsent(result)
+        case "consentFormIsLoaded": consentFormIsLoaded(result)
+        case "consentFormIsShowing": consentFormIsShowing(result)
+        case "requestConsentInfoUpdate": requestConsentInfoUpdate(call, result)
+            
+            
+            //                      "loadConsentForm" -> loadConsentForm(result)
+            //                      "showAsActivityConsentForm" -> showAsActivityConsentForm(result)
+            //                      "showAsDialogConsentForm" -> showAsDialogConsentForm(result)
+            
+            
+            
         default: result(FlutterMethodNotImplemented)
         }
     }
+    
+    private func requestConsentInfoUpdate(_ call: FlutterMethodCall, _ result: @escaping FlutterResult){
+        let args = call.arguments as! [String: Any]
+        let appKey = args["appKey"] as! String
+        if (appKey.isEmpty) {
+            let args: [String: Any] = ["error": "Appodeal key can't be null"]
+            channel?.invokeMethod("onFailedToUpdateConsentInfo", arguments: args)
+            return;
+        }
+        
+        STKConsentManager.shared().synchronize(withAppKey: appKey) { [unowned self] error in
+            if let error = error {
+                let args: [String: Any] = ["error": error.localizedDescription as String]
+                channel?.invokeMethod("onFailedToUpdateConsentInfo", arguments: args)
+                  print("Error while synchronising consent manager: \(error)") 
+            } else {
+                guard let consent = STKConsentManager.shared().consent as? STKConsentManagerJSONModel else {
+                    let args: [String: Any] = ["consnent": "not found consent"]
+                    channel?.invokeMethod("onConsentInfoUpdated", arguments: args)
+                    return
+                }
+                let json = consent.jsonRepresentation()
+                let data = try? JSONSerialization.data(withJSONObject: json as Any, options: [])
+                let consentSring = data.flatMap { String(data: $0, encoding: .utf8) }
+                let args: [String: Any] = ["consent": consentSring! as String]
+                channel?.invokeMethod("onConsentInfoUpdated", arguments: args)
+            }
+        }
+    }
+    
+    private func consentFormIsShowing(_ result: @escaping FlutterResult){
+        result(STKConsentManager.shared().isConsentDialogPresenting)
+    }
+    
+    private func consentFormIsLoaded(_ result: @escaping FlutterResult){
+        result(STKConsentManager.shared().isConsentDialogReady)
+    }
+    
+    private func getConsent(_ result: @escaping FlutterResult){
+        let json = STKConsentManager.shared().consent
+        if(json != nil){
+            let data = try? JSONSerialization.data(withJSONObject: json!, options: [])
+            let consentSring = data.flatMap { String(data: $0, encoding: .utf8) }
+            result(consentSring)
+        }else {
+            result("not found consent")
+        }
+    }
+    
+    private func getConsentZone(_ result: @escaping FlutterResult){
+        switch (STKConsentManager.shared().regulation){
+        case .unknown:
+            result(0)
+            break
+        case .none:
+            result(0)
+            break
+        case .GDPR:
+            result(1)
+        case .CCPA:
+            result(2)
+        default:
+            result(0)
+        }
+    }
+    
+    private func getConsentStatus(_ result: @escaping FlutterResult){
+        switch (STKConsentManager.shared().consentStatus){
+        case .unknown:
+            result(0)
+        case .nonPersonalized:
+            result(3)
+        case .partlyPersonalized:
+            result(2)
+        case .personalized:
+            result(1)
+        default:
+            result(0)
+        }
+    }
+    
+    private func shouldShowConsentDialog(_ result: @escaping FlutterResult) {
+        switch (STKConsentManager.shared().shouldShowConsentDialog){
+        case .unknown:
+            result(0)
+            break
+        case .true:
+            result(1)
+            break
+        case .false:
+            result(2)
+            break
+        default:
+            result(0)
+            break
+        }
+    }
+    
+    private func getStorage(_ result: @escaping FlutterResult) {
+        switch (STKConsentManager.shared().storage){
+        case STKConsentDialogStorage.none:
+            result(0)
+            break
+        case STKConsentDialogStorage.userDefaults:
+            result(1)
+            break
+        default:
+            result(0)
+            break
+        }
+    }
+    
+    private func getCustomVendor(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String:Any]
+        let bundle = args["bundle"] as! String
+        if let vendors = STKConsentManager.shared().value(forKey: "customVendors") as? [STKConsentManagerJSONModel] {
+            let vendor = vendors.first {
+                ($0.jsonRepresentation()["status"] as? String) == bundle
+            }
+            if((vendor?.jsonRepresentation().isEmpty) != nil){
+                let json = vendor?.jsonRepresentation()
+                let data = try? JSONSerialization.data(withJSONObject: json!, options: [])
+                let vendorSring = data.flatMap { String(data: $0, encoding: .utf8) }
+                result(vendorSring)
+                NSLog(vendorSring!)
+            }else {
+                result("not found vendor for bundle" + bundle)
+            }
+        }
+    }
+    
+    private func setCustomVendor(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let name = args["name"] as! String
+        let bundle = args["bundle"] as! String
+        let policyUrl = args["policyUrl"] as! String
+        let purposeIds = args["purposeIds"] as! [NSNumber]
+        let featureIds = args["featureIds"] as! [NSNumber]
+        let legitimateInterestPurposeIds = args["legitimateInterestPurposeIds"] as! [NSNumber]
+        
+        STKConsentManager.shared().registerCustomVendor { builder in
+            let _ = builder
+                .appendPolicyURL(URL(string: policyUrl)!)
+                .appendName(name)
+                .appendBundle(bundle)
+                .appendPurposesIds(purposeIds)
+                .appendFeaturesIds(featureIds)
+                .appendLegIntPurposeIds(legitimateInterestPurposeIds)
+        }
+    }
+    
+    private func setStorage(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let storage = args["storage"] as! Int
+        switch (storage){
+        case 0:
+            STKConsentManager.shared().storage = STKConsentDialogStorage.none
+            break;
+        case 1:
+            STKConsentManager.shared().storage = STKConsentDialogStorage.userDefaults
+            break;
+        default:
+            STKConsentManager.shared().storage = STKConsentDialogStorage.none
+            break;
+        }
+        result(nil)
+    }
+    
     
     private func initialize(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
