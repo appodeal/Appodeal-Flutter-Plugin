@@ -17,7 +17,7 @@ fun ConsentInfoUpdateListener(channel: MethodChannel): ConsentInfoUpdateListener
 
         override fun onFailedToUpdateConsentInfo(error: ConsentManagerException?) {
             channel.invokeMethod("onFailedToUpdateConsentInfo", mapOf(
-                    "consent" to error?.toString()
+                    "error" to error?.toString()
             ))
         }
     }
