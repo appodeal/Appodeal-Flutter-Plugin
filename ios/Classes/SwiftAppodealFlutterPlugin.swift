@@ -269,7 +269,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
     
-    
     private func initialize(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let appKey = args["appKey"] as! String
