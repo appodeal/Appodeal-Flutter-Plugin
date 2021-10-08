@@ -55,7 +55,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "setExtraDataBool": setExtraDataBool(call, result)
         case "getPredictedEcpm": getPredictedEcpm(call, result)
         case "getNativeSDKVersion": getNativeSDKVersion(call, result)
-            
         case "setStorage": setStorage(call,result)
         case "setCustomVendor": setCustomVendor(call,result)
         case "getCustomVendor": getCustomVendor(call, result)
@@ -67,16 +66,38 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "consentFormIsLoaded": consentFormIsLoaded(result)
         case "consentFormIsShowing": consentFormIsShowing(result)
         case "requestConsentInfoUpdate": requestConsentInfoUpdate(call, result)
-            
-            
-            //                      "loadConsentForm" -> loadConsentForm(result)
-            //                      "showAsActivityConsentForm" -> showAsActivityConsentForm(result)
-            //                      "showAsDialogConsentForm" -> showAsDialogConsentForm(result)
-            
-            
-            
+        case "loadConsentForm": loadConsentForm(result)
+        case "showAsDialogConsentForm": showAsDialogConsentForm(result)
+        case "disableAppTrackingTransparencyRequest": disableAppTrackingTransparencyRequest(result)
         default: result(FlutterMethodNotImplemented)
         }
+    }
+    
+    private func disableAppTrackingTransparencyRequest(_ result: @escaping FlutterResult){
+        STKConsentManager.shared().disableAppTrackingTransparencyRequest()
+        result(nil)
+    }
+    
+    private func showAsDialogConsentForm(_ result: @escaping FlutterResult){
+        guard let controller = UIApplication.shared.keyWindow?.rootViewController, STKConsentManager.shared().isConsentDialogReady
+        else {
+            channel?.invokeMethod("onConsentFormError", arguments: "issue with controller" + "STKConsentManager.isConsentDialogReady - " + String(STKConsentManager.shared().isConsentDialogReady))
+            return
+        }
+        STKConsentManager.shared().showConsentDialog(fromRootViewController: controller, delegate: self)
+        result(nil)
+    }
+    
+    private func loadConsentForm(_ result: @escaping FlutterResult){
+        STKConsentManager.shared().loadConsentDialog { [unowned self] error in
+            if let error = error {
+                let args: [String: Any] = ["error": error.localizedDescription as String]
+                channel?.invokeMethod("onConsentFormError", arguments: args)
+            } else {
+                channel?.invokeMethod("onConsentFormLoaded", arguments: nil)
+            }
+        }
+        result(nil)
     }
     
     private func requestConsentInfoUpdate(_ call: FlutterMethodCall, _ result: @escaping FlutterResult){
@@ -92,7 +113,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
             if let error = error {
                 let args: [String: Any] = ["error": error.localizedDescription as String]
                 channel?.invokeMethod("onFailedToUpdateConsentInfo", arguments: args)
-                  print("Error while synchronising consent manager: \(error)") 
+                print("Error while synchronising consent manager: \(error)")
             } else {
                 guard let consent = STKConsentManager.shared().consent as? STKConsentManagerJSONModel else {
                     let args: [String: Any] = ["consnent": "not found consent"]
@@ -106,6 +127,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
                 channel?.invokeMethod("onConsentInfoUpdated", arguments: args)
             }
         }
+        result(nil)
     }
     
     private func consentFormIsShowing(_ result: @escaping FlutterResult){
@@ -117,14 +139,14 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     }
     
     private func getConsent(_ result: @escaping FlutterResult){
-        let json = STKConsentManager.shared().consent
-        if(json != nil){
-            let data = try? JSONSerialization.data(withJSONObject: json!, options: [])
-            let consentSring = data.flatMap { String(data: $0, encoding: .utf8) }
-            result(consentSring)
-        }else {
+        guard let consent = STKConsentManager.shared().consent as? STKConsentManagerJSONModel else {
             result("not found consent")
+            return
         }
+        let json = consent.jsonRepresentation()
+        let data = try? JSONSerialization.data(withJSONObject: json as Any, options: [])
+        let consentSring = data.flatMap { String(data: $0, encoding: .utf8) }
+        result(consentSring)
     }
     
     private func getConsentZone(_ result: @escaping FlutterResult){
@@ -227,6 +249,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
                 .appendFeaturesIds(featureIds)
                 .appendLegIntPurposeIds(legitimateInterestPurposeIds)
         }
+        result(nil)
     }
     
     private func setStorage(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
@@ -264,7 +287,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         Appodeal.updateConsent(hasConsent)
         result(nil)
     }
-    
     
     private func isInitialized(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
@@ -360,13 +382,11 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     private func setTabletBanners(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let tabletBannerEnabled = args["tabletBannerEnabled"] as! Bool
-        
         if (tabletBannerEnabled) {
             Appodeal.setPreferredBannerAdSize(kAppodealUnitSize_728x90)
         }else {
             Appodeal.setPreferredBannerAdSize(kAPDAdSize320x50)
         }
-        
         result(nil)
     }
     
@@ -506,7 +526,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
     
-    
     private func setExtraDataString(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let key = args["key"] as! String
@@ -561,7 +580,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(Appodeal.predictedEcpm(for: adType))
     }
     
-    
     private func getNativeSDKVersion(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         result(Appodeal.getVersion())
     }
@@ -599,6 +617,4 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         default: return AppodealShowStyle(rawValue: 0)
         }
     }
-    
 }
-
