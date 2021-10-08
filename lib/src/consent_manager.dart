@@ -34,7 +34,11 @@ class ConsentManager {
   }
 
   static Future<void> showAsActivityConsentForm() async {
-    return _channel.invokeMethod('showAsActivityConsentForm');
+    if(Platform.isAndroid){
+      return _channel.invokeMethod('showAsActivityConsentForm');
+    }else if (Platform.isIOS) {
+      return _channel.invokeMethod('showAsDialogConsentForm');
+    }
   }
 
   static Future<void> loadConsentForm() async {
