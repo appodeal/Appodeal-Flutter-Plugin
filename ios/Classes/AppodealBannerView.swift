@@ -1,10 +1,3 @@
-//
-//  AppodealBannerView.swift
-//  appodeal_flutter
-//
-//  Created by Artyom Kul on 27.08.21.
-//
-
 import Appodeal
 import Flutter
 import Foundation
