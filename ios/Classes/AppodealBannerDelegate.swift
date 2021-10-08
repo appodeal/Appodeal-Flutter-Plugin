@@ -1,10 +1,3 @@
-//
-//  AppodealBannerDelegate.swift
-//  appodeal_flutter
-//
-//  Created by Artyom Kul on 24.08.21.
-//
-
 import Foundation
 import Appodeal
 
