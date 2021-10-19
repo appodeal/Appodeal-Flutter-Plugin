@@ -8,7 +8,6 @@ import 'package:appodeal_flutter_example/banner_view.dart';
 import 'package:appodeal_flutter_example/mrec_view.dart';
 import 'package:appodeal_flutter_example/rewarded_video.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'consent_manager.dart';
 
@@ -36,7 +35,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
   Future<void> initialization() async {
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
-    Appodeal.setTesting(true);
+   // Appodeal.setTesting(true);
     Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
     Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
@@ -44,7 +43,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setSmartBanners(false);
     Appodeal.setTabletBanners(false);
     Appodeal.setBannerAnimation(false);
-    Appodeal.setBannerRotation(90, 90);
+    //Appodeal.setBannerRotation(90, 90);
     Appodeal.disableNetwork("admob");
     Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
     Appodeal.disableLocationPermissionCheck();
@@ -232,14 +231,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     );
   }
 
-  void showToast(String message) {
-    Fluttertoast.showToast(
-        msg: message,
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
+  static void showToast(String message) {
+    print(message);
   }
 }
