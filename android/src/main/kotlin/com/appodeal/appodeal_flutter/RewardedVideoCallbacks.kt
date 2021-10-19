@@ -1,6 +1,7 @@
 
 package com.appodeal.appodeal_flutter
 
+import android.util.Log
 import com.appodeal.ads.RewardedVideoCallbacks
 import io.flutter.plugin.common.MethodChannel
 
@@ -25,10 +26,17 @@ fun RewardedVideoCallbacks(channel: MethodChannel): RewardedVideoCallbacks {
         }
 
         override fun onRewardedVideoFinished(amount: Double, reward: String?) {
-            channel.invokeMethod("onRewardedVideoFinished", mapOf(
+            if (reward!=null){
+                channel.invokeMethod("onRewardedVideoFinished", mapOf(
                     "amount" to amount,
                     "reward" to reward
-            ))
+                ))
+            }else {
+                channel.invokeMethod("onRewardedVideoFinished", mapOf(
+                    "amount" to amount,
+                    "reward" to "empty"
+                ))
+            }
         }
 
         override fun onRewardedVideoClosed(isFinished: Boolean) {
