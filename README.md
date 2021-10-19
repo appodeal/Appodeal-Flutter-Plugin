@@ -45,7 +45,7 @@ We distinguish 2 sets of permissions: required permissions, without which the Ap
 > Note:	Some networks and 3rd party dependencies (related to network dependencies) can include their own permissions to the manifest. If you want to force remove such permissions you can refer to [this guide](https://developer.android.com/studio/build/manifest-merge#node_markers).
 
  **2.1.2 Multidex support**
-If you are using minSdkVersion 20 (Android 4.4) and versions below you need to add Multidex support to your project. Follow this guide to add Multidex.
+If you are using minSdkVersion 20 (Android 4.4) and versions below you need to add Multidex support to your project. Follow [this guide](https://developer.android.com/studio/build/multidex.html) to add Multidex.
 
 **2.1.3 Configure Admob/A4G meta-data** 
 Add your AdMob app id to meta-data tag:
@@ -105,5 +105,220 @@ To improve ad performance the the following entries should be added:
 <key>NSCalendarsUsageDescription</key>
 <string><App Name> needs your calendar to provide personalised advertising experience tailored to you</string>
 ```
-
 ___
+## Step 3. Initialize SDK
+To initialize Appodeal SDK use this following method:
+```dart
+Appodeal.initialize(
+        "YOUR_APPODEAL_APP_KEY", [ad_types], consentValue);
+```
+`consentValue` is bool, with 'false' meaning that the user declines to give the consent.
+
+> Note: Make sure to replace "YOUR_APPODEAL_APP_KEY" with the actual app key.
+
+Use the type codes below to set the preferred ad format:
+- Appodeal.INTERSTITIAL for interstitial.
+- Appodeal.REWARDED_VIDEO for rewarded videos.
+- Appodeal.BANNER for banners.
+- Appodeal.MREC for 300*250 banners.
+___
+
+## Interstitial
+
+Interstitial ads are full-screen advertisements. In Appodeal, they are divided into two types - static interstitial and video interstitial.
+Both types of ads are requested in parallel when caching and will be shown to be the most expensive of the two.
+static interstitial - static full-screen banners.
+video interstitial - these are videos that the user can close 5 seconds after the start of viewing.
+### Initialize interstitial
+Add the following code to initialize Interstitials
+```dart
+Appodeal.initialize(
+        "YOUR_APPODEAL_APP_KEY", [Appodeal.INTERSTITIAL], consentValue);
+```
+
+**Manual caching**
+If you need more control of interstitial ads loading use manual caching. Manual caching for Interstitial can be useful to improve [display rate](https://blog.appodeal.com/whats-display-rate/) or decrease SDK loads when several ad types are cached.
+
+To disable automatic caching for Interstitials, use the code below before the SDK initialization:
+```dart
+Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
+```
+To cache interstitial use:
+```dart
+Appodeal.cache(Appodeal.INTERSTITIAL);
+```
+To display interstitial, you need to call the following code:
+```dart
+Appodeal.show(Appodeal.INTERSTITIAL);
+```
+You can check the status of loading before showing. This method returns a bool value indicating whether the interstitial is loaded.
+```dart
+Appodeal.isLoaded(Appodeal.INTERSTITIAL);
+```
+**Interstitial placements**
+Appodeal SDK allows you to tag each impression with different placement. For using placements you need to create placements in Appodeal Dashboard. [Read more](https://wiki.appodeal.com/enstag/segments-and-placements/appodeal-placements) about placements.
+To show an interstitial ad with placement use the following code: 
+```dart
+Appodeal.showWithPlacement(Appodeal.INTERSTITIAL, “placementName”);
+```
+**Interstitial callbacks**
+The callbacks are used to track different events in the lifecycle of an ad, e.g. when an ad was clicked on or closed. To implement them use the following code: 
+```dart
+Appodeal.setInterstitialCallbacks(
+        (onInterstitialLoaded, isPrecache) => {},
+        (onInterstitialFailedToLoad) => {},
+        (onInterstitialShown) => {},
+        (onInterstitialShowFailed) => {},
+        (onInterstitialClicked) => {},
+        (onInterstitialClosed) => {},
+        (onInterstitialExpired) => {});
+  }
+```
+
+**Get predicted eCPM**
+This method return expected eCPM for cached ad. Amount is calculated based on historical data for the current ad unit.
+```dart
+    Appodeal.getPredictedEcpm(Appodeal.INTERSTITIAL);
+```
+
+**Mute video interstitials (Only for android platform)**
+You can mute video ads if calls is muted on the device. For muting you need to call the following code before the initialization method:
+```dart
+    Appodeal.muteVideosIfCallsMuted(true);
+```
+## Rewarded video
+Rewarded video - user-initiated ads where users can earn in-app rewards in exchange for viewing a video ad.
+### Initialize Rewarded video
+Add the following code to initialize Interstitials
+```dart
+Appodeal.initialize(
+        "YOUR_APPODEAL_APP_KEY", [Appodeal.REWARDED_VIDEO], consentValue);
+```
+**Manual caching**
+If you need more control of Rewarded video ads loading use manual caching. Manual caching for Rewarded video can be useful to improve [display rate](https://blog.appodeal.com/whats-display-rate/) or decrease SDK loads when several ad types are cached.
+To disable automatic caching for Rewarded video, use the code below before the SDK initialization:
+```dart
+Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
+```
+To cache Rewarded video use:
+```dart
+Appodeal.cache(Appodeal.REWARDED_VIDEO);
+```
+To display Rewarded video, you need to call the following code:
+```dart
+Appodeal.show(Appodeal.REWARDED_VIDEO);
+```
+You can check the status of loading before showing. This method returns a bool value indicating whether the Rewarded video is loaded.
+```dart
+Appodeal.isLoaded(Appodeal.REWARDED_VIDEO);
+```
+**Rewarded video placements**
+Appodeal SDK allows you to tag each impression with different placement. For using placements you need to create placements in Appodeal Dashboard. [Read more](https://wiki.appodeal.com/enstag/segments-and-placements/appodeal-placements) about placements.
+To show an rewarded video ad with placement use the following code: 
+```dart
+Appodeal.showWithPlacement(Appodeal.REWARDED_VIDEO, “placementName”);
+```
+**Rewarded video callbacks**
+The callbacks are used to track different events in the lifecycle of an ad, e.g. when an ad was clicked on or closed. To implement them use the following code: 
+```dart
+ Appodeal.setRewardedVideoCallbacks(
+      (onRewardedVideoLoaded, isPrecache) => {},
+      (onRewardedVideoFailedToLoad) => {},
+      (onRewardedVideoShown) => {},
+      (onRewardedVideoShowFailed) => {},
+      (onRewardedVideoFinished, amount, reward) => {},
+      (onRewardedVideoClosed, isFinished) => {},
+      (onRewardedVideoExpired) => {},
+      (onRewardedVideoClicked) => {},
+    );
+```
+**Get predicted eCPM**
+This method return expected eCPM for cached ad. Amount is calculated based on historical data for the current ad unit.
+```dart
+    Appodeal.getPredictedEcpm(Appodeal.REWARDED_VIDEO);
+```
+___
+## Banner
+Banner ads are classic static banners, which are usually located at the bottom or top of the advertisement. Appodeal supports traditional 320x50 banners, tablet banners 728x90 and smart banners that adjust to the size and orientation of the device.
+You can display only one view for banner on the screen.
+
+### Initialize banner
+Add the following code to initialize banners
+```dart
+Appodeal.initialize(
+        "YOUR_APPODEAL_APP_KEY", [Appodeal.BANNER], consentValue);
+```
+**Display banner**
+Banner ads are refreshed every 15 seconds automatically by default. To display banner, you need to call the following code:
+```dart
+Appodeal.show(Appodeal.BANNER_BOTTOM); // Display banner at the bottom of the screen
+Appodeal.show(Appodeal.BANNER_TOP); // Display banner at the top of the screen
+Appodeal.show(Appodeal.BANNER_LEFT); // Display banner at the left of the screen
+Appodeal.show(Appodeal.BANNER_RIGHT); // Display banner at the right of the screen
+```
+**Display banner view at a custom position**
+To display a banner view add widget AppodealBanner()
+```dart
+child: AppodealBannerView(placementName: "default"))
+```
+**Check if banner is loaded**
+```dart
+Appodeal.isLoaded(Appodeal.BANNER);
+```
+**Hide banner**
+```dart
+Appodeal.hide(Appodeal.BANNER);
+```
+**Destroy banner**
+To free memory from hidden banner call the code below:
+```dart
+Appodeal.destroy(Appodeal.BANNER);
+```
+**Banner placements**
+Appodeal SDK allows you to tag each impression with different placement. For using placements you need to create placements in Appodeal Dashboard. [Read more](https://wiki.appodeal.com/enstag/segments-and-placements/appodeal-placements) about placements.
+To show an banner ad with placement use the following code: 
+```dart
+Appodeal.showWithPlacement(Appodeal.BANNER, “placementName”);
+```
+If the loaded ad can’t be shown for a specific placement, nothing will be shown. 
+You can configure your impression logic for each placement.
+If you have no placements, or call Appodeal.show with placement that do not exist, the impression will be tagged with 'default' placement and its settings will be applied.
+
+**Banner callbacks**
+The callbacks are used to track different events in the lifecycle of an ad, e.g. when an ad was clicked on or closed. To implement them use the following code: 
+```dart
+ Appodeal.setBannerCallbacks(
+            (onBannerLoaded, isPrecache) => {},
+            (onBannerFailedToLoad) => {},
+            (onBannerShown) => {},
+            (onBannerShowFailed) => {},
+            (onBannerClicked) => {},
+            (onBannerExpired) => {};
+```
+## MREC 
+MREC is 300x250 banner. This type can be useful if the application has a large free area for placing a banner in the interface.
+
+**Initialize MREC**
+Add the following code to initialize mrecs
+```dart
+Appodeal.initialize(
+        "YOUR_APPODEAL_APP_KEY", [Appodeal.MREC], consentValue);
+```
+**Display MREC**
+Appodeal SDK allows you to tag each impression with different placement. For using placements you need to create placements in Appodeal Dashboard. [Read more](https://wiki.appodeal.com/enstag/segments-and-placements/appodeal-placements) about placements.
+To display a mrec view add widget AppodealBanner()
+```dart
+child: AppodealBannerView(placementName: "default"))
+```
+**MREC callbacks**
+The callbacks are used to track different events in the lifecycle of an ad, e.g. when an ad was clicked on or closed. To implement them use the following code: 
+```dart
+Appodeal.setMrecCallbacks(
+            (onMrecLoaded, isPrecache) => {},
+            (onMrecFailedToLoad) => {},
+            (onMrecShown) => {},
+            (onMrecShowFailed) => {},
+            (onMrecClicked) => {},
+            (onMrecExpired) => {};
+  }
+```
