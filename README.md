@@ -322,3 +322,155 @@ Appodeal.setMrecCallbacks(
             (onMrecExpired) => {};
   }
 ```
+## GDPR and CCPA
+> Note:Keep in mind that it’s best to contact qualified legal professionals, if you haven’t done so already, to get more information and be well-prepared for compliance
+
+The General Data Protection Regulation, better known as GDPR, took effect on May 25, 2018. It’s a set of rules designed to give EU citizens more control over their personal data. Any businesses established in the EU or with users based in Europe are required to comply with GDPR or risk facing heavy fines. The California Consumer Privacy Act (CCPA) went into effect on January 1, 2020. **We have put together some resources below to help publishers understand better the steps they need to take to be GDPR compliant.**
+
+> Note: You can learn more about GDPR and CCPA and their differences [here](https://iapp.org/resources/article/ccpa-and-gdpr-comparison-chart/).
+
+### Step 1: Update Privacy Policy
+**1.1 Make sure your privacy policy includes information about advertising ID collection.**
+Don’t forget to add information about IP address and advertising ID collection, as well as [the link to Appodeal’s privacy policy](https://www.appodeal.com/privacy-policy) to your app’s privacy policy in Google Play and App Store.
+
+To speed up the process, you could use [privacy policy generators](https://app-privacy-policy-generator.firebaseapp.com/) —just insert advertising ID, IP address, and location (if you collect a user’ location) in the "Personally Identifiable Information you collect" field (in line with other information about your app) and [the link to Appodeal’s privacy policy](https://www.appodeal.com/privacy-policy) in "Link to the privacy policy of third party service providers used by the app".
+
+**1.2 Add a privacy policy to your mobile app.**
+You must add your explicit privacy policies in two places: your app’s Store Listing page and within your app.
+
+You can find detailed instructions on adding your privacy policy to your app on legal service websites. For example, Iubenda, the solution tailored to legal compliance, provides a [comprehensive guide](https://www.iubenda.com/blog/privacy-policy-for-android-app/) on including a privacy policy in your app.
+
+Make sure that your privacy policy website has an SSL-certificate—this point might seem to be obvious, but it’s still essential.
+
+Here’s are two useful resources that you can utilize while working on your app compliance:
+[Privacy, Security and Deception regulations (by Google Play)](https://play.google.com/intl/en-GB_ALL/about/privacy-security-deception/user-data/)
+[Recommendations on Developing a Meaningful Privacy Policy (by Attorney General California Department of Justice)](https://oag.ca.gov/sites/all/files/agweb/pdfs/cybersecurity/making_your_privacy_practices_public.pdf)
+
+> Note:**Please note that although we’re always eager to back you up with valuable information, we’re not authorized to provide any legal advice. It’s important to address your questions to lawyers who work specifically in this area.**
+
+## Step 2: Stack Consent Manager
+In order for Appodeal and our ad providers to deliver ads that are more relevant to your users, as a mobile app publisher, you need to collect explicit user consent in the regions covered by GDPR and CCPA.
+
+To get consent for collecting personal data of your users, we suggest you use a ready-made solution - Stack Consent Manager.
+
+Stack Consent Manager comes with a pre-made consent window that you can easily present to your users. That means you no longer need to create your own consent window.
+
+> Note:Minimal requirements: Appodeal SDK 2.7.0 or higher.
+
+**2.1. Update Consent Status**
+When using the Consent SDK, it is recommended that you determine the status of a user's consent at every app launch.
+Call the following code for determinating the status of a user's consent:
+```dart
+ConsentManager.requestConsentInfoUpdate("YOUR_APP_KEY");
+```
+
+Now you can use use the following ConsentInfo callbacks:
+```dart 
+ConsentManager.setConsentInfoUpdateListener(
+        (onConsentInfoUpdated, consent) => {},
+        (onFailedToUpdateConsentInfo, error) => {});
+``` 
+
+All returned errors are Exception instances with custom codes:
+Code | Description | 
+------------ | ------------- | 
+INTERNAL(1) | Error on the SDK side. Includes JS-bridge or encoding/decoding errors
+NETWORKING(2) | HTTP errors, parse request/response 
+INCONSISTENT(3) | Incorrect SDK API usage
+
+> Note: Consent manager SDK can be synchronized at any moment of the application lifecycle. We recommend synchronizing it at the application launch. Multiple synchronization calls are allowed.
+
+If the consent information is successfully updated, the updated consent is provided via the onConsentInfoUpdated() method of the ConsentInfoUpdateListener.
+
+Now you can receive information about the previous user consent and regulation zone. Before request these parameters are undefined.
+```dart 
+var consentStatus = await ConsentManager.getConsentStatus();
+```
+
+Consent Status | Description | 
+------------ | ------------- | 
+UNKNOWN | The user has neither granted nor declined consent for personalized or non-personalized ads.
+NON_PERSONALIZED | The user has granted consent for non-personalized ads.
+PARTLY_PERSONALIZED | The user has granted partly(for a few Ad networks) consent for personalized ads.
+PERSONALIZED | The user has granted consent for personalized ads.
+
+**2.2. Necessity of showing the consent window**
+After the onConsentInfoUpdated method was called, you need to determine if your users are subject to the GDPR and CCPA and whether you should show the consent window for the collection of personal data.
+You can check whether to show a Consent Dialog or not. Before request these parameters are undefined(Unknown status)
+```dart
+var shouldShow = await ConsentManager.shouldShowConsentDialog();
+```
+ShouldShow | Description | 
+------------ | ------------- | 
+TRUE | The user is within the scope of the GDPR or CCPA laws, the consent window should be displayed.
+FALSE | The user is not within the scope of the GDPR or CCPA laws OR the consent window has already been shown.
+UNKNOWN | The value is undefined(the requestConsentInfoUpdate method was not called).
+
+**2.3. Show Consent window**
+> Note: SDK allows calling consent window API only after request 
+
+After the SDK requests, you can build and load the consent window. Loading allowed in any regulation zone and independent from previous consent.
+Use the following code for loading consent form
+```dart
+ConsentManager.loadConsentForm();
+```
+
+You can check that the consent window is ready or not
+```dart
+var isLoaded = await ConsentManager.consentFormIsLoaded();
+```
+After the consent window Is ready you can show it as Activity or Dialog
+```dart
+ConsentManager.showAsDialogConsentForm();
+ConsentManager.showAsActivityConsentForm();
+```
+> Note: After the first display of the consent window, the shouldShowConsentDialog method will return the value of Consent.ShouldShow.FALSE in the next sessions
+
+Handling presentation callbacks of Consent Form: 
+```dart
+ConsentManager.setConsentFormListener(
+      (onConsentFormLoaded) => {},
+      (onConsentFormError, error) => {},
+      (onConsentFormOpened) => {},
+      (onConsentFormClosed, consent) => {}
+    );
+```
+## App Tracking Transparency
+Starting in iOS 14, IDFA will be unavailable until an app calls the App Tracking Transparency framework to present the app-tracking authorization request to the end-user. If an app does not present this request, the IDFA will automatically be zeroed out which may lead to a significant loss in ad revenue. 
+
+To display the App Tracking Transparency authorization request for accessing the IDFA, update your Info.plist to add the NSUserTrackingUsageDescription key with a custom message describing the usage. 
+```
+<key>NSUserTrackingUsageDescription</key>
+<string>This identifier will be used to deliver personalized ads to you.</string>
+```
+If you are using StackConsentManager framework in your project there are no additional steps required. Authorization request will be shown for users under iOS 14.5.
+
+Disable ATT request via Appodeal Unity Consent Manger: 
+```dart
+ConsentManager.disableAppTrackingTransparencyRequest();
+```
+## Advanced
+
+### Coppa 
+For purposes of the [Children's Online Privacy Protection Act (COPPA)](http://business.ftc.gov/privacy-and-security/children%27s-privacy), there is a setting called childDirectedTreatment. If your app is designed for kids you can disable sending user data to ad networks by the method below.
+
+Should be called before the SDK initialization:
+```dart
+Appodeal.setChildDirectedTreatment(bool value);
+```
+
+Using test mode allows you to get our test ad creatives with 100% fillrate. Use the following code for enable test mode (Should be called before the SDK initialization):
+```dart
+Appodeal.setTesting(true);
+``` 
+
+To enable verbose logging, use the code below (Should be called before the SDK initialization):
+```dart
+    Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
+```
+Logs will be written to logcat using the `"Appodeal"` tag.
+Available parameters:
+
+ - `Appodeal.LogLevelNone` - logs off;
+ - `Appodeal.LogLevelDebug` - debug messages;
+ - `Appodeal.LogLevelVerbose` -  all SDK and ad network messages.
