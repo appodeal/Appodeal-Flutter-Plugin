@@ -1,3 +1,5 @@
-## 0.0.1
+## 1.0.0-Beta
 
-* TODO: Describe initial release.
+* Update Appodeal iOS to 2.8.2
+* * Update Appodeal Android to 2.8.2.2
+
