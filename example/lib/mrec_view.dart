@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:appodeal_flutter/appodeal_flutter.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:flutter/material.dart';
 
 class MrecViewPage extends StatefulWidget {
