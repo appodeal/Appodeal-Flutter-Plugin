@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:appodeal_flutter/appodeal_flutter.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:appodeal_flutter_example/Interstitial.dart';
 import 'package:appodeal_flutter_example/banner.dart';
 import 'package:appodeal_flutter_example/banner_view.dart';
@@ -35,7 +35,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
 
   Future<void> initialization() async {
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
-   // Appodeal.setTesting(true);
+    Appodeal.setTesting(true);
     Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
     Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
     Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
@@ -43,7 +43,6 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setSmartBanners(false);
     Appodeal.setTabletBanners(false);
     Appodeal.setBannerAnimation(false);
-    //Appodeal.setBannerRotation(90, 90);
     Appodeal.disableNetwork("admob");
     Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
     Appodeal.disableLocationPermissionCheck();
