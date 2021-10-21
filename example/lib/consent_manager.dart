@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:appodeal_flutter/appodeal_flutter.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:appodeal_flutter_example/main.dart';
 import 'package:flutter/material.dart';
 
