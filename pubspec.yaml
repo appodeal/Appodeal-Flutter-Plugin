@@ -1,7 +1,7 @@
 name: appodeal_flutter
 description: Appodeal Flutter Plugin.
-version: 1.0.0-Beta
-homepage: https://https://www.appodeal.com
+version: 1.0.0-beta
+homepage: https://www.appodeal.com
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
