@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 class Appodeal {
-  static const APPODEAL_FLUTTER_PLUGIN_VERSION = "1.0.0";
 
   static const BANNER = 1;
   static const BANNER_RIGHT = 2;
@@ -571,14 +570,6 @@ class Appodeal {
   ///
   static Future<String> getNativeSDKVersion() async {
     return await _channel.invokeMethod('getNativeSDKVersion', {}) ?? "0";
-  }
-
-  /// <summary>
-  /// Get Flutter plugin version
-  /// See <see cref="Appodeal.getPluginVersion"/> for resulting triggered event.
-  /// </summary>
-  static String getAppodealFlutterPluginVersion() {
-    return APPODEAL_FLUTTER_PLUGIN_VERSION;
   }
 
   /// <summary>
