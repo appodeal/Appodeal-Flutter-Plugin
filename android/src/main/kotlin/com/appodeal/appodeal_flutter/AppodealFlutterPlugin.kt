@@ -46,7 +46,10 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "hide" -> hide(call, result)
             "setAutoCache" -> setAutoCache(call, result)
             "setTriggerOnLoadedOnPrecache" -> setTriggerOnLoadedOnPrecache(call, result)
-            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(call, result)
+            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(
+                call,
+                result
+            )
             "isLoaded" -> isLoaded(call, result)
             "isPrecache" -> isPrecache(call, result)
             "setSmartBanners" -> setSmartBanners(call, result)
@@ -57,7 +60,9 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "disableNetwork" -> disableNetwork(call, result)
             "disableNetworkForSpecificAdType" -> disableNetworkForSpecificAdType(call, result)
             "disableLocationPermissionCheck" -> disableLocationPermissionCheck(result)
-            "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(result)
+            "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(
+                result
+            )
             "setUserId" -> setUserId(call, result)
             "setUserAge" -> setUserAge(call, result)
             "setUserGender" -> setUserGender(call, result)
@@ -286,6 +291,8 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         if (consentString.isNotEmpty()) {
             consent = ConsentManager.getInstance(activity).consent
             Appodeal.initialize(activity, appKey, ads, consent!!)
+        } else {
+            Appodeal.initialize(activity, appKey, ads, false)
         }
         result.success(null)
     }

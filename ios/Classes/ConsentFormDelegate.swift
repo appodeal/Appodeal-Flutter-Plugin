@@ -1,5 +1,6 @@
 import Foundation
 import StackConsentManager.Private
+import Appodeal
 
 extension SwiftAppodealFlutterPlugin: STKConsentManagerDisplayDelegate {
     public func consentManagerWillShowDialog(_ consentManager: STKConsentManager) {
@@ -17,6 +18,7 @@ extension SwiftAppodealFlutterPlugin: STKConsentManagerDisplayDelegate {
             channel?.invokeMethod("onConsentInfoUpdated", arguments: args)
             return
         }
+        
         let json = consent.jsonRepresentation()
         let data = try? JSONSerialization.data(withJSONObject: json as Any, options: [])
         let consentSring = data.flatMap { String(data: $0, encoding: .utf8) }

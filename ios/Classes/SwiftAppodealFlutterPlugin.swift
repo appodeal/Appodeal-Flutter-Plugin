@@ -19,6 +19,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "initialize": initialize(call, result)
+        case "initializeWithConsent": initializeWithConsent (call, result)
         case "updateConsent": updateConsent(call, result)
         case "isInitialized": isInitialized(call, result)
         case "isAutoCacheEnabled": isAutoCacheEnabled(call, result)
@@ -279,6 +280,22 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         Appodeal.initialize(withApiKey: appKey, types: adTypes, hasConsent: hasConsent)
         result(nil)
     }
+
+    private func initializeWithConsent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+            let args = call.arguments as! [String: Any]
+            let appKey = args["appKey"] as! String
+            let types = args["adTypes"] as! [Int]
+            let consent = args["consent"] as! String
+            let adTypes = AppodealAdType(rawValue: types.reduce(0) { $0 | getAdType(adId: $1).rawValue })
+            setCallbacks()
+            if(!consent.isEmpty){
+               let report = STKConsentManager.shared().consent!
+               Appodeal.initialize(withApiKey: appKey, types: adTypes, consentReport: report)
+            } else {
+               Appodeal.initialize(withApiKey: appKey, types: adTypes, hasConsent: false)
+            }
+            result(nil)
+        }
     
     private func updateConsent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]

@@ -4,7 +4,7 @@
 1.1 Add the dependency to the pubspec.yaml file in your project:
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 1.0.1-beta
+  stack_appodeal_flutter: 1.0.2-beta
 ```
 1.2 Install the plugin by running the command below in the terminal:
 ```
