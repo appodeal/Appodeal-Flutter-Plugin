@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'stack_appodeal_flutter'
-  s.version          = '1.0.0-beta'
+  s.version          = '1.0.2-beta'
   s.summary          = 'Appodeal flutter plugin'
 
   s.homepage         = 'http://appodeal.com'
