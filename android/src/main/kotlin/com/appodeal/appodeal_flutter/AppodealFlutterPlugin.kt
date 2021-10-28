@@ -16,7 +16,6 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
-
 @Suppress("DEPRECATION", "SpellCheckingInspection")
 class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
@@ -46,10 +45,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "hide" -> hide(call, result)
             "setAutoCache" -> setAutoCache(call, result)
             "setTriggerOnLoadedOnPrecache" -> setTriggerOnLoadedOnPrecache(call, result)
-            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(
-                call,
-                result
-            )
+            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(call, result)
             "isLoaded" -> isLoaded(call, result)
             "isPrecache" -> isPrecache(call, result)
             "setSmartBanners" -> setSmartBanners(call, result)
@@ -60,9 +56,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "disableNetwork" -> disableNetwork(call, result)
             "disableNetworkForSpecificAdType" -> disableNetworkForSpecificAdType(call, result)
             "disableLocationPermissionCheck" -> disableLocationPermissionCheck(result)
-            "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(
-                result
-            )
+            "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(result)
             "setUserId" -> setUserId(call, result)
             "setUserAge" -> setUserAge(call, result)
             "setUserGender" -> setUserGender(call, result)
@@ -84,7 +78,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "getPredictedEcpm" -> getPredictedEcpm(call, result)
             "getNativeSDKVersion" -> getNativeSDKVersion(result)
             "setUseSafeArea" -> setUseSafeArea(call, result)
-
             "setStorage" -> setStorage(call, result)
             "setCustomVendor" -> setCustomVendor(call, result)
             "requestConsentInfoUpdate" -> requestConsentInfoUpdate(call, result)
@@ -99,7 +92,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "showAsDialogConsentForm" -> showAsDialogConsentForm(result)
             "consentFormIsLoaded" -> consentFormIsLoaded(result)
             "consentFormIsShowing" -> consentFormIsShowing(result)
-
             else -> result.notImplemented()
         }
     }
@@ -256,7 +248,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val purposeIds = listOf(args["purposeIds"])
         val featureIds = listOf(args["featureIds"])
         val legitimateInterestPurposeIds = listOf(args["legitimateInterestPurposeIds"])
-
 
         ConsentManager.getInstance(activity)
             .setCustomVendor(
