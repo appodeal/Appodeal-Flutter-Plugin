@@ -308,7 +308,7 @@ Appodeal.initialize(
 Appodeal SDK allows you to tag each impression with different placement. For using placements you need to create placements in Appodeal Dashboard. [Read more](https://wiki.appodeal.com/enstag/segments-and-placements/appodeal-placements) about placements.
 To display a mrec view add widget AppodealBanner()
 ```dart
-child: AppodealBannerView(placementName: "default"))
+child: AppodealMrecView(placementName: "default"))
 ```
 **MREC callbacks**
 The callbacks are used to track different events in the lifecycle of an ad, e.g. when an ad was clicked on or closed. To implement them use the following code: 
