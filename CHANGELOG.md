@@ -1,3 +1,8 @@
+## 1.0.3-beta
+
+* Updated Appodeal Android SDK to 2.10.3
+* Updated Appodeal iOS SDK to 2.10.3
+
 ## 1.0.2-beta
 
 * Updated initializeWithConsent() method 
