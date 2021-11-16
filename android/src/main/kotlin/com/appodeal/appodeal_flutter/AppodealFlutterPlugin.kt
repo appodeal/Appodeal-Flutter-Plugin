@@ -268,6 +268,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val hasConsent = args["hasConsent"] as Boolean
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
         setCallbacks()
+        Appodeal.setFramework("flutter", "1.0.4-beta")
         Appodeal.initialize(activity, appKey, ads, hasConsent)
         result.success(null)
     }
@@ -279,6 +280,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val consentString = args["consent"] as String
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
         setCallbacks()
+        Appodeal.setFramework("flutter", "1.0.4-beta")
         if (consentString.isNotEmpty()) {
             consent = ConsentManager.getInstance(activity).consent
             Appodeal.initialize(activity, appKey, ads, consent!!)
