@@ -277,7 +277,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let hasConsent = args["hasConsent"] as! Bool
         let adTypes = AppodealAdType(rawValue: types.reduce(0) { $0 | getAdType(adId: $1).rawValue })
         setCallbacks()
-        Appodeal.setFramework(APDFramework.flutter, version: "")
+        Appodeal.setFramework(APDFramework.flutter, version: "1.0.5-beta")
         Appodeal.initialize(withApiKey: appKey, types: adTypes, hasConsent: hasConsent)
         result(nil)
     }
@@ -289,7 +289,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
             let consent = args["consent"] as! String
             let adTypes = AppodealAdType(rawValue: types.reduce(0) { $0 | getAdType(adId: $1).rawValue })
             setCallbacks()
-            Appodeal.setFramework(APDFramework.flutter, version: "")
+            Appodeal.setFramework(APDFramework.flutter, version: "1.0.5-beta")
             if(!consent.isEmpty){
                let report = STKConsentManager.shared().consent!
                Appodeal.initialize(withApiKey: appKey, types: adTypes, consentReport: report)
