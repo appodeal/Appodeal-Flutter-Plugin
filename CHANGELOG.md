@@ -1,3 +1,7 @@
+## 1.0.4-beta
+
+* Updated initialize methods
+
 ## 1.0.3-beta
 
 * Updated Appodeal Android SDK to 2.10.3
