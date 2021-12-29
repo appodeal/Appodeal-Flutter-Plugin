@@ -1,3 +1,11 @@
+## 1.0.5
+
+* Updated Appodeal Android SDK to 2.11.0
+* Updated Appodeal iOS SDK to 2.11.0
+* Changed dependencies logic for iOS/Android module
+* Updated LICENSE
+* Updated README.md
+
 ## 1.0.4-beta
 
 * Updated initialize methods

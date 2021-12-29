@@ -1,14 +1,7 @@
-# Uncomment this line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '10.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
-
-project 'Runner', {
-  'Debug' => :debug,
-  'Profile' => :release,
-  'Release' => :release,
-}
 
 def flutter_root
   generated_xcode_build_settings_path = File.expand_path(File.join('..', 'Flutter', 'Generated.xcconfig'), __FILE__)
@@ -27,9 +20,30 @@ require File.expand_path(File.join('packages', 'flutter_tools', 'bin', 'podhelpe
 
 flutter_ios_podfile_setup
 
+install! 'cocoapods', :warn_for_multiple_pod_sources => false
+
+source 'https://github.com/appodeal/CocoaPods.git'
+source 'https://cdn.cocoapods.org/'
+
+def appodeal
+  pod 'APDAdColonyAdapter', '2.11.0.1'
+  pod 'APDAmazonAdsAdapter', '2.11.0.1'
+  pod 'APDAppLovinAdapter', '2.11.0.1'
+  pod 'APDBidMachineAdapter', '2.11.0.1' # Required
+  pod 'APDFacebookAudienceAdapter', '2.11.0.1'
+  pod 'APDGoogleAdMobAdapter', '2.11.0.1'
+  pod 'APDIronSourceAdapter', '2.11.0.1'
+  pod 'APDMyTargetAdapter', '2.11.0.1'
+  pod 'APDOguryAdapter', '2.11.0.1'
+  pod 'APDUnityAdapter', '2.11.0.1'
+  pod 'APDVungleAdapter', '2.11.0.1'
+  pod 'APDYandexAdapter', '2.11.0.1'
+end
+
 target 'Runner' do
   use_frameworks!
   use_modular_headers!
+  appodeal
 
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
