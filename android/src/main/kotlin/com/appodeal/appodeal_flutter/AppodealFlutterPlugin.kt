@@ -19,15 +19,21 @@ import io.flutter.plugin.common.MethodChannel.Result
 @Suppress("DEPRECATION", "SpellCheckingInspection")
 class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
-    private lateinit var channel: MethodChannel
-    private lateinit var activity: Activity
-    private lateinit var pluginBinding: FlutterPlugin.FlutterPluginBinding
+    private var _channel: MethodChannel? = null
+    private val channel get() = _channel!!
+
+    private var _pluginBinding: FlutterPlugin.FlutterPluginBinding? = null
+    private val pluginBinding get() = _pluginBinding!!
+
+    private var _activity: Activity? = null
+    private val activity get() = _activity!!
+
     private var consentForm: ConsentForm? = null
     private var consent: Consent? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        pluginBinding = flutterPluginBinding
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, "appodeal_flutter")
+        _pluginBinding = flutterPluginBinding
+        _channel = MethodChannel(flutterPluginBinding.binaryMessenger, "appodeal_flutter")
         channel.setMethodCallHandler(this)
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
     }
@@ -55,8 +61,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
             "trackInAppPurchase" -> trackInAppPurchase(call, result)
             "disableNetwork" -> disableNetwork(call, result)
             "disableNetworkForSpecificAdType" -> disableNetworkForSpecificAdType(call, result)
-            "disableLocationPermissionCheck" -> disableLocationPermissionCheck(result)
-            "disableWriteExternalStoragePermissionCheck" -> disableWriteExternalStoragePermissionCheck(result)
             "setUserId" -> setUserId(call, result)
             "setUserAge" -> setUserAge(call, result)
             "setUserGender" -> setUserGender(call, result)
@@ -101,7 +105,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        activity = binding.activity
+        _activity = binding.activity
 
         pluginBinding.platformViewRegistry.registerViewFactory(
             "com.appodeal.appodeal_flutter/bannerview",
@@ -200,7 +204,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
 
     private fun loadConsentForm(result: Result) {
         consentForm = ConsentForm.Builder(activity)
-            .withListener(ConsentFormListener(channel))
+            .withListener(ConsentFormListenerImpl(channel))
             .build()
         consentForm?.load()
         result.success(null)
@@ -209,7 +213,10 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     private fun requestConsentInfoUpdate(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         ConsentManager.getInstance(activity)
-            .requestConsentInfoUpdate(args["appKey"] as String, ConsentInfoUpdateListener(channel))
+            .requestConsentInfoUpdate(
+                args["appKey"] as String,
+                ConsentInfoUpdateListenerImpl(channel)
+            )
         result.success(null)
     }
 
@@ -268,7 +275,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val hasConsent = args["hasConsent"] as Boolean
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
         setCallbacks()
-        Appodeal.setFramework("flutter", "1.0.4-beta")
+        Appodeal.setFramework("flutter", "1.0.5")
         Appodeal.initialize(activity, appKey, ads, hasConsent)
         result.success(null)
     }
@@ -280,7 +287,7 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         val consentString = args["consent"] as String
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
         setCallbacks()
-        Appodeal.setFramework("flutter", "1.0.4-beta")
+        Appodeal.setFramework("flutter", "1.0.5")
         if (consentString.isNotEmpty()) {
             consent = ConsentManager.getInstance(activity).consent
             Appodeal.initialize(activity, appKey, ads, consent!!)
@@ -446,16 +453,6 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
         result.success(null)
     }
 
-    private fun disableLocationPermissionCheck(result: Result) {
-        Appodeal.disableLocationPermissionCheck()
-        result.success(null)
-    }
-
-    private fun disableWriteExternalStoragePermissionCheck(result: Result) {
-        Appodeal.disableWriteExternalStoragePermissionCheck()
-        result.success(null)
-    }
-
     private fun setUserId(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val userId = args["userId"] as String
@@ -600,10 +597,10 @@ class AppodealFlutterPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
     }
 
     private fun setCallbacks() {
-        Appodeal.setBannerCallbacks(BannerCallbacks(channel))
-        Appodeal.setInterstitialCallbacks(InterstitialCallbacks(channel))
-        Appodeal.setRewardedVideoCallbacks(RewardedVideoCallbacks(channel))
-        Appodeal.setNonSkippableVideoCallbacks(NonSkippableVideoCallbacks(channel))
-        Appodeal.setMrecCallbacks(MrecCallbacks(channel))
+        Appodeal.setBannerCallbacks(BannerCallbacksImpl(channel))
+        Appodeal.setInterstitialCallbacks(InterstitialCallbacksImpl(channel))
+        Appodeal.setRewardedVideoCallbacks(RewardedVideoCallbacksImpl(channel))
+        Appodeal.setNonSkippableVideoCallbacks(NonSkippableVideoCallbacksImpl(channel))
+        Appodeal.setMrecCallbacks(MrecCallbacksImpl(channel))
     }
 }

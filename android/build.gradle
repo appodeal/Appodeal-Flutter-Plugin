@@ -1,12 +1,10 @@
 group 'com.appodeal.appodeal_flutter'
-version '1.0-SNAPSHOT'
 
 buildscript {
     ext.kotlin_version = '1.4.32'
     repositories {
         google()
-        //noinspection JcenterRepositoryObsolete
-        jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -18,11 +16,9 @@ buildscript {
 rootProject.allprojects {
     repositories {
         google()
-        //noinspection JcenterRepositoryObsolete
+        mavenCentral()
+        maven { url "https://artifactory.appodeal.com/appodeal" }
         jcenter()
-        maven {
-            url "https://artifactory.appodeal.com/appodeal"
-        }
     }
 }
 
@@ -30,26 +26,29 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 30
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-    defaultConfig {
-        minSdkVersion 21
-    }
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        minSdkVersion 21
+    }
 }
 
 dependencies {
-    //noinspection GradleDependency
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //noinspection GradleDynamicVersion
-    implementation 'com.appodeal.ads:sdk:2.10.3.+'
-    implementation "org.jetbrains.kotlin:kotlin-script-runtime:1.5.10"
-    implementation "com.explorestack:consent:1.0.3"
+    implementation "com.explorestack:consent:1.0.5"
+    implementation 'com.appodeal.ads.sdk:core:2.11.0'
+    implementation 'com.appodeal.ads.sdk.networks:bidmachine:2.11.0.17'
 }
