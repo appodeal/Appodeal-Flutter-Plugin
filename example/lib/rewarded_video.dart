@@ -1,7 +1,7 @@
-import 'dart:developer';
-
-import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
+
+import 'main.dart';
 
 class RewardedVideoPage extends StatefulWidget {
   @override
@@ -14,18 +14,14 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
     super.initState();
 
     Appodeal.setRewardedVideoCallbacks(
-      (onRewardedVideoLoaded, isPrecache) => {showToast('RewardedVideoCallback - $onRewardedVideoLoaded isPrecache - $isPrecache')},
-      (onRewardedVideoFailedToLoad) => {showToast('RewardedVideoCallback - $onRewardedVideoFailedToLoad')},
-      (onRewardedVideoShown) => {showToast('RewardedVideoCallback - $onRewardedVideoShown')},
-      (onRewardedVideoShowFailed) => {showToast('RewardedVideoCallback - $onRewardedVideoShowFailed')},
-      (onRewardedVideoFinished, amount, reward) => {
-        showToast('RewardedVideoCallback - $onRewardedVideoFinished amount - $amount reward - $reward'),
-      },
-      (onRewardedVideoClosed, isFinished) => {
-        showToast('RewardedVideoCallback - $onRewardedVideoClosed isFinished - $isFinished'),
-      },
-      (onRewardedVideoExpired) => {showToast('RewardedVideoCallback - $onRewardedVideoExpired')},
-      (onRewardedVideoClicked) => {showToast('RewardedVideoCallback - $onRewardedVideoClicked')},
+      onRewardedVideoLoaded: (isPrecache) => showToast('onRewardedVideoLoaded: isPrecache - $isPrecache'),
+      onRewardedVideoFailedToLoad: () => showToast('onRewardedVideoFailedToLoad'),
+      onRewardedVideoShown: () => showToast('onRewardedVideoShown'),
+      onRewardedVideoShowFailed: () => showToast('onRewardedVideoShowFailed'),
+      onRewardedVideoFinished: (amount, reward) => showToast('onRewardedVideoFinished: amount - $amount, reward - $reward'),
+      onRewardedVideoClosed: (isFinished) => showToast('onRewardedVideoClosed isFinished - $isFinished'),
+      onRewardedVideoExpired: () => showToast('onRewardedVideoExpired'),
+      onRewardedVideoClicked: () => showToast('onRewardedVideoClicked'),
     );
   }
 
@@ -101,9 +97,5 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
         ),
       ),
     );
-  }
-
-  static void showToast(String message) {
-    log(message);
   }
 }

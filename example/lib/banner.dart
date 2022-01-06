@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:flutter/material.dart';
+
+import 'main.dart';
 
 class BannerPage extends StatefulWidget {
   @override
@@ -14,12 +14,12 @@ class _BannerPageState extends State<BannerPage> {
     super.initState();
 
     Appodeal.setBannerCallbacks(
-            (onBannerLoaded, isPrecache) => showToast('$onBannerLoaded - isPrecache - $isPrecache'),
-            (onBannerFailedToLoad) => showToast('$onBannerFailedToLoad'),
-            (onBannerShown) => showToast('$onBannerShown'),
-            (onBannerShowFailed) => showToast('$onBannerShowFailed'),
-            (onBannerClicked) => showToast('$onBannerClicked'),
-            (onBannerExpired) => showToast('$onBannerExpired'));
+        onBannerLoaded: (isPrecache) => showToast('onBannerLoaded: isPrecache - $isPrecache'),
+        onBannerFailedToLoad: () => showToast('onBannerFailedToLoad'),
+        onBannerShown: () => showToast('onBannerShown'),
+        onBannerShowFailed: () => showToast('onBannerShowFailed'),
+        onBannerClicked: () => showToast('onBannerClicked'),
+        onBannerExpired: () => showToast('onBannerExpired'));
   }
 
   @override
@@ -130,9 +130,5 @@ class _BannerPageState extends State<BannerPage> {
         ),
       ),
     );
-  }
-
-  static void showToast(String message) {
-    log(message);
   }
 }

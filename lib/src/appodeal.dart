@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 class Appodeal {
-
   static const BANNER = 1;
   static const BANNER_RIGHT = 2;
   static const BANNER_TOP = 3;
@@ -14,6 +13,7 @@ class Appodeal {
   static const INTERSTITIAL = 7;
   static const REWARDED_VIDEO = 8;
   static const MREC = 9;
+  static const ALL = 11;
 
   static const LogLevelNone = 0;
   static const LogLevelDebug = 1;
@@ -23,190 +23,95 @@ class Appodeal {
   static const GENDER_MALE = 1;
   static const GENDER_FEMALE = 2;
 
-  static Function(String onBannerLoaded, bool isPrecache)? _onBannerLoaded;
-  static Function(String onBannerFailedToLoad)? _onBannerFailedToLoad;
-  static Function(String onBannerShown)? _onBannerShown;
-  static Function(String onBannerShowFailed)? _onBannerShowFailed;
-  static Function(String onBannerClicked)? _onBannerClicked;
-  static Function(String onBannerExpired)? _onBannerExpired;
-
-  static Function(String onMrecLoaded, bool isPrecache)? _onMrecLoaded;
-  static Function(String onMrecFailedToLoad)? _onMrecFailedToLoad;
-  static Function(String onMrecShown)? _onMrecShown;
-  static Function(String onMrecShowFailed)? _onMrecShowFailed;
-  static Function(String onMrecClicked)? _onMrecClicked;
-  static Function(String onMrecExpired)? _onMrecExpired;
-
-  static Function(String onInterstitialLoaded, bool isPrecache)? _onInterstitialLoaded;
-  static Function(String onInterstitialFailedToLoad)? _onInterstitialFailedToLoad;
-  static Function(String onInterstitialShown)? _onInterstitialShown;
-  static Function(String onInterstitialShowFailed)? _onInterstitialShowFailed;
-  static Function(String onInterstitialClicked)? _onInterstitialClicked;
-  static Function(String onInterstitialClosed)? _onInterstitialClosed;
-  static Function(String onInterstitialExpired)? _onInterstitialExpired;
-
-  static Function(String onRewardedVideoLoaded, bool isPrecache)? _onRewardedVideoLoaded;
-  static Function(String onRewardedVideoFailedToLoad)? _onRewardedVideoFailedToLoad;
-  static Function(String onRewardedVideoShown)? _onRewardedVideoShown;
-  static Function(String onRewardedVideoShowFailed)? _onRewardedVideoShowFailed;
-  static Function(String onRewardedVideoFinished, double amount, String reward)? _onRewardedVideoFinished;
-  static Function(String onRewardedVideoClosed, bool isFinished)? _onRewardedVideoClosed;
-  static Function(String onRewardedVideoExpired)? _onRewardedVideoExpired;
-  static Function(String onRewardedVideoClicked)? _onRewardedVideoClicked;
-
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
+  static const MethodChannel _interstitialChannel =
+      const MethodChannel('appodeal_flutter/interstitial');
+  static const MethodChannel _rewardedVideoChannel =
+      const MethodChannel('appodeal_flutter/rewarded');
+  static const MethodChannel _bannerChannel =
+      const MethodChannel('appodeal_flutter/banner');
+  static const MethodChannel _mrecChannel =
+      const MethodChannel('appodeal_flutter/mrec');
 
-  /// <summary>
-  /// Initializes the relevant (Android or iOS) Appodeal SDK.
-  /// See <see cref="Appodeal.initialize"/> for resulting triggered event.
-  /// <param name="appKey">Appodeal app key you received when you created an app.</param>
-  /// <param name="adTypes">Type of advertising you want to initialize.</param>
-  /// <param name="hasConsent">User has given consent to the processing of personal data relating to him or her. https://www.eugdpr.org/.</param>
-  ///
-  ///  To initialize only interstitials use <see cref="Appodeal.initialize(appKey, Appodeal.INTERSTITIAL, hasConsent);"/>
-  ///  To initialize only banners use <see cref="Appodeal.initialize(appKey, Appodeal.BANNER, hasConsent);"/>
-  ///  To initialize only rewarded video use <see cref="Appodeal.initialize(appKey, Appodeal.REWARDED_VIDEO, hasConsent);"/>
-  ///  To initialize only non-skippable video use <see cref="Appodeal.initialize(appKey, Appodeal.NON_SKIPPABLE_VIDEO, hasConsent);"/>
-  ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC, hasConsent);"/>
-  /// </summary>
-  static Future<void> initialize(String appKey, List<int> adTypes, bool hasConsent) async {
-    _setCallbacks();
-    return _channel.invokeMethod('initialize', {'appKey': appKey, 'adTypes': adTypes, 'hasConsent': hasConsent});
+  static Future<void> initialize(String appKey,
+                                 List<int> adTypes,
+                                 {bool? boolConsent}) async {
+    return _channel.invokeMethod('initialize', {
+      'appKey': appKey,
+      'adTypes': adTypes,
+      'boolConsent': boolConsent,
+    });
   }
 
-  /// <summary>
-  /// Check if ad type is initialized
-  /// See <see cref="Appodeal.isInitialized"/> for resulting triggered event.
-  /// <param name="adType">adType type of advertising.</param>
-  /// </summary>
+  static Future<void> updateConsent(bool? boolConsent) async {
+    return _channel.invokeMethod('updateConsent', {'boolConsent': boolConsent});
+  }
+
   static Future<bool> isInitialized(int adType) async {
-    return await _channel.invokeMethod('isInitialized', {
-          'adType': adType,
-        }) ??
-        false;
+    return await _channel.invokeMethod('isInitialized', {'adType': adType})
+        ?? false;
   }
 
-  /// <summary>
-  /// Initializes the relevant (Android or iOS) Appodeal SDK.
-  /// See <see cref="Appodeal.initialize"/> for resulting triggered event.
-  /// <param name="appKey">Appodeal app key you received when you created an app.</param>
-  /// <param name="adTypes">Type of advertising you want to initialize.</param>
-  /// <param name="consent">Consent string from ConsentManager SDK.</param>
-  ///
-  ///  To initialize only interstitials use <see cref="Appodeal.initialize(appKey, Appodeal.INTERSTITIAL, consent);"/>
-  ///  To initialize only banners use <see cref="Appodeal.initialize(appKey, Appodeal.BANNER, consent);"/>
-  ///  To initialize only rewarded video use <see cref="Appodeal.initialize(appKey, Appodeal.REWARDED_VIDEO, consent);"/>
-  ///  To initialize only non-skippable video use <see cref="Appodeal.initialize(appKey, Appodeal.NON_SKIPPABLE_VIDEO, consent);"/>
-  ///  To initialize only 300*250 banners use <see cref="Appodeal.initialize(appKey, Appodeal.MREC, consent);"/>
-  /// </summary>
-   static Future<void>  initializeWithConsent(String appKey, List<int> adTypes, String consent){
-     _setCallbacks();
-     return _channel.invokeMethod('initializeWithConsent', {'appKey': appKey, 'adTypes': adTypes, 'consent': consent});
-   }
-
-
-  /// <summary>
-  /// Update consent value for ad networks in Appodeal SDK
-  /// See <see cref="Appodeal.updateConsent"/> for resulting triggered event.
-  /// <param name="hasConsent"> this param user has given consent to the processing of personal data relating to him or her. https://www.eugdpr.org/.</param>
-  /// </summary>
-  static Future<void> updateConsent(bool hasConsent) async {
-    return _channel.invokeMethod('updateConsent', {'hasConsent': hasConsent});
-  }
-
-  /// <summary>
-  /// Check if auto cache enabled for  this ad type
-  /// See <see cref="Appodeal.isAutoCacheEnabled"/> for resulting triggered event.
-  /// <param name="adType">adType type of advertising.</param>
-  /// </summary>
-  static Future<bool> isAutoCacheEnabled(int adType) async {
-    return await _channel.invokeMethod('isAutoCacheEnabled', {
-          'adType': adType,
-        }) ??
-        false;
-  }
-
-  /// <summary>
-  /// Start caching ads.
-  /// See <see cref="Appodeal.cache"/> for resulting triggered event.
-  /// <param name="adTypes">adType type of advertising.</param>
-  /// </summary>
-  static Future<void> cache(int adType) async {
-    return _channel.invokeMethod('cache', {
-      'adType': adType,
-    });
-  }
-
-  /// <summary>
-  /// Show advertising.
-  /// See <see cref="Appodeal.show"/> for resulting triggered event.
-  /// <param name="adTypes">adType type of advertising.</param>
-  /// </summary>
-  static Future<bool> show(int adType) async {
-    return await _channel.invokeMethod('show', {
-          'adType': adType,
-        }) ??
-        false;
-  }
-
-  /// <summary>
-  /// Show advertising.
-  /// See <see cref="Appodeal.show"/> for resulting triggered event.
-  /// <param name="adTypes">adType type of advertising.</param>
-  /// <param name="placement">name of placement.</param>
-  /// </summary>
-  static Future<bool> showWithPlacement(int adType, String placement) async {
-    return await _channel.invokeMethod('showWithPlacement', {
-          'adType': adType,
-          'placement': placement,
-        }) ??
-        false;
-  }
-
-  /// <summary>
-  /// Hide advertising.
-  /// See <see cref="Appodeal.hide"/> for resulting triggered event.
-  /// <param name="adTypes">adType type of advertising  Appodeal.BANNER</param>
-  /// </summary>
-  static Future<void> hide(int adType) async {
-    return _channel.invokeMethod('hide', {
-      'adType': adType,
-    });
-  }
-
-  /// <summary>
-  /// Start or stop auto caching new ads when current ads was shown..
-  /// See <see cref="Appodeal.setAutoCache"/> for resulting triggered event.
-  /// <param name="adTypes">adType type of advertising </param>
-  /// <param name="autoCache">true to use auto cache, false to not.</param>
-  /// </summary>
   static Future<void> setAutoCache(int adType, bool autoCache) async {
-    return _channel.invokeMethod('setAutoCache', {
-      'adType': adType,
-      'autoCache': autoCache,
-    });
+    return await _channel.invokeMethod(
+        'setAutoCache', {'adType': adType, 'autoCache': autoCache});
   }
 
-  /// <summary>
-  /// Triggering onLoaded callback when precache loaded.
-  /// See <see cref="Appodeal.setTriggerOnLoadedOnPrecache"/> for resulting triggered event.
-  /// <param name="adTypes">adType type of advertising </param>
-  /// <param name="onLoadedTriggerBoth">true - onLoaded will trigger when precache or normal ad were loaded.
-  ///                         false - onLoaded will trigger only when normal ad was loaded (default).</param>
-  /// </summary>
-  static Future<void> setTriggerOnLoadedOnPrecache(int adType, bool onLoadedTriggerBoth) async {
+  static Future<bool> isAutoCacheEnabled(int adType) async {
+    return await _channel.invokeMethod('isAutoCacheEnabled', {'adType': adType})
+        ?? false;
+  }
+
+  static Future<void> cache(int adType) async {
+    return _channel.invokeMethod('cache', {'adType': adType});
+  }
+
+  static Future<bool> isLoaded(int adType) async {
+    return await _channel.invokeMethod('isLoaded', {'adType': adType}) ?? false;
+  }
+
+  static Future<bool> isPrecache(int adType) async {
+    return await _channel.invokeMethod('isPrecache', {'adType': adType})
+        ?? false;
+  }
+
+  static Future<bool> canShow(int adType, [String placement = "default"]) async {
+    return await _channel.invokeMethod(
+            'canShow', {'adType': adType, 'placement': placement})
+        ?? false;
+  }
+
+  static Future<double> getPredictedEcpm(int adType) async {
+    return await _channel.invokeMethod('getPredictedEcpm', {'adType': adType})
+        ?? 0.0;
+  }
+
+  static Future<bool> show(int adType, [String placement = "default"]) async {
+    return await _channel.invokeMethod(
+        'show', {'adType': adType, 'placement': placement})
+        ?? false;
+  }
+
+  static Future<void> hide(int adType) async {
+    return _channel.invokeMethod('hide', {'adType': adType});
+  }
+
+  static Future<void> destroy(int adType) async {
+    if (Platform.isAndroid) {
+      return _channel.invokeMethod('destroy', {'adType': adType});
+    }
+  }
+
+  static Future<void> setTriggerOnLoadedOnPrecache(
+      int adType, bool onLoadedTriggerBoth) async {
     return _channel.invokeMethod('setTriggerOnLoadedOnPrecache', {
       'adType': adType,
       'onLoadedTriggerBoth': onLoadedTriggerBoth,
     });
   }
 
-  /// <summary>
-  /// Enabling shared ads instance across activities, supports only on Android platform. (disabled by default).
-  /// See <see cref="Appodeal.setSharedAdsInstanceAcrossActivities"/> for resulting triggered event.
-  /// <param name="sharedAdsInstanceAcrossActivities">enabling or disabling shared ads instance across activities.</param>
-  /// </summary>
-  static Future<void> setSharedAdsInstanceAcrossActivities(bool sharedAdsInstanceAcrossActivities) async {
+  static Future<void> setSharedAdsInstanceAcrossActivities(
+      bool sharedAdsInstanceAcrossActivities) async {
     if (Platform.isAndroid) {
       _channel.invokeMethod('setSharedAdsInstanceAcrossActivities', {
         'sharedAdsInstanceAcrossActivities': sharedAdsInstanceAcrossActivities,
@@ -214,82 +119,32 @@ class Appodeal {
     }
   }
 
-  /// <summary>
-  /// Checking if ad is loaded. Return true if ads currently loaded and can be shown.
-  /// See <see cref="Appodeal.isLoaded"/> for resulting triggered event.
-  /// <param name="adTypes">adType type of advertising </param>
-  /// </summary>
-  static Future<bool> isLoaded(int adType) async {
-    return await _channel.invokeMethod('isLoaded', {
-          'adType': adType,
-        }) ??
-        false;
-  }
-
-  /// <summary>
-  /// Checking if loaded ad is precache. Return true if currently loaded ads is precache.
-  /// See <see cref="Appodeal.isPrecache"/> for resulting triggered event.
-  /// <param name="adTypes">adType type of advertising. Currently supported only for interstitials. </param>
-  /// </summary>
-  static Future<bool> isPrecache(int adType) async {
-    return await _channel.invokeMethod('isPrecache', {
-          'adType': adType,
-        }) ??
-        false;
-  }
-
-  /// <summary>
-  /// Enabling or disabling smart banners (Enabled by default).
-  /// See <see cref="Appodeal.setSmartBanners"/> for resulting triggered event.
-  /// <param name="enabled">enabled enabling or disabling loading smart banners.</param>
-  /// </summary>
   static Future<void> setSmartBanners(bool smartBannerEnabled) async {
     return _channel.invokeMethod('setSmartBanners', {
       'smartBannerEnabled': smartBannerEnabled,
     });
   }
 
-  /// <summary>
-  /// Enabling or disabling 728*90 banners (Disabled by default).
-  /// See <see cref="Appodeal.setTabletBanners"/> for resulting triggered event.
-  /// <param name="enabled">enabled enabling or disabling loading 728*90 banners.</param>
-  /// </summary>
   static Future<void> setTabletBanners(bool tabletBannerEnabled) async {
     return _channel.invokeMethod('setTabletBanners', {
       'tabletBannerEnabled': tabletBannerEnabled,
     });
   }
 
-  /// <summary>
-  /// Enabling animation of banners (Enabled by default).
-  /// See <see cref="Appodeal.setBannerAnimation"/> for resulting triggered event.
-  /// <param name="enabled">animate enabling or disabling animations.</param>
-  /// </summary>
   static Future<void> setBannerAnimation(bool bannerAnimationEnabled) async {
     return _channel.invokeMethod('setBannerAnimation', {
       'bannerAnimationEnabled': bannerAnimationEnabled,
     });
   }
 
-  /// <summary>
-  /// Setting banners inverse rotation (by default: left = -90, right = 90).
-  /// See <see cref="Appodeal.setBannerRotation"/> for resulting triggered event.
-  /// <param name="leftBannerRotation">leftBannerRotation rotation for Appodeal.BANNER_LEFT.</param>
-  /// <param name="rightBannerRotation">leftBannerRotation rotation for Appodeal.BANNER_RIGHT.</param>
-  /// </summary>
-  static Future<void> setBannerRotation(int leftBannerRotation, int rightBannerRotation) async {
+  static Future<void> setBannerRotation(
+      int leftBannerRotation, int rightBannerRotation) async {
     return _channel.invokeMethod('setBannerRotation', {
       'leftBannerRotation': leftBannerRotation,
       'rightBannerRotation': rightBannerRotation,
     });
   }
 
-  /// <summary>
-  /// Tracks in-app purchase information and sends info to our servers for analytics.
-  /// See <see cref="Appodeal.trackInAppPurchase"/> for resulting triggered event.
-  /// <param name="amount">amount of purchase.</param>
-  /// <param name="currency">currency of purchase.</param>
-  /// </summary>
   static Future<void> trackInAppPurchase(double amount, String currency) async {
     return _channel.invokeMethod('trackInAppPurchase', {
       'amount': amount,
@@ -297,418 +152,216 @@ class Appodeal {
     });
   }
 
-  /// <summary>
-  /// Disabling specified network for all ad types.
-  /// See <see cref="Appodeal.disableNetwork"/> for resulting triggered event.
-  /// <param name="network">network name.</param>
-  /// </summary>
-  static Future<void> disableNetwork(String network) async {
+  static Future<void> disableNetwork(String network,
+                                     [int adType = Appodeal.ALL]) async {
     return _channel.invokeMethod('disableNetwork', {
-      'network': network,
-    });
-  }
-
-  /// <summary>
-  /// Disabling specified network for specified ad types.
-  /// See <see cref="Appodeal.disableNetworkForSpecificAdType"/> for resulting triggered event.
-  /// <param name="network">network name.</param>
-  /// <param name="adTypes">adType type of advertising.</param>
-  /// </summary>
-  static Future<void> disableNetworkForSpecificAdType(String network, int adType) async {
-    return _channel.invokeMethod('disableNetworkForSpecificAdType', {
       'network': network,
       'adType': adType,
     });
   }
 
-  /// <summary>
-  /// Disabling location permission check only for Android platform.
-  /// See <see cref="Appodeal.disableLocationPermissionCheck"/> for resulting triggered event.
-  /// </summary>
-  static Future<void> disableLocationPermissionCheck() async {
-    if (Platform.isAndroid) {
-      return _channel.invokeMethod('disableLocationPermissionCheck');
-    }
-  }
-
-  /// <summary>
-  /// Disabling write external storage permission check only for Android platform.
-  /// See <see cref="Appodeal.disableWriteExternalStoragePermissionCheck"/> for resulting triggered event.
-  /// </summary>
-  static Future<void> disableWriteExternalStoragePermissionCheck() async {
-    if (Platform.isAndroid) {
-      return _channel.invokeMethod('disableWriteExternalStoragePermissionCheck');
-    }
-  }
-
-  /// <summary>
-  /// Set user id.
-  /// See <see cref="Appodeal.setUserId"/> for resulting triggered event.
-  /// <param name="id">user id.</param>
-  /// </summary>
   static Future<void> setUserId(String userId) async {
     return _channel.invokeMethod('setUserId', {
       'userId': userId,
     });
   }
 
-  /// <summary>
-  /// Set user age.
-  /// See <see cref="Appodeal.setUserAge"/> for resulting triggered event.
-  /// <param name="age">user gender.</param>
-  /// </summary>
   static Future<void> setUserAge(int age) async {
-    return _channel.invokeMethod('setUserAge', {
-      'age': age,
-    });
+    return _channel.invokeMethod('setUserAge', {'age': age});
   }
 
-  /// <summary>
-  /// Set user gender.
-  /// See <see cref="Appodeal.setUserGender"/> for resulting triggered event.
-  /// <param name="gender">user gender.</param>
-  /// </summary>
   static Future<void> setUserGender(int gender) async {
-    return _channel.invokeMethod('setUserGender', {
-      'gender': gender,
-    });
+    return _channel.invokeMethod('setUserGender', {'gender': gender});
   }
 
-  /// <summary>
-  /// Enabling test mode.
-  //  In test mode test ads will be shown and debug data will be written to logcat.
-  /// See <see cref="Appodeal.setTesting"/> for resulting triggered event.
-  /// </summary>
   static Future<void> setTesting(bool testMode) async {
-    return _channel.invokeMethod('setTesting', {
-      'testMode': testMode,
-    });
+    return _channel.invokeMethod('setTesting', {'testMode': testMode});
   }
 
-  /// <summary>
-  /// Set log level. All logs will be written with tag "Appodeal".
-  /// See <see cref="Appodeal.setLogLevel"/> for resulting triggered event.
-  /// <param name="log">logLevel log level .</param>
-  /// </summary>
   static Future<void> setLogLevel(int logLevel) async {
-    return _channel.invokeMethod('setLogLevel', {
-      'logLevel': logLevel,
-    });
+    return _channel.invokeMethod('setLogLevel', {'logLevel': logLevel});
   }
 
-  /// <summary>
-  /// Set custom segment filter.
-  /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
-  /// <param name="name">name  name of the filter.</param>
-  /// <param name="value">value filter value.</param>
-  /// </summary>
-  static Future<void> setCustomFilterBool(String name, bool value) async {
-    return _channel.invokeMethod('setCustomFilterBool', {
-      'name': name,
-      'value': value,
-    });
-  }
-
-  /// <summary>
-  /// Set custom segment filter.
-  /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
-  /// <param name="name">name  name of the filter.</param>
-  /// <param name="value">value filter value.</param>
-  /// </summary>
-  static Future<void> setCustomFilterInt(String name, int value) async {
-    return _channel.invokeMethod('setCustomFilterInt', {
-      'name': name,
-      'value': value,
-    });
-  }
-
-  /// <summary>
-  /// Set custom segment filter.
-  /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
-  /// <param name="name">name  name of the filter.</param>
-  /// <param name="value">value filter value.</param>
-  /// </summary>
-  static Future<void> setCustomFilterDouble(String name, double value) async {
-    return _channel.invokeMethod('setCustomFilterDouble', {
-      'name': name,
-      'value': value,
-    });
-  }
-
-  /// <summary>
-  /// Set custom segment filter.
-  /// See <see cref="Appodeal.setCustomFilter"/> for resulting triggered event.
-  /// <param name="name">name  name of the filter.</param>
-  /// <param name="value">value filter value.</param>
-  /// </summary>
-  static Future<void> setCustomFilterString(String name, String value) async {
-    return _channel.invokeMethod('setCustomFilterString', {
-      'name': name,
-      'value': value,
-    });
-  }
-
-  /// <summary>
-  /// Check if ad with specific ad type can be shown with placement.
-  /// See <see cref="Appodeal.canShow"/> for resulting triggered event.
-  /// <param name="adTypes">type of advertising.</param>
-  /// </summary>
-  static Future<bool> canShow(int adType) async {
-    return await _channel.invokeMethod('canShow', {
-          'adType': adType,
-        }) ??
-        false;
-  }
-
-  /// <summary>
-  /// Check if ad with specific ad type can be shown with placement.
-  /// See <see cref="Appodeal.canShow"/> for resulting triggered event.
-  /// <param name="adTypes">type of advertising.</param>
-  /// <param name="placement">placement name.</param>
-  /// </summary>
-  static Future<bool> canShowWithPlacement(int adType, String placement) async {
-    return await _channel.invokeMethod('canShowWithPlacement', {
-          'adType': adType,
-          'placement': placement,
-        }) ??
-        false;
-  }
-
-  /// <summary>
-  /// Mute video if calls muted on device (supports only for Android platform).
-  /// See <see cref="Appodeal.muteVideosIfCallsMuted"/> for resulting triggered event.
-  /// <param name="value">true - mute videos if call volume is 0.</param>
-  /// </summary>
   static Future<void> muteVideosIfCallsMuted(bool value) async {
     if (Platform.isAndroid) {
-      return _channel.invokeMethod('muteVideosIfCallsMuted', {
-        'value': value,
-      });
+      _channel.invokeMethod('muteVideosIfCallsMuted', {'value': value});
     }
   }
 
-  /// <summary>
-  /// Disables data collection for kids apps.
-  /// See <see cref="Appodeal.setChildDirectedTreatment"/> for resulting triggered event.
-  /// <param name="value">value true to disable data collection for kids apps.</param>
-  /// </summary>
   static Future<void> setChildDirectedTreatment(bool value) async {
-    return _channel.invokeMethod('setChildDirectedTreatment', {
-      'value': value,
-    });
+    return _channel.invokeMethod('setChildDirectedTreatment', {'value': value});
   }
 
-  /// <summary>
-  /// Destroy cached ad.
-  /// See <see cref="Appodeal.destroy"/> for resulting triggered event.
-  /// <param name="adTypes">adTypes ad types you want to destroy.</param>
-  /// </summary>
-  static Future<void> destroy(int adType) async {
-    if (Platform.isAndroid) {
-      return _channel.invokeMethod('destroy', {
-        'adType': adType,
-      });
-    }
+  static Future<void> setCustomFilter(String name, dynamic value) async {
+    return _channel
+        .invokeMethod('setCustomFilter', {'name': name, 'value': value});
   }
 
-  /// <summary>
-  /// Add extra data to Appodeal.
-  /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
-  /// <param name="key">associated with value.</param>
-  /// <param name="value">value which will be saved in extra data by key.</param>
-  /// </summary>
-  static Future<void> setExtraDataString(String key, String value) async {
-    return _channel.invokeMethod('setExtraDataString', {
-      'key': key,
-      'value': value,
-    });
+  static Future<void> setExtraData(String key, dynamic value) async {
+    return _channel.invokeMethod('setExtraData', {'key': key, 'value': value});
   }
 
-  // <summary>
-  /// Add extra data to Appodeal.
-  /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
-  /// <param name="key">associated with value.</param>
-  /// <param name="value">value which will be saved in extra data by key.</param>
-  /// </summary>
-  static Future<void> setExtraDataInt(String key, int value) async {
-    return _channel.invokeMethod('setExtraDataInt', {
-      'key': key,
-      'value': value,
-    });
-  }
-
-  /// <summary>
-  /// Add extra data to Appodeal.
-  /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
-  /// <param name="key">associated with value.</param>
-  /// <param name="value">value which will be saved in extra data by key.</param>
-  /// </summary>
-  static Future<void> setExtraDataDouble(String key, double value) async {
-    return _channel.invokeMethod('setExtraDataDouble', {
-      'key': key,
-      'value': value,
-    });
-  }
-
-  /// <summary>
-  /// Add extra data to Appodeal.
-  /// See <see cref="Appodeal.setExtraData"/> for resulting triggered event.
-  /// <param name="key">associated with value.</param>
-  /// <param name="value">value which will be saved in extra data by key.</param>
-  /// </summary>
-  static Future<void> setExtraDataBool(String key, bool value) async {
-    return _channel.invokeMethod('setExtraDataBool', {
-      'key': key,
-      'value': value,
-    });
-  }
-
-  /// <summary>
-  /// Get native SDK version
-  /// See <see cref="Appodeal.getNativeSDKVersion"/> for resulting triggered event.
-  /// </summary>
-  ///
   static Future<String> getNativeSDKVersion() async {
     return await _channel.invokeMethod('getNativeSDKVersion', {}) ?? "0";
   }
 
-  /// <summary>
-  /// Get predicted ecpm for certain ad type.
-  /// See <see cref="Appodeal.getPredictedEcpm"/> for resulting triggered event.
-  /// <param name="adType">adType type of advertising.</param>
-  /// </summary>
-  static Future<double> getPredictedEcpm(int adType) async {
-    return await _channel.invokeMethod('getPredictedEcpm', {
-          'adType': adType,
-        }) ??
-        0.0;
-  }
-
-  /// <summary>
-  /// Set use safe area.
-  /// See <see cref="Appodeal.setUseSafeArea"/> for resulting triggered event.
-  /// </summary>
-  ///
   static Future<void> setUseSafeArea(bool value) async {
     if (Platform.isAndroid) {
-      return _channel.invokeMethod('setUseSafeArea', {
-        'value': value,
-      });
+      return _channel.invokeMethod('setUseSafeArea', {'value': value});
     }
   }
 
-  static void _setCallbacks() {
-    _channel.setMethodCallHandler((call) async {
-      if (call.method.startsWith('onBannerLoaded')) {
-        _onBannerLoaded?.call(call.method, call.arguments['isPrecache']);
-      } else if (call.method.startsWith('onBannerFailedToLoad')) {
-        _onBannerFailedToLoad?.call(call.method);
-      } else if (call.method.startsWith('onBannerShown')) {
-        _onBannerShown?.call(call.method);
-      } else if (call.method.startsWith('onBannerShowFailed')) {
-        _onBannerShowFailed?.call(call.method);
-      } else if (call.method.startsWith('onBannerClicked')) {
-        _onBannerClicked?.call(call.method);
-      } else if (call.method.startsWith('onBannerExpired')) {
-        _onBannerExpired?.call(call.method);
-      } else if (call.method.startsWith('onMrecLoaded')) {
-        _onMrecLoaded?.call(call.method, call.arguments['isPrecache']);
-      } else if (call.method.startsWith('onMrecFailedToLoad')) {
-        _onMrecFailedToLoad?.call(call.method);
-      } else if (call.method.startsWith('onMrecShown')) {
-        _onMrecShown?.call(call.method);
-      } else if (call.method.startsWith('onMrecShowFailed')) {
-        _onMrecShowFailed?.call(call.method);
-      } else if (call.method.startsWith('onMrecClicked')) {
-        _onMrecClicked?.call(call.method);
-      } else if (call.method.startsWith('onMrecExpired')) {
-        _onMrecExpired?.call(call.method);
-      } else if (call.method.startsWith('onInterstitialLoaded')) {
-        _onInterstitialLoaded?.call(call.method, call.arguments['isPrecache']);
-      } else if (call.method.startsWith('onInterstitialFailedToLoad')) {
-        _onInterstitialFailedToLoad?.call(call.method);
-      } else if (call.method.startsWith('onInterstitialShown')) {
-        _onInterstitialShown?.call(call.method);
-      } else if (call.method.startsWith('onInterstitialShowFailed')) {
-        _onInterstitialShowFailed?.call(call.method);
-      } else if (call.method.startsWith('onInterstitialClicked')) {
-        _onInterstitialClicked?.call(call.method);
-      } else if (call.method.startsWith('onInterstitialClosed')) {
-        _onInterstitialClosed?.call(call.method);
-      } else if (call.method.startsWith('onInterstitialExpired')) {
-        _onInterstitialExpired?.call(call.method);
-      } else if (call.method.startsWith('onRewardedVideoLoaded')) {
-        _onRewardedVideoLoaded?.call(call.method, call.arguments['isPrecache']);
-      } else if (call.method.startsWith('onRewardedVideoFailedToLoad')) {
-        _onRewardedVideoFailedToLoad?.call(call.method);
-      } else if (call.method.startsWith('onRewardedVideoShown')) {
-        _onRewardedVideoShown?.call(call.method);
-      } else if (call.method.startsWith('onRewardedVideoShowFailed')) {
-        _onRewardedVideoShowFailed?.call(call.method);
-      } else if (call.method.startsWith('onRewardedVideoFinished')) {
-        _onRewardedVideoFinished?.call(call.method, call.arguments['amount'], call.arguments['reward']);
-      } else if (call.method.startsWith('onRewardedVideoClosed')) {
-        _onRewardedVideoClosed?.call(call.method, call.arguments['isFinished']);
-      } else if (call.method.startsWith('onRewardedVideoExpired')) {
-        _onRewardedVideoExpired?.call(call.method);
-      } else if (call.method.startsWith('onRewardedVideoClicked')) {
-        _onRewardedVideoClicked?.call(call.method);
+  static void setInterstitialCallbacks(
+      {Function(bool isPrecache)? onInterstitialLoaded,
+      Function? onInterstitialFailedToLoad,
+      Function? onInterstitialShown,
+      Function? onInterstitialShowFailed,
+      Function? onInterstitialClicked,
+      Function? onInterstitialClosed,
+      Function? onInterstitialExpired}) {
+    _interstitialChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onInterstitialLoaded':
+          onInterstitialLoaded?.call(call.arguments['isPrecache']);
+          break;
+        case 'onInterstitialFailedToLoad':
+          onInterstitialFailedToLoad?.call();
+          break;
+        case 'onInterstitialShown':
+          onInterstitialShown?.call();
+          break;
+        case 'onInterstitialShowFailed':
+          onInterstitialShowFailed?.call();
+          break;
+        case 'onInterstitialClicked':
+          onInterstitialClicked?.call();
+          break;
+        case 'onInterstitialClosed':
+          onInterstitialClosed?.call();
+          break;
+        case 'onInterstitialExpired':
+          onInterstitialExpired?.call();
+          break;
       }
     });
   }
 
-  /// <summary>
-  /// Set Banner ads callbacks
-  /// See <see cref="Appodeal.setBannerCallbacks"/> for resulting triggered event.
-  static void setBannerCallbacks(Function(String event, bool isPrecache) onBannerLoaded,
-      Function(String event) onBannerFailedToLoad, Function(String event) onBannerShown,
-      Function(String event) onBannerShowFailed, Function(String event) onBannerClicked,
-      Function(String event) onBannerExpired) {
-    _onBannerLoaded = onBannerLoaded;
-    _onBannerFailedToLoad = onBannerFailedToLoad;
-    _onBannerShown = onBannerShown;
-    _onBannerShowFailed = onBannerShowFailed;
-    _onBannerClicked = onBannerClicked;
-    _onBannerExpired = onBannerExpired;
+  static void setRewardedVideoCallbacks(
+      {Function(bool isPrecache)? onRewardedVideoLoaded,
+      Function? onRewardedVideoFailedToLoad,
+      Function? onRewardedVideoShown,
+      Function? onRewardedVideoShowFailed,
+      Function? onRewardedVideoClicked,
+      Function(double amount, String reward)? onRewardedVideoFinished,
+      Function(bool isFinished)? onRewardedVideoClosed,
+      Function? onRewardedVideoExpired}) {
+    _rewardedVideoChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onRewardedVideoLoaded':
+          onRewardedVideoLoaded?.call(call.arguments['isPrecache']);
+          break;
+        case 'onRewardedVideoFailedToLoad':
+          onRewardedVideoFailedToLoad?.call();
+          break;
+        case 'onRewardedVideoShown':
+          onRewardedVideoShown?.call();
+          break;
+        case 'onRewardedVideoShowFailed':
+          onRewardedVideoShowFailed?.call();
+          break;
+        case 'onRewardedVideoClicked':
+          onRewardedVideoClicked?.call();
+          break;
+        case 'onRewardedVideoFinished':
+          onRewardedVideoFinished?.call(
+              call.arguments['amount'], call.arguments['reward']);
+          break;
+        case 'onRewardedVideoClosed':
+          onRewardedVideoClosed?.call(call.arguments['isFinished']);
+          break;
+        case 'onRewardedVideoExpired':
+          onRewardedVideoExpired?.call();
+          break;
+      }
+    });
   }
 
-  /// <summary>
-  /// Set Interstitial ads callbacks
-  /// See <see cref="Appodeal.setMrecCallbacks"/> for resulting triggered event.
-  static void setMrecCallbacks(Function(String event, bool isPrecache) onMrecLoaded, Function(String event) onMrecFailedToLoad, Function(String event) onMrecShown,
-      Function(String event) onMrecShowFailed, Function(String event) onMrecClicked, Function(String event) onMrecExpired) {
-    _onMrecLoaded = onMrecLoaded;
-    _onMrecFailedToLoad = onMrecFailedToLoad;
-    _onMrecShown = onMrecShown;
-    _onMrecShowFailed = onMrecShowFailed;
-    _onMrecClicked = onMrecClicked;
-    _onMrecExpired = onMrecExpired;
+  static void setBannerCallbacks(
+      {Function(bool isPrecache)? onBannerLoaded,
+      Function? onBannerFailedToLoad,
+      Function? onBannerShown,
+      Function? onBannerShowFailed,
+      Function? onBannerClicked,
+      Function? onBannerExpired}) {
+    _bannerChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onBannerLoaded':
+          onBannerLoaded?.call(call.arguments['isPrecache']);
+          break;
+        case 'onBannerFailedToLoad':
+          onBannerFailedToLoad?.call();
+          break;
+        case 'onBannerShown':
+          onBannerShown?.call();
+          break;
+        case 'onBannerShowFailed':
+          onBannerShowFailed?.call();
+          break;
+        case 'onBannerClicked':
+          onBannerClicked?.call();
+          break;
+        case 'onBannerExpired':
+          onBannerExpired?.call();
+          break;
+      }
+    });
   }
 
-  /// <summary>
-  /// Set Interstitial ads callbacks
-  /// See <see cref="Appodeal.setInterstitialCallbacks"/> for resulting triggered event.
-  static void setInterstitialCallbacks(Function(String event, bool isPrecache) onInterstitialLoaded, Function(String event) onInterstitialFailedToLoad, Function(String event) onInterstitialShown, Function(String event) onInterstitialShowFailed, Function(String event) onInterstitialClicked, Function(String event) onInterstitialClosed, Function(String event) onInterstitialExpired) {
-    _onInterstitialLoaded = onInterstitialLoaded;
-    _onInterstitialFailedToLoad = onInterstitialFailedToLoad;
-    _onInterstitialShown = onInterstitialShown;
-    _onInterstitialShowFailed = onInterstitialShowFailed;
-    _onInterstitialClicked = onInterstitialClicked;
-    _onInterstitialClosed = onInterstitialClosed;
-    _onInterstitialExpired = onInterstitialExpired;
+  static void setMrecCallbacks(
+      {Function(bool isPrecache)? onMrecLoaded,
+      Function? onMrecFailedToLoad,
+      Function? onMrecShown,
+      Function? onMrecShowFailed,
+      Function? onMrecClicked,
+      Function? onMrecExpired}) {
+    _mrecChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onMrecLoaded':
+          onMrecLoaded?.call(call.arguments['isPrecache']);
+          break;
+        case 'onMrecFailedToLoad':
+          onMrecFailedToLoad?.call();
+          break;
+        case 'onMrecShown':
+          onMrecShown?.call();
+          break;
+        case 'onMrecShowFailed':
+          onMrecShowFailed?.call();
+          break;
+        case 'onMrecClicked':
+          onMrecClicked?.call();
+          break;
+        case 'onMrecExpired':
+          onMrecExpired?.call();
+          break;
+      }
+    });
   }
+}
 
-  /// <summary>
-  /// Set Rewarded video ads callbacks
-  /// See <see cref="Appodeal.setRewardedVideoCallbacks"/> for resulting triggered event.
-  static void setRewardedVideoCallbacks(Function(String event, bool isPrecache) onRewardedVideoLoaded, Function(String event) onRewardedVideoFailedToLoad, Function(String event) onRewardedVideoShown, Function(String event) onRewardedVideoShowFailed, Function(String event, double amount, String reward) onRewardedVideoFinished, Function(String event, bool isFinished) onRewardedVideoClosed, Function(String event) onRewardedVideoExpired, Function(String event) onRewardedVideoClicked) {
-    _onRewardedVideoLoaded = onRewardedVideoLoaded;
-    _onRewardedVideoFailedToLoad = onRewardedVideoFailedToLoad;
-    _onRewardedVideoShown = onRewardedVideoShown;
-    _onRewardedVideoShowFailed = onRewardedVideoShowFailed;
-    _onRewardedVideoFinished = onRewardedVideoFinished;
-    _onRewardedVideoClosed = onRewardedVideoClosed;
-    _onRewardedVideoExpired = onRewardedVideoExpired;
-    _onRewardedVideoClicked = onRewardedVideoClicked;
-  }
+class _AdType {
+  _AdType._(int androidVal, int iosVal);
+
+  static final None = _AdType._(0, 0);
+  static final Interstitial = _AdType._(3, 0);
+  static final Banner = _AdType._(4, 0);
+  static final BannerBottom = _AdType._(8, 0);
+  static final BannerTop = _AdType._(16, 0);
+  static final BannerLeft = _AdType._(1024, 0);
+  static final BannerRight = _AdType._(2048, 0);
+  static final BannerView = _AdType._(64, 0);
+  static final Rewarded = _AdType._(128, 0);
+  static final Mrec = _AdType._(256, 0);
+  static final Native = _AdType._(512, 0);
+  static final All = _AdType._(4095, 0);
 }

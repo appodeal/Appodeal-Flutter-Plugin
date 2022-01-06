@@ -1,7 +1,7 @@
-import 'dart:developer';
-
-import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
+
+import 'main.dart';
 
 class InterstitialPage extends StatefulWidget {
   @override
@@ -14,20 +14,13 @@ class _InterstitialPageState extends State<InterstitialPage> {
     super.initState();
 
     Appodeal.setInterstitialCallbacks(
-        (onInterstitialLoaded, isPrecache) => {
-              showToast('$onInterstitialLoaded isPrecache - $isPrecache')},
-        (onInterstitialFailedToLoad) =>
-            {showToast('$onInterstitialFailedToLoad')},
-        (onInterstitialShown) =>
-            {showToast('$onInterstitialShown')},
-        (onInterstitialShowFailed) =>
-            {showToast('$onInterstitialShowFailed')},
-        (onInterstitialClicked) =>
-            {showToast('$onInterstitialClicked')},
-        (onInterstitialClosed) =>
-            {showToast('$onInterstitialClosed')},
-        (onInterstitialExpired) =>
-            {showToast('$onInterstitialExpired')});
+        onInterstitialLoaded: (isPrecache) => showToast('onInterstitialLoaded: isPrecache - $isPrecache'),
+        onInterstitialFailedToLoad: () => showToast('onInterstitialFailedToLoad'),
+        onInterstitialShown: () => showToast('onInterstitialShown'),
+        onInterstitialShowFailed: () => showToast('onInterstitialShowFailed'),
+        onInterstitialClicked: () => showToast('onInterstitialClicked'),
+        onInterstitialClosed: () => showToast('onInterstitialClosed'),
+        onInterstitialExpired: () => showToast('onInterstitialExpired'));
   }
 
   @override
@@ -111,9 +104,5 @@ class _InterstitialPageState extends State<InterstitialPage> {
         ),
       ),
     );
-  }
-
-  static void showToast(String message) {
-    log(message);
   }
 }

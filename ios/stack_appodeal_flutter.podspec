@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.dependency 'Flutter'
-  s.dependency "Appodeal", "2.11.0"
+  s.dependency "Appodeal", "2.11.1"
   s.dependency "StackConsentManager", "~> 1.1.2"
 
   # Flutter.framework does not contain a i386 slice.

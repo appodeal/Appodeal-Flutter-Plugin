@@ -9,7 +9,7 @@
 #endif
 
 @implementation AppodealFlutterPlugin
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
++ (void)registerWithRegistrar:(NSObject <FlutterPluginRegistrar> *)registrar {
     [SwiftAppodealFlutterPlugin registerWithRegistrar:registrar];
 }
 @end
