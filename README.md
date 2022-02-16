@@ -31,18 +31,18 @@ $ flutter pub get
 
 ```ruby
 def appodeal
-  pod 'APDAdColonyAdapter', '2.11.0.1'
-  pod 'APDAmazonAdsAdapter', '2.11.0.1'
-  pod 'APDAppLovinAdapter', '2.11.0.1'
-  pod 'APDBidMachineAdapter', '2.11.0.1' # Required
-  pod 'APDFacebookAudienceAdapter', '2.11.0.1'
-  pod 'APDGoogleAdMobAdapter', '2.11.0.1'
-  pod 'APDIronSourceAdapter', '2.11.0.1'
-  pod 'APDMyTargetAdapter', '2.11.0.1'
-  pod 'APDOguryAdapter', '2.11.0.1'
-  pod 'APDUnityAdapter', '2.11.0.1'
-  pod 'APDVungleAdapter', '2.11.0.1'
-  pod 'APDYandexAdapter', '2.11.0.1'
+  pod 'APDAdColonyAdapter', '2.11.1.2'
+  pod 'APDAmazonAdsAdapter', '2.11.1.2'
+  pod 'APDAppLovinAdapter', '2.11.1.2'
+  pod 'APDBidMachineAdapter', '2.11.1.2' # Required
+  pod 'APDFacebookAudienceAdapter', '2.11.1.2'
+  pod 'APDGoogleAdMobAdapter', '2.11.1.2'
+  pod 'APDIronSourceAdapter', '2.11.1.2'
+  pod 'APDMyTargetAdapter', '2.11.1.2'
+  pod 'APDOguryAdapter', '2.11.1.1'
+  pod 'APDUnityAdapter', '2.11.1.1'
+  pod 'APDVungleAdapter', '2.11.1.2'
+  pod 'APDYandexAdapter', '2.11.1.1'
 end
 
 target 'Runner' do
@@ -197,7 +197,7 @@ Appodeal.setChildDirectedTreatment(false);
 // Disable network for specific ad type:
 // Call this method before initilisation
 Appodeal.disableNetwork("admob");
-Appodeal.disableNetworkForSpecificAdType("vungle", Appodeal.INTERSTITIAL);
+Appodeal.disableNetwork("vungle", Appodeal.INTERSTITIAL);
 // Enable or disable triggering show for precache ads
 // Call this method before or after initilisation
 Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
@@ -218,9 +218,9 @@ Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
 Appodeal.setUserId("some user ud");
 // Set segment filter
 // Call this method before of after initilisation
-Appodeal.setCustomFilterString("levels_played": "levelsPlayed");
+Appodeal.setCustomFilter("levels_played": "levelsPlayed");
 // Set extras
-Appodeal.setExtraDataString("attribuition_id": "some value");
+Appodeal.setExtraData("attribuition_id": "some value");
 ```
 * Banner specific
 
@@ -251,51 +251,51 @@ Set callbacks listener to get track of ad lifecycle events.
 1. Banner
 ```dart
 Appodeal.setBannerCallbacks(
-        (onBannerLoaded, isPrecache) => {},
-        (onBannerFailedToLoad) => {},
-        (onBannerShown) => {},
-        (onBannerShowFailed) => {},
-        (onBannerClicked) => {},
-        (onBannerExpired) => {});
+        onBannerLoaded: (isPrecache) => {},
+        onBannerFailedToLoad: () => {},
+        onBannerShown: () => {},
+        onBannerShowFailed: () => {},
+        onBannerClicked: () => {},
+        onBannerExpired: () => {});
 ```
 
 2. MREC
 
 ```dart
 Appodeal.setMrecCallbacks(
-        (onMrecLoaded, isPrecache) => {},
-        (onMrecFailedToLoad) => {},
-        (onMrecShown) => {},
-        (onMrecShowFailed) => {},
-        (onMrecClicked) => {},
-        (onMrecExpired) => {});
+        onMrecLoaded: (isPrecache) => {},
+        onMrecFailedToLoad: () => {},
+        onMrecShown: () => {},
+        onMrecShowFailed: () => {},
+        onMrecClicked: () => {},
+        onMrecExpired: () => {});
 ```
 
 3. Interstitial
 
 ```dart
 Appodeal.setInterstitialCallbacks(
-        (onInterstitialLoaded, isPrecache) => {},
-        (onInterstitialFailedToLoad) => {},
-        (onInterstitialShown) => {},
-        (onInterstitialShowFailed) => {},
-        (onInterstitialClicked) => {},
-        (onInterstitialClosed) => {},
-        (onInterstitialExpired) => {});
+        onInterstitialLoaded: (isPrecache) => {},
+        onInterstitialFailedToLoad: () => {},
+        onInterstitialShown: () => {},
+        onInterstitialShowFailed: () => {},
+        onInterstitialClicked: () => {},
+        onInterstitialClosed: () => {},
+        onInterstitialExpired: () => {});
 ```
 
 4. Rewarded video
 
 ```dart
 Appodeal.setRewardedVideoCallbacks(
-        (onRewardedVideoLoaded, isPrecache) => {},
-        (onRewardedVideoFailedToLoad) => {},
-        (onRewardedVideoShown) => {},
-        (onRewardedVideoShowFailed) => {},
-        (onRewardedVideoFinished, amount, reward) => {},
-        (onRewardedVideoClosed, isFinished) => {},
-        (onRewardedVideoExpired) => {},
-        (onRewardedVideoClicked) => {});
+      onRewardedVideoLoaded: (isPrecache) => {},
+      onRewardedVideoFailedToLoad: () => {},
+      onRewardedVideoShown: () => {},
+      onRewardedVideoShowFailed: () => {},
+      onRewardedVideoFinished: (amount, reward) => {},
+      onRewardedVideoClosed: (isFinished) => {},
+      onRewardedVideoExpired: () => {},
+      onRewardedVideoClicked: () => {});
 ```
 
 ### Presentation
@@ -312,7 +312,7 @@ Appodeal.cache(Appodeal.INTERSTITIAL);
 
 2. Check that ad is loaded and can be shown
 
-``` javascript
+``` dart
 // Check that interstitial
 var isCanShow = await Appodeal.canShow(Appodeal.INTERSTITIAL);
 // Check that interstitial is loaded
@@ -332,7 +332,7 @@ Appodeal.show(Appodeal.BANNER_LEFT); // Display banner at the left of the screen
 Appodeal.show(Appodeal.BANNER_RIGHT); // Display banner at the right of the screen
 
 // Show interstitial for specific pacement
-Appodeal.showWithPlacement(Appodeal.INTERSTITIAL, “placementName”);
+Appodeal.show(Appodeal.INTERSTITIAL, “placementName”);
 ```
 
 4. Hide
@@ -357,12 +357,12 @@ Appodeal.destroy(Appodeal.BANNER); //Appodeal.MREC
 
 To display a Banner view add widget:
 ```dart
-child: AppodealBannerView(placementName: "default"))
+child: AppodealBanner(adSize: AppodealBannerSize.BANNER, placement: "default");
 ```
 
 To display a MREC view add widget:
 ```dart
-child: AppodealMrecView(placementName: "default"))
+child: AppodealBanner(adSize: AppodealBannerSize.MEDIUM_RECTANGLE, placement: "default");
 ```
 
 ## Privacy Policy and Consent
