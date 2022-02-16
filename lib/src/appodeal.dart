@@ -13,7 +13,7 @@ class Appodeal {
   static const INTERSTITIAL = 7;
   static const REWARDED_VIDEO = 8;
   static const MREC = 9;
-  static const ALL = 11;
+  static const ALL = 10;
 
   static const LogLevelNone = 0;
   static const LogLevelDebug = 1;

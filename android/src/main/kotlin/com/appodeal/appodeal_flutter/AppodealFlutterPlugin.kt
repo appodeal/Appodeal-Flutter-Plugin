@@ -124,7 +124,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             7 -> Appodeal.INTERSTITIAL
             8 -> Appodeal.REWARDED_VIDEO
             9 -> Appodeal.MREC
-
+            10 -> 4095 //1111111111 Appodeal.ALL
             else -> Appodeal.NONE
         }
     }
