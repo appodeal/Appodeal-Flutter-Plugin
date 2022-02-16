@@ -1,7 +1,7 @@
-import 'dart:developer';
-
-import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
+
+import 'main.dart';
 
 class MrecViewPage extends StatefulWidget {
   @override
@@ -20,12 +20,12 @@ class _MrecViewPageState extends State<MrecViewPage> {
     });
 
     Appodeal.setMrecCallbacks(
-            (onMrecLoaded, isPrecache) => showToast('$onMrecLoaded - isPrecache - $isPrecache'),
-            (onMrecFailedToLoad) => showToast('$onMrecFailedToLoad'),
-            (onMrecShown) => showToast('$onMrecShown'),
-            (onMrecShowFailed) => showToast('$onMrecShowFailed'),
-            (onMrecClicked) => showToast('$onMrecClicked'),
-            (onMrecExpired) => showToast('$onMrecExpired'));
+        onMrecLoaded: (isPrecache) => showToast('onMrecLoaded: isPrecache - $isPrecache'),
+        onMrecFailedToLoad: () => showToast('onMrecFailedToLoad'),
+        onMrecShown: () => showToast('onMrecShown'),
+        onMrecShowFailed: () => showToast('onMrecShowFailed'),
+        onMrecClicked: () => showToast('onMrecClicked'),
+        onMrecExpired: () => showToast('onMrecExpired'));
   }
 
   @override
@@ -75,16 +75,16 @@ class _MrecViewPageState extends State<MrecViewPage> {
             //Header
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Visibility(visible: isShow, child: AppodealMrecView(placementName: "default")),
+              child: Visibility(
+                  visible: isShow,
+                  child: AppodealBanner(
+                      adSize: AppodealBannerSize.MEDIUM_RECTANGLE,
+                      placement: "default")),
             ),
             //Interstitial
           ]),
         ),
       ),
     );
-  }
-
-  static void showToast(String message) {
-    print(message);
   }
 }
