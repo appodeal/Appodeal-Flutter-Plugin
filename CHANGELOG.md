@@ -1,3 +1,5 @@
+## 1.1.0
+
 ## 1.0.5
 
 * Updated Appodeal Android SDK to 2.11.0
