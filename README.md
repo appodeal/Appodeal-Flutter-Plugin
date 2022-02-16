@@ -218,9 +218,9 @@ Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
 Appodeal.setUserId("some user ud");
 // Set segment filter
 // Call this method before of after initilisation
-Appodeal.setCustomFilter("levels_played": "levelsPlayed");
+Appodeal.setCustomFilter("levels_played", "levelsPlayed");
 // Set extras
-Appodeal.setExtraData("attribuition_id": "some value");
+Appodeal.setExtraData("attribuition_id", "some value");
 ```
 * Banner specific
 
