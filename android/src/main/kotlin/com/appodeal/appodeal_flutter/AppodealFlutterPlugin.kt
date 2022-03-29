@@ -143,7 +143,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
         setCallbacks()
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
-        Appodeal.setFramework("flutter", "1.1.0")
+        Appodeal.setFramework("flutter", "1.2.0")
 
         val managerConsent: Consent? = ConsentManager.getInstance(applicationContext).consent
         val booleanConsent: Boolean? = args["boolConsent"] as? Boolean
@@ -210,7 +210,8 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private fun show(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val adType = getAdType(args["adType"] as Int)
-        result.success(Appodeal.show(activity, adType))
+        val placement = args["placement"] as String
+        result.success(Appodeal.show(activity, adType, placement))
     }
 
     private fun hide(call: MethodCall, result: Result) {

@@ -18,7 +18,7 @@ Appodeal Flutter Plugin for your Flutter application.
 Add the dependency to the `pubspec.yaml` file in your project:
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 1.1.0
+  stack_appodeal_flutter: 1.2.0
 ```
 Install the plugin by running the command below in the terminal:
 ```

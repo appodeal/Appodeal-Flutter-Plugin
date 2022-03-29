@@ -348,20 +348,3 @@ class Appodeal {
     });
   }
 }
-
-class _AdType {
-  _AdType._(int androidVal, int iosVal);
-
-  static final None = _AdType._(0, 0);
-  static final Interstitial = _AdType._(3, 0);
-  static final Banner = _AdType._(4, 0);
-  static final BannerBottom = _AdType._(8, 0);
-  static final BannerTop = _AdType._(16, 0);
-  static final BannerLeft = _AdType._(1024, 0);
-  static final BannerRight = _AdType._(2048, 0);
-  static final BannerView = _AdType._(64, 0);
-  static final Rewarded = _AdType._(128, 0);
-  static final Mrec = _AdType._(256, 0);
-  static final Native = _AdType._(512, 0);
-  static final All = _AdType._(4095, 0);
-}
