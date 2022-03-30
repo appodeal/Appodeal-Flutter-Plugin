@@ -95,7 +95,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let types = args["adTypes"] as! [Int]
         let adTypes = AppodealAdType(rawValue: types.reduce(0) {$0 | getAdType(adId: $1).rawValue})
         setCallbacks()
-        Appodeal.setFramework(APDFramework.flutter, version: "1.1.0")
+        Appodeal.setFramework(APDFramework.flutter, version: "1.2.0")
         if let consent = STKConsentManager.shared().consent {
             Appodeal.initialize(withApiKey: appKey, types: adTypes, consentReport: consent)
         } else if let hasConsent = args["hasConsent"] as? Bool {

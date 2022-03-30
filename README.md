@@ -18,7 +18,7 @@ Appodeal Flutter Plugin for your Flutter application.
 Add the dependency to the `pubspec.yaml` file in your project:
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 1.1.0
+  stack_appodeal_flutter: 1.2.0
 ```
 Install the plugin by running the command below in the terminal:
 ```
@@ -31,16 +31,16 @@ $ flutter pub get
 
 ```ruby
 def appodeal
-  pod 'APDAdColonyAdapter', '2.11.1.2'
+  pod 'APDAdColonyAdapter', '2.11.1.3'
   pod 'APDAmazonAdsAdapter', '2.11.1.2'
-  pod 'APDAppLovinAdapter', '2.11.1.2'
-  pod 'APDBidMachineAdapter', '2.11.1.2' # Required
+  pod 'APDAppLovinAdapter', '2.11.1.3'
+  pod 'APDBidMachineAdapter', '2.11.1.3' # Required
   pod 'APDFacebookAudienceAdapter', '2.11.1.2'
-  pod 'APDGoogleAdMobAdapter', '2.11.1.2'
-  pod 'APDIronSourceAdapter', '2.11.1.2'
+  pod 'APDGoogleAdMobAdapter', '2.11.1.3'
+  pod 'APDIronSourceAdapter', '2.11.1.3'
   pod 'APDMyTargetAdapter', '2.11.1.2'
   pod 'APDOguryAdapter', '2.11.1.1'
-  pod 'APDUnityAdapter', '2.11.1.1'
+  pod 'APDUnityAdapter', '2.11.1.2'
   pod 'APDVungleAdapter', '2.11.1.2'
   pod 'APDYandexAdapter', '2.11.1.1'
 end

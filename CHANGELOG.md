@@ -1,3 +1,11 @@
+## 1.2.0
+
+* Updated Appodeal iOS SDK adapters for to 2.11.1
+* Updated Appodeal Android SDK adapters for to 2.11.0
+* Added Appodeal class api dart doc comments
+* Added obtain placement name logic for method `show` in Android side
+* Synchronized left/right banner display logic between iOS and Android
+
 ## 1.1.0
 
 * **Major Api changes**:
