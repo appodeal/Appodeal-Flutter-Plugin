@@ -176,7 +176,7 @@ class Appodeal {
     });
   }
 
-  /// Set [sharedAdsInstanceAcrossActivities] for `Android` platform (`false` by default).
+  /// Set [sharedAdsInstanceAcrossActivities] for `Android` platform (`true` by default).
   ///
   /// If [sharedAdsInstanceAcrossActivities] `true` that the SDK will show AdView on all new activities without calling additional code from your side.
   /// If you want to control the display yourself, you can set [sharedAdsInstanceAcrossActivities] as `false` parameter.
@@ -211,11 +211,11 @@ class Appodeal {
     });
   }
 
-  /// Setting banners inverse rotation (by default: left = -90, right = 90).
+  /// Setting banners inverse rotation (by default: left = 90, right = -90).
   ///
-  /// [leftBannerRotation] rotation for [BANNER_LEFT], [rightBannerRotation] rotation for [BANNER_LEFT}
-  static Future<void> setBannerRotation(
-      int leftBannerRotation, int rightBannerRotation) async {
+  /// [leftBannerRotation] rotation for [BANNER_LEFT], [BANNER_RIGHT]
+  static Future<void> setBannerRotation(int leftBannerRotation,
+                                        int rightBannerRotation) async {
     return _channel.invokeMethod('setBannerRotation', {
       'leftBannerRotation': leftBannerRotation,
       'rightBannerRotation': rightBannerRotation,

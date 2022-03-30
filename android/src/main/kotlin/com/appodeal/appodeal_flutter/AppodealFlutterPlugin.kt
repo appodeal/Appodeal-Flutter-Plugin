@@ -142,6 +142,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         @Suppress("UNCHECKED_CAST") val adTypes = args["adTypes"] as List<Int>
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
         setCallbacks()
+        Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
         Appodeal.setFramework("flutter", "1.2.0")
 
@@ -286,8 +287,8 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setBannerRotation(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val leftBannerRotation = getAdType(args["leftBannerRotation"] as Int)
-        val rightBannerRotation = getAdType(args["rightBannerRotation"] as Int)
+        val leftBannerRotation = args["leftBannerRotation"] as Int
+        val rightBannerRotation = args["rightBannerRotation"] as Int
         Appodeal.setBannerRotation(leftBannerRotation, rightBannerRotation)
         result.success(null)
     }
