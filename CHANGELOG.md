@@ -1,3 +1,8 @@
+## 1.2.1
+
+* Started support for Flutter 3.0
+* Updated kotlin and gradle versions
+
 ## 1.2.0
 
 * Updated Appodeal iOS SDK adapters for to 2.11.1

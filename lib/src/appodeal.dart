@@ -64,9 +64,8 @@ class Appodeal {
   /// Initialize the Appodeal SDK with the [appKey] and List [adTypes] of the advertising you want to initialize.
   /// If you use [ConsentManager] you may not provide [boolConsent],
   /// otherwise provide if user has given or reject consent to the processing of personal data relating to him or her.
-  static Future<void> initialize(String appKey,
-                                 List<int> adTypes,
-                                 {bool? boolConsent}) async {
+  static Future<void> initialize(String appKey, List<int> adTypes,
+      {bool? boolConsent}) async {
     return _channel.invokeMethod('initialize', {
       'appKey': appKey,
       'adTypes': adTypes,
@@ -86,8 +85,8 @@ class Appodeal {
   ///
   /// Returns `true` if ad type is initialized, otherwise `false`.
   static Future<bool> isInitialized(int adType) async {
-    return await _channel.invokeMethod('isInitialized', {'adType': adType})
-        ?? false;
+    return await _channel.invokeMethod('isInitialized', {'adType': adType}) ??
+        false;
   }
 
   /// Set [autoCache] new ads when current ads was shown for [adType].
@@ -100,8 +99,9 @@ class Appodeal {
   ///
   /// Returns `true` if auto cache enabled, otherwise `false`.
   static Future<bool> isAutoCacheEnabled(int adType) async {
-    return await _channel.invokeMethod('isAutoCacheEnabled', {'adType': adType})
-        ?? false;
+    return await _channel
+            .invokeMethod('isAutoCacheEnabled', {'adType': adType}) ??
+        false;
   }
 
   /// Start caching ads for [adType]
@@ -120,32 +120,34 @@ class Appodeal {
   ///
   /// Returns `true` if currently loaded ads is precache, otherwise `false`.
   static Future<bool> isPrecache(int adType) async {
-    return await _channel.invokeMethod('isPrecache', {'adType': adType})
-        ?? false;
+    return await _channel.invokeMethod('isPrecache', {'adType': adType}) ??
+        false;
   }
 
   /// Check if ad with specific [adType] can be shown with [placement]
   ///
   /// Returns `true` if ad can be shown with this placement, otherwise `false`.
-  static Future<bool> canShow(int adType, [String placement = "default"]) async {
+  static Future<bool> canShow(int adType,
+      [String placement = "default"]) async {
     return await _channel.invokeMethod(
-            'canShow', {'adType': adType, 'placement': placement})
-        ?? false;
+            'canShow', {'adType': adType, 'placement': placement}) ??
+        false;
   }
 
   /// Get predicted ecpm for certain [adType]
   static Future<double> getPredictedEcpm(int adType) async {
-    return await _channel.invokeMethod('getPredictedEcpm', {'adType': adType})
-        ?? 0.0;
+    return await _channel
+            .invokeMethod('getPredictedEcpm', {'adType': adType}) ??
+        0.0;
   }
 
   /// Show [adType] advertising with [placement]
   ///
   /// Returns `true` if ad can be shown with this placement, otherwise `false`.
   static Future<bool> show(int adType, [String placement = "default"]) async {
-    return await _channel.invokeMethod(
-        'show', {'adType': adType, 'placement': placement})
-        ?? false;
+    return await _channel
+            .invokeMethod('show', {'adType': adType, 'placement': placement}) ??
+        false;
   }
 
   /// Hide [adType] advertising
@@ -168,8 +170,8 @@ class Appodeal {
   ///
   /// if [onLoadedTriggerBoth] `true` that onLoaded will trigger when precache or normal ad were loaded,
   /// otherwise `false` that onLoaded will trigger only when normal ad was loaded (default).
-  static Future<void> setTriggerOnLoadedOnPrecache(int adType,
-                                                   bool onLoadedTriggerBoth) async {
+  static Future<void> setTriggerOnLoadedOnPrecache(
+      int adType, bool onLoadedTriggerBoth) async {
     return _channel.invokeMethod('setTriggerOnLoadedOnPrecache', {
       'adType': adType,
       'onLoadedTriggerBoth': onLoadedTriggerBoth,
@@ -214,8 +216,8 @@ class Appodeal {
   /// Setting banners inverse rotation (by default: left = 90, right = -90).
   ///
   /// [leftBannerRotation] rotation for [BANNER_LEFT], [BANNER_RIGHT]
-  static Future<void> setBannerRotation(int leftBannerRotation,
-                                        int rightBannerRotation) async {
+  static Future<void> setBannerRotation(
+      int leftBannerRotation, int rightBannerRotation) async {
     return _channel.invokeMethod('setBannerRotation', {
       'leftBannerRotation': leftBannerRotation,
       'rightBannerRotation': rightBannerRotation,
@@ -232,7 +234,7 @@ class Appodeal {
 
   /// Disabling specified [network] for [adType]
   static Future<void> disableNetwork(String network,
-                                     [int adType = Appodeal.ALL]) async {
+      [int adType = Appodeal.ALL]) async {
     return _channel.invokeMethod('disableNetwork', {
       'network': network,
       'adType': adType,
