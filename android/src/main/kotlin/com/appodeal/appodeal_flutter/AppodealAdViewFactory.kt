@@ -9,6 +9,6 @@ import io.flutter.plugin.platform.PlatformViewFactory
 internal class AppodealAdViewFactory(
     private val activity: Activity,
 ) : PlatformViewFactory(StandardMessageCodec.INSTANCE) {
-    override fun create(context: Context, viewId: Int, args: Any?): PlatformView =
+    override fun create(context: Context?, viewId: Int, args: Any?): PlatformView  =
         AppodealAdView(activity, args as HashMap<*, *>)
 }
