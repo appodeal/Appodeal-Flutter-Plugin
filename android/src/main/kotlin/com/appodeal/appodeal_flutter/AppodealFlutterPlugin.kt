@@ -144,7 +144,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         setCallbacks()
         Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
-        Appodeal.setFramework("flutter", "1.2.0")
+        Appodeal.setFramework("flutter", "1.2.1")
 
         val managerConsent: Consent? = ConsentManager.getInstance(applicationContext).consent
         val booleanConsent: Boolean? = args["boolConsent"] as? Boolean
