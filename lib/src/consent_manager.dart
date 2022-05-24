@@ -4,10 +4,15 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 
 enum Storage { NONE, SHARED_PREFERENCE }
+
 enum Status { UNKNOWN, NON_PERSONALIZED, PARTLY_PERSONALIZED, PERSONALIZED }
+
 enum Zone { UNKNOWN, NONE, GDPR, CCPA }
+
 enum HasConsent { UNKNOWN, TRUE, FALSE }
+
 enum ShouldShow { UNKNOWN, TRUE, FALSE }
+
 enum AuthorizationStatus { NOT_DETERMINED, RESTRICTED, DENIED, AUTHORIZED }
 
 class ConsentManager {
@@ -34,9 +39,9 @@ class ConsentManager {
   }
 
   static Future<void> showAsActivityConsentForm() async {
-    if(Platform.isAndroid){
+    if (Platform.isAndroid) {
       return _channel.invokeMethod('showAsActivityConsentForm');
-    }else if (Platform.isIOS) {
+    } else if (Platform.isIOS) {
       return _channel.invokeMethod('showAsDialogConsentForm');
     }
   }
