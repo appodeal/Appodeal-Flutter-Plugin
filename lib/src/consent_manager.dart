@@ -3,18 +3,25 @@ import 'dart:io';
 
 import 'package:flutter/services.dart';
 
+@Deprecated("Will be changed to new API in future releases.")
 enum Storage { NONE, SHARED_PREFERENCE }
 
+@Deprecated("Will be changed to new API in future releases.")
 enum Status { UNKNOWN, NON_PERSONALIZED, PARTLY_PERSONALIZED, PERSONALIZED }
 
+@Deprecated("Will be changed to new API in future releases.")
 enum Zone { UNKNOWN, NONE, GDPR, CCPA }
 
+@Deprecated("Will be changed to new API in future releases.")
 enum HasConsent { UNKNOWN, TRUE, FALSE }
 
+@Deprecated("Will be changed to new API in future releases.")
 enum ShouldShow { UNKNOWN, TRUE, FALSE }
 
+@Deprecated("Will be changed to new API in future releases.")
 enum AuthorizationStatus { NOT_DETERMINED, RESTRICTED, DENIED, AUTHORIZED }
 
+@Deprecated("Will be changed to new API in future releases.")
 class ConsentManager {
   static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
 

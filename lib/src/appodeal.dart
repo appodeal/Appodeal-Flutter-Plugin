@@ -77,6 +77,7 @@ class Appodeal {
   ///
   /// If you use [ConsentManager] you may not provide [boolConsent],
   /// otherwise provide if user has given or reject consent to the processing of personal data relating to him or her.
+  @Deprecated("Will be changed to new API in future releases.")
   static Future<void> updateConsent(bool? boolConsent) async {
     return _channel.invokeMethod('updateConsent', {'boolConsent': boolConsent});
   }
@@ -170,6 +171,7 @@ class Appodeal {
   ///
   /// if [onLoadedTriggerBoth] `true` that onLoaded will trigger when precache or normal ad were loaded,
   /// otherwise `false` that onLoaded will trigger only when normal ad was loaded (default).
+  @Deprecated("Will be removed in future releases.")
   static Future<void> setTriggerOnLoadedOnPrecache(
       int adType, bool onLoadedTriggerBoth) async {
     return _channel.invokeMethod('setTriggerOnLoadedOnPrecache', {
@@ -183,6 +185,7 @@ class Appodeal {
   /// If [sharedAdsInstanceAcrossActivities] `true` that the SDK will show AdView on all new activities without calling additional code from your side.
   /// If you want to control the display yourself, you can set [sharedAdsInstanceAcrossActivities] as `false` parameter.
   /// Support only for [BANNER] and [MREC]
+  @Deprecated("Will be changed to new API in future releases.")
   static Future<void> setSharedAdsInstanceAcrossActivities(
       bool sharedAdsInstanceAcrossActivities) async {
     if (Platform.isAndroid) {
@@ -192,7 +195,7 @@ class Appodeal {
     }
   }
 
-  /// Set [smartBannerEnabled] (`true` by default).
+  /// Set [smartBannerEnabled] (`false` by default).
   static Future<void> setSmartBanners(bool smartBannerEnabled) async {
     return _channel.invokeMethod('setSmartBanners', {
       'smartBannerEnabled': smartBannerEnabled,
@@ -225,6 +228,7 @@ class Appodeal {
   }
 
   /// Tracks in-app purchase information ([amount] and [currency]) and sends info to our servers for analytics
+  @Deprecated("Will be removed in future releases.")
   static Future<void> trackInAppPurchase(double amount, String currency) async {
     return _channel.invokeMethod('trackInAppPurchase', {
       'amount': amount,
@@ -242,6 +246,7 @@ class Appodeal {
   }
 
   /// Set [userId]
+  @Deprecated("Will be removed in future releases.")
   static Future<void> setUserId(String userId) async {
     return _channel.invokeMethod('setUserId', {
       'userId': userId,
@@ -249,6 +254,7 @@ class Appodeal {
   }
 
   /// Set [age]
+  @Deprecated("Will be removed in future releases.")
   static Future<void> setUserAge(int age) async {
     return _channel.invokeMethod('setUserAge', {'age': age});
   }
@@ -256,6 +262,7 @@ class Appodeal {
   /// Set [gender]
   ///
   /// support genders: [GENDER_OTHER], [GENDER_MALE], [GENDER_FEMALE]
+  @Deprecated("Will be removed in future releases.")
   static Future<void> setUserGender(int gender) async {
     return _channel.invokeMethod('setUserGender', {'gender': gender});
   }
