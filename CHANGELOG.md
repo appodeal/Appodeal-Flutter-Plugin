@@ -1,3 +1,13 @@
+## 1.2.2
+
+* **Smart banners disable by default.**
+* Changed View Ad smart banner behavor.
+* Minor fixes and stability improvements.
+* Deprecated consent logic behavor.
+* Deprecated methods: `Appodeal.updateConsent(...)`, `Appodeal.setTriggerOnLoadedOnPrecache(...)`,
+  `Appodeal.setSharedAdsInstanceAcrossActivities(...)`, `Appodeal.trackInAppPurchase(...)`,
+  `Appodeal.setUserId(...)`, `Appodeal.setUserAge(...)`, `Appodeal.setUserGender(...)`.
+
 ## 1.2.1
 
 * Started support for Flutter 3.0

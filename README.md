@@ -185,19 +185,24 @@ Use the type codes below to set the preferred ad format:
 // By default autocache is enabled for all ad types
 // Call this method before or after initilisation
 Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
+
 // Set testing mode
 // Call this method before initilisation
 Appodeal.setTesting(false);
+
 // Set Appodeal SDK logging level
 // Call this method before initilisation
 Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
+
 // Enable or disable child direct threatment
 // Call this method before initilisation
 Appodeal.setChildDirectedTreatment(false);
+
 // Disable network for specific ad type:
 // Call this method before initilisation
 Appodeal.disableNetwork("admob");
 Appodeal.disableNetwork("vungle", Appodeal.INTERSTITIAL);
+
 // Enable or disable triggering show for precache ads
 // Call this method before or after initilisation
 Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
@@ -206,19 +211,10 @@ Appodeal.setTriggerOnLoadedOnPrecache(Appodeal.INTERSTITIAL, true);
 * Segments and targeting.
 
 ``` dart
-// Set user age
-// Call this method before or after initilisation
-Appodeal.setUserAge(25);
-// Set user gender
-// Supported values are male | female
-// Call this method before of after initilisation
-Appodeal.setUserGender(Appodeal.GENDER_FEMALE);
-// Set specific user id from attribution system
-// Call this method before initilisation
-Appodeal.setUserId("some user ud");
 // Set segment filter
 // Call this method before of after initilisation
 Appodeal.setCustomFilter("levels_played", "levelsPlayed");
+
 // Set extras
 Appodeal.setExtraData("attribuition_id", "some value");
 ```
@@ -226,13 +222,16 @@ Appodeal.setExtraData("attribuition_id", "some value");
 
 ``` dart
 // Enable or disable tablet banners.
+// SUPORTED ONLY FOR NON-VIEW DISPLAYING
 // Call this method before of after initilisation
 Appodeal.setTabletBanners(false);
-// Enable or disable smart banners.
-// iOS smart banners are supported only
-// for applications where autoration is disabled
+
+// Enable or disable smart banners. 
+// SUPORTED ONLY FOR NON-VIEW DISPLAYING
+// iOS smart banners are supported only for applications where autorotation is disabled
 // Call this method before of after initilisation
 Appodeal.setSmartBanners(false);
+
 // Enable or disable banner refresh animation
 // Call this method before of after initilisation
 Appodeal.setBannerAnimation(true);

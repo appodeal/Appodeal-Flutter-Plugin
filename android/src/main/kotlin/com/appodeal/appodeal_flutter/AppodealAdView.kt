@@ -12,7 +12,7 @@ class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformVie
 
     private val placement: String = arguments["placement"] as? String ?: "default"
     private val bannerType: Int = toBannerType(arguments["adSize"] as HashMap<*, *>)
-    private val adView: View = getAdView(activity)
+    private val adView: View = getAdView(activity.applicationContext)
 
     init {
         (adView.parent as? ViewGroup)?.removeView(adView)
