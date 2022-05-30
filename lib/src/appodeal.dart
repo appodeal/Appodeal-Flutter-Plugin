@@ -170,6 +170,7 @@ class Appodeal {
   ///
   /// if [onLoadedTriggerBoth] `true` that onLoaded will trigger when precache or normal ad were loaded,
   /// otherwise `false` that onLoaded will trigger only when normal ad was loaded (default).
+  @Deprecated("Will be removed in future releases.")
   static Future<void> setTriggerOnLoadedOnPrecache(
       int adType, bool onLoadedTriggerBoth) async {
     return _channel.invokeMethod('setTriggerOnLoadedOnPrecache', {
@@ -192,7 +193,7 @@ class Appodeal {
     }
   }
 
-  /// Set [smartBannerEnabled] (`true` by default).
+  /// Set [smartBannerEnabled] (`false` by default).
   static Future<void> setSmartBanners(bool smartBannerEnabled) async {
     return _channel.invokeMethod('setSmartBanners', {
       'smartBannerEnabled': smartBannerEnabled,

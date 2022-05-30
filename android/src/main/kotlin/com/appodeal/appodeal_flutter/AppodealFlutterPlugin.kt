@@ -24,21 +24,16 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private var consentForm: ConsentForm? = null
 
-    private lateinit var interstitial: AppodealInterstitial
-    private lateinit var rewardedVideo: AppodealRewarded
-    private lateinit var banner: AppodealBanner
-    private lateinit var mrec: AppodealMrec
+    private val interstitial: AppodealInterstitial by lazy { AppodealInterstitial(pluginBinding) }
+    private val rewardedVideo: AppodealRewarded by lazy { AppodealRewarded(pluginBinding) }
+    private val banner: AppodealBanner by lazy { AppodealBanner(pluginBinding) }
+    private val mrec: AppodealMrec by lazy { AppodealMrec(pluginBinding) }
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         super.onAttachedToEngine(binding)
         _pluginBinding = binding
         _channel = MethodChannel(binding.binaryMessenger, "appodeal_flutter")
         channel.setMethodCallHandler(this)
-
-        interstitial = AppodealInterstitial(binding)
-        rewardedVideo = AppodealRewarded(binding)
-        banner = AppodealBanner(binding)
-        mrec = AppodealMrec(binding)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -141,10 +136,15 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val appKey = args["appKey"] as String
         @Suppress("UNCHECKED_CAST") val adTypes = args["adTypes"] as List<Int>
         val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
-        setCallbacks()
+        Appodeal.setInterstitialCallbacks(interstitial.adListener)
+        Appodeal.setRewardedVideoCallbacks(rewardedVideo.adListener)
+        Appodeal.setBannerCallbacks(banner.adListener)
+        Appodeal.setMrecCallbacks(mrec.adListener)
+        Appodeal.setSmartBanners(isSmartBannerEnabled)
+        Appodeal.set728x90Banners(isTabletBannerEnabled)
         Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
-        Appodeal.setFramework("flutter", "1.2.1")
+        Appodeal.setFramework("flutter", "1.2.2")
 
         val managerConsent: Consent? = ConsentManager.getInstance(applicationContext).consent
         val booleanConsent: Boolean? = args["boolConsent"] as? Boolean
@@ -266,15 +266,15 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setSmartBanners(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val smartBannerEnabled = args["smartBannerEnabled"] as Boolean
-        Appodeal.setSmartBanners(smartBannerEnabled)
+        isSmartBannerEnabled = args["smartBannerEnabled"] as Boolean
+        Appodeal.setSmartBanners(isSmartBannerEnabled)
         result.success(null)
     }
 
     private fun setTabletBanners(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val tabletBannerEnabled = args["tabletBannerEnabled"] as Boolean
-        Appodeal.set728x90Banners(tabletBannerEnabled)
+        isTabletBannerEnabled = args["tabletBannerEnabled"] as Boolean
+        Appodeal.set728x90Banners(isTabletBannerEnabled)
         result.success(null)
     }
 
@@ -386,13 +386,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val value = args["value"] as Boolean
         Appodeal.setUseSafeArea(value)
         result.success(null)
-    }
-
-    private fun setCallbacks() {
-        Appodeal.setInterstitialCallbacks(interstitial.adListener)
-        Appodeal.setRewardedVideoCallbacks(rewardedVideo.adListener)
-        Appodeal.setBannerCallbacks(banner.adListener)
-        Appodeal.setMrecCallbacks(mrec.adListener)
     }
 
     // Consent Logic
@@ -524,3 +517,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         result.success(null)
     }
 }
+
+private var isSmartBannerEnabled: Boolean = false
+private var isTabletBannerEnabled: Boolean = false
