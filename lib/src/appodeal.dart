@@ -321,7 +321,7 @@ class Appodeal {
     _channel.invokeMethod('setCustomFilter', {'name': name, 'value': value});
   }
 
-  /// Set custom extara data [name] to [value]
+  /// Set custom extara data [key] to [value].
   static setExtraData(String key, dynamic value) {
     _channel.invokeMethod('setExtraData', {'key': key, 'value': value});
   }
@@ -334,6 +334,17 @@ class Appodeal {
   /// Get SDK platform version.
   static Future<String> getPlatformSDKVersion() async {
     return await _channel.invokeMethod('getPlatformSDKVersion');
+  }
+
+  /// Logging event with [eventName] and [params] in all of connected service.
+  static logEvent(String eventName, Map<String, dynamic> params) {
+    _channel
+        .invokeMethod('logEvent', {"eventName": eventName, "params": params});
+  }
+
+  /// Validate in-app purchase in one of connected attribution service.
+  static validateInAppPurchase() {
+    _channel.invokeMethod('validateInAppPurchase', {});
   }
 
   static loadConsentForm() {

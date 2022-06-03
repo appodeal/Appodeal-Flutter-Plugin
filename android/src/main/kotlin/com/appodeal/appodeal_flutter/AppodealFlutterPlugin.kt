@@ -82,7 +82,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "isUseSafeArea" -> isUseSafeArea(call, result)
             "setCustomFilter" -> setCustomFilter(call, result)
             "setExtraData" -> setExtraData(call, result)
-            "getPlatformSDKVersion" -> getPlatformSDKVersion(result)
+            "getPlatformSDKVersion" -> getPlatformSDKVersion(call, result)
             //Services logic
             "logEvent" -> logEvent(call, result)
             "validateInAppPurchase" -> validateInAppPurchase(call, result)
@@ -354,8 +354,22 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         result.success(null)
     }
 
-    private fun getPlatformSDKVersion(result: Result) {
+    private fun getPlatformSDKVersion(call: MethodCall, result: Result) {
         result.success(Appodeal.getVersion())
+    }
+
+    //Services logic
+    private fun logEvent(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val eventName = args["eventName"] as String
+        @Suppress("UNCHECKED_CAST") val params = args["params"] as Map<String, *>
+        Appodeal.logEvent(eventName, params)
+        result.success(null)
+    }
+
+    private fun validateInAppPurchase(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        result.success(null)
     }
 
     // Consent Logic
@@ -388,9 +402,11 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val name = args["name"] as String
         val bundle = args["bundle"] as String
         val policyUrl = args["policyUrl"] as String
-        val purposeIds: List<Int> = (args["purposeIds"] as? List<Int>).orEmpty()
-        val featureIds: List<Int> = (args["featureIds"] as? List<Int>).orEmpty()
-        val legitimateInterestPurposeIds =
+        @Suppress("UNCHECKED_CAST") val purposeIds: List<Int> =
+            (args["purposeIds"] as? List<Int>).orEmpty()
+        @Suppress("UNCHECKED_CAST") val featureIds: List<Int> =
+            (args["featureIds"] as? List<Int>).orEmpty()
+        @Suppress("UNCHECKED_CAST") val legitimateInterestPurposeIds =
             (args["legitimateInterestPurposeIds"] as? List<Int>).orEmpty()
         val vendor = Vendor.Builder(
             id = id,
