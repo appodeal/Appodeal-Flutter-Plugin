@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:stack_appodeal_flutter/src/appodeal_ad_type.dart';
-import 'package:stack_appodeal_flutter/src/consent_manager.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 /// Appodeal SDK Flutter Plugin main class.
 ///
@@ -57,11 +56,14 @@ class Appodeal {
     _channel.invokeMethod('setLogLevel', {'logLevel': logLevel});
   }
 
-  /// Set [logLevel]
-  ///
-  /// support log level: [LogLevelNone], [LogLevelDebug], [LogLevelVerbose]
-  static updateGDPRUserConsent(int logLevel) {
-    _channel.invokeMethod('updateGDPRUserConsent', {'logLevel': logLevel});
+  static updateGDPRUserConsent(GDPRUserConsent gdprUserConsent) {
+    _channel.invokeMethod(
+        'updateGDPRUserConsent', {'gdprUserConsent': gdprUserConsent.rawValue});
+  }
+
+  static updateCCPAUserConsent(CCPAUserConsent ccpaUserConsent) {
+    _channel.invokeMethod(
+        'updateCCPAUserConsent', {'ccpaUserConsent': ccpaUserConsent.rawValue});
   }
 
   /// Initialize the Appodeal SDK
