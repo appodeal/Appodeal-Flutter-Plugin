@@ -8,7 +8,7 @@ import com.appodeal.ads.Appodeal
 import io.flutter.plugin.platform.PlatformView
 import java.lang.ref.WeakReference
 
-class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformView {
+internal class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformView {
 
     private val placement: String = arguments["placement"] as? String ?: "default"
     private val bannerType: Int = toBannerType(arguments["adSize"] as HashMap<*, *>)
@@ -54,9 +54,7 @@ class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformVie
             else -> error("Banner type doesn't support")
         }
     }
-
-    companion object {
-        private var refMrecAdView: WeakReference<View> = WeakReference<View>(null)
-        private var refBannerAdView: WeakReference<View> = WeakReference<View>(null)
-    }
 }
+
+private var refMrecAdView = WeakReference<View>(null)
+private var refBannerAdView = WeakReference<View>(null)
