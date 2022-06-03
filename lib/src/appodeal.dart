@@ -10,17 +10,17 @@ import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 ///
 class Appodeal {
   /// Rectangular ads that appear at the top/right/bottom/left or view of the device screen.
-  static const BANNER = AppodealAdType.BANNER;
-  static const BANNER_RIGHT = AppodealAdType.BANNER_RIGHT;
-  static const BANNER_TOP = AppodealAdType.BANNER_TOP;
-  static const BANNER_LEFT = AppodealAdType.BANNER_LEFT;
-  static const BANNER_BOTTOM = AppodealAdType.BANNER_BOTTOM;
+  static const BANNER = AppodealAdType.Banner;
+  static const BANNER_RIGHT = AppodealAdType.BannerRight;
+  static const BANNER_TOP = AppodealAdType.BannerTop;
+  static const BANNER_LEFT = AppodealAdType.BannerLeft;
+  static const BANNER_BOTTOM = AppodealAdType.BannerBottom;
 
   /// Interstitial ads are full-screen ads that cover the interface of their host app.
-  static const INTERSTITIAL = AppodealAdType.INTERSTITIAL;
+  static const INTERSTITIAL = AppodealAdType.Interstitial;
 
   /// Ads that reward users for watching short videos and interacting with playable ads and surveys.
-  static const REWARDED_VIDEO = AppodealAdType.REWARDED_VIDEO;
+  static const REWARDED_VIDEO = AppodealAdType.RewardedVideo;
 
   /// Rectangular ads (with defined size 300x250 dp) that appear at the view of the device screen.
   static const MREC = AppodealAdType.MREC;
@@ -44,9 +44,16 @@ class Appodeal {
   static const MethodChannel _mrecChannel =
       const MethodChannel('appodeal_flutter/mrec');
 
-  /// Set [testMode]
-  static setTesting(bool testMode) {
-    _channel.invokeMethod('setTesting', {'testMode': testMode});
+  /// Set [isTestMode] for get test advertising.
+  static setTesting(bool isTestMode) {
+    _channel.invokeMethod('setTestMode', {'isTestMode': isTestMode});
+  }
+
+  /// Check if test mode is enabled
+  ///
+  /// Returns `true` if test mode is enabled, otherwise `false`.
+  static Future<bool> isTesting() async {
+    return await _channel.invokeMethod('isTestMode');
   }
 
   /// Set [logLevel]
@@ -83,6 +90,7 @@ class Appodeal {
     });
     _channel.invokeMethod('initialize', {
       'appKey': appKey,
+      'sdkVersion': getSDKVersion(),
       'adTypes': adTypes.fold<int>(
           0, (previousValue, element) => previousValue | element.platformType),
     });
@@ -93,23 +101,21 @@ class Appodeal {
   /// Returns `true` if ad type is initialized, otherwise `false`.
   static Future<bool> isInitialized(AppodealAdType adType) async {
     return await _channel
-            .invokeMethod('isInitialized', {'adType': adType.platformType}) ??
-        false;
+        .invokeMethod('isInitialized', {'adType': adType.platformType});
   }
 
-  /// Set [autoCache] new ads when current ads was shown for [adType].
-  static setAutoCache(AppodealAdType adType, bool autoCache) {
+  /// Set [isAutoCache] new ads when current ads was shown for [adType].
+  static setAutoCache(AppodealAdType adType, bool isAutoCache) {
     _channel.invokeMethod('setAutoCache',
-        {'adType': adType.platformType, 'autoCache': autoCache});
+        {'adType': adType.platformType, 'isAutoCache': isAutoCache});
   }
 
   /// Check if auto cache enabled for [adType]
   ///
   /// Returns `true` if auto cache enabled, otherwise `false`.
   static Future<bool> isAutoCacheEnabled(AppodealAdType adType) async {
-    return await _channel.invokeMethod(
-            'isAutoCacheEnabled', {'adType': adType.platformType}) ??
-        false;
+    return await _channel
+        .invokeMethod('isAutoCacheEnabled', {'adType': adType.platformType});
   }
 
   /// Start caching ads for [adType]
@@ -122,8 +128,7 @@ class Appodeal {
   /// Returns `true` if ads currently loaded and can be shown, otherwise `false`.
   static Future<bool> isLoaded(AppodealAdType adType) async {
     return await _channel
-            .invokeMethod('isLoaded', {'adType': adType.platformShowType}) ??
-        false;
+        .invokeMethod('isLoaded', {'adType': adType.platformShowType});
   }
 
   /// Check if loaded ad is precache for [adType]
@@ -131,8 +136,7 @@ class Appodeal {
   /// Returns `true` if currently loaded ads is precache, otherwise `false`.
   static Future<bool> isPrecache(AppodealAdType adType) async {
     return await _channel
-            .invokeMethod('isPrecache', {'adType': adType.platformType}) ??
-        false;
+        .invokeMethod('isPrecache', {'adType': adType.platformType});
   }
 
   /// Check if ad with specific [adType] can be shown with [placement]
@@ -140,16 +144,14 @@ class Appodeal {
   /// Returns `true` if ad can be shown with this placement, otherwise `false`.
   static Future<bool> canShow(AppodealAdType adType,
       [String placement = "default"]) async {
-    return await _channel.invokeMethod('canShow',
-            {'adType': adType.platformType, 'placement': placement}) ??
-        false;
+    return await _channel.invokeMethod(
+        'canShow', {'adType': adType.platformType, 'placement': placement});
   }
 
   /// Get predicted ecpm for certain [adType]
   static Future<double> getPredictedEcpm(AppodealAdType adType) async {
-    return await _channel.invokeMethod(
-            'getPredictedEcpm', {'adType': adType.platformType}) ??
-        0.0;
+    return await _channel
+        .invokeMethod('getPredictedEcpm', {'adType': adType.platformType});
   }
 
   /// Show [adType] advertising with [placement]
@@ -157,9 +159,8 @@ class Appodeal {
   /// Returns `true` if ad can be shown with this placement, otherwise `false`.
   static Future<bool> show(AppodealAdType adType,
       [String placement = "default"]) async {
-    return await _channel.invokeMethod('show',
-            {'adType': adType.platformShowType, 'placement': placement}) ??
-        false;
+    return await _channel.invokeMethod(
+        'show', {'adType': adType.platformShowType, 'placement': placement});
   }
 
   /// Hide [adType] advertising
@@ -178,15 +179,15 @@ class Appodeal {
     }
   }
 
-  /// Set [setAdViewAutoResume] for `Android` platform (`true` by default).
+  /// Set [isAdViewAutoResume] for `Android` platform (`true` by default).
   ///
-  /// If [setAdViewAutoResume] `true` that the SDK will show AdView on all new activities without calling additional code from your side.
-  /// If you want to control the display yourself, you can set [setAdViewAutoResume] as `false` parameter.
+  /// If [isAdViewAutoResume] `true` that the SDK will show AdView on all new activities without calling additional code from your side.
+  /// If you want to control the display yourself, you can set [isAdViewAutoResume] as `false` parameter.
   /// Support only for [BANNER] and [MREC]
-  static setAdViewAutoResume(bool adViewAutoResumeEnabled) {
+  static setAdViewAutoResume(bool isAdViewAutoResume) {
     if (Platform.isAndroid) {
       _channel.invokeMethod('setAdViewAutoResume', {
-        'adViewAutoResumeEnabled': adViewAutoResumeEnabled,
+        'isAdViewAutoResume': isAdViewAutoResume,
       });
     }
   }
@@ -201,10 +202,10 @@ class Appodeal {
     return false;
   }
 
-  /// Set [smartBannerEnabled] (`false` by default).
-  static setSmartBanners(bool smartBannerEnabled) {
+  /// Set [isSmartBannersEnabled] (`false` by default).
+  static setSmartBanners(bool isSmartBannersEnabled) {
     _channel.invokeMethod('setSmartBanners', {
-      'smartBannerEnabled': smartBannerEnabled,
+      'isSmartBannersEnabled': isSmartBannersEnabled,
     });
   }
 
@@ -215,10 +216,10 @@ class Appodeal {
     return await _channel.invokeMethod('isSmartBanners');
   }
 
-  /// Set [tabletBannerEnabled] (`false` by default).
-  static setTabletBanners(bool tabletBannerEnabled) {
+  /// Set [isTabletBannerEnabled] (`false` by default).
+  static setTabletBanners(bool isTabletBannerEnabled) {
     _channel.invokeMethod('setTabletBanners', {
-      'tabletBannerEnabled': tabletBannerEnabled,
+      'isTabletBannerEnabled': isTabletBannerEnabled,
     });
   }
 
@@ -230,9 +231,9 @@ class Appodeal {
   }
 
   /// Set [bannerAnimationEnabled] (`true` by default).
-  static setBannerAnimation(bool bannerAnimationEnabled) {
+  static setBannerAnimation(bool isBannerAnimationEnabled) {
     _channel.invokeMethod('setBannerAnimation', {
-      'bannerAnimationEnabled': bannerAnimationEnabled,
+      'isBannerAnimationEnabled': isBannerAnimationEnabled,
     });
   }
 
@@ -255,17 +256,18 @@ class Appodeal {
 
   /// Disabling specified [network] for [adType]
   static disableNetwork(String network,
-      [AppodealAdType adType = AppodealAdType.ALL]) {
+      [AppodealAdType adType = AppodealAdType.All]) {
     _channel.invokeMethod('disableNetwork', {
       'network': network,
       'adType': adType.platformType,
     });
   }
 
-  /// Mute video if `true` for `Android` platform (`false` by default).
-  static muteVideosIfCallsMuted(bool value) {
+  /// Mute video if [isMuteVideosIfCallsMuted] is `true` for `Android` platform (`false` by default).
+  static muteVideosIfCallsMuted(bool isMuteVideosIfCallsMuted) {
     if (Platform.isAndroid) {
-      _channel.invokeMethod('muteVideosIfCallsMuted', {'value': value});
+      _channel.invokeMethod('muteVideosIfCallsMuted',
+          {'isMuteVideosIfCallsMuted': isMuteVideosIfCallsMuted});
     }
   }
 
@@ -281,9 +283,10 @@ class Appodeal {
 
   /// Disables data collection for kids apps
   ///
-  /// If [value] `true` that to disable data collection for kids apps
-  static setChildDirectedTreatment(bool value) {
-    _channel.invokeMethod('setChildDirectedTreatment', {'value': value});
+  /// If [isChildDirectedTreatment] `true` that to disable data collection for kids apps
+  static setChildDirectedTreatment(bool isChildDirectedTreatment) {
+    _channel.invokeMethod('setChildDirectedTreatment',
+        {'isChildDirectedTreatment': isChildDirectedTreatment});
   }
 
   /// Check if data collection for kids apps disabled (`false` by default).
@@ -291,6 +294,26 @@ class Appodeal {
   /// Returns `true` if data collection for kids apps disabled, otherwise `false`.
   static isChildDirectedTreatment() async {
     return await _channel.invokeMethod('isChildDirectedTreatment');
+  }
+
+  /// Set use safe area [isUseSafeArea] for `Android` platform (`false` by default).
+  ///
+  /// Appodeal SDK will consider safe area when ad shown
+  /// Support only for [BANNER] and [MREC]
+  static setUseSafeArea(bool isUseSafeArea) {
+    if (Platform.isAndroid) {
+      _channel.invokeMethod('isUseSafeArea', {'isUseSafeArea': isUseSafeArea});
+    }
+  }
+
+  /// Check if usage safe area is enabled for `Android` platform (`false` by default).
+  ///
+  /// Returns `true` usage safe area is enabled, otherwise `false`.
+  static isUseSafeArea() async {
+    if (Platform.isAndroid) {
+      return await _channel.invokeMethod('isUseSafeArea');
+    }
+    return false;
   }
 
   /// Set custom segment filter [name] to [value]
@@ -303,29 +326,14 @@ class Appodeal {
     _channel.invokeMethod('setExtraData', {'key': key, 'value': value});
   }
 
+  /// Get SDK version.
+  static String getSDKVersion() {
+    return "3.0.0";
+  }
+
   /// Get SDK platform version.
-  static Future<String> getNativeSDKVersion() async {
-    return await _channel.invokeMethod('getNativeSDKVersion', {}) ?? "0";
-  }
-
-  /// Set use safe area [value] for `Android` platform (`false` by default).
-  ///
-  /// Appodeal SDK will consider safe area when ad shown
-  /// Support only for [BANNER] and [MREC]
-  static setUseSafeArea(bool value) {
-    if (Platform.isAndroid) {
-      _channel.invokeMethod('setUseSafeArea', {'value': value});
-    }
-  }
-
-  /// Check if usage safe area is enabled for `Android` platform (`false` by default).
-  ///
-  /// Returns `true` usage safe area is enabled, otherwise `false`.
-  static isUseSafeArea() async {
-    if (Platform.isAndroid) {
-      return await _channel.invokeMethod('isUseSafeArea');
-    }
-    return false;
+  static Future<String> getPlatformSDKVersion() async {
+    return await _channel.invokeMethod('getPlatformSDKVersion');
   }
 
   static loadConsentForm() {

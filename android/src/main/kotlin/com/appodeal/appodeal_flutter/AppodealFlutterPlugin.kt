@@ -82,7 +82,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "isUseSafeArea" -> isUseSafeArea(call, result)
             "setCustomFilter" -> setCustomFilter(call, result)
             "setExtraData" -> setExtraData(call, result)
-            "getNativeSDKVersion" -> getNativeSDKVersion(result)
+            "getPlatformSDKVersion" -> getPlatformSDKVersion(result)
             //Services logic
             "logEvent" -> logEvent(call, result)
             "validateInAppPurchase" -> validateInAppPurchase(call, result)
@@ -148,6 +148,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private fun initialize(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val appKey = args["appKey"] as String
+        val sdkVersion = args["sdkVersion"] as String
         val adTypes = args["adTypes"] as Int
         Appodeal.setInterstitialCallbacks(interstitial.adListener)
         Appodeal.setRewardedVideoCallbacks(rewardedVideo.adListener)
@@ -157,7 +158,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         Appodeal.set728x90Banners(isTabletBannerEnabled)
         Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
-        Appodeal.setFramework("flutter", "1.2.2")
+        Appodeal.setFramework("flutter", sdkVersion)
 
         Appodeal.updateConsent(ConsentManager.consent)
         Appodeal.initialize(activity, appKey, adTypes, object : ApdInitializationCallback {
@@ -177,8 +178,8 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private fun setAutoCache(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val adType = args["adType"] as Int
-        val autoCache = args["autoCache"] as Boolean
-        Appodeal.setAutoCache(adType, autoCache)
+        val isAutoCache = args["isAutoCache"] as Boolean
+        Appodeal.setAutoCache(adType, isAutoCache)
         result.success(null)
     }
 
@@ -243,7 +244,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setAdViewAutoResume(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val isAdViewAutoResumeEnabled = args["adViewAutoResumeEnabled"] as Boolean
+        val isAdViewAutoResumeEnabled = args["isAdViewAutoResume"] as Boolean
         Appodeal.setSharedAdsInstanceAcrossActivities(isAdViewAutoResumeEnabled)
         result.success(null)
     }
@@ -254,7 +255,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setSmartBanners(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        isSmartBannersEnabled = args["smartBannerEnabled"] as Boolean
+        isSmartBannersEnabled = args["isSmartBannersEnabled"] as Boolean
         Appodeal.setSmartBanners(isSmartBannersEnabled)
         result.success(null)
     }
@@ -265,7 +266,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setTabletBanners(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        isTabletBannerEnabled = args["tabletBannerEnabled"] as Boolean
+        isTabletBannerEnabled = args["isTabletBannerEnabled"] as Boolean
         Appodeal.set728x90Banners(isTabletBannerEnabled)
         result.success(null)
     }
@@ -276,7 +277,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setBannerAnimation(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        isBannerAnimationEnabled = args["bannerAnimationEnabled"] as Boolean
+        isBannerAnimationEnabled = args["isBannerAnimationEnabled"] as Boolean
         Appodeal.setBannerAnimation(isBannerAnimationEnabled)
         result.success(null)
     }
@@ -303,7 +304,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun muteVideosIfCallsMuted(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        isMuteVideosIfCallsMuted = args["value"] as Boolean
+        isMuteVideosIfCallsMuted = args["isMuteVideosIfCallsMuted"] as Boolean
         Appodeal.muteVideosIfCallsMuted(isMuteVideosIfCallsMuted)
         result.success(null)
     }
@@ -314,7 +315,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setChildDirectedTreatment(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        isChildDirectedTreatment = args["value"] as Boolean
+        isChildDirectedTreatment = args["isChildDirectedTreatment"] as Boolean
         Appodeal.setChildDirectedTreatment(isChildDirectedTreatment)
         result.success(null)
     }
@@ -325,7 +326,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setUseSafeArea(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        isUseSafeArea = args["value"] as Boolean
+        isUseSafeArea = args["isUseSafeArea"] as Boolean
         Appodeal.setUseSafeArea(isUseSafeArea)
         result.success(null)
     }
@@ -353,7 +354,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         result.success(null)
     }
 
-    private fun getNativeSDKVersion(result: Result) {
+    private fun getPlatformSDKVersion(result: Result) {
         result.success(Appodeal.getVersion())
     }
 
