@@ -68,9 +68,9 @@ class ConsentManager {
       String vendorName,
       String vendorBundle,
       String vendorPolicyUrl,
-      var vendorPurposeIds,
-      var vendorFeatureIds,
-      var vendorLegitimateInterestPurposeIds) async {
+      List<int> vendorPurposeIds,
+      List<int> vendorFeatureIds,
+      List<int> vendorLegitimateInterestPurposeIds) async {
     return _channel.invokeMethod('setCustomVendor', {
       'name': vendorName,
       'bundle': vendorBundle,
