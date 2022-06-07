@@ -343,8 +343,23 @@ class Appodeal {
   }
 
   /// Validate in-app purchase in one of connected attribution service.
-  static validateInAppPurchase() {
-    _channel.invokeMethod('validateInAppPurchase', {});
+  static validateInAppPurchase(AppodealPurchase purchase,
+      {Function(AppodealPurchase purchase, List<ServiceError>? errors)?
+          onInAppPurchaseValidateSuccess,
+      Function(AppodealPurchase purchase, List<ServiceError>? errors)?
+          onInAppPurchaseValidateFail}) {
+    _channel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onInAppPurchaseValidateSuccess':
+          onInAppPurchaseValidateSuccess?.call(
+              purchase, call.arguments['errors']);
+          break;
+        case 'onInAppPurchaseValidateFail':
+          onInAppPurchaseValidateFail?.call(purchase, call.arguments['errors']);
+          break;
+      }
+    });
+    _channel.invokeMethod('validateInAppPurchase', purchase.toMap);
   }
 
   static loadConsentForm() {
@@ -546,3 +561,5 @@ class Appodeal {
 }
 
 class ApdInitializationError {}
+
+class ServiceError {}

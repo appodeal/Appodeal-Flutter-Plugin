@@ -1,11 +1,11 @@
-class _UserConsent {
+class _AppodealUserConsent {
   final int rawValue;
 
-  const _UserConsent._({required this.rawValue});
+  const _AppodealUserConsent._({required this.rawValue});
 }
 
 /// An additional consent object containing zone as GDPR
-class GDPRUserConsent extends _UserConsent {
+class GDPRUserConsent extends _AppodealUserConsent {
   /// Unknown status - the user has neither granted nor declined consent for personalized or non-personalized ads.
   static const Unknown = GDPRUserConsent._(rawValue: 0);
 
@@ -20,7 +20,7 @@ class GDPRUserConsent extends _UserConsent {
 }
 
 /// An additional consent object containing zone as CCPA
-class CCPAUserConsent extends _UserConsent {
+class CCPAUserConsent extends _AppodealUserConsent {
   /// Unknown status - the user has neither granted nor declined consent for personalized or non-personalized ads
   static const Unknown = CCPAUserConsent._(rawValue: 0);
 

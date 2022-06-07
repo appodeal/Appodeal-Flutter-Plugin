@@ -2,10 +2,14 @@ package com.appodeal.appodeal_flutter
 
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
+import com.appodeal.ads.inapp.InAppPurchase
+import com.appodeal.ads.inapp.InAppPurchase.Type
+import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
 import com.appodeal.ads.initializing.ApdInitializationCallback
 import com.appodeal.ads.initializing.ApdInitializationError
 import com.appodeal.ads.regulator.CCPAUserConsent
 import com.appodeal.ads.regulator.GDPRUserConsent
+import com.appodeal.ads.service.ServiceError
 import com.appodeal.ads.utils.Log.LogLevel
 import com.appodeal.consent.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -369,6 +373,53 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun validateInAppPurchase(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
+        val type = args["type"] as String
+        val price = args["price"] as String
+        val currency = args["currency"] as String
+        val publicKey = args["publicKey"] as? String?
+        val signature = args["signature"] as? String?
+        val purchaseData = args["purchaseData"] as? String?
+        val developerPayload = args["developerPayload"] as? String?
+        val sku = args["sku"] as? String?
+        val orderId = args["orderId"] as? String?
+        val purchaseToken = args["purchaseToken"] as? String?
+        val purchaseTimestamp = args["purchaseTimestamp"] as Int
+        @Suppress("UNCHECKED_CAST") val additionalParameters =
+            args["additionalParameters"] as Map<String, String>
+        val purchase: InAppPurchase = when (Type.valueOf(type)) {
+            Type.InApp -> InAppPurchase.newInAppBuilder()
+            Type.Subs -> InAppPurchase.newSubscriptionBuilder()
+        }.withPrice(price)
+            .withCurrency(currency)
+            .withPublicKey(publicKey)
+            .withSignature(signature)
+            .withPurchaseData(purchaseData)
+            .withDeveloperPayload(developerPayload)
+            .withSku(sku)
+            .withOrderId(orderId)
+            .withPurchaseToken(purchaseToken)
+            .withPurchaseTimestamp(purchaseTimestamp.toLong())
+            .withAdditionalParams(additionalParameters)
+            .build()
+
+        Appodeal.validateInAppPurchase(
+            applicationContext,
+            purchase,
+            object : InAppPurchaseValidateCallback {
+                override fun onInAppPurchaseValidateFail(
+                    purchase: InAppPurchase,
+                    errors: List<ServiceError>
+                ) {
+                    channel.invokeMethod("onInAppPurchaseValidateFail", null)
+                }
+
+                override fun onInAppPurchaseValidateSuccess(
+                    purchase: InAppPurchase,
+                    errors: List<ServiceError>?
+                ) {
+                    channel.invokeMethod("onInAppPurchaseValidateSuccess", null)
+                }
+            })
         result.success(null)
     }
 
