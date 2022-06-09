@@ -44,6 +44,13 @@ class Appodeal {
   static const MethodChannel _mrecChannel =
       const MethodChannel('appodeal_flutter/mrec');
 
+  static final _functions = Map<String, Function(MethodCall call)?>();
+  static final Future<dynamic> Function(MethodCall call) _handler =
+      (call) async {
+    _functions[call.method]?.call(call);
+    _functions.remove(call.method);
+  };
+
   /// Set [isTestMode] for get test advertising.
   static setTesting(bool isTestMode) {
     _channel.invokeMethod('setTestMode', {'isTestMode': isTestMode});
@@ -83,17 +90,13 @@ class Appodeal {
       required List<AppodealAdType> adTypes,
       Function(List<ApdInitializationError>? errors)?
           onInitializationFinished}) {
-    _channel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case 'onInitializationFinished':
-          List<ApdInitializationError> error =
-              List<String>.from(call.arguments['errors'])
-                  .map((e) => ApdInitializationError._(e))
-                  .toList();
-          onInitializationFinished?.call(error);
-          break;
-      }
-    });
+    _functions["onInitializationFinished"] = (call) {
+      final error = List<String>.from(call.arguments['errors'])
+          .map((e) => ApdInitializationError._(e))
+          .toList();
+      onInitializationFinished?.call(error);
+    };
+    _channel.setMethodCallHandler(_handler);
     _channel.invokeMethod('initialize', {
       'appKey': appKey,
       'sdkVersion': getSDKVersion(),
