@@ -352,22 +352,24 @@ class Appodeal {
   }
 
   /// Validate in-app purchase in one of connected attribution service.
-  static validateInAppPurchase(AppodealPurchase purchase,
-      {Function(AppodealPurchase purchase, List<ServiceError>? errors)?
+  static validateInAppPurchase(
+      {required AppodealPurchase purchase,
+      Function(AppodealPurchase purchase, List<ServiceError>? errors)?
           onInAppPurchaseValidateSuccess,
       Function(AppodealPurchase purchase, List<ServiceError>? errors)?
           onInAppPurchaseValidateFail}) {
-    _channel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case 'onInAppPurchaseValidateSuccess':
-          onInAppPurchaseValidateSuccess?.call(
-              purchase, call.arguments['errors']);
-          break;
-        case 'onInAppPurchaseValidateFail':
-          onInAppPurchaseValidateFail?.call(purchase, call.arguments['errors']);
-          break;
-      }
-    });
+    _functions["onInAppPurchaseValidateSuccess"] = (call) {
+      final error = List<String>.from(call.arguments['errors'])
+          .map((e) => ServiceError._(e))
+          .toList();
+      onInAppPurchaseValidateSuccess?.call(purchase, error);
+    };
+    _functions["onInAppPurchaseValidateFail"] = (call) {
+      final error = List<String>.from(call.arguments['errors'])
+          .map((e) => ServiceError._(e))
+          .toList();
+      onInAppPurchaseValidateFail?.call(purchase, error);
+    };
     _channel.invokeMethod('validateInAppPurchase', purchase.toMap);
   }
 
@@ -575,4 +577,8 @@ class ApdInitializationError {
   ApdInitializationError._(this.desctiption);
 }
 
-class ServiceError {}
+class ServiceError {
+  final String desctiption;
+
+  ServiceError._(this.desctiption);
+}

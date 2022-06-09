@@ -7,6 +7,7 @@ import com.appodeal.ads.inapp.InAppPurchase.Type
 import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
 import com.appodeal.ads.initializing.ApdInitializationCallback
 import com.appodeal.ads.initializing.ApdInitializationError
+import com.appodeal.ads.initializing.ApdInitializationError.*
 import com.appodeal.ads.regulator.CCPAUserConsent
 import com.appodeal.ads.regulator.GDPRUserConsent
 import com.appodeal.ads.service.ServiceError
@@ -164,18 +165,20 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
         Appodeal.setFramework("flutter", sdkVersion)
 
+        val map: (List<ApdInitializationError>?) -> Map<String, List<String>?> = { errors ->
+            val arg: List<String> = errors?.map { error ->
+                when (error) {
+                    is Critical -> "Critical: ${error::class.simpleName} ${error.description}"
+                    is NonCritical -> "NonCritical: ${error::class.simpleName} [${error.componentName}] ${error.description}"
+                    is InternalError -> "InternalError: ${error::class.simpleName} ${error.message}"
+                }
+            } ?: emptyList()
+            mapOf("errors" to arg)
+        }
         Appodeal.updateConsent(ConsentManager.consent)
         Appodeal.initialize(activity, appKey, adTypes, object : ApdInitializationCallback {
-            override fun onInitializationFinished(errors: List<ApdInitializationError>?) {
-                val arg: List<String> = errors?.map { error ->
-                    when (error) {
-                        is ApdInitializationError.Critical -> "Critical: ${error.description}"
-                        is ApdInitializationError.NonCritical -> "NonCritical: [${error.componentName}] ${error.description}"
-                        is ApdInitializationError.InternalError -> "InternalError ${error.message}"
-                    }
-                } ?: emptyList()
-                channel.invokeMethod("onInitializationFinished", hashMapOf("errors" to arg))
-            }
+            override fun onInitializationFinished(errors: List<ApdInitializationError>?) =
+                channel.invokeMethod("onInitializationFinished", map(errors))
         })
         result.success(null)
     }
@@ -408,7 +411,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             .withPurchaseTimestamp(purchaseTimestamp.toLong())
             .withAdditionalParams(additionalParameters)
             .build()
-
+        val map: (List<ServiceError>?) -> Map<String, List<String>?> = { errors ->
+            mapOf("errors" to errors?.map { "${it::class.simpleName} [${it.componentName}] ${it.description}" })
+        }
         Appodeal.validateInAppPurchase(
             applicationContext,
             purchase,
@@ -416,16 +421,12 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
                 override fun onInAppPurchaseValidateFail(
                     purchase: InAppPurchase,
                     errors: List<ServiceError>
-                ) {
-                    channel.invokeMethod("onInAppPurchaseValidateFail", null)
-                }
+                ) = channel.invokeMethod("onInAppPurchaseValidateFail", map(errors))
 
                 override fun onInAppPurchaseValidateSuccess(
                     purchase: InAppPurchase,
                     errors: List<ServiceError>?
-                ) {
-                    channel.invokeMethod("onInAppPurchaseValidateSuccess", null)
-                }
+                ) = channel.invokeMethod("onInAppPurchaseValidateSuccess", map(errors))
             })
         result.success(null)
     }
