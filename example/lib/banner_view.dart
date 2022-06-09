@@ -23,12 +23,12 @@ class _BannerViewPageState extends State<BannerViewPage> {
     });
 
     Appodeal.setBannerCallbacks(
-        onBannerLoaded: (isPrecache) => showToast('onBannerLoaded: isPrecache - $isPrecache'),
-        onBannerFailedToLoad: () => showToast('onBannerFailedToLoad'),
-        onBannerShown: () => showToast('onBannerShown'),
-        onBannerShowFailed: () => showToast('onBannerShowFailed'),
-        onBannerClicked: () => showToast('onBannerClicked'),
-        onBannerExpired: () => showToast('onBannerExpired'));
+        onBannerLoaded: (isPrecache) => print('onBannerLoaded: isPrecache - $isPrecache'),
+        onBannerFailedToLoad: () => print('onBannerFailedToLoad'),
+        onBannerShown: () => print('onBannerShown'),
+        onBannerShowFailed: () => print('onBannerShowFailed'),
+        onBannerClicked: () => print('onBannerClicked'),
+        onBannerExpired: () => print('onBannerExpired'));
   }
 
   @override

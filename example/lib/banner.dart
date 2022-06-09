@@ -14,12 +14,12 @@ class _BannerPageState extends State<BannerPage> {
     super.initState();
 
     Appodeal.setBannerCallbacks(
-        onBannerLoaded: (isPrecache) => showToast('onBannerLoaded: isPrecache - $isPrecache'),
-        onBannerFailedToLoad: () => showToast('onBannerFailedToLoad'),
-        onBannerShown: () => showToast('onBannerShown'),
-        onBannerShowFailed: () => showToast('onBannerShowFailed'),
-        onBannerClicked: () => showToast('onBannerClicked'),
-        onBannerExpired: () => showToast('onBannerExpired'));
+        onBannerLoaded: (isPrecache) => print('onBannerLoaded: isPrecache - $isPrecache'),
+        onBannerFailedToLoad: () => print('onBannerFailedToLoad'),
+        onBannerShown: () => print('onBannerShown'),
+        onBannerShowFailed: () => print('onBannerShowFailed'),
+        onBannerClicked: () => print('onBannerClicked'),
+        onBannerExpired: () => print('onBannerExpired'));
   }
 
   @override
@@ -45,7 +45,7 @@ class _BannerPageState extends State<BannerPage> {
                   style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isInitialized = await Appodeal.isInitialized(Appodeal.BANNER);
-                    showToast('Banner isInitialized - $isInitialized');
+                    print('Banner isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
                 ),
@@ -58,7 +58,7 @@ class _BannerPageState extends State<BannerPage> {
                   style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isCanShow = await Appodeal.canShow(Appodeal.BANNER);
-                    showToast('Banner canShow - $isCanShow');
+                    print('Banner canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
                 ),

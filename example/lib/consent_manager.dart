@@ -15,24 +15,24 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
     super.initState();
     ConsentManager.setConsentInfoUpdateListener(
         (onConsentInfoUpdated, consent) => {
-              showToast('$onConsentInfoUpdated consent - $consent'),
+              print('$onConsentInfoUpdated consent - $consent'),
               print('$onConsentInfoUpdated consent - $consent'),
             },
         (onFailedToUpdateConsentInfo, error) => {
-              showToast('$onFailedToUpdateConsentInfo error'),
+              print('$onFailedToUpdateConsentInfo error'),
               print('$onFailedToUpdateConsentInfo error - $error')
             });
 
     ConsentManager.setConsentFormListener(
-      (onConsentFormLoaded) => showToast('$onConsentFormLoaded'),
+      (onConsentFormLoaded) => print('$onConsentFormLoaded'),
       (onConsentFormError, error) => {
-        showToast('$onConsentFormError error'),
+        print('$onConsentFormError error'),
         print('$onConsentFormError error - $error')
       },
-      (onConsentFormOpened) => showToast('$onConsentFormOpened'),
+      (onConsentFormOpened) => print('$onConsentFormOpened'),
       (onConsentFormClosed, consent) => {
         initialization(consent),
-        showToast('$onConsentFormClosed'),
+        print('$onConsentFormClosed'),
         print('$onConsentFormClosed consent - $consent'),
       },
     );
@@ -47,8 +47,8 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
     Appodeal.setUseSafeArea(true);
 
     Appodeal.initialize(
-      appodealKey,
-      [
+      appKey: appodealKey,
+      adTypes: [
         Appodeal.REWARDED_VIDEO,
         Appodeal.INTERSTITIAL,
         Appodeal.BANNER,
@@ -133,7 +133,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                       onPressed: () async {
                         var vendor = await ConsentManager.getCustomVendor(
                             "com.appodeal.test");
-                        showToast('Vendor - $vendor');
+                        print('Vendor - $vendor');
                       },
                       child: const Text('GET VENDOR'),
                     ),
@@ -148,7 +148,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                           fixedSize: Size(300, 20)),
                       onPressed: () async {
                         var storage = await ConsentManager.getStorage();
-                        showToast('Vendor - $storage');
+                        print('Vendor - $storage');
                       },
                       child: const Text('GET STORAGE'),
                     ),
@@ -164,7 +164,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                       onPressed: () async {
                         var shouldShow =
                             await ConsentManager.shouldShowConsentDialog();
-                        showToast('SHOULD SHOW? - $shouldShow');
+                        print('SHOULD SHOW? - $shouldShow');
                       },
                       child: const Text('SHOULD SHOW?'),
                     ),
@@ -179,7 +179,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                           fixedSize: Size(300, 20)),
                       onPressed: () async {
                         var zone = await ConsentManager.getConsentZone();
-                        showToast('Zone - $zone');
+                        print('Zone - $zone');
                       },
                       child: const Text('GET ZONE'),
                     ),
@@ -194,7 +194,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                           fixedSize: Size(300, 20)),
                       onPressed: () async {
                         var status = await ConsentManager.getConsentStatus();
-                        showToast('Status - $status');
+                        print('Status - $status');
                       },
                       child: const Text('GET STATUS'),
                     ),
@@ -267,7 +267,7 @@ class _ConsentManagerState extends State<ConsentManagerPage> {
                       onPressed: () async {
                         var isLoaded =
                             await ConsentManager.consentFormIsLoaded();
-                        showToast('isLoaded - $isLoaded');
+                        print('isLoaded - $isLoaded');
                       },
                       child: const Text('FORM IS LOADED?'),
                     ),

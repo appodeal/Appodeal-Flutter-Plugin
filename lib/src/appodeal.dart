@@ -78,13 +78,19 @@ class Appodeal {
   /// Initialize the Appodeal SDK with the [appKey] and List [adTypes] of the advertising you want to initialize.
   /// If you use [ConsentManager] you may not provide [boolConsent],
   /// otherwise provide if user has given or reject consent to the processing of personal data relating to him or her.
-  static initialize(String appKey, List<AppodealAdType> adTypes,
-      {Function(List<ApdInitializationError>? errors)?
+  static initialize(
+      {required String appKey,
+      required List<AppodealAdType> adTypes,
+      Function(List<ApdInitializationError>? errors)?
           onInitializationFinished}) {
     _channel.setMethodCallHandler((call) async {
       switch (call.method) {
         case 'onInitializationFinished':
-          onInitializationFinished?.call(call.arguments['errors']);
+          List<ApdInitializationError> error =
+              List<String>.from(call.arguments['errors'])
+                  .map((e) => ApdInitializationError._(e))
+                  .toList();
+          onInitializationFinished?.call(error);
           break;
       }
     });
@@ -560,6 +566,10 @@ class Appodeal {
   }
 }
 
-class ApdInitializationError {}
+class ApdInitializationError {
+  final String desctiption;
+
+  ApdInitializationError._(this.desctiption);
+}
 
 class ServiceError {}

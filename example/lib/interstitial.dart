@@ -14,13 +14,13 @@ class _InterstitialPageState extends State<InterstitialPage> {
     super.initState();
 
     Appodeal.setInterstitialCallbacks(
-        onInterstitialLoaded: (isPrecache) => showToast('onInterstitialLoaded: isPrecache - $isPrecache'),
-        onInterstitialFailedToLoad: () => showToast('onInterstitialFailedToLoad'),
-        onInterstitialShown: () => showToast('onInterstitialShown'),
-        onInterstitialShowFailed: () => showToast('onInterstitialShowFailed'),
-        onInterstitialClicked: () => showToast('onInterstitialClicked'),
-        onInterstitialClosed: () => showToast('onInterstitialClosed'),
-        onInterstitialExpired: () => showToast('onInterstitialExpired'));
+        onInterstitialLoaded: (isPrecache) => print('onInterstitialLoaded: isPrecache - $isPrecache'),
+        onInterstitialFailedToLoad: () => print('onInterstitialFailedToLoad'),
+        onInterstitialShown: () => print('onInterstitialShown'),
+        onInterstitialShowFailed: () => print('onInterstitialShowFailed'),
+        onInterstitialClicked: () => print('onInterstitialClicked'),
+        onInterstitialClosed: () => print('onInterstitialClosed'),
+        onInterstitialExpired: () => print('onInterstitialExpired'));
   }
 
   @override
@@ -78,7 +78,7 @@ class _InterstitialPageState extends State<InterstitialPage> {
                   onPressed: () async {
                     var isCanShow =
                         await Appodeal.canShow(Appodeal.INTERSTITIAL);
-                    showToast('Interstitial canShow - $isCanShow');
+                    print('Interstitial canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
                 ),
@@ -93,7 +93,7 @@ class _InterstitialPageState extends State<InterstitialPage> {
                   onPressed: () async {
                     var isInitialized =
                         await Appodeal.isInitialized(Appodeal.INTERSTITIAL);
-                    showToast('Interstitial isInitialized - $isInitialized');
+                    print('Interstitial isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
                 ),
