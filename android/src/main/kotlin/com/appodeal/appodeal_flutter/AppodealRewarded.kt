@@ -38,15 +38,15 @@ internal class AppodealRewarded(
             adChannel.invokeMethod("onRewardedVideoShowFailed", null)
         }
 
-        override fun onRewardedVideoFinished(amount: Double, reward: String?) {
+        override fun onRewardedVideoFinished(amount: Double, name: String?) {
             adChannel.invokeMethod(
                 "onRewardedVideoFinished",
-                mapOf("amount" to amount, "reward" to (reward ?: "empty"))
+                mapOf("amount" to amount, "reward" to (name ?: "empty"))
             )
         }
 
-        override fun onRewardedVideoClosed(isFinished: Boolean) {
-            adChannel.invokeMethod("onRewardedVideoClosed", mapOf("isFinished" to isFinished))
+        override fun onRewardedVideoClosed(finished: Boolean) {
+            adChannel.invokeMethod("onRewardedVideoClosed", mapOf("isFinished" to finished))
         }
 
         override fun onRewardedVideoExpired() {

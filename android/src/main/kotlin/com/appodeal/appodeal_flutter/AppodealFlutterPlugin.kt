@@ -167,7 +167,14 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         Appodeal.updateConsent(ConsentManager.consent)
         Appodeal.initialize(activity, appKey, adTypes, object : ApdInitializationCallback {
             override fun onInitializationFinished(errors: List<ApdInitializationError>?) {
-                channel.invokeMethod("onInitializationFinished", null)
+                val arg: List<String> = errors?.map { error ->
+                    when (error) {
+                        is ApdInitializationError.Critical -> "Critical: ${error.description}"
+                        is ApdInitializationError.NonCritical -> "NonCritical: [${error.componentName}] ${error.description}"
+                        is ApdInitializationError.InternalError -> "InternalError ${error.message}"
+                    }
+                } ?: emptyList()
+                channel.invokeMethod("onInitializationFinished", hashMapOf("errors" to arg))
             }
         })
         result.success(null)
