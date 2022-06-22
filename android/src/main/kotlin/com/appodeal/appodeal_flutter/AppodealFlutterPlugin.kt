@@ -454,7 +454,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun setCustomVendor(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val id = args["id"] as? Int?
         val name = args["name"] as String
         val bundle = args["bundle"] as String
         val policyUrl = args["policyUrl"] as String
@@ -465,7 +464,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         @Suppress("UNCHECKED_CAST") val legitimateInterestPurposeIds =
             (args["legitimateInterestPurposeIds"] as? List<Int>).orEmpty()
         val vendor = Vendor.Builder(
-            id = id,
             name = name,
             bundle = bundle,
             policyUrl = policyUrl,
