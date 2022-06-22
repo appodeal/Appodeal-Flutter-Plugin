@@ -27,12 +27,27 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private var _pluginBinding: FlutterPlugin.FlutterPluginBinding? = null
     private val pluginBinding get() = checkNotNull(_pluginBinding)
 
-    private var consentForm: ConsentForm? = null
-
     private val interstitial: AppodealInterstitial by lazy { AppodealInterstitial(pluginBinding) }
     private val rewardedVideo: AppodealRewarded by lazy { AppodealRewarded(pluginBinding) }
     private val banner: AppodealBanner by lazy { AppodealBanner(pluginBinding) }
     private val mrec: AppodealMrec by lazy { AppodealMrec(pluginBinding) }
+
+    private val consentForm: ConsentForm by lazy {
+        ConsentForm(applicationContext,
+            object : IConsentFormListener {
+                override fun onConsentFormClosed(consent: Consent) =
+                    channel.invokeMethod("onConsentFormClosed", null)
+
+                override fun onConsentFormError(error: ConsentManagerError) =
+                    channel.invokeMethod("onConsentFormShowFailed", error.toArg())
+
+                override fun onConsentFormLoaded(consentForm: ConsentForm) =
+                    channel.invokeMethod("onConsentFormLoaded", null)
+
+                override fun onConsentFormOpened() =
+                    channel.invokeMethod("onConsentFormOpened", null)
+            })
+    }
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         super.onAttachedToEngine(binding)
@@ -152,7 +167,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun initialize(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val appKey = args["appKey"] as String
+        appKey = args["appKey"] as String
         val sdkVersion = args["sdkVersion"] as String
         val adTypes = args["adTypes"] as Int
         Appodeal.setInterstitialCallbacks(interstitial.adListener)
@@ -164,21 +179,10 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
         Appodeal.setFramework("flutter", sdkVersion)
-
-        val map: (List<ApdInitializationError>?) -> Map<String, List<String>?> = { errors ->
-            val arg: List<String> = errors?.map { error ->
-                when (error) {
-                    is Critical -> "Critical: ${error::class.simpleName} ${error.description}"
-                    is NonCritical -> "NonCritical: ${error::class.simpleName} [${error.componentName}] ${error.description}"
-                    is InternalError -> "InternalError: ${error::class.simpleName} ${error.message}"
-                }
-            } ?: emptyList()
-            mapOf("errors" to arg)
-        }
         Appodeal.updateConsent(ConsentManager.consent)
         Appodeal.initialize(activity, appKey, adTypes, object : ApdInitializationCallback {
             override fun onInitializationFinished(errors: List<ApdInitializationError>?) =
-                channel.invokeMethod("onInitializationFinished", map(errors))
+                channel.invokeMethod("onInitializationFinished", errors?.toArg())
         })
         result.success(null)
     }
@@ -411,9 +415,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             .withPurchaseTimestamp(purchaseTimestamp.toLong())
             .withAdditionalParams(additionalParameters)
             .build()
-        val map: (List<ServiceError>?) -> Map<String, List<String>?> = { errors ->
-            mapOf("errors" to errors?.map { "${it::class.simpleName} [${it.componentName}] ${it.description}" })
-        }
         Appodeal.validateInAppPurchase(
             applicationContext,
             purchase,
@@ -421,37 +422,31 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
                 override fun onInAppPurchaseValidateFail(
                     purchase: InAppPurchase,
                     errors: List<ServiceError>
-                ) = channel.invokeMethod("onInAppPurchaseValidateFail", map(errors))
+                ) = channel.invokeMethod("onInAppPurchaseValidateFail", errors.toArg())
 
                 override fun onInAppPurchaseValidateSuccess(
                     purchase: InAppPurchase,
                     errors: List<ServiceError>?
-                ) = channel.invokeMethod("onInAppPurchaseValidateSuccess", map(errors))
+                ) = channel.invokeMethod("onInAppPurchaseValidateSuccess", errors?.toArg())
             })
         result.success(null)
     }
 
     // Consent Logic
     private fun loadConsentForm(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
         ConsentManager.requestConsentInfoUpdate(
             applicationContext,
-            args["appKey"] as String,
-            object : ConsentInfoUpdateListener() {
-                override fun onConsentInfoUpdated(consent: Consent) {
-                    consentForm = ConsentForm(
-                        applicationContext,
-                        object : ConsentFormListener() {
-                        }
-                    )
-                    consentForm?.load()
-                }
+            appKey,
+            object : IConsentInfoUpdateListener {
+                override fun onConsentInfoUpdated(consent: Consent) = consentForm.load()
+                override fun onFailedToUpdateConsentInfo(error: ConsentManagerError) =
+                    channel.invokeMethod("onConsentFormLoadError", error.toArg())
             }
         )
     }
 
     private fun showConsentForm(call: MethodCall, result: Result) {
-        consentForm?.show()
+        consentForm.show()
         result.success(null)
     }
 
@@ -481,6 +476,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     }
 }
 
+private var appKey: String = String()
 private var isTestMode: Boolean = false
 private var isSmartBannersEnabled: Boolean = false
 private var isTabletBannerEnabled: Boolean = false
@@ -488,3 +484,23 @@ private var isBannerAnimationEnabled: Boolean = false
 private var isMuteVideosIfCallsMuted: Boolean = false
 private var isChildDirectedTreatment: Boolean = false
 private var isUseSafeArea: Boolean = false
+
+private fun ConsentManagerError.toArg(): Map<String, List<String>> =
+    mapOf("errors" to listOf(this.toString()))
+
+private fun List<ApdInitializationError>.toArg(): Map<String, List<String>> {
+    val arg = this.map { error ->
+        when (error) {
+            is Critical -> "Critical: ${error::class.simpleName} ${error.description}"
+            is NonCritical -> "NonCritical: ${error::class.simpleName} [${error.componentName}] ${error.description}"
+            is InternalError -> "InternalError: ${error::class.simpleName} ${error.message}"
+        }
+    }
+    return mapOf("errors" to arg)
+}
+
+@JvmName("toArgServiceError")
+private fun List<ServiceError>.toArg(): Map<String, List<String>> {
+    val arg = this.map { "${it::class.simpleName} [${it.componentName}] ${it.description}" }
+    return mapOf("errors" to arg)
+}
