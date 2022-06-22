@@ -34,7 +34,16 @@ class Appodeal {
   /// Log level verbose for [setLogLevel] method.
   static const LogLevelVerbose = 2;
 
-  static const MethodChannel _channel = const MethodChannel('appodeal_flutter');
+  @Deprecated("Will be removed in future releases.")
+  static final _functions = Map<String, Function(MethodCall call)?>();
+  @Deprecated("Will be removed in future releases.")
+  static final Future<dynamic> Function(MethodCall call) _handler =
+      (call) async {
+    _functions[call.method]?.call(call);
+    _functions.remove(call.method);
+  };
+
+  static MethodChannel _channel = _defaultChannel(_handler);
   static const MethodChannel _interstitialChannel =
       const MethodChannel('appodeal_flutter/interstitial');
   static const MethodChannel _rewardedVideoChannel =
@@ -43,13 +52,6 @@ class Appodeal {
       const MethodChannel('appodeal_flutter/banner');
   static const MethodChannel _mrecChannel =
       const MethodChannel('appodeal_flutter/mrec');
-
-  static final _functions = Map<String, Function(MethodCall call)?>();
-  static final Future<dynamic> Function(MethodCall call) _handler =
-      (call) async {
-    _functions[call.method]?.call(call);
-    _functions.remove(call.method);
-  };
 
   /// Set [isTestMode] for get test advertising.
   static setTesting(bool isTestMode) {
@@ -96,7 +98,6 @@ class Appodeal {
           .toList();
       onInitializationFinished?.call(error);
     };
-    _channel.setMethodCallHandler(_handler);
     _channel.invokeMethod('initialize', {
       'appKey': appKey,
       'sdkVersion': getSDKVersion(),
@@ -393,14 +394,18 @@ class Appodeal {
       {Function? onOpened,
       Function(List<ApdConsentFormError> error)? onShowFailed,
       Function? onClosed}) {
-    _functions["onConsentFormOpened"] = onOpened?.call();
+    _functions["onConsentFormOpened"] = (call) {
+      onOpened?.call();
+    };
     _functions["onConsentFormShowFailed"] = (call) {
       final error = List<String>.from(call.arguments['errors'])
           .map((e) => ApdConsentFormError._(e))
           .toList();
       onShowFailed?.call(error);
     };
-    _functions["onConsentFormClosed"] = onClosed?.call();
+    _functions["onConsentFormClosed"] = (call) {
+      onClosed?.call();
+    };
     _channel.invokeMethod('showConsentForm');
   }
 
@@ -592,6 +597,13 @@ class Appodeal {
       }
     });
   }
+}
+
+@Deprecated("Will be changed in future releases.")
+MethodChannel _defaultChannel(Future Function(MethodCall call) handler) {
+  const channel = MethodChannel('appodeal_flutter');
+  channel.setMethodCallHandler(handler);
+  return channel;
 }
 
 class ApdInitializationError {
