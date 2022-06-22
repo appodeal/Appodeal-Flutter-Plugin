@@ -167,7 +167,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun initialize(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        appKey = args["appKey"] as String
+        val appKey = args["appKey"] as String
         val sdkVersion = args["sdkVersion"] as String
         val adTypes = args["adTypes"] as Int
         Appodeal.setInterstitialCallbacks(interstitial.adListener)
@@ -434,6 +434,8 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     // Consent Logic
     private fun loadConsentForm(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val appKey = args["appKey"] as String
         ConsentManager.requestConsentInfoUpdate(
             applicationContext,
             appKey,
@@ -476,7 +478,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     }
 }
 
-private var appKey: String = String()
 private var isTestMode: Boolean = false
 private var isSmartBannersEnabled: Boolean = false
 private var isTabletBannerEnabled: Boolean = false
@@ -486,7 +487,7 @@ private var isChildDirectedTreatment: Boolean = false
 private var isUseSafeArea: Boolean = false
 
 private fun ConsentManagerError.toArg(): Map<String, List<String>> =
-    mapOf("errors" to listOf(this.toString()))
+    mapOf("errors" to listOf("${this.event}: ${this.message}"))
 
 private fun List<ApdInitializationError>.toArg(): Map<String, List<String>> {
     val arg = this.map { error ->

@@ -374,16 +374,19 @@ class Appodeal {
   }
 
   static loadConsentForm(
-      {Function? onLoaded,
+      {required String appKey,
+      Function? onLoaded,
       Function(List<ApdConsentFormError> error)? onLoadFailed}) {
-    _functions["onConsentFormLoaded"] = onLoaded?.call();
+    _functions["onConsentFormLoaded"] = (call) {
+      onLoaded?.call();
+    };
     _functions["onConsentFormLoadError"] = (call) {
       final error = List<String>.from(call.arguments['errors'])
           .map((e) => ApdConsentFormError._(e))
           .toList();
       onLoadFailed?.call(error);
     };
-    _channel.invokeMethod('loadConsentForm');
+    _channel.invokeMethod('loadConsentForm', {'appKey': appKey});
   }
 
   static showConsentForm(
