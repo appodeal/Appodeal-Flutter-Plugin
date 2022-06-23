@@ -1,8 +1,5 @@
-
-import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:flutter/material.dart';
-
-import 'main.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class BannerViewPage extends StatefulWidget {
   const BannerViewPage({Key? key}) : super(key: key);
@@ -85,9 +82,7 @@ class _BannerViewPageState extends State<BannerViewPage> {
               child: Visibility(
                   visible: isShow,
                   child: AppodealBanner(
-                      adSize: AppodealBannerSize.BANNER,
-                      placement: "default"
-                  )),
+                      adSize: AppodealBannerSize.BANNER, placement: "default")),
             ),
             //Interstitial
           ]),

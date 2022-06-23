@@ -85,7 +85,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     }
     
     private func isTestMode(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        result(isTestMode)
+        result(isTestModeEnabled)
     }
     
     private func setLogLevel(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
@@ -104,7 +104,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let logLevel = args["gdprUserConsent"] as! Int
         switch logLevel {
         case -1: Appodeal.updateUserConsentGDPR(.nonPersonalized)
-        case 0: Appodeal.updateUserConsentGDPR(.unknown)
         case 1: Appodeal.updateUserConsentGDPR(.personalized)
         default: Appodeal.updateUserConsentGDPR(.unknown)
         }
@@ -116,7 +115,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let logLevel = args["ccpaUserConsent"] as! Int
         switch logLevel {
         case -1: Appodeal.updateUserConsentCCPA(.optOut)
-        case 0: Appodeal.updateUserConsentCCPA(.unknown)
         case 1: Appodeal.updateUserConsentCCPA(.optIn)
         default: Appodeal.updateUserConsentCCPA(.unknown)
         }
@@ -152,7 +150,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     private func setAutoCache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let adType = AppodealAdType(rawValue: args["adType"] as! Int)
-        let autoCache = args["autoCache"] as! Bool
+        let autoCache = args["isAutoCache"] as! Bool
         Appodeal.setAutocache(autoCache, types: adType)
         result(nil)
     }

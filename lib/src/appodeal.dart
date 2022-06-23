@@ -9,6 +9,8 @@ import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 /// This class declares a public API Appodeal SDK Flutter Plugin
 ///
 class Appodeal {
+  Appodeal._();
+
   /// Rectangular ads that appear at the top/right/bottom/left or view of the device screen.
   static const BANNER = AppodealAdType.Banner;
   static const BANNER_RIGHT = AppodealAdType.BannerRight;
@@ -93,9 +95,9 @@ class Appodeal {
       Function(List<ApdInitializationError>? errors)?
           onInitializationFinished}) {
     _functions["onInitializationFinished"] = (call) {
-      final error = List<String>.from(call.arguments['errors'])
-          .map((e) => ApdInitializationError._(e))
-          .toList();
+      final errors = call.arguments?['errors'] ?? <String>[];
+      final error = List<ApdInitializationError>.from(
+          errors.map((e) => ApdInitializationError._(e)));
       onInitializationFinished?.call(error);
     };
     _channel.invokeMethod('initialize', {

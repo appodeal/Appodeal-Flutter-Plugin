@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
-import 'main.dart';
-
 class InterstitialPage extends StatefulWidget {
   @override
   _InterstitialPageState createState() => _InterstitialPageState();

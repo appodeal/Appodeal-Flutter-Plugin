@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
-import 'main.dart';
-
 class RewardedVideoPage extends StatefulWidget {
   @override
   _RewardedVideoPageState createState() => _RewardedVideoPageState();
@@ -45,9 +43,12 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isInitialized = await Appodeal.isInitialized(Appodeal.REWARDED_VIDEO);
+                    var isInitialized =
+                        await Appodeal.isInitialized(Appodeal.REWARDED_VIDEO);
                     print('Rewarded video isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
@@ -58,9 +59,12 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isCanShow = await Appodeal.canShow(Appodeal.REWARDED_VIDEO);
+                    var isCanShow =
+                        await Appodeal.canShow(Appodeal.REWARDED_VIDEO);
                     print('Rewarded video canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
@@ -72,7 +76,9 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.cache(Appodeal.REWARDED_VIDEO);
                   },
@@ -84,7 +90,9 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.show(Appodeal.REWARDED_VIDEO);
                   },

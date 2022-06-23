@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
-import 'main.dart';
-
 class MrecViewPage extends StatefulWidget {
   @override
   _MrecViewPageState createState() => _MrecViewPageState();
@@ -48,7 +46,9 @@ class _MrecViewPageState extends State<MrecViewPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     setState(() {
                       isShow = true;
@@ -62,7 +62,9 @@ class _MrecViewPageState extends State<MrecViewPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     setState(() {
                       isShow = false;

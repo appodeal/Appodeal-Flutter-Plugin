@@ -1,7 +1,5 @@
-import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:flutter/material.dart';
-
-import 'main.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class BannerPage extends StatefulWidget {
   @override
@@ -42,9 +40,12 @@ class _BannerPageState extends State<BannerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isInitialized = await Appodeal.isInitialized(Appodeal.BANNER);
+                    var isInitialized =
+                        await Appodeal.isInitialized(Appodeal.BANNER);
                     print('Banner isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
@@ -55,7 +56,9 @@ class _BannerPageState extends State<BannerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isCanShow = await Appodeal.canShow(Appodeal.BANNER);
                     print('Banner canShow - $isCanShow');
@@ -69,7 +72,9 @@ class _BannerPageState extends State<BannerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.show(Appodeal.BANNER_BOTTOM);
                   },
@@ -81,7 +86,9 @@ class _BannerPageState extends State<BannerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.show(Appodeal.BANNER_TOP);
                   },
@@ -93,7 +100,9 @@ class _BannerPageState extends State<BannerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.show(Appodeal.BANNER_RIGHT);
                   },
@@ -105,7 +114,9 @@ class _BannerPageState extends State<BannerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.show(Appodeal.BANNER_LEFT);
                   },
@@ -117,7 +128,9 @@ class _BannerPageState extends State<BannerPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
-                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20), fixedSize: Size(300, 20)),
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
                   onPressed: () {
                     Appodeal.hide(Appodeal.BANNER);
                   },

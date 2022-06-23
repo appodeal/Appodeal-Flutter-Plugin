@@ -1,16 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 
-import 'package:appodeal_flutter_example/Interstitial.dart';
 import 'package:appodeal_flutter_example/banner.dart';
 import 'package:appodeal_flutter_example/banner_view.dart';
-import 'package:appodeal_flutter_example/consent_manager.dart';
+import 'package:appodeal_flutter_example/interstitial.dart';
 import 'package:appodeal_flutter_example/mrec_view.dart';
 import 'package:appodeal_flutter_example/rewarded_video.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
-
-import 'ext.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -38,15 +36,17 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setUseSafeArea(true);
 
     Appodeal.initialize(
-      appodealKey,
-      [
-        Appodeal.REWARDED_VIDEO,
-        Appodeal.INTERSTITIAL,
-        Appodeal.BANNER,
-        Appodeal.MREC
-      ],
-      boolConsent: false,
-    );
+        appKey: _appodealKey,
+        adTypes: [
+          AppodealAdType.RewardedVideo,
+          AppodealAdType.Interstitial,
+          AppodealAdType.Banner,
+          AppodealAdType.MREC
+        ],
+        onInitializationFinished: (errors) {
+          errors?.forEach((error) => print(error.desctiption));
+          print("onInitializationFinished: errors - ${errors?.length ?? 0}");
+        });
   }
 
   @override
@@ -181,31 +181,12 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 20),
-                      fixedSize: Size(300, 20)),
-                  onPressed: () async {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ConsentManagerPage()),
-                    );
-                  },
-                  child: const Text('CONSENT MANAGER'),
-                ),
-              ),
-            ],
-          ),
         ]),
       ),
     );
   }
 }
 
-void showToast(String message) => print(message);
+final String _appodealKey = Platform.isAndroid
+    ? "d908f77a97ae0993514bc8edba7e776a36593c77e5f44994"
+    : "dee74c5129f53fc629a44a690a02296694e3eef99f2d3a5f";
