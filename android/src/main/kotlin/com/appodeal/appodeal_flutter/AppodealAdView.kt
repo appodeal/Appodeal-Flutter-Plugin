@@ -23,36 +23,20 @@ internal class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : Pl
 
     override fun dispose() {}
 
-    private fun toBannerType(size: HashMap<*, *>): Int {
-        return when (size["name"] as String) {
-            "BANNER" -> Appodeal.BANNER_VIEW
-            "MEDIUM_RECTANGLE" -> Appodeal.MREC
-            else -> error("Banner type doesn't support")
-        }
+    private fun toBannerType(size: HashMap<*, *>): Int = when (size["name"] as String) {
+        "BANNER" -> Appodeal.BANNER_VIEW
+        "MEDIUM_RECTANGLE" -> Appodeal.MREC
+        else -> error("Banner type doesn't support")
     }
 
-    private fun getAdView(context: Context): View {
-        when (bannerType) {
-            Appodeal.MREC -> {
-                var mrecAdView = refMrecAdView.get()
-                if (mrecAdView == null) {
-                    mrecAdView = Appodeal.getMrecView(context)
-                    refMrecAdView = WeakReference(mrecAdView)
-                    return mrecAdView
-                }
-                return mrecAdView
-            }
-            Appodeal.BANNER_VIEW -> {
-                var bannerAdView = refBannerAdView.get()
-                if (bannerAdView == null) {
-                    bannerAdView = Appodeal.getBannerView(context)
-                    refBannerAdView = WeakReference(bannerAdView)
-                    return bannerAdView
-                }
-                return bannerAdView
-            }
-            else -> error("Banner type doesn't support")
+    private fun getAdView(context: Context): View = when (bannerType) {
+        Appodeal.MREC -> refMrecAdView.get() ?: run {
+            Appodeal.getMrecView(context).also { refMrecAdView = WeakReference(it) }
         }
+        Appodeal.BANNER_VIEW -> refBannerAdView.get() ?: run {
+            Appodeal.getBannerView(context).also { refBannerAdView = WeakReference(it) }
+        }
+        else -> error("Banner type doesn't support")
     }
 }
 

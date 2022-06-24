@@ -356,7 +356,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     private func showConsentForm(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         guard let controller = UIApplication.shared.keyWindow?.rootViewController, STKConsentManager.shared().isConsentDialogReady
         else {
-            let args: [String: [String]] = ["errors": ["issue with controller (is ready: \(STKConsentManager.shared().isConsentDialogReady)"]]
+            let args: [String: [String]] = ["errors": ["issue with controller (is ready: \(STKConsentManager.shared().isConsentDialogReady))"]]
             channel.invokeMethod("onConsentFormShowFailed", arguments: args)
             return
         }

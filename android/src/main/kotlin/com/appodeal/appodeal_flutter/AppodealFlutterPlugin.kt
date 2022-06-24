@@ -1,5 +1,6 @@
 package com.appodeal.appodeal_flutter
 
+import android.content.Context
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.inapp.InAppPurchase
@@ -27,27 +28,15 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private var _pluginBinding: FlutterPlugin.FlutterPluginBinding? = null
     private val pluginBinding get() = checkNotNull(_pluginBinding)
 
+    @Deprecated("Will be removed in future releases.")
+    private var _consentForm: ConsentForm? = null
+    @Deprecated("Will be removed in future releases.")
+    private val consentForm get() = checkNotNull(_consentForm)
+
     private val interstitial: AppodealInterstitial by lazy { AppodealInterstitial(pluginBinding) }
     private val rewardedVideo: AppodealRewarded by lazy { AppodealRewarded(pluginBinding) }
     private val banner: AppodealBanner by lazy { AppodealBanner(pluginBinding) }
     private val mrec: AppodealMrec by lazy { AppodealMrec(pluginBinding) }
-
-    private val consentForm: ConsentForm by lazy {
-        ConsentForm(applicationContext,
-            object : IConsentFormListener {
-                override fun onConsentFormClosed(consent: Consent) =
-                    channel.invokeMethod("onConsentFormClosed", null)
-
-                override fun onConsentFormError(error: ConsentManagerError) =
-                    channel.invokeMethod("onConsentFormShowFailed", error.toArg())
-
-                override fun onConsentFormLoaded(consentForm: ConsentForm) =
-                    channel.invokeMethod("onConsentFormLoaded", null)
-
-                override fun onConsentFormOpened() =
-                    channel.invokeMethod("onConsentFormOpened", null)
-            })
-    }
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         super.onAttachedToEngine(binding)
@@ -440,14 +429,52 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             applicationContext,
             appKey,
             object : IConsentInfoUpdateListener {
-                override fun onConsentInfoUpdated(consent: Consent) = consentForm.load()
-                override fun onFailedToUpdateConsentInfo(error: ConsentManagerError) =
+                override fun onConsentInfoUpdated(consent: Consent) {
+                    _consentForm = ConsentForm(
+                        applicationContext,
+                        object : IConsentFormListener {
+                            override fun onConsentFormClosed(consent: Consent) =
+                                channel.invokeMethod("onConsentFormClosed", null)
+
+                            override fun onConsentFormError(error: ConsentManagerError) =
+                                channel.invokeMethod("onConsentFormShowFailed", error.toArg())
+
+                            override fun onConsentFormLoaded(consentForm: ConsentForm) =
+                                channel.invokeMethod("onConsentFormLoaded", null)
+
+                            override fun onConsentFormOpened() =
+                                channel.invokeMethod("onConsentFormOpened", null)
+                        }
+                    )
+                    consentForm.load()
+                }
+
+                override fun onFailedToUpdateConsentInfo(error: ConsentManagerError) {
                     channel.invokeMethod("onConsentFormLoadError", error.toArg())
+                }
             }
         )
     }
 
     private fun showConsentForm(call: MethodCall, result: Result) {
+        _consentForm = _consentForm ?: run {
+            ConsentForm(
+                applicationContext,
+                object : IConsentFormListener {
+                    override fun onConsentFormClosed(consent: Consent) =
+                        channel.invokeMethod("onConsentFormClosed", null)
+
+                    override fun onConsentFormError(error: ConsentManagerError) =
+                        channel.invokeMethod("onConsentFormShowFailed", error.toArg())
+
+                    override fun onConsentFormLoaded(consentForm: ConsentForm) =
+                        channel.invokeMethod("onConsentFormLoaded", null)
+
+                    override fun onConsentFormOpened() =
+                        channel.invokeMethod("onConsentFormOpened", null)
+                }
+            )
+        }
         consentForm.show()
         result.success(null)
     }

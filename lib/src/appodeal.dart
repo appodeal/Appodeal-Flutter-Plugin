@@ -357,19 +357,19 @@ class Appodeal {
   /// Validate in-app purchase in one of connected attribution service.
   static validateInAppPurchase(
       {required AppodealPurchase purchase,
-      Function(AppodealPurchase purchase, List<ApdServiceError>? errors)?
+      Function(AppodealPurchase purchase, List<ApdValidationError>? errors)?
           onInAppPurchaseValidateSuccess,
-      Function(AppodealPurchase purchase, List<ApdServiceError>? errors)?
+      Function(AppodealPurchase purchase, List<ApdValidationError>? errors)?
           onInAppPurchaseValidateFail}) {
     _functions["onInAppPurchaseValidateSuccess"] = (call) {
       final error = List<String>.from(call.arguments['errors'])
-          .map((e) => ApdServiceError._(e))
+          .map((e) => ApdValidationError._(e))
           .toList();
       onInAppPurchaseValidateSuccess?.call(purchase, error);
     };
     _functions["onInAppPurchaseValidateFail"] = (call) {
       final error = List<String>.from(call.arguments['errors'])
-          .map((e) => ApdServiceError._(e))
+          .map((e) => ApdValidationError._(e))
           .toList();
       onInAppPurchaseValidateFail?.call(purchase, error);
     };
@@ -379,14 +379,13 @@ class Appodeal {
   static loadConsentForm(
       {required String appKey,
       Function? onLoaded,
-      Function(List<ApdConsentFormError> error)? onLoadFailed}) {
+      Function(List<ApdConsentError> error)? onLoadFailed}) {
     _functions["onConsentFormLoaded"] = (call) {
       onLoaded?.call();
     };
     _functions["onConsentFormLoadError"] = (call) {
-      final error = List<String>.from(call.arguments['errors'])
-          .map((e) => ApdConsentFormError._(e))
-          .toList();
+      final error = List<ApdConsentError>.from(
+          call.arguments['errors'].map((e) => ApdConsentError._(e)));
       onLoadFailed?.call(error);
     };
     _channel.invokeMethod('loadConsentForm', {'appKey': appKey});
@@ -394,15 +393,14 @@ class Appodeal {
 
   static showConsentForm(
       {Function? onOpened,
-      Function(List<ApdConsentFormError> error)? onShowFailed,
+      Function(List<ApdConsentError> error)? onShowFailed,
       Function? onClosed}) {
     _functions["onConsentFormOpened"] = (call) {
       onOpened?.call();
     };
     _functions["onConsentFormShowFailed"] = (call) {
-      final error = List<String>.from(call.arguments['errors'])
-          .map((e) => ApdConsentFormError._(e))
-          .toList();
+      final error = List<ApdConsentError>.from(
+          call.arguments['errors'].map((e) => ApdConsentError._(e)));
       onShowFailed?.call(error);
     };
     _functions["onConsentFormClosed"] = (call) {
@@ -614,14 +612,14 @@ class ApdInitializationError {
   ApdInitializationError._(this.desctiption);
 }
 
-class ApdServiceError {
+class ApdValidationError {
   final String desctiption;
 
-  ApdServiceError._(this.desctiption);
+  ApdValidationError._(this.desctiption);
 }
 
-class ApdConsentFormError {
+class ApdConsentError {
   final String desctiption;
 
-  ApdConsentFormError._(this.desctiption);
+  ApdConsentError._(this.desctiption);
 }
