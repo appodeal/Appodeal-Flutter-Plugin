@@ -64,7 +64,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "isChildDirectedTreatment": isChildDirectedTreatment(call, result)
         case "setCustomFilter": setCustomFilter(call, result)
         case "setExtraData": setExtraData(call, result)
-        case "getPlatformSDKVersion": getPlatformSDKVersion(call, result)
+        case "getPlatformSdkVersion": getPlatformSdkVersion(call, result)
             //Services logic
         case "logEvent": logEvent(call, result)
         case "validateInAppPurchase": validateInAppPurchase(call, result)
@@ -282,7 +282,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
     
-    private func getPlatformSDKVersion(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+    private func getPlatformSdkVersion(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         result(Appodeal.getVersion())
     }
     

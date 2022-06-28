@@ -90,7 +90,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "isUseSafeArea" -> isUseSafeArea(call, result)
             "setCustomFilter" -> setCustomFilter(call, result)
             "setExtraData" -> setExtraData(call, result)
-            "getPlatformSDKVersion" -> getPlatformSDKVersion(call, result)
+            "getPlatformSdkVersion" -> getPlatformSdkVersion(call, result)
             //Services logic
             "logEvent" -> logEvent(call, result)
             "validateInAppPurchase" -> validateInAppPurchase(call, result)
@@ -360,7 +360,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         result.success(null)
     }
 
-    private fun getPlatformSDKVersion(call: MethodCall, result: Result) {
+    private fun getPlatformSdkVersion(call: MethodCall, result: Result) {
         result.success(Appodeal.getVersion())
     }
 

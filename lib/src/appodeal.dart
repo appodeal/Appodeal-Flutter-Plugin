@@ -344,8 +344,8 @@ class Appodeal {
   }
 
   /// Get SDK platform version.
-  static Future<String> getPlatformSDKVersion() async {
-    return await _channel.invokeMethod('getPlatformSDKVersion');
+  static Future<String> getPlatformSdkVersion() async {
+    return await _channel.invokeMethod('getPlatformSdkVersion');
   }
 
   /// Logging event with [eventName] and [params] in all of connected service.
@@ -568,6 +568,45 @@ class Appodeal {
   /// [onMrecClicked] Called when MREC was clicked.
   /// [onMrecExpired] Called when MREC was expired by time.
   static void setMrecCallbacks(
+      {Function(bool isPrecache)? onMrecLoaded,
+      Function? onMrecFailedToLoad,
+      Function? onMrecShown,
+      Function? onMrecShowFailed,
+      Function? onMrecClicked,
+      Function? onMrecExpired}) {
+    _mrecChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onMrecLoaded':
+          onMrecLoaded?.call(call.arguments['isPrecache']);
+          break;
+        case 'onMrecFailedToLoad':
+          onMrecFailedToLoad?.call();
+          break;
+        case 'onMrecShown':
+          onMrecShown?.call();
+          break;
+        case 'onMrecShowFailed':
+          onMrecShowFailed?.call();
+          break;
+        case 'onMrecClicked':
+          onMrecClicked?.call();
+          break;
+        case 'onMrecExpired':
+          onMrecExpired?.call();
+          break;
+      }
+    });
+  }
+
+  /// Set request callbacks
+  ///
+  /// [onMrecLoaded] Called when MREC was loaded, `isPrecache` - `true` if MREC is precache.
+  /// [onMrecFailedToLoad] Called when MREC is fail to load. But if auto cache enabled for MRECs, loading will be continued.
+  /// [onMrecShown]Called when MREC was shown.
+  /// [onMrecShowFailed] Called when MREC show failed.
+  /// [onMrecClicked] Called when MREC was clicked.
+  /// [onMrecExpired] Called when MREC was expired by time.
+  static void setRequestCallbacks(
       {Function(bool isPrecache)? onMrecLoaded,
       Function? onMrecFailedToLoad,
       Function? onMrecShown,
