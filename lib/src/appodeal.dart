@@ -46,6 +46,8 @@ class Appodeal {
   };
 
   static MethodChannel _channel = _defaultChannel(_handler);
+  static const MethodChannel _requestChannel =
+      const MethodChannel('appodeal_flutter/request');
   static const MethodChannel _interstitialChannel =
       const MethodChannel('appodeal_flutter/interstitial');
   static const MethodChannel _rewardedVideoChannel =
@@ -600,38 +602,20 @@ class Appodeal {
 
   /// Set request callbacks
   ///
-  /// [onMrecLoaded] Called when MREC was loaded, `isPrecache` - `true` if MREC is precache.
-  /// [onMrecFailedToLoad] Called when MREC is fail to load. But if auto cache enabled for MRECs, loading will be continued.
-  /// [onMrecShown]Called when MREC was shown.
-  /// [onMrecShowFailed] Called when MREC show failed.
-  /// [onMrecClicked] Called when MREC was clicked.
-  /// [onMrecExpired] Called when MREC was expired by time.
+  /// [onImpression] Called every time the ad starts showing.
   static void setRequestCallbacks(
-      {Function(bool isPrecache)? onMrecLoaded,
-      Function? onMrecFailedToLoad,
-      Function? onMrecShown,
-      Function? onMrecShowFailed,
-      Function? onMrecClicked,
-      Function? onMrecExpired}) {
-    _mrecChannel.setMethodCallHandler((call) async {
+      {Function(String adType, String? networkName, String? adUnitName,
+              double loadedEcpm)?
+          onImpression}) {
+    _requestChannel.setMethodCallHandler((call) async {
       switch (call.method) {
-        case 'onMrecLoaded':
-          onMrecLoaded?.call(call.arguments['isPrecache']);
-          break;
-        case 'onMrecFailedToLoad':
-          onMrecFailedToLoad?.call();
-          break;
-        case 'onMrecShown':
-          onMrecShown?.call();
-          break;
-        case 'onMrecShowFailed':
-          onMrecShowFailed?.call();
-          break;
-        case 'onMrecClicked':
-          onMrecClicked?.call();
-          break;
-        case 'onMrecExpired':
-          onMrecExpired?.call();
+        case 'onImpression':
+          onImpression?.call(
+            call.arguments['adType'],
+            call.arguments['networkName'],
+            call.arguments['adUnitName'],
+            call.arguments['loadedEcpm'],
+          );
           break;
       }
     });

@@ -32,10 +32,12 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     @Deprecated("Will be removed in future releases.")
     private val consentForm get() = checkNotNull(_consentForm)
 
-    private val interstitial: AppodealInterstitial by lazy { AppodealInterstitial(pluginBinding) }
-    private val rewardedVideo: AppodealRewarded by lazy { AppodealRewarded(pluginBinding) }
-    private val banner: AppodealBanner by lazy { AppodealBanner(pluginBinding) }
-    private val mrec: AppodealMrec by lazy { AppodealMrec(pluginBinding) }
+    private val requestCallback by lazy { AppodealRequestCallback(pluginBinding) }
+
+    private val interstitial by lazy { AppodealInterstitial(pluginBinding) }
+    private val rewardedVideo by lazy { AppodealRewarded(pluginBinding) }
+    private val banner by lazy { AppodealBanner(pluginBinding) }
+    private val mrec by lazy { AppodealMrec(pluginBinding) }
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         super.onAttachedToEngine(binding)
@@ -46,6 +48,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        requestCallback.adChannel.setMethodCallHandler(null)
         interstitial.adChannel.setMethodCallHandler(null)
         rewardedVideo.adChannel.setMethodCallHandler(null)
         banner.adChannel.setMethodCallHandler(null)
@@ -158,6 +161,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val appKey = args["appKey"] as String
         val sdkVersion = args["sdkVersion"] as String
         val adTypes = args["adTypes"] as Int
+        Appodeal.setRequestCallbacks(requestCallback.adListener)
         Appodeal.setInterstitialCallbacks(interstitial.adListener)
         Appodeal.setRewardedVideoCallbacks(rewardedVideo.adListener)
         Appodeal.setBannerCallbacks(banner.adListener)
