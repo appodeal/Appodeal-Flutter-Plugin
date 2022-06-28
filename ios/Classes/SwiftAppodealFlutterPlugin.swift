@@ -298,30 +298,32 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private func validateInAppPurchase(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let sku = args["sku"] as! String
-        let type = args["type"] as! String
+        let type = args["type"] as! Int
+        let orderId = args["orderId"] as! String
         let price = args["price"] as! String
         let currency = args["currency"] as! String
-        let orderId = args["orderId"] as! String
+        let transactionId = args["transactionId"] as! String
+        let additionalParameters = args["additionalParameters"] as! [String: String]
         
-        let additionalParameters = args["additionalParameters"] as! [String: Any]
-        
-        Appodeal.validateAndTrack(
-            inAppPurchase: sku,
-            type: .autoRenewableSubscription,
-            price: price,
-            currency: currency,
-            transactionId: "some transaction id",
-            additionalParameters: additionalParameters,
-            success: { [weak self] response in
-                self?.channel.invokeMethod("onInAppPurchaseValidateSuccess", arguments: nil)
-            },
-            failure: {
-                [weak self] error in
-                let args: [String: [String?]] = ["errors": [error?.localizedDescription]]
-                self?.channel.invokeMethod("onInAppPurchaseValidateFail", arguments: args)
-            }
-        )
+        if let purchaseType = APDPurchaseType(rawValue: UInt(type)) {
+            Appodeal.validateAndTrack(
+                inAppPurchase: orderId,
+                type: purchaseType,
+                price: price,
+                currency: currency,
+                transactionId: transactionId,
+                additionalParameters: additionalParameters,
+                success: { [weak self] response in
+                    self?.channel.invokeMethod("onInAppPurchaseValidateSuccess", arguments: nil)
+                },
+                failure: { [weak self] error in
+                    let args: [String: [String?]] = ["errors": [error?.localizedDescription]]
+                    self?.channel.invokeMethod("onInAppPurchaseValidateFail", arguments: args)
+                }
+            )
+        } else {
+            channel.invokeMethod("onInAppPurchaseValidateFail", arguments: nil)
+        }
         result(nil)
     }
     

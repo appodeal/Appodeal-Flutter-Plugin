@@ -1,6 +1,5 @@
 package com.appodeal.appodeal_flutter
 
-import android.content.Context
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.inapp.InAppPurchase
@@ -376,7 +375,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun validateInAppPurchase(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val type = args["type"] as String
+        val type = args["type"] as Int
         val price = args["price"] as String
         val currency = args["currency"] as String
         val publicKey = args["publicKey"] as? String?
@@ -389,9 +388,10 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val purchaseTimestamp = args["purchaseTimestamp"] as Int
         @Suppress("UNCHECKED_CAST") val additionalParameters =
             args["additionalParameters"] as Map<String, String>
-        val purchase: InAppPurchase = when (Type.valueOf(type)) {
-            Type.InApp -> InAppPurchase.newInAppBuilder()
-            Type.Subs -> InAppPurchase.newSubscriptionBuilder()
+        val purchase: InAppPurchase = when (type) {
+            Type.InApp.ordinal -> InAppPurchase.newInAppBuilder()
+            Type.Subs.ordinal -> InAppPurchase.newSubscriptionBuilder()
+            else -> return channel.invokeMethod("onInAppPurchaseValidateFail", null)
         }.withPrice(price)
             .withCurrency(currency)
             .withPublicKey(publicKey)

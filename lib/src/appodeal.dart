@@ -600,7 +600,7 @@ class Appodeal {
 }
 
 @Deprecated("Will be changed in future releases.")
-MethodChannel _defaultChannel(Future Function(MethodCall call) handler) {
+MethodChannel _defaultChannel(final Future Function(MethodCall call) handler) {
   const channel = MethodChannel('appodeal_flutter');
   channel.setMethodCallHandler(handler);
   return channel;
