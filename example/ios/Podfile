@@ -30,15 +30,15 @@ def appodeal
   pod 'BDMAdColonyAdapter', '~> 1.9.4'
   pod 'APDAdjustAdapter', '3.0.0.1'
   pod 'APDAppLovinAdapter', '3.0.0.1'
-  pod 'APDAppsFlyerAdapter', '3.0.0.1'
-  pod 'APDBidMachineAdapter', '3.0.0.1' # Required
+  pod 'APDAppsFlyerAdapter', '3.0.0.2'
+  pod 'APDBidMachineAdapter', '3.0.0.2' # Required
   pod 'BDMCriteoAdapter', '~> 1.9.4'
   pod 'BDMPangleAdapter', '~> 1.9.4.2'
   pod 'BDMAmazonAdapter', '~> 1.9.4.2'
   pod 'BDMSmaatoAdapter', '~> 1.9.4'
   pod 'BDMTapjoyAdapter', '~> 1.9.4'
-  pod 'APDFirebaseAdapter', '3.0.0.1'
-  pod 'APDGoogleAdMobAdapter', '3.0.0.1'
+  pod 'APDFirebaseAdapter', '3.0.0.2'
+  pod 'APDGoogleAdMobAdapter', '3.0.0.2'
   pod 'APDIABAdapter', '3.0.0.1' # Required
   pod 'BDMIABAdapter', '~> 1.9.4'
   pod 'APDIronSourceAdapter', '3.0.0.1'
