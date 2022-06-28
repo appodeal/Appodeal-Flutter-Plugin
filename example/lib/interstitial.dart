@@ -37,6 +37,38 @@ class _InterstitialPageState extends State<InterstitialPage> {
         body: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    var isInitialized =
+                        await Appodeal.isInitialized(Appodeal.INTERSTITIAL);
+                    print('Interstitial isInitialized - $isInitialized');
+                  },
+                  child: const Text('IS INITIALIZED?'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    var isCanShow =
+                        await Appodeal.canShow(Appodeal.INTERSTITIAL);
+                    print('Interstitial canShow - $isCanShow');
+                  },
+                  child: const Text('CAN SHOW?'),
+                ),
+              ],
+            ),
             //Header
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -63,37 +95,6 @@ class _InterstitialPageState extends State<InterstitialPage> {
                     Appodeal.show(Appodeal.INTERSTITIAL);
                   },
                   child: const Text('SHOW INTERSTITIAL'),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 20),
-                      fixedSize: Size(300, 20)),
-                  onPressed: () async {
-                    var isCanShow =
-                        await Appodeal.canShow(Appodeal.INTERSTITIAL);
-                    print('Interstitial canShow - $isCanShow');
-                  },
-                  child: const Text('CAN SHOW?'),
-                ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () async {
-                    var isInitialized =
-                        await Appodeal.isInitialized(Appodeal.INTERSTITIAL);
-                    print('Interstitial isInitialized - $isInitialized');
-                  },
-                  child: const Text('IS INITIALIZED?'),
                 ),
               ],
             ),
