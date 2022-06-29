@@ -66,19 +66,19 @@ extension APDSdk {
         )
         
         let eCPM = trackImpression.value(forKey: "eCPM") as? Double ?? 0.0
-        let networkName = trackImpression.value(forKey: "networkName") as? String
-        let adUnitName = trackImpression.value(forKey:"adItemName") as? String
-        var adType = "unknown"
+        let networkName = trackImpression.value(forKey: "networkName") as? String ?? ""
+        let adUnitName = trackImpression.value(forKey:"adItemName") as? String ?? ""
+        var adType = "Unknown"
         if adQueueRequest == 1 {
-            adType = "banner"
+            adType = "Banner"
         } else if adQueueRequest == 2 {
-            adType = "mrec"
+            adType = "Mrec"
         } else if adQueueRequest == 3 {
-            adType = "interstitial"
+            adType = "Interstitial"
         } else if adQueueRequest == 4 {
-            adType = "rewarded"
+            adType = "RewardedVideo"
         } else if adQueueRequest == 5 {
-            adType = "native"
+            adType = "Native"
         }
         
         channel?.invokeMethod(
