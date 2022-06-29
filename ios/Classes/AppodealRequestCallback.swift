@@ -1,8 +1,22 @@
-import Appodeal
 import Flutter
 import Foundation
-import StackFoundation
+import Appodeal
 
+internal final class AppodealRequestCallback {
+    
+    internal let adChannel: FlutterMethodChannel
+    
+    init(registrar: FlutterPluginRegistrar) {
+        adChannel = FlutterMethodChannel(name: "appodeal_flutter/request", binaryMessenger: registrar.messenger())
+    }
+}
+
+extension Appodeal {
+    static func registerRequestCallback(requestCallback: AppodealRequestCallback) {
+        APDSdk.shared().channel = requestCallback.adChannel
+        APDSdk.swizzle()
+    }
+}
 
 extension APDSdk {
     
@@ -78,11 +92,4 @@ extension APDSdk {
         )
     }
     
-}
-
-
-extension Appodeal {
-    static func registerForAdRevenueTracking() {
-        APDSdk.swizzle()
-    }
 }

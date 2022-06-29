@@ -20,6 +20,8 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     let channel: FlutterMethodChannel
     
+    private let requestCallback: AppodealRequestCallback
+    
     private let interstitial: AppodealInterstitial
     private let rewardedVideo: AppodealRewarded
     private let banner: AppodealBanner
@@ -27,6 +29,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private init(registrar: FlutterPluginRegistrar) {
         channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
+        requestCallback = AppodealRequestCallback(registrar: registrar)
         interstitial = AppodealInterstitial(registrar: registrar)
         rewardedVideo = AppodealRewarded(registrar: registrar)
         banner = AppodealBanner(registrar: registrar)
@@ -127,7 +130,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let sdkVersion = args["sdkVersion"] as! String
         let types = args["adTypes"] as! Int
         let adTypes = AppodealAdType(rawValue: types)
-        Appodeal.registerForAdRevenueTracking()
         Appodeal.setInterstitialDelegate(interstitial.adListener)
         Appodeal.setRewardedVideoDelegate(rewardedVideo.adListener)
         Appodeal.setBannerDelegate(banner.adListener)
@@ -139,7 +141,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         }
         Appodeal.setInitializationDelegate(self)
         Appodeal.initialize(withApiKey: appKey, types: adTypes)
-        APDSdk.shared().channel = interstitial.adChannel
+        Appodeal.registerRequestCallback(requestCallback: requestCallback)
         result(nil)
     }
     
