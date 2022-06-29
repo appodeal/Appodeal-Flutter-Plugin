@@ -378,6 +378,12 @@ class Appodeal {
     _channel.invokeMethod('validateInAppPurchase', purchase.toMap);
   }
 
+  static disableAppTrackingTransparencyRequest() {
+    if (Platform.isIOS) {
+      _channel.invokeMethod('disableAppTrackingTransparencyRequest');
+    }
+  }
+
   static loadConsentForm(
       {required String appKey,
       Function? onLoaded,
