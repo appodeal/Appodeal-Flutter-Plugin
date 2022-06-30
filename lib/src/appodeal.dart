@@ -76,11 +76,17 @@ class Appodeal {
     _channel.invokeMethod('setLogLevel', {'logLevel': logLevel});
   }
 
+  /// Update user consent for GDPR region [gdprUserConsent]
+  ///
+  /// support consents: [GDPRUserConsent.Personalized], [GDPRUserConsent.Unknown], [GDPRUserConsent.NonPersonalized]
   static updateGDPRUserConsent(GDPRUserConsent gdprUserConsent) {
     _channel.invokeMethod(
         'updateGDPRUserConsent', {'gdprUserConsent': gdprUserConsent.rawValue});
   }
 
+  /// Update user consent for CCPA region [ccpaUserConsent]
+  ///
+  /// support consents: [CCPAUserConsent.OptIn], [CCPAUserConsent.Unknown], [CCPAUserConsent.OptOut]
   static updateCCPAUserConsent(CCPAUserConsent ccpaUserConsent) {
     _channel.invokeMethod(
         'updateCCPAUserConsent', {'ccpaUserConsent': ccpaUserConsent.rawValue});
@@ -89,8 +95,7 @@ class Appodeal {
   /// Initialize the Appodeal SDK
   ///
   /// Initialize the Appodeal SDK with the [appKey] and List [adTypes] of the advertising you want to initialize.
-  /// If you use [ConsentManager] you may not provide [boolConsent],
-  /// otherwise provide if user has given or reject consent to the processing of personal data relating to him or her.
+  /// To find out about the end of initialization, use the [onInitializationFinished] callback
   static initialize(
       {required String appKey,
       required List<AppodealAdType> adTypes,
@@ -356,7 +361,7 @@ class Appodeal {
         .invokeMethod('logEvent', {"eventName": eventName, "params": params});
   }
 
-  /// Validate in-app purchase in one of connected attribution service.
+  /// Validate in-app [purchase] in one of connected attribution service.
   static validateInAppPurchase(
       {required AppodealPurchase purchase,
       Function(AppodealPurchase purchase, List<ApdValidationError>? errors)?
@@ -378,12 +383,14 @@ class Appodeal {
     _channel.invokeMethod('validateInAppPurchase', purchase.toMap);
   }
 
+  /// Disable App Tracking Transparency authorization request for `iOS` platform
   static disableAppTrackingTransparencyRequest() {
     if (Platform.isIOS) {
       _channel.invokeMethod('disableAppTrackingTransparencyRequest');
     }
   }
 
+  /// Load consent form
   static loadConsentForm(
       {required String appKey,
       Function? onLoaded,
@@ -399,6 +406,7 @@ class Appodeal {
     _channel.invokeMethod('loadConsentForm', {'appKey': appKey});
   }
 
+  /// Show the consent form to determine the user's consent
   static showConsentForm(
       {Function? onOpened,
       Function(List<ApdConsentError> error)? onShowFailed,
@@ -417,6 +425,7 @@ class Appodeal {
     _channel.invokeMethod('showConsentForm');
   }
 
+  /// Set custom vendor for consent form
   static setCustomVendor(
       String vendorName,
       String vendorBundle,
@@ -635,18 +644,30 @@ MethodChannel _defaultChannel(final Future Function(MethodCall call) handler) {
   return channel;
 }
 
+/// Appodeal SDK Initialization Error class.
+///
+/// This class declares errors during initialization.
+///
 class ApdInitializationError {
   final String desctiption;
 
   ApdInitializationError._(this.desctiption);
 }
 
+/// Appodeal SDK In-App Validation Error class.
+///
+/// This class declares errors during in-app validation.
+///
 class ApdValidationError {
   final String desctiption;
 
   ApdValidationError._(this.desctiption);
 }
 
+/// Appodeal SDK Consent Error class.
+///
+/// This class declares errors during consent behavor.
+///
 class ApdConsentError {
   final String desctiption;
 

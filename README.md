@@ -804,6 +804,8 @@ end
 
 #### AppsFlyer
 
+Add dependencies into build.gradle (module: app)
+
 ```groovy
 dependencies {
     // ... other project dependencies
@@ -822,6 +824,8 @@ end
 
 #### Firebase
 
+Add dependencies into build.gradle (module: app)
+
 ```groovy
 dependencies {
     // ... other project dependencies
@@ -839,6 +843,8 @@ end
 ```
 
 #### Meta
+
+Add dependencies into build.gradle (module: app)
 
 ```groovy
 dependencies {
@@ -1142,7 +1148,7 @@ child: AppodealBanner(adSize: AppodealBannerSize.MEDIUM_RECTANGLE, placement: "d
 ## Privacy Policy and Consent
 
 > Note: Keep in mind that it’s best to contact qualified legal professionals, if you haven’t done so already, to get
-> more information and be well-prepared for compliance
+> more information and be well-prepared for compliance.
 
 The General Data Protection Regulation, better known as GDPR, took effect on May 25, 2018. It’s a set of rules designed
 to give EU citizens more control over their personal data. Any businesses established in the EU or with users based in
@@ -1150,7 +1156,7 @@ Europe are required to comply with GDPR or risk facing heavy fines. The Californ
 effect on January 1, 2020. **We have put together some resources below to help publishers understand better the steps
 they need to take to be GDPR compliant.**
 
-> Note: You can learn more about GDPR and CCPA and their
+> Note: You can learn more about GDPR and CCPA and their.
 > differences [here](https://iapp.org/resources/article/ccpa-and-gdpr-comparison-chart/).
 
 ### Step 1: Update Privacy Policy
@@ -1230,7 +1236,8 @@ Starting in iOS 14, IDFA will be unavailable until an app calls the App Tracking
 app-tracking authorization request to the end-user. If an app does not present this request, the IDFA will automatically
 be zeroed out which may lead to a significant loss in ad revenue.
 
-To display the App Tracking Transparency authorization request for accessing the IDFA, update your Info.plist to add the
+To display the App Tracking Transparency authorization request for accessing the IDFA, update your `Info.plist` to add
+the
 NSUserTrackingUsageDescription key with a custom message describing the usage.
 
 ```
@@ -1238,10 +1245,10 @@ NSUserTrackingUsageDescription key with a custom message describing the usage.
 <string>This identifier will be used to deliver personalized ads to you.</string>
 ```
 
-If you are using StackConsentManager framework in your project there are no additional steps required. Authorization
-request will be shown for users under iOS 14.5.
+If you are using Appodeal SDK 3.x.x in your project there are no additional steps required.
+Authorization request will be shown for users under iOS 14.5.
 
-Disable ATT request via Appodeal Unity Consent Manger:
+Disable ATT request via Appodeal:
 
 ```dart
 Appodeal.disableAppTrackingTransparencyRequest();
