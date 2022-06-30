@@ -6,7 +6,7 @@ Official Appodeal Flutter Plugin for your Flutter application.
 
 - **Appodeal SDK 3.0 already included ready-made consent solution**
     - Appodeal SDK 3.0 in **first initialization** shows a ready-made consent window if the user is in the regions
-      covered by GDPR and CCPA. [See more about this behavior](#step-2:-appodeal-consent-behavior)
+      covered by GDPR and CCPA. [See more about this behavior](#step-2-appodeal-consent-new-breaking-changes)
 
 - **Major Api changes**
     - initialize
@@ -41,8 +41,8 @@ If you have used one of the removed/changed APIs, please check the integration g
     - [Presentation](#presentation)
     - [Ad View](#ad-view)
 - [Privacy Policy and Consent](#privacy-policy-and-consent)
-    - [Step 1: Update Privacy Policy](#step-1:-update-privacy-policy)
-    - [Step 2: Appodeal Consent Behavior (_**New Breaking Changes**_)](#step-2:-appodeal-consent-behavior)
+    - [Step 1: Update Privacy Policy](#step-1-update-privacy-policy)
+    - [Step 2: Appodeal Consent Behavior (_**New Breaking Changes**_)](#step-2-appodeal-consent-new-breaking-changes)
 - [App Tracking Transparency](#app-tracking-transparency)
 - [Changelog](CHANGELOG.md)
 
