@@ -23,3 +23,7 @@ flutter:
         pluginClass: AppodealFlutterPlugin
       ios:
         pluginClass: AppodealFlutterPlugin
+
+false_secrets:
+  - /example/android/app/google-services.json
+  - /example/ios/Runner/GoogleService-Info.plist
