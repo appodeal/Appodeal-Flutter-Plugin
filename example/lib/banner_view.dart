@@ -1,8 +1,5 @@
-
-import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'package:flutter/material.dart';
-
-import 'main.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class BannerViewPage extends StatefulWidget {
   const BannerViewPage({Key? key}) : super(key: key);
@@ -23,12 +20,12 @@ class _BannerViewPageState extends State<BannerViewPage> {
     });
 
     Appodeal.setBannerCallbacks(
-        onBannerLoaded: (isPrecache) => showToast('onBannerLoaded: isPrecache - $isPrecache'),
-        onBannerFailedToLoad: () => showToast('onBannerFailedToLoad'),
-        onBannerShown: () => showToast('onBannerShown'),
-        onBannerShowFailed: () => showToast('onBannerShowFailed'),
-        onBannerClicked: () => showToast('onBannerClicked'),
-        onBannerExpired: () => showToast('onBannerExpired'));
+        onBannerLoaded: (isPrecache) => print('onBannerLoaded: isPrecache - $isPrecache'),
+        onBannerFailedToLoad: () => print('onBannerFailedToLoad'),
+        onBannerShown: () => print('onBannerShown'),
+        onBannerShowFailed: () => print('onBannerShowFailed'),
+        onBannerClicked: () => print('onBannerClicked'),
+        onBannerExpired: () => print('onBannerExpired'));
   }
 
   @override
@@ -85,9 +82,7 @@ class _BannerViewPageState extends State<BannerViewPage> {
               child: Visibility(
                   visible: isShow,
                   child: AppodealBanner(
-                      adSize: AppodealBannerSize.BANNER,
-                      placement: "default"
-                  )),
+                      adSize: AppodealBannerSize.BANNER, placement: "default")),
             ),
             //Interstitial
           ]),

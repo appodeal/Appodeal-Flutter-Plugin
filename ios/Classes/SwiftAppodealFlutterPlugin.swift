@@ -20,6 +20,8 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     let channel: FlutterMethodChannel
     
+    private let requestCallback: AppodealRequestCallback
+    
     private let interstitial: AppodealInterstitial
     private let rewardedVideo: AppodealRewarded
     private let banner: AppodealBanner
@@ -27,6 +29,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private init(registrar: FlutterPluginRegistrar) {
         channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
+        requestCallback = AppodealRequestCallback(registrar: registrar)
         interstitial = AppodealInterstitial(registrar: registrar)
         rewardedVideo = AppodealRewarded(registrar: registrar)
         banner = AppodealBanner(registrar: registrar)
@@ -35,7 +38,11 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
-        case "updateConsent": updateConsent(call, result)
+        case "setTestMode": setTestMode(call, result)
+        case "isTestMode": isTestMode(call, result)
+        case "setLogLevel": setLogLevel(call, result)
+        case "updateGDPRUserConsent": updateGDPRUserConsent(call, result)
+        case "updateCCPAUserConsent": updateCCPAUserConsent(call, result)
         case "initialize": initialize(call, result)
         case "isInitialized": isInitialized(call, result)
         case "setAutoCache": setAutoCache(call, result)
@@ -47,124 +54,152 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "getPredictedEcpm": getPredictedEcpm(call, result)
         case "show": show(call, result)
         case "hide": hide(call, result)
-        case "setTesting": setTesting(call, result)
-        case "setLogLevel": setLogLevel(call, result)
-        case "setTriggerOnLoadedOnPrecache": setTriggerOnLoadedOnPrecache(call, result)
+            //Extra logic
         case "setSmartBanners": setSmartBanners(call, result)
+        case "isSmartBanners": isSmartBanners(call, result)
         case "setTabletBanners": setTabletBanners(call, result)
+        case "isTabletBanners": isTabletBanners(call, result)
         case "setBannerAnimation": setBannerAnimation(call, result)
+        case "isBannerAnimation": isBannerAnimation(call, result)
         case "setBannerRotation": setBannerRotation(call, result)
-        case "trackInAppPurchase": trackInAppPurchase(call, result)
         case "disableNetwork": disableNetwork(call, result)
-        case "disableNetworkForSpecificAdType": disableNetworkForSpecificAdType(call, result)
-        case "setUserId": setUserId(call, result)
-        case "setUserAge": setUserAge(call, result)
-        case "setUserGender": setUserGender(call, result)
         case "setChildDirectedTreatment": setChildDirectedTreatment(call, result)
+        case "isChildDirectedTreatment": isChildDirectedTreatment(call, result)
         case "setCustomFilter": setCustomFilter(call, result)
         case "setExtraData": setExtraData(call, result)
-        case "getNativeSDKVersion": getNativeSDKVersion(call, result)
-        case "setStorage": setStorage(call, result)
+        case "getPlatformSdkVersion": getPlatformSdkVersion(call, result)
+            //Services logic
+        case "logEvent": logEvent(call, result)
+        case "validateInAppPurchase": validateInAppPurchase(call, result)
+            // Consent Logic
+        case "disableAppTrackingTransparencyRequest": disableAppTrackingTransparencyRequest(call, result)
+        case "loadConsentForm": loadConsentForm(call, result)
+        case "showConsentForm": showConsentForm(call, result)
         case "setCustomVendor": setCustomVendor(call, result)
-        case "getCustomVendor": getCustomVendor(call, result)
-        case "getStorage": getStorage(result)
-        case "shouldShowConsentDialog": shouldShowConsentDialog(result)
-        case "getConsentZone": getConsentZone(result)
-        case "getConsentStatus": getConsentStatus(result)
-        case "getConsent": getConsent(result)
-        case "consentFormIsLoaded": consentFormIsLoaded(result)
-        case "consentFormIsShowing": consentFormIsShowing(result)
-        case "requestConsentInfoUpdate": requestConsentInfoUpdate(call, result)
-        case "loadConsentForm": loadConsentForm(result)
-        case "showAsDialogConsentForm": showAsDialogConsentForm(result)
-        case "disableAppTrackingTransparencyRequest": disableAppTrackingTransparencyRequest(result)
         default: result(FlutterMethodNotImplemented)
         }
     }
     
-    private func updateConsent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+    private func setTestMode(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let hasConsent = args["hasConsent"] as! Bool
-        Appodeal.updateConsent(hasConsent)
+        isTestModeEnabled = args["isTestMode"] as! Bool
+        Appodeal.setTestingEnabled(isTestModeEnabled)
+        result(nil)
+    }
+    
+    private func isTestMode(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(isTestModeEnabled)
+    }
+    
+    private func setLogLevel(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let logLevel = args["logLevel"] as! Int
+        switch logLevel {
+        case 1: Appodeal.setLogLevel(APDLogLevel.debug)
+        case 2: Appodeal.setLogLevel(APDLogLevel.verbose)
+        default:Appodeal.setLogLevel(APDLogLevel.off)
+        }
+        result(nil)
+    }
+    
+    private func updateGDPRUserConsent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let logLevel = args["gdprUserConsent"] as! Int
+        switch logLevel {
+        case -1: Appodeal.updateUserConsentGDPR(.nonPersonalized)
+        case 1: Appodeal.updateUserConsentGDPR(.personalized)
+        default: Appodeal.updateUserConsentGDPR(.unknown)
+        }
+        result(nil)
+    }
+    
+    private func updateCCPAUserConsent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let logLevel = args["ccpaUserConsent"] as! Int
+        switch logLevel {
+        case -1: Appodeal.updateUserConsentCCPA(.optOut)
+        case 1: Appodeal.updateUserConsentCCPA(.optIn)
+        default: Appodeal.updateUserConsentCCPA(.unknown)
+        }
         result(nil)
     }
     
     private func initialize(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let appKey = args["appKey"] as! String
-        let types = args["adTypes"] as! [Int]
-        let adTypes = AppodealAdType(rawValue: types.reduce(0) {$0 | getAdType(adId: $1).rawValue})
+        let sdkVersion = args["sdkVersion"] as! String
+        let types = args["adTypes"] as! Int
+        let adTypes = AppodealAdType(rawValue: types)
         Appodeal.setInterstitialDelegate(interstitial.adListener)
         Appodeal.setRewardedVideoDelegate(rewardedVideo.adListener)
         Appodeal.setBannerDelegate(banner.adListener)
         Appodeal.setSmartBannersEnabled(isSmartBannerEnabled)
         Appodeal.setPreferredBannerAdSize(isTabletBannerEnabled ? kAppodealUnitSize_728x90 : kAPDAdSize320x50)
-        Appodeal.setFramework(APDFramework.flutter, version: "1.2.2")
+        Appodeal.setFramework(APDFramework.flutter, version: sdkVersion)
         if let consent = STKConsentManager.shared().consent {
-            Appodeal.initialize(withApiKey: appKey, types: adTypes, consentReport: consent)
-        } else if let hasConsent = args["hasConsent"] as? Bool {
-            Appodeal.initialize(withApiKey: appKey, types: adTypes, hasConsent: hasConsent)
-        } else {
-            Appodeal.initialize(withApiKey: appKey, types: adTypes)
+            Appodeal.updateConsentReport(consent)
         }
+        Appodeal.setInitializationDelegate(self)
+        Appodeal.initialize(withApiKey: appKey, types: adTypes)
+        Appodeal.registerRequestCallback(requestCallback: requestCallback)
         result(nil)
     }
     
     private func isInitialized(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getAdType(adId: args["adType"] as! Int)
-        result(Appodeal.isInitalized(for: adType))
+        let adType = AppodealAdType(rawValue: args["adType"] as! Int)
+        result(Appodeal.isInitialized(for: adType))
     }
     
     private func setAutoCache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getAdType(adId: args["adType"] as! Int)
-        let autoCache = args["autoCache"] as! Bool
+        let adType = AppodealAdType(rawValue: args["adType"] as! Int)
+        let autoCache = args["isAutoCache"] as! Bool
         Appodeal.setAutocache(autoCache, types: adType)
         result(nil)
     }
     
     private func isAutoCacheEnabled(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getAdType(adId: args["adType"] as! Int)
+        let adType = AppodealAdType(rawValue: args["adType"] as! Int)
         result(Appodeal.isAutocacheEnabled(_: adType))
     }
     
     private func cache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getAdType(adId: args["adType"] as! Int)
+        let adType = AppodealAdType(rawValue: args["adType"] as! Int)
         Appodeal.cacheAd(adType)
         result(nil)
     }
     
     private func isLoaded(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getShowStyle(adId: args["adType"] as! Int)
+        let adType = AppodealShowStyle(rawValue: args["adType"] as! Int)
         result(Appodeal.isReadyForShow(with: adType))
     }
     
     private func isPrecache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getAdType(adId: args["adType"] as! Int)
+        let adType = AppodealAdType(rawValue: args["adType"] as! Int)
         result(Appodeal.isPrecacheAd(_: adType))
     }
     
     private func canShow(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getAdType(adId: args["adType"] as! Int)
+        let adType = AppodealAdType(rawValue: args["adType"] as! Int)
         let placement = args["placement"] as! String
         result(Appodeal.canShow(adType, forPlacement: placement))
     }
     
     private func getPredictedEcpm(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getAdType(adId: args["adType"] as! Int)
+        let adType = AppodealAdType(rawValue: args["adType"] as! Int)
         result(Appodeal.predictedEcpm(for: adType))
     }
     
     private func show(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let adType = getShowStyle(adId: args["adType"] as! Int)
+        let adType = AppodealShowStyle(rawValue: args["adType"] as! Int)
         let placement = args["placement"] as! String
         let rootViewController = UIApplication.shared.keyWindow?.rootViewController
         result(Appodeal.showAd(adType, forPlacement: placement, rootViewController: rootViewController))
@@ -175,52 +210,37 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
     
-    private func setTesting(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let testMode = args["testMode"] as! Bool
-        Appodeal.setTestingEnabled(testMode)
-        result(nil)
-    }
-    
-    private func setLogLevel(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let logLevel = args["logLevel"] as! Int
-        switch logLevel {
-        case 1:
-            Appodeal.setLogLevel(APDLogLevel.debug)
-        case 2:
-            Appodeal.setLogLevel(APDLogLevel.verbose)
-        default:
-            Appodeal.setLogLevel(APDLogLevel.off)
-        }
-        result(nil)
-    }
-    
-    private func setTriggerOnLoadedOnPrecache(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let onLoadedTriggerBoth = args["onLoadedTriggerBoth"] as! Bool
-        Appodeal.setTriggerPrecacheCallbacks(onLoadedTriggerBoth)
-        result(nil)
-    }
-    
     private func setSmartBanners(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        isSmartBannerEnabled = args["smartBannerEnabled"] as! Bool
+        isSmartBannerEnabled = args["isSmartBannersEnabled"] as! Bool
         Appodeal.setSmartBannersEnabled(isSmartBannerEnabled)
         result(nil)
     }
     
+    private func isSmartBanners(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(Appodeal.isSmartBannersEnabled())
+    }
+    
     private func setTabletBanners(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        isTabletBannerEnabled = args["tabletBannerEnabled"] as! Bool
+        isTabletBannerEnabled = args["isTabletBannerEnabled"] as! Bool
         Appodeal.setPreferredBannerAdSize(isTabletBannerEnabled ? kAppodealUnitSize_728x90 : kAPDAdSize320x50)
         result(nil)
     }
+    
+    private func isTabletBanners(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(isTabletBannerEnabled)
+    }
+    
     private func setBannerAnimation(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let bannerAnimationEnabled = args["bannerAnimationEnabled"] as! Bool
-        Appodeal.setBannerAnimationEnabled(bannerAnimationEnabled)
+        isBannerAnimationEnabled = args["isBannerAnimationEnabled"] as! Bool
+        Appodeal.setBannerAnimationEnabled(isBannerAnimationEnabled)
         result(nil)
+    }
+    
+    private func isBannerAnimation(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(isBannerAnimationEnabled)
     }
     
     private func setBannerRotation(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
@@ -231,82 +251,30 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         result(nil)
     }
     
-    private func trackInAppPurchase(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let amount = args["amount"] as! Double
-        let currency = args["currency"] as! String
-        Appodeal.track(inAppPurchase: NSNumber.init(value: amount), currency: currency)
-        result(nil)
-    }
-    
     private func disableNetwork(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let network = args["network"] as! String
-        Appodeal.disableNetwork(network)
-        result(nil)
-    }
-    
-    private func disableNetworkForSpecificAdType(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let network = args["network"] as! String
-        let adType = getAdType(adId: args["adType"] as! Int)
+        let adType = AppodealAdType(rawValue: args["adType"] as! Int)
         Appodeal.disableNetwork(for: adType, name: network)
-        result(nil)
-    }
-    
-    private func setUserId(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let userId = args["userId"] as! String
-        Appodeal.setUserId(userId)
-        result(nil)
-    }
-    
-    private func setUserAge(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let age = args["age"] as! Int
-        Appodeal.setUserAge(UInt(age))
-        result(nil)
-    }
-    
-    private func setUserGender(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let age = args["gender"] as! Int
-        switch age {
-        case 0:
-            Appodeal.setUserGender(AppodealUserGender.other)
-        case 1:
-            Appodeal.setUserGender(AppodealUserGender.male)
-        case 2:
-            Appodeal.setUserGender(AppodealUserGender.female)
-        default:
-            Appodeal.setUserGender(AppodealUserGender.other)
-        }
         result(nil)
     }
     
     private func setChildDirectedTreatment(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
-        let value = args["value"] as! Bool
-        Appodeal.setChildDirectedTreatment(value)
+        isChildDirectedTreatmentEnabled = args["isChildDirectedTreatment"] as! Bool
+        Appodeal.setChildDirectedTreatment(isChildDirectedTreatmentEnabled)
         result(nil)
+    }
+    
+    private func isChildDirectedTreatment(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(isChildDirectedTreatmentEnabled)
     }
     
     private func setCustomFilter(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let key = args["name"] as! String
         let value = args["value"]
-        switch value {
-        case is String:
-            Appodeal.setCustomState([key: value as! String])
-        case is Int:
-            Appodeal.setCustomState([key: value as! Int])
-        case is Double:
-            Appodeal.setCustomState([key: value as! Double])
-        case is Bool:
-            Appodeal.setCustomState([key: value as! Bool])
-        default:
-            Appodeal.setCustomState([key: value as Any])
-        }
+        Appodeal.setCustomStateValue(value, forKey: key)
         result(nil)
     }
     
@@ -314,217 +282,92 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let args = call.arguments as! [String: Any]
         let key = args["key"] as! String
         let value = args["value"]
-        switch value {
-        case is String:
-            Appodeal.setCustomState([key: value as! String])
-        case is Int:
-            Appodeal.setCustomState([key: value as! Int])
-        case is Double:
-            Appodeal.setCustomState([key: value as! Double])
-        case is Bool:
-            Appodeal.setCustomState([key: value as! Bool])
-        default:
-            Appodeal.setCustomState([key: value as Any])
+        Appodeal.setExtrasValue(value, forKey: key)
+        result(nil)
+    }
+    
+    private func getPlatformSdkVersion(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(Appodeal.getVersion())
+    }
+    
+    //Services logic
+    
+    private func logEvent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let eventName = args["eventName"] as! String
+        let params = args["params"] as! [String: Any]
+        Appodeal.trackEvent(eventName, customParameters: params)
+        result(nil)
+    }
+    
+    private func validateInAppPurchase(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let type = args["type"] as! Int
+        let orderId = args["orderId"] as! String
+        let price = args["price"] as! String
+        let currency = args["currency"] as! String
+        let transactionId = args["transactionId"] as! String
+        let additionalParameters = args["additionalParameters"] as! [String: String]
+        
+        if let purchaseType = APDPurchaseType(rawValue: UInt(type)) {
+            Appodeal.validateAndTrack(
+                inAppPurchase: orderId,
+                type: purchaseType,
+                price: price,
+                currency: currency,
+                transactionId: transactionId,
+                additionalParameters: additionalParameters,
+                success: { [weak self] response in
+                    self?.channel.invokeMethod("onInAppPurchaseValidateSuccess", arguments: nil)
+                },
+                failure: { [weak self] error in
+                    let args: [String: [String?]] = ["errors": [error?.localizedDescription]]
+                    self?.channel.invokeMethod("onInAppPurchaseValidateFail", arguments: args)
+                }
+            )
+        } else {
+            channel.invokeMethod("onInAppPurchaseValidateFail", arguments: nil)
         }
         result(nil)
     }
     
-    private func getNativeSDKVersion(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        result(Appodeal.getVersion())
-    }
+    // Consent Logic
     
-    private func getAdType(adId: Int) -> AppodealAdType {
-        switch adId {
-        case 1: return .banner
-        case 2: return .banner
-        case 3: return .banner
-        case 4: return .banner
-        case 5: return .banner
-        case 6: return .nativeAd
-        case 7: return .interstitial
-        case 8: return .rewardedVideo
-        case 9: return .MREC
-        case 10: return AppodealAdType(rawValue: 4095)
-        default: return AppodealAdType(rawValue: 0)
-        }
-    }
-    
-    private func getShowStyle(adId: Int) -> AppodealShowStyle {
-        switch adId {
-        case 1: return .bannerBottom
-        case 2: return .bannerRight
-        case 3: return .bannerTop
-        case 4: return .bannerLeft
-        case 5: return .bannerBottom
-        case 7: return .interstitial
-        case 8: return .rewardedVideo
-        default: return AppodealShowStyle(rawValue: 0)
-        }
-    }
-    
-    //Consent logic
-    private func disableAppTrackingTransparencyRequest(_ result: @escaping FlutterResult) {
+    private func disableAppTrackingTransparencyRequest(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         STKConsentManager.shared().disableAppTrackingTransparencyRequest()
         result(nil)
     }
     
-    private func showAsDialogConsentForm(_ result: @escaping FlutterResult) {
+    private func loadConsentForm(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let appKey = args["appKey"] as! String
+        STKConsentManager.shared().synchronize(withAppKey: appKey) { [unowned self] error in
+            if let error = error {
+                let args: [String: [String]] = ["errors": [error.localizedDescription]]
+                channel.invokeMethod("onConsentFormLoadError", arguments: args)
+            } else {
+                STKConsentManager.shared().loadConsentDialog { [unowned self] error in
+                    if let error = error {
+                        let args: [String: [String]] = ["errors": [error.localizedDescription]]
+                        channel.invokeMethod("onConsentFormLoadError", arguments: args)
+                    } else {
+                        channel.invokeMethod("onConsentFormLoaded", arguments: nil)
+                    }
+                }
+            }
+        }
+        result(nil)
+    }
+    
+    private func showConsentForm(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         guard let controller = UIApplication.shared.keyWindow?.rootViewController, STKConsentManager.shared().isConsentDialogReady
         else {
-            channel.invokeMethod("onConsentFormError", arguments: "issue with controller" + "STKConsentManager.isConsentDialogReady - " + String(STKConsentManager.shared().isConsentDialogReady))
+            let args: [String: [String]] = ["errors": ["issue with controller (is ready: \(STKConsentManager.shared().isConsentDialogReady))"]]
+            channel.invokeMethod("onConsentFormShowFailed", arguments: args)
             return
         }
         STKConsentManager.shared().showConsentDialog(fromRootViewController: controller, delegate: self)
         result(nil)
-    }
-    
-    private func loadConsentForm(_ result: @escaping FlutterResult) {
-        STKConsentManager.shared().loadConsentDialog { [unowned self] error in
-            if let error = error {
-                let args: [String: Any] = ["error": error.localizedDescription as String]
-                channel.invokeMethod("onConsentFormError", arguments: args)
-            } else {
-                channel.invokeMethod("onConsentFormLoaded", arguments: nil)
-            }
-        }
-        result(nil)
-    }
-    
-    private func requestConsentInfoUpdate(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let appKey = args["appKey"] as! String
-        if (appKey.isEmpty) {
-            let args: [String: Any] = ["error": "Appodeal key can't be null"]
-            channel.invokeMethod("onFailedToUpdateConsentInfo", arguments: args)
-            return;
-        }
-        
-        STKConsentManager.shared().synchronize(withAppKey: appKey) { [unowned self] error in
-            if let error = error {
-                let args: [String: Any] = ["error": error.localizedDescription as String]
-                channel.invokeMethod("onFailedToUpdateConsentInfo", arguments: args)
-                print("Error while synchronising consent manager: \(error)")
-            } else {
-                guard let consent = STKConsentManager.shared().consent as? STKConsentManagerJSONModel else {
-                    let args: [String: Any] = ["consnent": "not found consent"]
-                    channel.invokeMethod("onConsentInfoUpdated", arguments: args)
-                    return
-                }
-                let json = consent.jsonRepresentation()
-                let data = try? JSONSerialization.data(withJSONObject: json as Any, options: [])
-                let consentSring = data.flatMap {
-                    String(data: $0, encoding: .utf8)
-                }
-                let args: [String: Any] = ["consent": consentSring! as String]
-                channel.invokeMethod("onConsentInfoUpdated", arguments: args)
-            }
-        }
-        result(nil)
-    }
-    
-    private func consentFormIsShowing(_ result: @escaping FlutterResult) {
-        result(STKConsentManager.shared().isConsentDialogPresenting)
-    }
-    
-    private func consentFormIsLoaded(_ result: @escaping FlutterResult) {
-        result(STKConsentManager.shared().isConsentDialogReady)
-    }
-    
-    private func getConsent(_ result: @escaping FlutterResult) {
-        guard let consent = STKConsentManager.shared().consent as? STKConsentManagerJSONModel else {
-            result("not found consent")
-            return
-        }
-        let json = consent.jsonRepresentation()
-        let data = try? JSONSerialization.data(withJSONObject: json as Any, options: [])
-        let consentSring = data.flatMap {
-            String(data: $0, encoding: .utf8)
-        }
-        result(consentSring)
-    }
-    
-    private func getConsentZone(_ result: @escaping FlutterResult) {
-        switch (STKConsentManager.shared().regulation) {
-        case .unknown:
-            result(0)
-            break
-        case .none:
-            result(0)
-            break
-        case .GDPR:
-            result(1)
-        case .CCPA:
-            result(2)
-        default:
-            result(0)
-        }
-    }
-    
-    private func getConsentStatus(_ result: @escaping FlutterResult) {
-        switch (STKConsentManager.shared().consentStatus) {
-        case .unknown:
-            result(0)
-        case .nonPersonalized:
-            result(3)
-        case .partlyPersonalized:
-            result(2)
-        case .personalized:
-            result(1)
-        default:
-            result(0)
-        }
-    }
-    
-    private func shouldShowConsentDialog(_ result: @escaping FlutterResult) {
-        switch (STKConsentManager.shared().shouldShowConsentDialog) {
-        case .unknown:
-            result(0)
-            break
-        case .true:
-            result(1)
-            break
-        case .false:
-            result(2)
-            break
-        default:
-            result(0)
-            break
-        }
-    }
-    
-    private func getStorage(_ result: @escaping FlutterResult) {
-        switch (STKConsentManager.shared().storage) {
-        case STKConsentDialogStorage.none:
-            result(0)
-            break
-        case STKConsentDialogStorage.userDefaults:
-            result(1)
-            break
-        default:
-            result(0)
-            break
-        }
-    }
-    
-    private func getCustomVendor(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let bundle = args["bundle"] as! String
-        if let vendors = STKConsentManager.shared().value(forKey: "customVendors") as? [STKConsentManagerJSONModel] {
-            let vendor = vendors.first {
-                ($0.jsonRepresentation()["status"] as? String) == bundle
-            }
-            if ((vendor?.jsonRepresentation().isEmpty) != nil) {
-                let json = vendor?.jsonRepresentation()
-                let data = try? JSONSerialization.data(withJSONObject: json!, options: [])
-                let vendorSring = data.flatMap {
-                    String(data: $0, encoding: .utf8)
-                }
-                result(vendorSring)
-                NSLog(vendorSring!)
-            } else {
-                result("not found vendor for bundle" + bundle)
-            }
-        }
     }
     
     private func setCustomVendor(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
@@ -547,24 +390,10 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         }
         result(nil)
     }
-    
-    private func setStorage(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let storage = args["storage"] as! Int
-        switch (storage) {
-        case 0:
-            STKConsentManager.shared().storage = STKConsentDialogStorage.none
-            break;
-        case 1:
-            STKConsentManager.shared().storage = STKConsentDialogStorage.userDefaults
-            break;
-        default:
-            STKConsentManager.shared().storage = STKConsentDialogStorage.none
-            break;
-        }
-        result(nil)
-    }
 }
 
+private var isTestModeEnabled: Bool = false
 private var isSmartBannerEnabled: Bool = false
 private var isTabletBannerEnabled: Bool = false
+private var isBannerAnimationEnabled: Bool = false
+private var isChildDirectedTreatmentEnabled: Bool = false

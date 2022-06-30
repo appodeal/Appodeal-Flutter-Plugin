@@ -5,8 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
-import 'appodeal_banner_size.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class AppodealBanner extends StatefulWidget {
   final AppodealBannerSize adSize;

@@ -49,7 +49,11 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.explorestack:consent:1.0.5'
-    implementation 'com.appodeal.ads.sdk:core:2.11.0'
-    implementation 'com.appodeal.ads.sdk.networks:bidmachine:2.11.0.20'
+    implementation 'com.appodeal.ads.sdk:core:3.0.0'
+    implementation 'com.appodeal.ads.sdk.networks:mraid:3.0.0.0'
+    implementation 'com.appodeal.ads.sdk.networks:vast:3.0.0.0'
+    implementation 'com.appodeal.ads.sdk.networks:nast:3.0.0.0'
+    implementation 'com.appodeal.ads.sdk.networks:appodeal:3.0.0.0'
+    implementation 'com.appodeal.ads.sdk.networks:bidmachine:3.0.0.0'
+    implementation 'com.appodeal.ads.sdk.services:stack_analytics:3.0.0.0'
 }

@@ -1,3 +1,13 @@
+## 3.0.0
+
+* **Major Api changes**
+* Updated Appodeal iOS SDK to 3.0.0
+* Updated Appodeal Android SDK to 3.0.0
+* Started support Monetization + UA + Analytics data services.
+* Added new api for in-app purchases and event tracking.
+* Internal Api improvments
+* Internal View Ad improvments
+
 ## 1.2.2
 
 * **Smart banners disable by default.**

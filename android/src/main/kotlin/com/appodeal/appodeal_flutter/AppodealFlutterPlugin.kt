@@ -2,17 +2,22 @@ package com.appodeal.appodeal_flutter
 
 import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
-import com.appodeal.ads.UserSettings
-import com.explorestack.consent.Consent
-import com.explorestack.consent.ConsentForm
-import com.explorestack.consent.ConsentManager
-import com.explorestack.consent.Vendor
+import com.appodeal.ads.inapp.InAppPurchase
+import com.appodeal.ads.inapp.InAppPurchase.Type
+import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
+import com.appodeal.ads.initializing.ApdInitializationCallback
+import com.appodeal.ads.initializing.ApdInitializationError
+import com.appodeal.ads.initializing.ApdInitializationError.*
+import com.appodeal.ads.regulator.CCPAUserConsent
+import com.appodeal.ads.regulator.GDPRUserConsent
+import com.appodeal.ads.service.ServiceError
+import com.appodeal.ads.utils.Log.LogLevel
+import com.appodeal.consent.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.Result
-import org.json.JSONObject
 
 internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
@@ -22,12 +27,17 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private var _pluginBinding: FlutterPlugin.FlutterPluginBinding? = null
     private val pluginBinding get() = checkNotNull(_pluginBinding)
 
-    private var consentForm: ConsentForm? = null
+    @Deprecated("Will be removed in future releases.")
+    private var _consentForm: ConsentForm? = null
+    @Deprecated("Will be removed in future releases.")
+    private val consentForm get() = checkNotNull(_consentForm)
 
-    private val interstitial: AppodealInterstitial by lazy { AppodealInterstitial(pluginBinding) }
-    private val rewardedVideo: AppodealRewarded by lazy { AppodealRewarded(pluginBinding) }
-    private val banner: AppodealBanner by lazy { AppodealBanner(pluginBinding) }
-    private val mrec: AppodealMrec by lazy { AppodealMrec(pluginBinding) }
+    private val requestCallback by lazy { AppodealRequestCallback(pluginBinding) }
+
+    private val interstitial by lazy { AppodealInterstitial(pluginBinding) }
+    private val rewardedVideo by lazy { AppodealRewarded(pluginBinding) }
+    private val banner by lazy { AppodealBanner(pluginBinding) }
+    private val mrec by lazy { AppodealMrec(pluginBinding) }
 
     override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         super.onAttachedToEngine(binding)
@@ -38,6 +48,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        requestCallback.adChannel.setMethodCallHandler(null)
         interstitial.adChannel.setMethodCallHandler(null)
         rewardedVideo.adChannel.setMethodCallHandler(null)
         banner.adChannel.setMethodCallHandler(null)
@@ -46,7 +57,11 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
-            "updateConsent" -> updateConsent(call, result)
+            "setTestMode" -> setTestMode(call, result)
+            "isTestMode" -> isTestMode(call, result)
+            "setLogLevel" -> setLogLevel(call, result)
+            "updateGDPRUserConsent" -> updateGDPRUserConsent(call, result)
+            "updateCCPAUserConsent" -> updateCCPAUserConsent(call, result)
             "initialize" -> initialize(call, result)
             "isInitialized" -> isInitialized(call, result)
             "setAutoCache" -> setAutoCache(call, result)
@@ -60,40 +75,32 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "hide" -> hide(call, result)
             "destroy" -> destroy(call, result)
             //Extra logic
-            "setTriggerOnLoadedOnPrecache" -> setTriggerOnLoadedOnPrecache(call, result)
-            "setSharedAdsInstanceAcrossActivities" -> setSharedAdsInstanceAcrossActivities(call, result)
+            "setAdViewAutoResume" -> setAdViewAutoResume(call, result)
+            "isAdViewAutoResume" -> isAdViewAutoResume(call, result)
             "setSmartBanners" -> setSmartBanners(call, result)
+            "isSmartBanners" -> isSmartBanners(call, result)
             "setTabletBanners" -> setTabletBanners(call, result)
+            "isTabletBanners" -> isTabletBanners(call, result)
             "setBannerAnimation" -> setBannerAnimation(call, result)
+            "isBannerAnimation" -> isBannerAnimation(call, result)
             "setBannerRotation" -> setBannerRotation(call, result)
-            "trackInAppPurchase" -> trackInAppPurchase(call, result)
             "disableNetwork" -> disableNetwork(call, result)
-            "setUserId" -> setUserId(call, result)
-            "setUserAge" -> setUserAge(call, result)
-            "setUserGender" -> setUserGender(call, result)
-            "setTesting" -> setTesting(call, result)
-            "setLogLevel" -> setLogLevel(call, result)
             "muteVideosIfCallsMuted" -> muteVideosIfCallsMuted(call, result)
+            "isMuteVideosIfCallsMuted" -> isMuteVideosIfCallsMuted(call, result)
             "setChildDirectedTreatment" -> setChildDirectedTreatment(call, result)
+            "isChildDirectedTreatment" -> isChildDirectedTreatment(call, result)
+            "setUseSafeArea" -> setUseSafeArea(call, result)
+            "isUseSafeArea" -> isUseSafeArea(call, result)
             "setCustomFilter" -> setCustomFilter(call, result)
             "setExtraData" -> setExtraData(call, result)
-            "getNativeSDKVersion" -> getNativeSDKVersion(result)
-            "setUseSafeArea" -> setUseSafeArea(call, result)
+            "getPlatformSdkVersion" -> getPlatformSdkVersion(call, result)
+            //Services logic
+            "logEvent" -> logEvent(call, result)
+            "validateInAppPurchase" -> validateInAppPurchase(call, result)
             //Consent logic
-            "setStorage" -> setStorage(call, result)
+            "loadConsentForm" -> loadConsentForm(call, result)
+            "showConsentForm" -> showConsentForm(call, result)
             "setCustomVendor" -> setCustomVendor(call, result)
-            "requestConsentInfoUpdate" -> requestConsentInfoUpdate(call, result)
-            "getCustomVendor" -> getCustomVendor(call, result)
-            "getStorage" -> getStorage(result)
-            "shouldShowConsentDialog" -> shouldShowConsentDialog(result)
-            "getConsentZone" -> getConsentZone(result)
-            "getConsentStatus" -> getConsentStatus(result)
-            "getConsent" -> getConsent(result)
-            "loadConsentForm" -> loadConsentForm(result)
-            "showAsActivityConsentForm" -> showAsActivityConsentForm(result)
-            "showAsDialogConsentForm" -> showAsDialogConsentForm(result)
-            "consentFormIsLoaded" -> consentFormIsLoaded(result)
-            "consentFormIsShowing" -> consentFormIsShowing(result)
             else -> result.notImplemented()
         }
     }
@@ -108,181 +115,185 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         }
     }
 
-    private fun getAdType(adId: Int): Int {
-        return when (adId) {
-            1 -> Appodeal.BANNER
-            2 -> Appodeal.BANNER_RIGHT
-            3 -> Appodeal.BANNER_TOP
-            4 -> Appodeal.BANNER_LEFT
-            5 -> Appodeal.BANNER_BOTTOM
-            6 -> Appodeal.NATIVE
-            7 -> Appodeal.INTERSTITIAL
-            8 -> Appodeal.REWARDED_VIDEO
-            9 -> Appodeal.MREC
-            10 -> 4095 //1111111111 Appodeal.ALL
-            else -> Appodeal.NONE
-        }
+    private fun setTestMode(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        isTestMode = args["isTestMode"] as Boolean
+        Appodeal.setTesting(isTestMode)
+        result.success(null)
     }
 
-    private fun updateConsent(call: MethodCall, result: Result) {
+    private fun isTestMode(call: MethodCall, result: Result) {
+        result.success(isTestMode)
+    }
+
+    private fun setLogLevel(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val hasConsent: Boolean? = args["boolConsent"] as? Boolean
-        Appodeal.updateConsent(hasConsent)
+        when (args["logLevel"] as Int) {
+            1 -> Appodeal.setLogLevel(LogLevel.debug)
+            2 -> Appodeal.setLogLevel(LogLevel.verbose)
+            else -> Appodeal.setLogLevel(LogLevel.none)
+        }
+        result.success(null)
+    }
+
+    private fun updateGDPRUserConsent(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        when (args["gdprUserConsent"] as Int) {
+            -1 -> Appodeal.updateGDPRUserConsent(GDPRUserConsent.NonPersonalized)
+            0 -> Appodeal.updateGDPRUserConsent(GDPRUserConsent.Unknown)
+            1 -> Appodeal.updateGDPRUserConsent(GDPRUserConsent.Personalized)
+        }
+        result.success(null)
+    }
+
+    private fun updateCCPAUserConsent(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        when (args["ccpaUserConsent"] as Int) {
+            -1 -> Appodeal.updateCCPAUserConsent(CCPAUserConsent.OptOut)
+            0 -> Appodeal.updateCCPAUserConsent(CCPAUserConsent.Unknown)
+            1 -> Appodeal.updateCCPAUserConsent(CCPAUserConsent.OptIn)
+        }
         result.success(null)
     }
 
     private fun initialize(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val appKey = args["appKey"] as String
-        @Suppress("UNCHECKED_CAST") val adTypes = args["adTypes"] as List<Int>
-        val ads = adTypes.fold(0) { acc, value -> acc or getAdType(value) }
+        val sdkVersion = args["sdkVersion"] as String
+        val adTypes = args["adTypes"] as Int
+        Appodeal.setRequestCallbacks(requestCallback.adListener)
         Appodeal.setInterstitialCallbacks(interstitial.adListener)
         Appodeal.setRewardedVideoCallbacks(rewardedVideo.adListener)
         Appodeal.setBannerCallbacks(banner.adListener)
         Appodeal.setMrecCallbacks(mrec.adListener)
-        Appodeal.setSmartBanners(isSmartBannerEnabled)
+        Appodeal.setSmartBanners(isSmartBannersEnabled)
         Appodeal.set728x90Banners(isTabletBannerEnabled)
         Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
-        Appodeal.setFramework("flutter", "1.2.2")
-
-        val managerConsent: Consent? = ConsentManager.getInstance(applicationContext).consent
-        val booleanConsent: Boolean? = args["boolConsent"] as? Boolean
-        when {
-            managerConsent != null -> Appodeal.initialize(activity, appKey, ads, managerConsent)
-            booleanConsent != null -> Appodeal.initialize(activity, appKey, ads, booleanConsent)
-            else -> Appodeal.initialize(activity, appKey, ads)
-        }
+        Appodeal.setFramework("flutter", sdkVersion)
+        Appodeal.updateConsent(ConsentManager.consent)
+        Appodeal.initialize(activity, appKey, adTypes, object : ApdInitializationCallback {
+            override fun onInitializationFinished(errors: List<ApdInitializationError>?) =
+                channel.invokeMethod("onInitializationFinished", errors?.toArg())
+        })
         result.success(null)
     }
 
     private fun isInitialized(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         result.success(Appodeal.isInitialized(adType))
     }
 
     private fun setAutoCache(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
-        val autoCache = args["autoCache"] as Boolean
-        Appodeal.setAutoCache(adType, autoCache)
+        val adType = args["adType"] as Int
+        val isAutoCache = args["isAutoCache"] as Boolean
+        Appodeal.setAutoCache(adType, isAutoCache)
         result.success(null)
     }
 
     private fun isAutoCacheEnabled(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         result.success(Appodeal.isAutoCacheEnabled(adType))
     }
 
     private fun cache(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         Appodeal.cache(activity, adType)
         result.success(null)
     }
 
     private fun isLoaded(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         result.success(Appodeal.isLoaded(adType))
     }
 
     private fun isPrecache(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         result.success(Appodeal.isPrecache(adType))
     }
 
     private fun canShow(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         val placement = args["placement"] as String
         result.success(Appodeal.canShow(adType, placement))
     }
 
     private fun getPredictedEcpm(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         result.success(Appodeal.getPredictedEcpm(adType))
     }
 
     private fun show(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         val placement = args["placement"] as String
         result.success(Appodeal.show(activity, adType, placement))
     }
 
     private fun hide(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         Appodeal.hide(activity, adType)
         result.success(null)
     }
 
     private fun destroy(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
+        val adType = args["adType"] as Int
         Appodeal.destroy(adType)
         result.success(null)
     }
 
-    private fun setTesting(call: MethodCall, result: Result) {
+    private fun setAdViewAutoResume(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val value = args["testMode"] as Boolean
-        if (value) {
-            Appodeal.setTesting(value)
-        }
+        val isAdViewAutoResumeEnabled = args["isAdViewAutoResume"] as Boolean
+        Appodeal.setSharedAdsInstanceAcrossActivities(isAdViewAutoResumeEnabled)
         result.success(null)
     }
 
-    private fun setLogLevel(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        when (args["logLevel"] as Int) {
-            1 -> Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.debug)
-            2 -> Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.verbose)
-            else -> Appodeal.setLogLevel(com.appodeal.ads.utils.Log.LogLevel.none)
-        }
-
-        result.success(null)
-    }
-
-    private fun setTriggerOnLoadedOnPrecache(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        val adType = getAdType(args["adType"] as Int)
-        val onLoadedTriggerBoth = args["onLoadedTriggerBoth"] as Boolean
-        Appodeal.setTriggerOnLoadedOnPrecache(adType, onLoadedTriggerBoth)
-        result.success(null)
-    }
-
-    private fun setSharedAdsInstanceAcrossActivities(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        val onLoadedTriggerBoth = args["sharedAdsInstanceAcrossActivities"] as Boolean
-        Appodeal.setSharedAdsInstanceAcrossActivities(onLoadedTriggerBoth)
-        result.success(null)
+    private fun isAdViewAutoResume(call: MethodCall, result: Result) {
+        result.success(Appodeal.isSharedAdsInstanceAcrossActivities())
     }
 
     private fun setSmartBanners(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        isSmartBannerEnabled = args["smartBannerEnabled"] as Boolean
-        Appodeal.setSmartBanners(isSmartBannerEnabled)
+        isSmartBannersEnabled = args["isSmartBannersEnabled"] as Boolean
+        Appodeal.setSmartBanners(isSmartBannersEnabled)
         result.success(null)
+    }
+
+    private fun isSmartBanners(call: MethodCall, result: Result) {
+        result.success(isSmartBannersEnabled)
     }
 
     private fun setTabletBanners(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        isTabletBannerEnabled = args["tabletBannerEnabled"] as Boolean
+        isTabletBannerEnabled = args["isTabletBannerEnabled"] as Boolean
         Appodeal.set728x90Banners(isTabletBannerEnabled)
         result.success(null)
     }
 
+    private fun isTabletBanners(call: MethodCall, result: Result) {
+        result.success(isTabletBannerEnabled)
+    }
+
     private fun setBannerAnimation(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val bannerAnimationEnabled = args["bannerAnimationEnabled"] as Boolean
-        Appodeal.setBannerAnimation(bannerAnimationEnabled)
+        isBannerAnimationEnabled = args["isBannerAnimationEnabled"] as Boolean
+        Appodeal.setBannerAnimation(isBannerAnimationEnabled)
         result.success(null)
+    }
+
+    private fun isBannerAnimation(call: MethodCall, result: Result) {
+        result.success(isBannerAnimationEnabled)
     }
 
     private fun setBannerRotation(call: MethodCall, result: Result) {
@@ -293,73 +304,54 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         result.success(null)
     }
 
-    private fun trackInAppPurchase(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        val amount = args["amount"] as Double
-        val currency = args["currency"] as String
-        Appodeal.trackInAppPurchase(activity, amount, currency)
-        result.success(null)
-    }
-
     private fun disableNetwork(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val network = args["network"] as String
-        val adType = getAdType(args["adType"] as Int)
-        Appodeal.disableNetwork(activity, network, adType)
-        result.success(null)
-    }
-
-    private fun setUserId(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        val userId = args["userId"] as String
-        Appodeal.setUserId(userId)
-        result.success(null)
-    }
-
-    private fun setUserAge(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        val age = args["age"] as Int
-        Appodeal.setUserAge(age)
-        result.success(null)
-    }
-
-    private fun setUserGender(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        when (args["gender"] as Int) {
-            0 -> Appodeal.setUserGender(UserSettings.Gender.OTHER)
-            1 -> Appodeal.setUserGender(UserSettings.Gender.MALE)
-            2 -> Appodeal.setUserGender(UserSettings.Gender.FEMALE)
-        }
+        val adType = args["adType"] as Int
+        Appodeal.disableNetwork(network, adType)
         result.success(null)
     }
 
     private fun muteVideosIfCallsMuted(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val value = args["value"] as Boolean
-        if (value) {
-            Appodeal.muteVideosIfCallsMuted(value)
-        }
+        isMuteVideosIfCallsMuted = args["isMuteVideosIfCallsMuted"] as Boolean
+        Appodeal.muteVideosIfCallsMuted(isMuteVideosIfCallsMuted)
         result.success(null)
+    }
+
+    private fun isMuteVideosIfCallsMuted(call: MethodCall, result: Result) {
+        result.success(isMuteVideosIfCallsMuted)
     }
 
     private fun setChildDirectedTreatment(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val value = args["value"] as Boolean
-        if (value) {
-            Appodeal.setChildDirectedTreatment(value)
-        }
+        isChildDirectedTreatment = args["isChildDirectedTreatment"] as Boolean
+        Appodeal.setChildDirectedTreatment(isChildDirectedTreatment)
         result.success(null)
+    }
+
+    private fun isChildDirectedTreatment(call: MethodCall, result: Result) {
+        result.success(isChildDirectedTreatment)
+    }
+
+    private fun setUseSafeArea(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        isUseSafeArea = args["isUseSafeArea"] as Boolean
+        Appodeal.setUseSafeArea(isUseSafeArea)
+        result.success(null)
+    }
+
+    private fun isUseSafeArea(call: MethodCall, result: Result) {
+        result.success(isUseSafeArea)
     }
 
     private fun setCustomFilter(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val name = args["name"] as String
         when (val value = args["value"]) {
-            is String -> Appodeal.setCustomFilter(name, value)
             is Int -> Appodeal.setCustomFilter(name, value)
             is Double -> Appodeal.setCustomFilter(name, value)
-            is Boolean -> Appodeal.setCustomFilter(name, value)
-            is Any -> Appodeal.setCustomFilter(name, value)
+            else -> Appodeal.setCustomFilter(name, value)
         }
         result.success(null)
     }
@@ -367,133 +359,128 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private fun setExtraData(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val key = args["key"] as String
-        when (val value = args["value"]) {
-            is String -> Appodeal.setExtraData(key, value)
-            is Int -> Appodeal.setExtraData(key, value)
-            is Double -> Appodeal.setExtraData(key, value)
-            is Boolean -> Appodeal.setExtraData(key, value)
-            is JSONObject -> Appodeal.setExtraData(key, value)
-        }
+        val value = args["value"]
+        Appodeal.setExtraData(key, value)
         result.success(null)
     }
 
-    private fun getNativeSDKVersion(result: Result) {
+    private fun getPlatformSdkVersion(call: MethodCall, result: Result) {
         result.success(Appodeal.getVersion())
     }
 
-    private fun setUseSafeArea(call: MethodCall, result: Result) {
+    //Services logic
+    private fun logEvent(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val value = args["value"] as Boolean
-        Appodeal.setUseSafeArea(value)
+        val eventName = args["eventName"] as String
+        @Suppress("UNCHECKED_CAST") val params = args["params"] as Map<String, *>
+        Appodeal.logEvent(eventName, params)
+        result.success(null)
+    }
+
+    private fun validateInAppPurchase(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val type = args["type"] as Int
+        val price = args["price"] as String
+        val currency = args["currency"] as String
+        val publicKey = args["publicKey"] as? String?
+        val signature = args["signature"] as? String?
+        val purchaseData = args["purchaseData"] as? String?
+        val developerPayload = args["developerPayload"] as? String?
+        val sku = args["sku"] as? String?
+        val orderId = args["orderId"] as? String?
+        val purchaseToken = args["purchaseToken"] as? String?
+        val purchaseTimestamp = args["purchaseTimestamp"] as Int
+        @Suppress("UNCHECKED_CAST") val additionalParameters =
+            args["additionalParameters"] as Map<String, String>
+        val purchase: InAppPurchase = when (type) {
+            Type.InApp.ordinal -> InAppPurchase.newInAppBuilder()
+            Type.Subs.ordinal -> InAppPurchase.newSubscriptionBuilder()
+            else -> return channel.invokeMethod("onInAppPurchaseValidateFail", null)
+        }.withPrice(price)
+            .withCurrency(currency)
+            .withPublicKey(publicKey)
+            .withSignature(signature)
+            .withPurchaseData(purchaseData)
+            .withDeveloperPayload(developerPayload)
+            .withSku(sku)
+            .withOrderId(orderId)
+            .withPurchaseToken(purchaseToken)
+            .withPurchaseTimestamp(purchaseTimestamp.toLong())
+            .withAdditionalParams(additionalParameters)
+            .build()
+        Appodeal.validateInAppPurchase(
+            applicationContext,
+            purchase,
+            object : InAppPurchaseValidateCallback {
+                override fun onInAppPurchaseValidateFail(
+                    purchase: InAppPurchase,
+                    errors: List<ServiceError>
+                ) = channel.invokeMethod("onInAppPurchaseValidateFail", errors.toArg())
+
+                override fun onInAppPurchaseValidateSuccess(
+                    purchase: InAppPurchase,
+                    errors: List<ServiceError>?
+                ) = channel.invokeMethod("onInAppPurchaseValidateSuccess", errors?.toArg())
+            })
         result.success(null)
     }
 
     // Consent Logic
-    private fun shouldShowConsentDialog(result: Result) {
-        val shouldShowType: Int =
-            when (ConsentManager.getInstance(activity).shouldShowConsentDialog().toString()) {
-                Consent.ShouldShow.UNKNOWN.toString() -> 0
-                Consent.ShouldShow.TRUE.toString() -> 1
-                Consent.ShouldShow.FALSE.toString() -> 2
-                else -> 0
+    private fun loadConsentForm(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val appKey = args["appKey"] as String
+        ConsentManager.requestConsentInfoUpdate(
+            applicationContext,
+            appKey,
+            object : IConsentInfoUpdateListener {
+                override fun onConsentInfoUpdated(consent: Consent) {
+                    _consentForm = ConsentForm(
+                        applicationContext,
+                        object : IConsentFormListener {
+                            override fun onConsentFormClosed(consent: Consent) =
+                                channel.invokeMethod("onConsentFormClosed", null)
+
+                            override fun onConsentFormError(error: ConsentManagerError) =
+                                channel.invokeMethod("onConsentFormShowFailed", error.toArg())
+
+                            override fun onConsentFormLoaded(consentForm: ConsentForm) =
+                                channel.invokeMethod("onConsentFormLoaded", null)
+
+                            override fun onConsentFormOpened() =
+                                channel.invokeMethod("onConsentFormOpened", null)
+                        }
+                    )
+                    consentForm.load()
+                }
+
+                override fun onFailedToUpdateConsentInfo(error: ConsentManagerError) {
+                    channel.invokeMethod("onConsentFormLoadError", error.toArg())
+                }
             }
-        result.success(shouldShowType)
-    }
-
-    private fun getConsentZone(result: Result) {
-        val consentZoneType: Int = when (ConsentManager.getInstance(activity).consentZone) {
-            Consent.Zone.UNKNOWN -> 0
-            Consent.Zone.GDPR -> 1
-            Consent.Zone.CCPA -> 2
-            else -> 0
-        }
-        result.success(consentZoneType)
-    }
-
-    private fun getConsentStatus(result: Result) {
-        val consentStatusType: Int = when (ConsentManager.getInstance(activity).consentStatus) {
-            Consent.Status.UNKNOWN -> 0
-            Consent.Status.PERSONALIZED -> 1
-            Consent.Status.PARTLY_PERSONALIZED -> 2
-            Consent.Status.NON_PERSONALIZED -> 3
-            else -> 0
-        }
-        result.success(consentStatusType)
-    }
-
-    private fun getConsent(result: Result) {
-        result.success(ConsentManager.getInstance(activity).consent?.toJSONObject().toString())
-    }
-
-    private fun consentFormIsShowing(result: Result) {
-        if (consentForm != null) {
-            result.success(consentForm?.isShowing)
-        } else {
-            result.success(false)
-        }
-    }
-
-    private fun consentFormIsLoaded(result: Result) {
-        if (consentForm != null) {
-            result.success(consentForm?.isLoaded)
-        } else {
-            result.success(false)
-        }
-    }
-
-    private fun showAsDialogConsentForm(result: Result) {
-        consentForm?.showAsDialog()
-        result.success(null)
-    }
-
-    private fun showAsActivityConsentForm(result: Result) {
-        consentForm?.showAsActivity()
-        result.success(null)
-    }
-
-    private fun loadConsentForm(result: Result) {
-        consentForm = ConsentForm.Builder(activity)
-            .withListener(ConsentFormListenerImpl(channel))
-            .build()
-        consentForm?.load()
-        result.success(null)
-    }
-
-    private fun requestConsentInfoUpdate(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        ConsentManager.getInstance(activity)
-            .requestConsentInfoUpdate(
-                args["appKey"] as String,
-                ConsentInfoUpdateListenerImpl(channel)
-            )
-        result.success(null)
-    }
-
-    private fun getStorage(result: Result) {
-        val storageType: Int = when (ConsentManager.getInstance(activity).storage) {
-            ConsentManager.Storage.NONE -> 0
-            ConsentManager.Storage.SHARED_PREFERENCE -> 1
-            else -> 0
-        }
-        result.success(storageType)
-    }
-
-    private fun setStorage(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        when (args["storage"] as Int) {
-            0 -> ConsentManager.getInstance(activity).storage = ConsentManager.Storage.NONE
-            1 -> ConsentManager.getInstance(activity).storage =
-                ConsentManager.Storage.SHARED_PREFERENCE
-        }
-        result.success(null)
-    }
-
-    private fun getCustomVendor(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        result.success(
-            ConsentManager.getInstance(activity).getCustomVendor(args["bundle"] as String)
-                ?.toJSONObject().toString()
         )
+    }
+
+    private fun showConsentForm(call: MethodCall, result: Result) {
+        _consentForm = _consentForm ?: run {
+            ConsentForm(
+                applicationContext,
+                object : IConsentFormListener {
+                    override fun onConsentFormClosed(consent: Consent) =
+                        channel.invokeMethod("onConsentFormClosed", null)
+
+                    override fun onConsentFormError(error: ConsentManagerError) =
+                        channel.invokeMethod("onConsentFormShowFailed", error.toArg())
+
+                    override fun onConsentFormLoaded(consentForm: ConsentForm) =
+                        channel.invokeMethod("onConsentFormLoaded", null)
+
+                    override fun onConsentFormOpened() =
+                        channel.invokeMethod("onConsentFormOpened", null)
+                }
+            )
+        }
+        consentForm.show()
+        result.success(null)
     }
 
     private fun setCustomVendor(call: MethodCall, result: Result) {
@@ -501,22 +488,49 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val name = args["name"] as String
         val bundle = args["bundle"] as String
         val policyUrl = args["policyUrl"] as String
-        val purposeIds = listOf(args["purposeIds"])
-        val featureIds = listOf(args["featureIds"])
-        val legitimateInterestPurposeIds = listOf(args["legitimateInterestPurposeIds"])
-
-        ConsentManager.getInstance(activity)
-            .setCustomVendor(
-                Vendor.Builder(name, bundle, policyUrl)
-                    .setPurposeIds(purposeIds as MutableList<Int>)
-                    .setFeatureIds(featureIds as MutableList<Int>)
-                    .setLegitimateInterestPurposeIds(legitimateInterestPurposeIds as MutableList<Int>)
-                    .build()
-            )
-
+        @Suppress("UNCHECKED_CAST") val purposeIds: List<Int> =
+            (args["purposeIds"] as? List<Int>).orEmpty()
+        @Suppress("UNCHECKED_CAST") val featureIds: List<Int> =
+            (args["featureIds"] as? List<Int>).orEmpty()
+        @Suppress("UNCHECKED_CAST") val legitimateInterestPurposeIds =
+            (args["legitimateInterestPurposeIds"] as? List<Int>).orEmpty()
+        val vendor = Vendor.Builder(
+            name = name,
+            bundle = bundle,
+            policyUrl = policyUrl,
+            purposeIds = purposeIds,
+            featureIds = featureIds,
+            legitimateInterestPurposeIds = legitimateInterestPurposeIds
+        ).build()
+        ConsentManager.customVendors[name] = vendor
         result.success(null)
     }
 }
 
-private var isSmartBannerEnabled: Boolean = false
+private var isTestMode: Boolean = false
+private var isSmartBannersEnabled: Boolean = false
 private var isTabletBannerEnabled: Boolean = false
+private var isBannerAnimationEnabled: Boolean = false
+private var isMuteVideosIfCallsMuted: Boolean = false
+private var isChildDirectedTreatment: Boolean = false
+private var isUseSafeArea: Boolean = false
+
+private fun ConsentManagerError.toArg(): Map<String, List<String>> =
+    mapOf("errors" to listOf("${this.event}: ${this.message}"))
+
+private fun List<ApdInitializationError>.toArg(): Map<String, List<String>> {
+    val arg = this.map { error ->
+        when (error) {
+            is Critical -> "Critical: ${error::class.simpleName} ${error.description}"
+            is NonCritical -> "NonCritical: ${error::class.simpleName} [${error.componentName}] ${error.description}"
+            is InternalError -> "InternalError: ${error::class.simpleName} ${error.message}"
+        }
+    }
+    return mapOf("errors" to arg)
+}
+
+@JvmName("toArgServiceError")
+private fun List<ServiceError>.toArg(): Map<String, List<String>> {
+    val arg = this.map { "${it::class.simpleName} [${it.componentName}] ${it.description}" }
+    return mapOf("errors" to arg)
+}
