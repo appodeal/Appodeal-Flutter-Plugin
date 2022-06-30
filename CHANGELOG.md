@@ -5,8 +5,8 @@
 * Updated Appodeal Android SDK to 3.0.0
 * Started support Monetization + UA + Analytics data services.
 * Added new api for in-app purchases and event tracking.
-* Internal Api improvments
-* Internal View Ad improvments
+* Internal Api improvements
+* Internal View Ad improvements
 
 ## 1.2.2
 
@@ -62,8 +62,8 @@
     > );
     > ```
 * Updated Appodeal iOS SDK to 2.11.1
-* Internal Api improvments
-* Internal View Ad improvments
+* Internal Api improvements
+* Internal View Ad improvements
 
 ## 1.0.5
 
