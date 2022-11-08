@@ -31,8 +31,8 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setTesting(kReleaseMode ? false : true); //only not release mode
     Appodeal.setLogLevel(Appodeal.LogLevelVerbose);
 
-    Appodeal.setAutoCache(Appodeal.INTERSTITIAL, false);
-    Appodeal.setAutoCache(Appodeal.REWARDED_VIDEO, false);
+    Appodeal.setAutoCache(AppodealAdType.Interstitial, false);
+    Appodeal.setAutoCache(AppodealAdType.RewardedVideo, false);
     Appodeal.setUseSafeArea(true);
 
     Appodeal.initialize(

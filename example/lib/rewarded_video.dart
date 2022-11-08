@@ -48,7 +48,7 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isInitialized =
-                        await Appodeal.isInitialized(Appodeal.REWARDED_VIDEO);
+                        await Appodeal.isInitialized(AppodealAdType.RewardedVideo);
                     print('Rewarded video isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
@@ -64,7 +64,7 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isCanShow =
-                        await Appodeal.canShow(Appodeal.REWARDED_VIDEO);
+                        await Appodeal.canShow(AppodealAdType.RewardedVideo);
                     print('Rewarded video canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
@@ -80,7 +80,7 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.cache(Appodeal.REWARDED_VIDEO);
+                    Appodeal.cache(AppodealAdType.RewardedVideo);
                   },
                   child: const Text('CACHE REWARDED VIDEO'),
                 ),
@@ -94,7 +94,7 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.show(Appodeal.REWARDED_VIDEO);
+                    Appodeal.show(AppodealAdType.RewardedVideo);
                   },
                   child: const Text('SHOW REWARDED VIDEO'),
                 ),

@@ -1,4 +1,4 @@
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
@@ -26,32 +26,33 @@ source 'https://github.com/appodeal/CocoaPods.git'
 source 'https://cdn.cocoapods.org/'
 
 def appodeal
-  pod 'APDAdColonyAdapter', '3.0.0.1'
-  pod 'BDMAdColonyAdapter', '~> 1.9.4'
-  pod 'APDAdjustAdapter', '3.0.0.1'
-  pod 'APDAppLovinAdapter', '3.0.0.1'
-  pod 'APDAppsFlyerAdapter', '3.0.0.2'
-  pod 'APDBidMachineAdapter', '3.0.0.2' # Required
-  pod 'BDMCriteoAdapter', '~> 1.9.4'
-  pod 'BDMPangleAdapter', '~> 1.9.4.2'
-  pod 'BDMAmazonAdapter', '~> 1.9.4.2'
-  pod 'BDMSmaatoAdapter', '~> 1.9.4'
-  pod 'BDMTapjoyAdapter', '~> 1.9.4'
-  pod 'APDFirebaseAdapter', '3.0.0.2'
-  pod 'APDGoogleAdMobAdapter', '3.0.0.2'
-  pod 'APDIABAdapter', '3.0.0.1' # Required
-  pod 'BDMIABAdapter', '~> 1.9.4'
-  pod 'APDIronSourceAdapter', '3.0.0.1'
-  pod 'APDFacebookAdapter', '3.0.0.1'
-  pod 'APDMetaAudienceNetworkAdapter', '3.0.0.1'
-  pod 'BDMMetaAudienceAdapter', '~> 1.9.4'
-  pod 'APDMyTargetAdapter', '3.0.0.1'
-  pod 'BDMMyTargetAdapter', '~> 1.9.4'
-  pod 'APDStackAnalyticsAdapter', '3.0.0.1' # Required
-  pod 'APDUnityAdapter', '3.0.0.1'
-  pod 'APDVungleAdapter', '3.0.0.1'
-  pod 'BDMVungleAdapter', '~> 1.9.4'
-  pod 'APDYandexAdapter', '3.0.0.1'
+  pod 'APDAdColonyAdapter', '3.0.1.1'
+  pod 'BDMAdColonyAdapter', '~> 1.9.5'
+  pod 'APDAdjustAdapter', '3.0.1.1'
+  pod 'APDAppLovinAdapter', '3.0.1.1'
+  pod 'APDAppsFlyerAdapter', '3.0.1.1'
+  pod 'APDBidMachineAdapter', '3.0.1.1' # Required
+  pod 'BDMCriteoAdapter', '~> 1.9.5'
+  pod 'BDMPangleAdapter', '~> 1.9.5'
+  pod 'BDMAmazonAdapter', '~> 1.9.5'
+  pod 'BDMSmaatoAdapter', '~> 1.9.5'
+  pod 'BDMNotsyAdapter', '~> 1.9.5'
+  pod 'BDMTapjoyAdapter', '~> 1.9.5'
+  pod 'APDFirebaseAdapter', '3.0.1.1'
+  pod 'APDGoogleAdMobAdapter', '3.0.1.1'
+  pod 'APDIABAdapter', '3.0.1.1' # Required
+  pod 'BDMIABAdapter', '~> 1.9.5'
+  pod 'APDIronSourceAdapter', '3.0.1.1'
+  pod 'APDFacebookAdapter', '3.0.1.1'
+  pod 'APDMetaAudienceNetworkAdapter', '3.0.1.1'
+  pod 'BDMMetaAudienceAdapter', '~> 1.9.5'
+  pod 'APDMyTargetAdapter', '3.0.1.1'
+  pod 'BDMMyTargetAdapter', '~> 1.9.5'
+  pod 'APDStackAnalyticsAdapter', '3.0.1.1' # Required
+  pod 'APDUnityAdapter', '3.0.1.1'
+  pod 'APDVungleAdapter', '3.0.1.1'
+  pod 'BDMVungleAdapter', '~> 1.9.5'
+  pod 'APDYandexAdapter', '3.0.1.1'
 end
 
 target 'Runner' do

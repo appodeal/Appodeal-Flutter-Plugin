@@ -1,14 +1,14 @@
 group 'com.appodeal.appodeal_flutter'
 
 buildscript {
-    ext.kotlin_version = '1.6.21'
+    ext.kotlin_version = '1.7.20'
     repositories {
         google()
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.2.1'
+        classpath 'com.android.tools.build:gradle:7.2.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -18,7 +18,6 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven { url "https://artifactory.appodeal.com/appodeal" }
-        jcenter()
     }
 }
 
@@ -26,11 +25,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 31
+    compileSdk 33
 
     defaultConfig {
         minSdk 21
-        targetSdk 31
+        targetSdk 33
     }
 
     compileOptions {
@@ -49,11 +48,12 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.appodeal.ads.sdk:core:3.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:mraid:3.0.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:vast:3.0.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:nast:3.0.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:appodeal:3.0.0.0'
-    implementation 'com.appodeal.ads.sdk.networks:bidmachine:3.0.0.0'
-    implementation 'com.appodeal.ads.sdk.services:stack_analytics:3.0.0.0'
+    implementation 'com.appodeal.ads.sdk:core:3.0.1'
+    implementation 'com.appodeal.ads.sdk.networks:mraid:3.0.1.0'
+    implementation 'com.appodeal.ads.sdk.networks:vast:3.0.1.0'
+    implementation 'com.appodeal.ads.sdk.networks:nast:3.0.1.0'
+    implementation 'com.appodeal.ads.sdk.networks:appodeal:3.0.1.0'
+    implementation 'com.appodeal.ads.sdk.networks:bidmachine:3.0.1.0'
+    implementation 'com.appodeal.ads.sdk.services:stack_analytics:3.0.1.0'
+    implementation 'com.appodeal.ads.sdk.services:sentry_analytics:3.0.1.0'
 }

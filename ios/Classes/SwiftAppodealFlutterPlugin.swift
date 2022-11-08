@@ -21,6 +21,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     let channel: FlutterMethodChannel
     
     private let requestCallback: AppodealRequestCallback
+    private let adRevenueCallback: AppodealAdRevenueCallback
     
     private let interstitial: AppodealInterstitial
     private let rewardedVideo: AppodealRewarded
@@ -30,6 +31,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     private init(registrar: FlutterPluginRegistrar) {
         channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
         requestCallback = AppodealRequestCallback(registrar: registrar)
+        adRevenueCallback = AppodealAdRevenueCallback(registrar: registrar)
         interstitial = AppodealInterstitial(registrar: registrar)
         rewardedVideo = AppodealRewarded(registrar: registrar)
         banner = AppodealBanner(registrar: registrar)
@@ -65,6 +67,8 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "disableNetwork": disableNetwork(call, result)
         case "setChildDirectedTreatment": setChildDirectedTreatment(call, result)
         case "isChildDirectedTreatment": isChildDirectedTreatment(call, result)
+        case "setUserId": setUserId(call, result)
+        case "getUserId": getUserId(call, result)
         case "setCustomFilter": setCustomFilter(call, result)
         case "setExtraData": setExtraData(call, result)
         case "getPlatformSdkVersion": getPlatformSdkVersion(call, result)
@@ -142,6 +146,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         Appodeal.setInitializationDelegate(self)
         Appodeal.initialize(withApiKey: appKey, types: adTypes)
         Appodeal.registerRequestCallback(requestCallback: requestCallback)
+        Appodeal.setAdRevenueDelegate(adRevenueCallback.adListener)
         result(nil)
     }
     
@@ -268,6 +273,17 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private func isChildDirectedTreatment(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         result(isChildDirectedTreatmentEnabled)
+    }
+    
+    private func setUserId(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let userId = args["userId"] as! String
+        Appodeal.setUserId(userId)
+        result(nil)
+    }
+    
+    private func getUserId(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(Appodeal.userId())
     }
     
     private func setCustomFilter(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {

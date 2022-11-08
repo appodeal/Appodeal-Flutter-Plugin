@@ -35,6 +35,19 @@ class AppodealAdType {
     required this.sios,
   });
 
+  factory AppodealAdType.byPlatformType(int platformType) {
+    if (Interstitial.platformType == platformType) return Interstitial;
+    if (RewardedVideo.platformType == platformType) return RewardedVideo;
+    if (Banner.platformType == platformType ||
+        BannerBottom.platformType == platformType ||
+        BannerTop.platformType == platformType ||
+        BannerLeft.platformType == platformType ||
+        BannerRight.platformType == platformType) return Banner;
+    if (MREC.platformType == platformType) return MREC;
+    if (NativeAd.platformType == platformType) return NativeAd;
+    return None;
+  }
+
   int get platformType => Platform.isAndroid ? android : ios;
 
   int get platformShowType => Platform.isAndroid ? android : sios;

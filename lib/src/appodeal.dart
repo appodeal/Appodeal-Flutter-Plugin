@@ -46,8 +46,8 @@ class Appodeal {
   };
 
   static MethodChannel _channel = _defaultChannel(_handler);
-  static const MethodChannel _requestChannel =
-      const MethodChannel('appodeal_flutter/request');
+  static const MethodChannel _adrevenueChannel =
+      const MethodChannel('appodeal_flutter/adrevenue');
   static const MethodChannel _interstitialChannel =
       const MethodChannel('appodeal_flutter/interstitial');
   static const MethodChannel _rewardedVideoChannel =
@@ -56,6 +56,10 @@ class Appodeal {
       const MethodChannel('appodeal_flutter/banner');
   static const MethodChannel _mrecChannel =
       const MethodChannel('appodeal_flutter/mrec');
+
+  @Deprecated("Will be removed in future releases.")
+  static const MethodChannel _requestChannel =
+      const MethodChannel('appodeal_flutter/request');
 
   /// Set [isTestMode] for get test advertising.
   static setTesting(bool isTestMode) {
@@ -184,14 +188,14 @@ class Appodeal {
 
   /// Hide [adType] advertising
   ///
-  /// Support only [BANNER] and [MREC]
+  /// Support only [AppodealAdType.Banner] and [AppodealAdType.MREC]
   static hide(AppodealAdType adType) {
     _channel.invokeMethod('hide', {'adType': adType.platformShowType});
   }
 
   /// Destroy [adType] advertising
   ///
-  /// Support only [BANNER] and [MREC]
+  /// Support only [AppodealAdType.Banner] and [AppodealAdType.MREC]
   static destroy(AppodealAdType adType) {
     if (Platform.isAndroid) {
       _channel.invokeMethod('destroy', {'adType': adType.platformType});
@@ -202,7 +206,7 @@ class Appodeal {
   ///
   /// If [isAdViewAutoResume] `true` that the SDK will show AdView on all new activities without calling additional code from your side.
   /// If you want to control the display yourself, you can set [isAdViewAutoResume] as `false` parameter.
-  /// Support only for [BANNER] and [MREC]
+  /// Support only for [AppodealAdType.Banner] and [AppodealAdType.MREC]
   static setAdViewAutoResume(bool isAdViewAutoResume) {
     if (Platform.isAndroid) {
       _channel.invokeMethod('setAdViewAutoResume', {
@@ -265,7 +269,7 @@ class Appodeal {
 
   /// Setting banners inverse rotation (by default: left = 90, right = -90).
   ///
-  /// [leftBannerRotation] rotation for [BANNER_LEFT], [BANNER_RIGHT]
+  /// [leftBannerRotation] rotation for [AppodealAdType.BannerLeft], [AppodealAdType.BannerRight]
   static setBannerRotation(int leftBannerRotation, int rightBannerRotation) {
     _channel.invokeMethod('setBannerRotation', {
       'leftBannerRotation': leftBannerRotation,
@@ -311,14 +315,14 @@ class Appodeal {
   /// Check if data collection for kids apps disabled (`false` by default).
   ///
   /// Returns `true` if data collection for kids apps disabled, otherwise `false`.
-  static isChildDirectedTreatment() async {
+  static Future<bool> isChildDirectedTreatment() async {
     return await _channel.invokeMethod('isChildDirectedTreatment');
   }
 
   /// Set use safe area [isUseSafeArea] for `Android` platform (`false` by default).
   ///
   /// Appodeal SDK will consider safe area when ad shown
-  /// Support only for [BANNER] and [MREC]
+  /// Support only for [AppodealAdType.Banner] and [AppodealAdType.MREC]
   static setUseSafeArea(bool isUseSafeArea) {
     if (Platform.isAndroid) {
       _channel.invokeMethod('isUseSafeArea', {'isUseSafeArea': isUseSafeArea});
@@ -328,11 +332,21 @@ class Appodeal {
   /// Check if usage safe area is enabled for `Android` platform (`false` by default).
   ///
   /// Returns `true` usage safe area is enabled, otherwise `false`.
-  static isUseSafeArea() async {
+  static Future<bool> isUseSafeArea() async {
     if (Platform.isAndroid) {
       return await _channel.invokeMethod('isUseSafeArea');
     }
     return false;
+  }
+
+  /// Set [userId]
+  static setUserId(String userId) {
+    _channel.invokeMethod('setUserId', {'userId': userId});
+  }
+
+  /// Get user Id.
+  static Future<String?> getUserId() async {
+    return await _channel.invokeMethod('getUserId');
   }
 
   /// Set custom segment filter [name] to [value]
@@ -347,7 +361,7 @@ class Appodeal {
 
   /// Get SDK version.
   static String getSDKVersion() {
-    return "3.0.0";
+    return "3.0.1";
   }
 
   /// Get SDK platform version.
@@ -615,9 +629,24 @@ class Appodeal {
     });
   }
 
+  /// Set ad revenue callbacks
+  ///
+  /// [onAdRevenueReceive] Called every time when SDK receives a revenue information for an ad.
+  static void setAdRevenueCallbacks(
+      {Function(AppodealAdRevenue adRevenue)? onAdRevenueReceive}) {
+    _adrevenueChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onAdRevenueReceive':
+          onAdRevenueReceive?.call(AppodealAdRevenue.fromArgs(call.arguments));
+          break;
+      }
+    });
+  }
+
   /// Set request callbacks
   ///
   /// [onImpression] Called every time the ad starts showing.
+  @Deprecated("Will be removed in future releases.")
   static void setRequestCallbacks(
       {Function(String adType, String? networkName, String? adUnitName,
               double loadedEcpm)?

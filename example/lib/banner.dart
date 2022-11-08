@@ -45,7 +45,7 @@ class _BannerPageState extends State<BannerPage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isInitialized =
-                        await Appodeal.isInitialized(Appodeal.BANNER);
+                        await Appodeal.isInitialized(AppodealAdType.Banner);
                     print('Banner isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
@@ -60,7 +60,7 @@ class _BannerPageState extends State<BannerPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isCanShow = await Appodeal.canShow(Appodeal.BANNER);
+                    var isCanShow = await Appodeal.canShow(AppodealAdType.Banner);
                     print('Banner canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
@@ -76,7 +76,7 @@ class _BannerPageState extends State<BannerPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.show(Appodeal.BANNER_BOTTOM);
+                    Appodeal.show(AppodealAdType.BannerBottom);
                   },
                   child: const Text('SHOW BANNER BOTTOM'),
                 ),
@@ -90,7 +90,7 @@ class _BannerPageState extends State<BannerPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.show(Appodeal.BANNER_TOP);
+                    Appodeal.show(AppodealAdType.BannerTop);
                   },
                   child: const Text('SHOW BANNER TOP'),
                 ),
@@ -104,7 +104,7 @@ class _BannerPageState extends State<BannerPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.show(Appodeal.BANNER_RIGHT);
+                    Appodeal.show(AppodealAdType.BannerRight);
                   },
                   child: const Text('SHOW BANNER RIGHT'),
                 ),
@@ -118,7 +118,7 @@ class _BannerPageState extends State<BannerPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.show(Appodeal.BANNER_LEFT);
+                    Appodeal.show(AppodealAdType.BannerLeft);
                   },
                   child: const Text('SHOW BANNER LEFT'),
                 ),
@@ -132,7 +132,7 @@ class _BannerPageState extends State<BannerPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.hide(Appodeal.BANNER);
+                    Appodeal.hide(AppodealAdType.Banner);
                   },
                   child: const Text('HIDE BANNER'),
                 ),
