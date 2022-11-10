@@ -1027,7 +1027,7 @@ Appodeal.muteVideosIfCallsMuted(bool); //default - false
 Appodeal.setAdViewAutoResume(true); //default - true
 ```
 
-* Ad impression information
+* Ad revenue information
 
 ```dart
 // If you want to get revenue information you can use request callback.
@@ -1080,14 +1080,14 @@ Appodeal.setInterstitialCallbacks(
 
 ```dart
 Appodeal.setRewardedVideoCallbacks(
-      onRewardedVideoLoaded: (isPrecache) => {},
-      onRewardedVideoFailedToLoad: () => {},
-      onRewardedVideoShown: () => {},
-      onRewardedVideoShowFailed: () => {},
-      onRewardedVideoFinished: (amount, reward) => {},
-      onRewardedVideoClosed: (isFinished) => {},
-      onRewardedVideoExpired: () => {},
-      onRewardedVideoClicked: () => {});
+        onRewardedVideoLoaded: (isPrecache) => {},
+        onRewardedVideoFailedToLoad: () => {},
+        onRewardedVideoShown: () => {},
+        onRewardedVideoShowFailed: () => {},
+        onRewardedVideoFinished: (amount, reward) => {},
+        onRewardedVideoClosed: (isFinished) => {},
+        onRewardedVideoExpired: () => {},
+        onRewardedVideoClicked: () => {});
 ```
 
 ### Presentation
