@@ -46,7 +46,7 @@ class _InterstitialPageState extends State<InterstitialPage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isInitialized =
-                        await Appodeal.isInitialized(Appodeal.INTERSTITIAL);
+                        await Appodeal.isInitialized(AppodealAdType.Interstitial);
                     print('Interstitial isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
@@ -62,7 +62,7 @@ class _InterstitialPageState extends State<InterstitialPage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isCanShow =
-                        await Appodeal.canShow(Appodeal.INTERSTITIAL);
+                        await Appodeal.canShow(AppodealAdType.Interstitial);
                     print('Interstitial canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
@@ -78,7 +78,7 @@ class _InterstitialPageState extends State<InterstitialPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.cache(Appodeal.INTERSTITIAL);
+                    Appodeal.cache(AppodealAdType.Interstitial);
                   },
                   child: const Text('CACHE INTERSTITIAL'),
                 ),
@@ -92,7 +92,7 @@ class _InterstitialPageState extends State<InterstitialPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    Appodeal.show(Appodeal.INTERSTITIAL);
+                    Appodeal.show(AppodealAdType.Interstitial);
                   },
                   child: const Text('SHOW INTERSTITIAL'),
                 ),

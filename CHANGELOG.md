@@ -1,3 +1,10 @@
+## 3.0.1
+
+* Updated Appodeal iOS SDK to 3.0.1
+* Updated Appodeal Android SDK to 3.0.1
+* Started support `AdRevenueCallbacks` for notified about ad revenue events.
+* Reverted methods `Appodeal.setUserId(...)` `Appodeal.getUserId()` for analytics.
+
 ## 3.0.0
 
 * **Major Api changes**

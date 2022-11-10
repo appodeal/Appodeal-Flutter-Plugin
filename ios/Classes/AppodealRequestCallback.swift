@@ -2,6 +2,7 @@ import Flutter
 import Foundation
 import Appodeal
 
+@available(*, deprecated, message: "Will be removed in future releases.")
 internal final class AppodealRequestCallback {
     
     internal let adChannel: FlutterMethodChannel
@@ -11,6 +12,7 @@ internal final class AppodealRequestCallback {
     }
 }
 
+@available(*, deprecated, message: "Will be removed in future releases.")
 extension Appodeal {
     static func registerRequestCallback(requestCallback: AppodealRequestCallback) {
         APDSdk.shared().channel = requestCallback.adChannel
@@ -18,6 +20,7 @@ extension Appodeal {
     }
 }
 
+@available(*, deprecated, message: "Will be removed in future releases.")
 extension APDSdk {
     
     private static var channelKey: UInt8 = 0
@@ -91,5 +94,4 @@ extension APDSdk {
             ]
         )
     }
-    
 }

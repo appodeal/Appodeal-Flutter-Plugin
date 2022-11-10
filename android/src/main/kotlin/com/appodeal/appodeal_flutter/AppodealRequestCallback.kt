@@ -5,6 +5,7 @@ import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
+@Deprecated("Will be removed in future releases.")
 internal class AppodealRequestCallback(
     private val flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
 ) : MethodChannel.MethodCallHandler {

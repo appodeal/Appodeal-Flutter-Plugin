@@ -1,6 +1,5 @@
 package com.appodeal.appodeal_flutter
 
-import androidx.annotation.NonNull
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.inapp.InAppPurchase
 import com.appodeal.ads.inapp.InAppPurchase.Type
@@ -31,15 +30,17 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private var _consentForm: ConsentForm? = null
     @Deprecated("Will be removed in future releases.")
     private val consentForm get() = checkNotNull(_consentForm)
-
+    @Deprecated("Will be removed in future releases.")
     private val requestCallback by lazy { AppodealRequestCallback(pluginBinding) }
+
+    private val adRevenueCallback by lazy { AppodealAdRevenueCallback(pluginBinding) }
 
     private val interstitial by lazy { AppodealInterstitial(pluginBinding) }
     private val rewardedVideo by lazy { AppodealRewarded(pluginBinding) }
     private val banner by lazy { AppodealBanner(pluginBinding) }
     private val mrec by lazy { AppodealMrec(pluginBinding) }
 
-    override fun onAttachedToEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         super.onAttachedToEngine(binding)
         _pluginBinding = binding
         _channel = MethodChannel(binding.binaryMessenger, "appodeal_flutter")
@@ -49,13 +50,14 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
         requestCallback.adChannel.setMethodCallHandler(null)
+        adRevenueCallback.adChannel.setMethodCallHandler(null)
         interstitial.adChannel.setMethodCallHandler(null)
         rewardedVideo.adChannel.setMethodCallHandler(null)
         banner.adChannel.setMethodCallHandler(null)
         mrec.adChannel.setMethodCallHandler(null)
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    override fun onMethodCall(call: MethodCall, result: Result) {
         when (call.method) {
             "setTestMode" -> setTestMode(call, result)
             "isTestMode" -> isTestMode(call, result)
@@ -91,6 +93,8 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "isChildDirectedTreatment" -> isChildDirectedTreatment(call, result)
             "setUseSafeArea" -> setUseSafeArea(call, result)
             "isUseSafeArea" -> isUseSafeArea(call, result)
+            "setUserId" -> setUserId(call, result)
+            "getUserId" -> getUserId(call, result)
             "setCustomFilter" -> setCustomFilter(call, result)
             "setExtraData" -> setExtraData(call, result)
             "getPlatformSdkVersion" -> getPlatformSdkVersion(call, result)
@@ -162,6 +166,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val sdkVersion = args["sdkVersion"] as String
         val adTypes = args["adTypes"] as Int
         Appodeal.setRequestCallbacks(requestCallback.adListener)
+        Appodeal.setAdRevenueCallbacks(adRevenueCallback.adListener)
         Appodeal.setInterstitialCallbacks(interstitial.adListener)
         Appodeal.setRewardedVideoCallbacks(rewardedVideo.adListener)
         Appodeal.setBannerCallbacks(banner.adListener)
@@ -343,6 +348,16 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun isUseSafeArea(call: MethodCall, result: Result) {
         result.success(isUseSafeArea)
+    }
+
+    private fun setUserId(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        Appodeal.setUserId(args["userId"] as String)
+        result.success(null)
+    }
+
+    private fun getUserId(call: MethodCall, result: Result) {
+        result.success(Appodeal.getUserId())
     }
 
     private fun setCustomFilter(call: MethodCall, result: Result) {

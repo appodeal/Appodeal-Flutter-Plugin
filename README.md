@@ -2,7 +2,7 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## ❗❗ Breaking changes when updating to 3.0.0❗❗
+## ❗❗ Breaking changes when updating to 3.x.x❗❗
 
 - **Appodeal SDK 3.0 already included ready-made consent solution**
     - Appodeal SDK 3.0 in **first initialization** shows a ready-made consent window if the user is in the regions
@@ -18,8 +18,7 @@ Official Appodeal Flutter Plugin for your Flutter application.
     - Get insights and find out if your active UA campaigns bring you revenue or make you lose money.
     - Track your metrics with Firebase Keywords. Analyze how product A/B test (via Firebase remote config) affects both
       your product & monetization.Track your metrics with Firebase Keywords. Analyze how product A/B test (via Firebase
-      remote config) affects both your product &
-      monetization. [See more about services](#services)
+      remote config) affects both your product & monetization. [See more about services](#services)
 
 If you have used one of the removed/changed APIs, please check the integration guide for the updated instructions.
 
@@ -52,7 +51,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.0.0
+  stack_appodeal_flutter: 3.0.1
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -68,28 +67,29 @@ $ flutter pub get
 
 ```ruby
 def appodeal
-  pod 'APDAdColonyAdapter', '3.0.0.1'
-  pod 'BDMAdColonyAdapter', '~> 1.9.4'
-  pod 'APDAppLovinAdapter', '3.0.0.1'
-  pod 'APDBidMachineAdapter', '3.0.0.2' # Required
-  pod 'BDMCriteoAdapter', '~> 1.9.4'
-  pod 'BDMPangleAdapter', '~> 1.9.4.2'
-  pod 'BDMAmazonAdapter', '~> 1.9.4.2'
-  pod 'BDMSmaatoAdapter', '~> 1.9.4'
-  pod 'BDMTapjoyAdapter', '~> 1.9.4'
-  pod 'APDGoogleAdMobAdapter', '3.0.0.2'
-  pod 'APDIABAdapter', '3.0.0.1' # Required
-  pod 'BDMIABAdapter', '~> 1.9.4'
-  pod 'APDIronSourceAdapter', '3.0.0.1'
-  pod 'APDMetaAudienceNetworkAdapter', '3.0.0.1'
-  pod 'BDMMetaAudienceAdapter', '~> 1.9.4'
-  pod 'APDMyTargetAdapter', '3.0.0.1'
-  pod 'BDMMyTargetAdapter', '~> 1.9.4'
-  pod 'APDStackAnalyticsAdapter', '3.0.0.1' # Required
-  pod 'APDUnityAdapter', '3.0.0.1'
-  pod 'APDVungleAdapter', '3.0.0.1'
-  pod 'BDMVungleAdapter', '~> 1.9.4'
-  pod 'APDYandexAdapter', '3.0.0.1'
+  pod 'APDAdColonyAdapter', '3.0.1.1'
+  pod 'BDMAdColonyAdapter', '~> 1.9.5'
+  pod 'APDAppLovinAdapter', '3.0.1.1'
+  pod 'APDBidMachineAdapter', '3.0.1.1' # Required
+  pod 'BDMCriteoAdapter', '~> 1.9.5'
+  pod 'BDMPangleAdapter', '~> 1.9.5'
+  pod 'BDMAmazonAdapter', '~> 1.9.5'
+  pod 'BDMSmaatoAdapter', '~> 1.9.5'
+  pod 'BDMNotsyAdapter', '~> 1.9.5'
+  pod 'BDMTapjoyAdapter', '~> 1.9.5'
+  pod 'APDGoogleAdMobAdapter', '3.0.1.1'
+  pod 'APDIABAdapter', '3.0.1.1' # Required
+  pod 'BDMIABAdapter', '~> 1.9.5'
+  pod 'APDIronSourceAdapter', '3.0.1.1'
+  pod 'APDMetaAudienceNetworkAdapter', '3.0.1.1'
+  pod 'BDMMetaAudienceAdapter', '~> 1.9.5'
+  pod 'APDMyTargetAdapter', '3.0.1.1'
+  pod 'BDMMyTargetAdapter', '~> 1.9.5'
+  pod 'APDStackAnalyticsAdapter', '3.0.1.1' # Required
+  pod 'APDUnityAdapter', '3.0.1.1'
+  pod 'APDVungleAdapter', '3.0.1.1'
+  pod 'BDMVungleAdapter', '~> 1.9.5'
+  pod 'APDYandexAdapter', '3.0.1.1'
 end
 
 target 'Runner' do
@@ -102,7 +102,7 @@ end
 ```
 
 You can change following implementation to use custom mediation setup.
-See [docs](https://wiki.appodeal.com/en/ios-beta-3-0-0/get-started#iOSSDK.GetStartedBeta-Step1.ImportSDK).
+See [docs](https://wiki.appodeal.com/en/ios/get-started#getstarted-Step1.ImportSDK).
 
 > Note: Appodeal requires to use `use_frameworks!`. You need to remove Flipper dependency from Podfile and AppDelegate.
 
@@ -562,11 +562,27 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
+        <string>cp8zw746q7.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
         <string>3qy4746246.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
         <string>v4nxqhlyqp.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>y5ghdn5j9k.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>47vhws6wlr.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>ecpz2srf59.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -618,7 +634,7 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>v79kvwwj4g.skadnetwork</string>
+        <string>238da6jt44.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -626,7 +642,7 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>238da6jt44.skadnetwork</string>
+        <string>v79kvwwj4g.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -703,7 +719,7 @@ Add dependencies into `build.gradle` (module: app)
 dependencies {
     ...
     // ... other project dependencies
-    implementation ('com.appodeal.ads:sdk:3.0.0.+') {
+    implementation ('com.appodeal.ads:sdk:3.0.1.+') {
         exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
@@ -727,7 +743,7 @@ allprojects {
 ```
 
 > Note: You can change following implementation to use custom mediation setup.
-> See [Docs](https://wiki.appodeal.com/en/android-beta-3-0-0/get-started#AndroidSDK.GetstartedBeta-ImportSDK).
+> See [Docs](https://wiki.appodeal.com/en/android/get-started#getstarted-ImportSDK).
 
 2. Network security configuration
 
@@ -751,7 +767,6 @@ In your *network_security_config.xml* file, add `base-config` that sets `clearte
     <base-config cleartextTrafficPermitted="true">
         <trust-anchors>
             <certificates src="system" />
-            <certificates src="user" />
         </trust-anchors>
     </base-config>
     <domain-config cleartextTrafficPermitted="true">
@@ -789,7 +804,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:adjust:3.0.0.+'
+    implementation 'com.appodeal.ads.sdk.services:adjust:3.0.1.+'
 }
 ```
 
@@ -798,7 +813,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAdjustAdapter', '3.0.0.1'
+  pod 'APDAdjustAdapter', '3.0.1.1'
 end
 ```
 
@@ -809,7 +824,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:appsflyer:3.0.0.+'
+    implementation 'com.appodeal.ads.sdk.services:appsflyer:3.0.1.+'
 }
 ```
 
@@ -818,7 +833,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAppsFlyerAdapter', '3.0.0.2'
+  pod 'APDAppsFlyerAdapter', '3.0.1.1'
 end
 ```
 
@@ -829,7 +844,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:firebase:3.0.0.+'
+    implementation 'com.appodeal.ads.sdk.services:firebase:3.0.1.+'
 }
 ```
 
@@ -838,7 +853,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFirebaseAdapter', '3.0.0.2'
+  pod 'APDFirebaseAdapter', '3.0.1.1'
 end
 ```
 
@@ -849,7 +864,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.0.0.+'
+    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.0.1.+'
 }
 ```
 
@@ -858,7 +873,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFacebookAdapter', '3.0.0.2'
+  pod 'APDFacebookAdapter', '3.0.1.1'
 end
 ```
 
@@ -1012,11 +1027,12 @@ Appodeal.muteVideosIfCallsMuted(bool); //default - false
 Appodeal.setAdViewAutoResume(true); //default - true
 ```
 
-* Ad impression information
+* Ad revenue information
 
 ```dart
-// If you want to get impression data you can use request callback.
-Appodeal.setRequestCallbacks(onImpression: (adType, networkName, adUnitName, loadedEcpm) {});
+// If you want to get revenue information you can use request callback.
+// Called every time when SDK receives a revenue information for an ad.
+Appodeal.setAdRevenueCallbacks(onAdRevenueReceive: (adRevenue) => {});
 ```
 
 ### Callbacks
@@ -1064,14 +1080,14 @@ Appodeal.setInterstitialCallbacks(
 
 ```dart
 Appodeal.setRewardedVideoCallbacks(
-      onRewardedVideoLoaded: (isPrecache) => {},
-      onRewardedVideoFailedToLoad: () => {},
-      onRewardedVideoShown: () => {},
-      onRewardedVideoShowFailed: () => {},
-      onRewardedVideoFinished: (amount, reward) => {},
-      onRewardedVideoClosed: (isFinished) => {},
-      onRewardedVideoExpired: () => {},
-      onRewardedVideoClicked: () => {});
+        onRewardedVideoLoaded: (isPrecache) => {},
+        onRewardedVideoFailedToLoad: () => {},
+        onRewardedVideoShown: () => {},
+        onRewardedVideoShowFailed: () => {},
+        onRewardedVideoFinished: (amount, reward) => {},
+        onRewardedVideoClosed: (isFinished) => {},
+        onRewardedVideoExpired: () => {},
+        onRewardedVideoClicked: () => {});
 ```
 
 ### Presentation
@@ -1104,8 +1120,8 @@ Appodeal.show(AppodealAdType.Interstitial);
 // Show banner
 Appodeal.show(AppodealAdType.BannerBottom); // Display banner at the bottom of the screen
 Appodeal.show(AppodealAdType.BannerTop); // Display banner at the top of the screen
-Appodeal.show(Appodeal.BannerLeft); // Display banner at the left of the screen
-Appodeal.show(Appodeal.BannerRight); // Display banner at the right of the screen
+Appodeal.show(AppodealAdType.BannerLeft); // Display banner at the left of the screen
+Appodeal.show(AppodealAdType.BannerRight); // Display banner at the right of the screen
 
 // Show interstitial for specific pacement
 Appodeal.show(AppodealAdType.Interstitial, “placementName”);
