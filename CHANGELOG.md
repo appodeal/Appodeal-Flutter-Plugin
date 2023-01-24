@@ -1,3 +1,8 @@
+## 3.0.2
+
+* Updated Appodeal iOS SDK to 3.0.2
+* Updated Appodeal Android SDK to 3.0.2
+
 ## 3.0.1
 
 * Updated Appodeal iOS SDK to 3.0.1
