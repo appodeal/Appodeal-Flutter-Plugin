@@ -63,5 +63,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.appodeal.ads:sdk:3.0.1.+'
+    implementation 'com.appodeal.ads:sdk:3.0.2.+'
 }
