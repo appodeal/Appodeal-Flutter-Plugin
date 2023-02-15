@@ -916,6 +916,14 @@ Appodeal.validateInAppPurchase(
     onInAppPurchaseValidateFail: (purchase, errors) {});
 ```
 
+| Parameter            | Description                                            | Usage                     |
+|----------------------|--------------------------------------------------------|---------------------------|
+| orderId              | Product purchased unique order id for the transaction. | Adjust/AppsFlyer          |
+| price                | In-app event revenue.                                  | Adjust/AppsFlyer/Appodeal |
+| currency             | In-app event currency.                                 | Adjust/AppsFlyer/Appodeal |
+| transactionId        | Product purchased transaction id.                      | Adjust/AppsFlyer          |
+| additionalParameters | Additional parameters of the in-app event.             |                           |
+
 * For Play Store:
 
 ```dart
@@ -937,6 +945,21 @@ Appodeal.validateInAppPurchase(
     onInAppPurchaseValidateSuccess: (purchase, errors) {},
     onInAppPurchaseValidateFail: (purchase, errors) {});
 ```
+
+| Parameter            | Description                                                                                                        | Usage                     |
+|----------------------|--------------------------------------------------------------------------------------------------------------------|---------------------------|
+| purchaseType         | Purchase type. Must be InAppPurchase.Type.InApp or InAppPurchase.Type.Subs                                         | Adjust/AppsFlyer          |
+| publicKey            | [Public key from Google Developer Console.](https://support.google.com/googleplay/android-developer/answer/186113) | AppsFlyer                 |
+| signature            | Transaction signature (returned from Google API when the purchase is completed).                                   | Adjust/AppsFlyer          |
+| purchaseData         | Product purchased in JSON format (returned from Google API when the purchase is completed).                        | AppsFlyer                 |
+| purchaseToken        | Product purchased token (returned from Google API when the purchase is completed).                                 | Adjust                    |
+| purchaseTimestamp    | Product purchased timestamp (returned from Google API when the purchase is completed).                             | Adjust                    |
+| developerPayload     | Product purchased developer payload (returned from Google API when the purchase is completed).                     | Adjust                    ||
+| orderId              | Product purchased unique order id for the transaction (returned from Google API when the purchase is completed).   | Adjust                    |
+| sku                  | Stock keeping unit id.                                                                                             | Adjust                    |
+| price                | In-app event revenue.                                                                                              | Adjust/AppsFlyer/Appodeal |
+| currency             | In-app event currency.                                                                                             | Adjust/AppsFlyer/Appodeal |
+| additionalParameters | Additional parameters of the in-app event.                                                                         |                           |
 
 ##### Event tracking
 
