@@ -57,10 +57,6 @@ class Appodeal {
   static const MethodChannel _mrecChannel =
       const MethodChannel('appodeal_flutter/mrec');
 
-  @Deprecated("Will be removed in future releases.")
-  static const MethodChannel _requestChannel =
-      const MethodChannel('appodeal_flutter/request');
-
   /// Set [isTestMode] for get test advertising.
   static setTesting(bool isTestMode) {
     _channel.invokeMethod('setTestMode', {'isTestMode': isTestMode});
@@ -638,28 +634,6 @@ class Appodeal {
       switch (call.method) {
         case 'onAdRevenueReceive':
           onAdRevenueReceive?.call(AppodealAdRevenue.fromArgs(call.arguments));
-          break;
-      }
-    });
-  }
-
-  /// Set request callbacks
-  ///
-  /// [onImpression] Called every time the ad starts showing.
-  @Deprecated("Will be removed in future releases.")
-  static void setRequestCallbacks(
-      {Function(String adType, String? networkName, String? adUnitName,
-              double loadedEcpm)?
-          onImpression}) {
-    _requestChannel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case 'onImpression':
-          onImpression?.call(
-            call.arguments['adType'],
-            call.arguments['networkName'],
-            call.arguments['adUnitName'],
-            call.arguments['loadedEcpm'],
-          );
           break;
       }
     });
