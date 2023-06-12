@@ -1,3 +1,9 @@
+## 3.1.3-beta.1
+
+* Updated Appodeal iOS SDK to 3.1.3-beta.1
+* Updated Appodeal Android SDK to 3.1.3-beta.1
+* Removed method `Appodeal.setRequestCallbacks(...)`. Removed removed request callback logic.
+
 ## 3.0.2
 
 * Updated Appodeal iOS SDK to 3.0.2

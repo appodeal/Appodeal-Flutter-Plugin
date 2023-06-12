@@ -51,7 +51,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.0.2
+  stack_appodeal_flutter: 3.1.3-beta.1
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -67,32 +67,28 @@ $ flutter pub get
 
 ```ruby
 def appodeal
-  pod 'APDAdColonyAdapter', '3.0.2.1'
-  pod 'BidMachineAdColonyAdapter', '~> 2.0.0.0'
-  pod 'APDAdjustAdapter', '3.0.2.1'
-  pod 'APDAppLovinAdapter', '3.0.2.1'
-  pod 'APDAppsFlyerAdapter', '3.0.2.1'
-  pod 'APDBidMachineAdapter', '3.0.2.1' # Required
-  pod 'BidMachineAmazonAdapter', '~> 2.0.0.0'
-  pod 'BidMachineCriteoAdapter', '~> 2.0.0.0'
-  pod 'BidMachineSmaatoAdapter', '~> 2.0.0.0'
-  pod 'BidMachineTapjoyAdapter', '~> 2.0.0.0'
-  pod 'BidMachinePangleAdapter', '~> 2.0.0.0'
-  pod 'BidMachineNotsyAdapter', '~> 2.0.0.4'
-  pod 'APDFirebaseAdapter', '3.0.2.1'
-  pod 'APDGoogleAdMobAdapter', '3.0.2.1'
-  pod 'APDIABAdapter', '3.0.2.1' # Required
-  pod 'APDIronSourceAdapter', '3.0.2.1'
-  pod 'APDFacebookAdapter', '3.0.2.1'
-  pod 'APDMetaAudienceNetworkAdapter', '3.0.2.1'
-  pod 'BidMachineMetaAudienceAdapter', '~> 2.0.0.0'
-  pod 'APDMyTargetAdapter', '3.0.2.1'
-  pod 'BidMachineMyTargetAdapter', '~> 2.0.0.2'
-  pod 'APDStackAnalyticsAdapter', '3.0.2.1' # Required
-  pod 'APDUnityAdapter', '3.0.2.1'
-  pod 'APDVungleAdapter', '3.0.2.1'
-  pod 'BidMachineVungleAdapter', '~> 2.0.0.1'
-  pod 'APDYandexAdapter', '3.0.2.1'
+  pod 'APDAdColonyAdapter', '3.1.3.0-beta.1'
+  pod 'BidMachineAdColonyAdapter', '~> 2.1.0.0'
+  pod 'APDAppLovinAdapter', '3.1.3.1-beta.1'
+  pod 'APDBidMachineAdapter', '3.1.3.1-beta.1' # Required
+  pod 'BidMachineAmazonAdapter', '~> 2.1.0.0'
+  pod 'BidMachineCriteoAdapter', '~> 2.1.0.0'
+  pod 'BidMachineMintegralAdapter', '~> 2.1.0.1'
+  pod 'BidMachineSmaatoAdapter', '~> 2.1.0.0'
+  pod 'BidMachineTapjoyAdapter', '~> 2.1.0.0'
+  pod 'BidMachinePangleAdapter', '~> 2.1.0.0'
+  pod 'APDGoogleAdMobAdapter', '3.1.3.1-beta.1'
+  pod 'APDIABAdapter', '3.1.3.0-beta.1' # Required
+  pod 'APDIronSourceAdapter', '3.1.3.0-beta.1'
+  pod 'APDMetaAudienceNetworkAdapter', '3.1.3.1-beta.1'
+  pod 'BidMachineMetaAudienceAdapter', '~> 2.1.0.0'
+  pod 'APDMyTargetAdapter', '3.1.3.1-beta.1'
+  pod 'BidMachineMyTargetAdapter', '~> 2.1.0.1'
+  pod 'APDStackAnalyticsAdapter', '3.1.3.0-beta.1' # Required
+  pod 'APDUnityAdapter', '3.1.3.1-beta.1'
+  pod 'APDVungleAdapter', '3.1.3.1-beta.1'
+  pod 'BidMachineVungleAdapter', '~> 2.1.0.2'
+  pod 'APDYandexAdapter', '3.1.3.0-beta.1'
 end
 
 target 'Runner' do
@@ -133,263 +129,11 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
 <array>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>4pfyvq9l8r.skadnetwork</string>
+        <string>22mmun2rn5.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>6g9af3uyq4.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>4fzdc2evr5.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>2fnua5tdw4.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>ydx93a7ass.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>cg4yq2srnc.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>v72qych5uu.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>mlmmfzh3r3.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>pwdxu55a5a.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>c6k4g5qg8m.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>wg4vff78zm.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>g28c52eehv.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>523jb4fst2.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>294l99pt4k.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>hs6bdukanm.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>prcb7njmu6.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>m8dbw4sv7c.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>9nlqeag3gk.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>cj5566h2ga.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>u679fj5vs4.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>a7xqa6mtl2.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>g2y4y55b64.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>wzmmz9fp6w.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>yclnxrl5pm.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>4468km3ulz.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>t38b2kh725.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>7ug5zh24hu.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>rx5hdcabgc.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>5lm9lj6jb7.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>9rd848q2bz.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>n6fk4nfna4.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>7rz58n8ntl.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>ejvt5qm6ak.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>275upjj5gd.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>kbd757ywx3.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>9t245vhmpl.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>n9x2a789qt.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>44jx6755aq.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>tl55sbb4fm.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>2u9pt9hc89.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>8s468mfl3y.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>klf5c3l5u5.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>ppxm28t8ap.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>74b6s63p6l.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>kbmxgpxpgc.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>44n7hlldy6.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>5l3tpt7t6e.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>uw77j35x4d.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>6964rsfnh4.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>84993kbrcf.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>pwa73g5rt2.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>mtkv5xtk9e.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>e5fvkxwrpn.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>gta9lk7p23.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>r45fhb6rf7.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>3rd42ekr43.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>ludvb6z3bs.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>737z793b9f.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>mls7yz5dvl.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>w9q455wk68.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>p78axxw29g.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>6xzpu9s2p8.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>ggvn48r87g.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>3sh42y64q3.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>f38h382jlk.skadnetwork</string>
+        <string>238da6jt44.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -397,71 +141,27 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>cstr6suwn9.skadnetwork</string>
+        <string>24zw6aqk47.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>zmvfpc5aq8.skadnetwork</string>
+        <string>252b5q8x7y.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>feyaarzu9v.skadnetwork</string>
+        <string>275upjj5gd.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>5a6flpkh64.skadnetwork</string>
+        <string>294l99pt4k.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>glqzh8vgby.skadnetwork</string>
+        <string>2fnua5tdw4.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>424m5254lk.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>av6w8kgt66.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>s39g8k73mm.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>lr83yxwka7.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>22mmun2rn5.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>su67r6k2v3.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>4w7y6s5ca2.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>dzg6xy7pwj.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>y45688jllp.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>hdw39hrw9y.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>4dzt52r2t5.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>5tjdwbrq8w.skadnetwork</string>
+        <string>2u9pt9hc89.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -469,47 +169,7 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>xy9t38ct57.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>54nzkqm89y.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>9b89h5y424.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>79pbpufp6p.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>s69wq72ugq.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>k674qkevps.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>578prtvx9j.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>f73kdq92p3.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>x44k69ngh6.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>mp6xlyr22a.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>qqp299437r.skadnetwork</string>
+        <string>3l6bd9hu43.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -517,83 +177,31 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>97r2b46745.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>6p4ks3rnbw.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>rvh3l7un93.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>zq492l623r.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>24zw6aqk47.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>cs644xg564.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>9vvzujtq5s.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>c3frkrj4fj.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>8r8llnkz5a.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>x8uqf25wch.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>b9bk5wbcq9.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>bxvub5ada5.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>krvm3zuq6h.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>a2p9lx4jpn.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>v9wttpbfk9.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>n38lu8286q.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
-        <string>cp8zw746q7.skadnetwork</string>
-    </dict>
-    <dict>
-        <key>SKAdNetworkIdentifier</key>
         <string>3qy4746246.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>v4nxqhlyqp.skadnetwork</string>
+        <string>3rd42ekr43.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>y5ghdn5j9k.skadnetwork</string>
+        <string>3sh42y64q3.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>424m5254lk.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>4468km3ulz.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>44jx6755aq.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>44n7hlldy6.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -601,7 +209,107 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>ecpz2srf59.skadnetwork</string>
+        <string>488r3q3dtq.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>4dzt52r2t5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>4fzdc2evr5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>4mn522wn87.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>4pfyvq9l8r.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>4w7y6s5ca2.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>523jb4fst2.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>52fl2v3hgk.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>54nzkqm89y.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>578prtvx9j.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>5a6flpkh64.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>5l3tpt7t6e.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>5lm9lj6jb7.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>5tjdwbrq8w.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>6964rsfnh4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>6g9af3uyq4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>6p4ks3rnbw.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>6v7lgmsu45.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>6xzpu9s2p8.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>737z793b9f.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>74b6s63p6l.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>79pbpufp6p.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>7rz58n8ntl.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>7ug5zh24hu.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>84993kbrcf.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>89z7zv988g.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -613,47 +321,127 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>488r3q3dtq.skadnetwork</string>
+        <string>8r8llnkz5a.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>52fl2v3hgk.skadnetwork</string>
+        <string>8s468mfl3y.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>m5mvw97r93.skadnetwork</string>
+        <string>97r2b46745.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>89z7zv988g.skadnetwork</string>
+        <string>9b89h5y424.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>hb56zgv37p.skadnetwork</string>
+        <string>9nlqeag3gk.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>6v7lgmsu45.skadnetwork</string>
+        <string>9rd848q2bz.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>m297p6643m.skadnetwork</string>
+        <string>9t245vhmpl.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>3l6bd9hu43.skadnetwork</string>
+        <string>9vvzujtq5s.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>vcra2ehyfk.skadnetwork</string>
+        <string>9yg77x724h.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>238da6jt44.skadnetwork</string>
+        <string>a2p9lx4jpn.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
-        <string>v79kvwwj4g.skadnetwork</string>
+        <string>a7xqa6mtl2.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>a8cz6cu7e5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>av6w8kgt66.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>b9bk5wbcq9.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>bxvub5ada5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>c3frkrj4fj.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>c6k4g5qg8m.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>cg4yq2srnc.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>cj5566h2ga.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>cp8zw746q7.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>cs644xg564.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>cstr6suwn9.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>dbu4b84rxf.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>dkc879ngq3.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>dzg6xy7pwj.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>e5fvkxwrpn.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>ecpz2srf59.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>eh6m2bh4zr.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>ejvt5qm6ak.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>f38h382jlk.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>f73kdq92p3.skadnetwork</string>
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
@@ -661,7 +449,271 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
     </dict>
     <dict>
         <key>SKAdNetworkIdentifier</key>
+        <string>feyaarzu9v.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>g28c52eehv.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>g2y4y55b64.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>ggvn48r87g.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>glqzh8vgby.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
         <string>gta8lk7p23.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>gta9lk7p23.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>hb56zgv37p.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>hdw39hrw9y.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>hs6bdukanm.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>k674qkevps.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>kbd757ywx3.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>kbmxgpxpgc.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>klf5c3l5u5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>krvm3zuq6h.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>lr83yxwka7.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>ludvb6z3bs.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>m297p6643m.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>m5mvw97r93.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>m8dbw4sv7c.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>mlmmfzh3r3.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>mls7yz5dvl.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>mp6xlyr22a.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>mtkv5xtk9e.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>n38lu8286q.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>n66cz3y3bx.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>n6fk4nfna4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>n9x2a789qt.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>nzq8sh4pbs.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>p78axxw29g.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>ppxm28t8ap.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>prcb7njmu6.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>pwa73g5rt2.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>pwdxu55a5a.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>qqp299437r.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>r45fhb6rf7.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>rvh3l7un93.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>rx5hdcabgc.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>s39g8k73mm.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>s69wq72ugq.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>su67r6k2v3.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>t38b2kh725.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>tl55sbb4fm.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>u679fj5vs4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>uw77j35x4d.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>v4nxqhlyqp.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>v72qych5uu.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>v79kvwwj4g.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>v9wttpbfk9.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>vcra2ehyfk.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>vutu7akeur.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>w9q455wk68.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>wg4vff78zm.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>wzmmz9fp6w.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>x44k69ngh6.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>x5l83yy675.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>x8jxxk4ff5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>x8uqf25wch.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>xy9t38ct57.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>y45688jllp.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>y5ghdn5j9k.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>yclnxrl5pm.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>ydx93a7ass.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>zmvfpc5aq8.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>zq492l623r.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>7fmhfwg9en.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>6yxyv74ff7.skadnetwork</string>
     </dict>
 </array>
 ```
@@ -734,7 +786,7 @@ Add dependencies into `build.gradle` (module: app)
 dependencies {
     ...
     // ... other project dependencies
-    implementation ('com.appodeal.ads:sdk:3.0.2.+') {
+    implementation ('com.appodeal.ads:sdk:3.1.3.1-beta.1') {
         exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
@@ -819,7 +871,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:adjust:3.0.2.+'
+    implementation 'com.appodeal.ads.sdk.services:adjust:3.1.3.1-beta.1'
 }
 ```
 
@@ -828,7 +880,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAdjustAdapter', '3.0.2.1'
+  pod 'APDAdjustAdapter', '3.1.3.0-beta.1'
 end
 ```
 
@@ -839,7 +891,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:appsflyer:3.0.2.+'
+  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.1.3.1-beta.1'
 }
 ```
 
@@ -848,7 +900,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAppsFlyerAdapter', '3.0.2.1'
+  pod 'APDAppsFlyerAdapter', '3.1.3.1-beta.1'
 end
 ```
 
@@ -859,7 +911,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:firebase:3.0.2.+'
+    implementation 'com.appodeal.ads.sdk.services:firebase:3.1.3.0-beta.1'
 }
 ```
 
@@ -868,7 +920,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFirebaseAdapter', '3.0.2.1'
+  pod 'APDFirebaseAdapter', '3.1.3.1-beta.1'
 end
 ```
 
@@ -879,7 +931,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.0.2.+'
+    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.1.3.1-beta.1'
 }
 ```
 
@@ -888,7 +940,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFacebookAdapter', '3.0.2.1'
+  pod 'APDFacebookAdapter', '3.1.3.1-beta.1'
 end
 ```
 
