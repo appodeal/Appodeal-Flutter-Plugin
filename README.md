@@ -66,6 +66,11 @@ $ flutter pub get
 2. Add Appodeal adapters. Add pods into `./ios/Podfile`:
 
 ```ruby
+source 'https://github.com/appodeal/CocoaPods.git'
+source 'https://cdn.cocoapods.org/'
+
+platform :ios, '12.0'
+
 def appodeal
   pod 'APDAdColonyAdapter', '3.1.3.0-beta.1'
   pod 'BidMachineAdColonyAdapter', '~> 2.1.0.0'
