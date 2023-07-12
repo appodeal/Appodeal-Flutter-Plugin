@@ -13,9 +13,8 @@ internal abstract class AppodealBaseFlutterPlugin :
 
     private var activityReference = WeakReference<Activity>(null)
     private var contextReference = WeakReference<Context>(null)
-    internal val activity: Activity get() = checkNotNull(activityReference.get())
-    internal val applicationContext: Context
-        get() = checkNotNull(contextReference.get() ?: activity.applicationContext)
+    internal val activity: Activity get() = requireNotNull(activityReference.get())
+    internal val context: Context get() = requireNotNull(activityReference.get() ?: contextReference.get())
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         contextReference = WeakReference(binding.applicationContext)
@@ -25,15 +24,11 @@ internal abstract class AppodealBaseFlutterPlugin :
         activityReference = WeakReference(binding.activity)
     }
 
-    override fun onDetachedFromActivityForConfigChanges() {
-        activityReference.clear()
-    }
+    override fun onDetachedFromActivityForConfigChanges() {}
 
     override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
         activityReference = WeakReference(binding.activity)
     }
 
-    override fun onDetachedFromActivity() {
-        activityReference.clear()
-    }
+    override fun onDetachedFromActivity() {}
 }

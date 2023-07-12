@@ -420,7 +420,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             .withAdditionalParams(additionalParameters)
             .build()
         Appodeal.validateInAppPurchase(
-            applicationContext,
+            context,
             purchase,
             object : InAppPurchaseValidateCallback {
                 override fun onInAppPurchaseValidateFail(
@@ -441,12 +441,12 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val args = call.arguments as Map<*, *>
         val appKey = args["appKey"] as String
         ConsentManager.requestConsentInfoUpdate(
-            applicationContext,
+            context,
             appKey,
             object : IConsentInfoUpdateListener {
                 override fun onConsentInfoUpdated(consent: Consent) {
                     _consentForm = ConsentForm(
-                        applicationContext,
+                        context,
                         object : IConsentFormListener {
                             override fun onConsentFormClosed(consent: Consent) =
                                 channel.invokeMethod("onConsentFormClosed", null)
@@ -474,7 +474,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private fun showConsentForm(call: MethodCall, result: Result) {
         _consentForm = _consentForm ?: run {
             ConsentForm(
-                applicationContext,
+                context,
                 object : IConsentFormListener {
                     override fun onConsentFormClosed(consent: Consent) =
                         channel.invokeMethod("onConsentFormClosed", null)
