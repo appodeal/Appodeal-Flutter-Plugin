@@ -8,19 +8,11 @@ Official Appodeal Flutter Plugin for your Flutter application.
     - Appodeal SDK 3.0 in **first initialization** shows a ready-made consent window if the user is in the regions
       covered by GDPR and CCPA. [See more about this behavior](#step-2-appodeal-consent-new-breaking-changes)
 
-- **Major Api changes**
-    - initialize
-    - update consent logic
-    - ad type logic
-    - support impression information
-
 - **Support Monetization + UA + Analytics data services**
     - Get insights and find out if your active UA campaigns bring you revenue or make you lose money.
     - Track your metrics with Firebase Keywords. Analyze how product A/B test (via Firebase remote config) affects both
       your product & monetization.Track your metrics with Firebase Keywords. Analyze how product A/B test (via Firebase
       remote config) affects both your product & monetization. [See more about services](#services)
-
-If you have used one of the removed/changed APIs, please check the integration guide for the updated instructions.
 
 ## Table of Contents
 
