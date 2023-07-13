@@ -2,25 +2,17 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## ❗❗ Breaking changes when updating to 3.x.x❗❗
+## Appodeal SDK 3.0
 
-- **Appodeal SDK 3.0 already included ready-made consent solution**
+- **Already included ready-made consent solution**
     - Appodeal SDK 3.0 in **first initialization** shows a ready-made consent window if the user is in the regions
       covered by GDPR and CCPA. [See more about this behavior](#step-2-appodeal-consent-new-breaking-changes)
-
-- **Major Api changes**
-    - initialize
-    - update consent logic
-    - ad type logic
-    - support impression information
 
 - **Support Monetization + UA + Analytics data services**
     - Get insights and find out if your active UA campaigns bring you revenue or make you lose money.
     - Track your metrics with Firebase Keywords. Analyze how product A/B test (via Firebase remote config) affects both
       your product & monetization.Track your metrics with Firebase Keywords. Analyze how product A/B test (via Firebase
       remote config) affects both your product & monetization. [See more about services](#services)
-
-If you have used one of the removed/changed APIs, please check the integration guide for the updated instructions.
 
 ## Table of Contents
 
@@ -51,7 +43,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.1.3-beta.1
+  stack_appodeal_flutter: 3.1.3-beta.2
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -72,28 +64,28 @@ source 'https://cdn.cocoapods.org/'
 platform :ios, '12.0'
 
 def appodeal
-  pod 'APDAdColonyAdapter', '3.1.3.0-beta.1'
-  pod 'BidMachineAdColonyAdapter', '~> 2.1.0.0'
-  pod 'APDAppLovinAdapter', '3.1.3.1-beta.1'
-  pod 'APDBidMachineAdapter', '3.1.3.1-beta.1' # Required
-  pod 'BidMachineAmazonAdapter', '~> 2.1.0.0'
-  pod 'BidMachineCriteoAdapter', '~> 2.1.0.0'
-  pod 'BidMachineMintegralAdapter', '~> 2.1.0.1'
-  pod 'BidMachineSmaatoAdapter', '~> 2.1.0.0'
-  pod 'BidMachineTapjoyAdapter', '~> 2.1.0.0'
-  pod 'BidMachinePangleAdapter', '~> 2.1.0.0'
-  pod 'APDGoogleAdMobAdapter', '3.1.3.1-beta.1'
-  pod 'APDIABAdapter', '3.1.3.0-beta.1' # Required
-  pod 'APDIronSourceAdapter', '3.1.3.0-beta.1'
-  pod 'APDMetaAudienceNetworkAdapter', '3.1.3.1-beta.1'
-  pod 'BidMachineMetaAudienceAdapter', '~> 2.1.0.0'
-  pod 'APDMyTargetAdapter', '3.1.3.1-beta.1'
-  pod 'BidMachineMyTargetAdapter', '~> 2.1.0.1'
-  pod 'APDStackAnalyticsAdapter', '3.1.3.0-beta.1' # Required
-  pod 'APDUnityAdapter', '3.1.3.1-beta.1'
-  pod 'APDVungleAdapter', '3.1.3.1-beta.1'
-  pod 'BidMachineVungleAdapter', '~> 2.1.0.2'
-  pod 'APDYandexAdapter', '3.1.3.0-beta.1'
+  pod 'APDAdColonyAdapter', '3.1.3.0-beta.2'
+  pod 'BidMachineAdColonyAdapter', '~> 2.2.0.0'
+  pod 'APDAppLovinAdapter', '3.1.3.0-beta.2'
+  pod 'APDBidMachineAdapter', '3.1.3.0-beta.2' # Required
+  pod 'BidMachineMintegralAdapter', '~> 2.2.0.0'
+  pod 'BidMachineAmazonAdapter', '~> 2.2.0.0'
+  pod 'BidMachineCriteoAdapter', '~> 2.2.0.0'
+  pod 'BidMachineSmaatoAdapter', '~> 2.2.0.0'
+  pod 'BidMachineTapjoyAdapter', '~> 2.2.0.0'
+  pod 'BidMachinePangleAdapter', '~> 2.2.0.0'
+  pod 'APDGoogleAdMobAdapter', '3.1.3.0-beta.2'
+  pod 'APDIABAdapter', '3.1.3.0-beta.2' # Required
+  pod 'APDIronSourceAdapter', '3.1.3.0-beta.2'
+  pod 'APDMetaAudienceNetworkAdapter', '3.1.3.0-beta.2'
+  pod 'BidMachineMetaAudienceAdapter', '~> 2.2.0.0'
+  pod 'APDMyTargetAdapter', '3.1.3.0-beta.2'
+  pod 'BidMachineMyTargetAdapter', '~> 2.2.0.0'
+  pod 'APDStackAnalyticsAdapter', '3.1.3.0-beta.2' # Required
+  pod 'APDUnityAdapter', '3.1.3.0-beta.2'
+  pod 'APDVungleAdapter', '3.1.3.0-beta.2'
+  pod 'BidMachineVungleAdapter', '~> 2.2.0.0'
+  pod 'APDYandexAdapter', '3.1.3.0-beta.2'
 end
 
 target 'Runner' do
@@ -720,6 +712,314 @@ update the *SKAdNetworkItems* key with an additional dictionary in your `Info.pl
         <key>SKAdNetworkIdentifier</key>
         <string>6yxyv74ff7.skadnetwork</string>
     </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>mqn7fxpca7.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>633vhxswh4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>tmhh9296z4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>zh3b7bxvad.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>xmn954pzmp.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>79w64w269u.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>d7g9azk84q.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>866k9ut3g3.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>2q884k2j68.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>gfat3222tu.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>pd25vrrwzn.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>y755zyxw56.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>qlbq5gtkt8.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>67369282zy.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>899vrgt9g8.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>mj797d8u6f.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>88k8774x49.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>t3b3f7n3x8.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>c7g47wypnu.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>9g2aggbj52.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>z5b3gh5ugf.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>dd3a75yxkv.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>h5jmj969g5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>dr774724x4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>t7ky8fmwkd.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>fz2k2k5tej.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>w28pnjg2k4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>2rq3zucswp.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>vc83br9sjg.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>eqhxz8m8av.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>7k3cvf297u.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>nu4557a4je.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>7tnzynbdc7.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>l6nv3x923s.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>h8vml93bkz.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>uzqba5354d.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>8qiegk9qfv.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>xx9sdjej2w.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>au67k4efj4.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>dmv22haz9p.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>7fbxrn65az.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>b55w3d8y8z.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>v7896pgt74.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>5ghnmfs3dh.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>627r9wr2y5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>sczv5946wb.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>8w3np9l82g.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>nrt9jy4kw9.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>7953jerfzd.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>dn942472g5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>cad8qz2s3j.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>r26jy69rpl.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>jb7bn6koa5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>fkak3gfpt6.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>2tdux39lx8.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>3cgn6rq224.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>nfqy3847ph.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>dticjx1a9i.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>9wsyqb3ku7.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>qu637u8glc.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>x5854y7y24.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>gvmwg8q7h5.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>bvpn9ufa9b.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>6qx585k4p6.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>l93v5h6a4m.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>axh5283zss.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>5mv394q32t.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>hjevpa356n.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>ln5gz23vtd.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>pu4na253f3.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>t6d3zquu66.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>x2jnk7ly8j.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>yrqqpx2mcb.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>z4gj7hsk7h.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>bd757ywx3.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>33r6p7g8nc.skadnetwork</string>
+    </dict>
+    <dict>
+        <key>SKAdNetworkIdentifier</key>
+        <string>g69uk9uh2b.skadnetwork</string>
+    </dict>
 </array>
 ```
 
@@ -791,7 +1091,7 @@ Add dependencies into `build.gradle` (module: app)
 dependencies {
     ...
     // ... other project dependencies
-    implementation ('com.appodeal.ads:sdk:3.1.3.1-beta.1') {
+    implementation ('com.appodeal.ads:sdk:3.1.3.1-beta.2') {
         exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
@@ -808,7 +1108,7 @@ allprojects {
     repositories {
         ...
         jcenter()
-        maven { url "https://artifactory.appodeal.com/appodeal" }
+        maven { url "https://artifactory.appodeal.com/appodeal-beta-public" }
         ...
     }
 }
@@ -876,7 +1176,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:adjust:3.1.3.1-beta.1'
+    implementation 'com.appodeal.ads.sdk.services:adjust:3.1.3.0-beta.2'
 }
 ```
 
@@ -885,7 +1185,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAdjustAdapter', '3.1.3.0-beta.1'
+  pod 'APDAdjustAdapter', '3.1.3.0-beta.2'
 end
 ```
 
@@ -896,7 +1196,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.1.3.1-beta.1'
+  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.1.3.1-beta.2'
 }
 ```
 
@@ -905,7 +1205,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAppsFlyerAdapter', '3.1.3.1-beta.1'
+  pod 'APDAppsFlyerAdapter', '3.1.3.0-beta.2'
 end
 ```
 
@@ -916,7 +1216,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:firebase:3.1.3.0-beta.1'
+    implementation 'com.appodeal.ads.sdk.services:firebase:3.1.3.0-beta.2'
 }
 ```
 
@@ -925,7 +1225,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFirebaseAdapter', '3.1.3.1-beta.1'
+  pod 'APDFirebaseAdapter', '3.1.3.0-beta.2'
 end
 ```
 
@@ -936,7 +1236,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.1.3.1-beta.1'
+    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.1.3.0-beta.2'
 }
 ```
 
@@ -945,7 +1245,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFacebookAdapter', '3.1.3.1-beta.1'
+  pod 'APDFacebookAdapter', '3.1.3.0-beta.2'
 end
 ```
 

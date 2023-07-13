@@ -1,3 +1,9 @@
+## 3.1.3-beta.2
+
+* Updated Appodeal iOS SDK to 3.1.3-beta.2
+* Updated Appodeal Android SDK to 3.1.3-beta.2
+* Minor fixes and stability improvements.
+
 ## 3.1.3-beta.1
 
 * Updated Appodeal iOS SDK to 3.1.3-beta.1
