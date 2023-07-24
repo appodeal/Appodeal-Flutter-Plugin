@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'stack_appodeal_flutter'
-  s.version          = '3.1.3-beta.2'
+  s.version          = '3.1.3-beta.3'
   s.summary          = 'Appodeal flutter plugin'
   s.description      = <<-DESC
   Flutter plugin for Appodeal SDK. It supports interstitial, rewarded video and banner ads.
