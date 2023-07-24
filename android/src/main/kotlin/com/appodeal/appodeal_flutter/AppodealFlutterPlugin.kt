@@ -28,6 +28,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     @Deprecated("Will be removed in future releases.")
     private var _consentForm: ConsentForm? = null
+
     @Deprecated("Will be removed in future releases.")
     private val consentForm get() = checkNotNull(_consentForm)
 
@@ -172,7 +173,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
         Appodeal.setFramework("flutter", sdkVersion)
-        Appodeal.updateConsent(ConsentManager.consent)
         Appodeal.initialize(activity, appKey, adTypes, object : ApdInitializationCallback {
             override fun onInitializationFinished(errors: List<ApdInitializationError>?) =
                 channel.invokeMethod("onInitializationFinished", errors?.toArg())

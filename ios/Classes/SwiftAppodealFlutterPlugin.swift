@@ -138,9 +138,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         Appodeal.setSmartBannersEnabled(isSmartBannerEnabled)
         Appodeal.setPreferredBannerAdSize(isTabletBannerEnabled ? kAppodealUnitSize_728x90 : kAPDAdSize320x50)
         Appodeal.setFramework(APDFramework.flutter, version: sdkVersion)
-        if let consent = STKConsentManager.shared().consent {
-            Appodeal.updateConsentReport(consent)
-        }
         Appodeal.setInitializationDelegate(self)
         Appodeal.initialize(withApiKey: appKey, types: adTypes)
         Appodeal.setAdRevenueDelegate(adRevenueCallback.adListener)
