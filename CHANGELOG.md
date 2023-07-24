@@ -1,3 +1,8 @@
+## 3.1.3-beta.3
+
+* Fixed issue with repeating consent window.
+* Updated Appodeal Android SDK to 3.1.3.2-beta.2
+
 ## 3.1.3-beta.2
 
 * Updated Appodeal iOS SDK to 3.1.3-beta.2

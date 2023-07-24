@@ -43,7 +43,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.1.3-beta.2
+  stack_appodeal_flutter: 3.1.3-beta.3
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -1091,7 +1091,7 @@ Add dependencies into `build.gradle` (module: app)
 dependencies {
     ...
     // ... other project dependencies
-    implementation ('com.appodeal.ads:sdk:3.1.3.1-beta.2') {
+    implementation ('com.appodeal.ads:sdk:3.1.3.2-beta.2') {
         exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
