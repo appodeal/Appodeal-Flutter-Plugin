@@ -27,6 +27,9 @@ class Appodeal {
   /// Rectangular ads (with defined size 300x250 dp) that appear at the view of the device screen.
   static const MREC = AppodealAdType.MREC;
 
+  /// NativeAd todo
+  static const NATIVE = AppodealAdType.NativeAd;
+
   /// Log level none for [setLogLevel] method.
   static const LogLevelNone = 0;
 
@@ -56,6 +59,8 @@ class Appodeal {
       const MethodChannel('appodeal_flutter/banner');
   static const MethodChannel _mrecChannel =
       const MethodChannel('appodeal_flutter/mrec');
+  static const MethodChannel _nativeChannel =
+  const MethodChannel('appodeal_flutter/native');
 
   /// Set [isTestMode] for get test advertising.
   static setTesting(bool isTestMode) {
@@ -623,6 +628,40 @@ class Appodeal {
           break;
       }
     });
+  }
+
+  /// TODO doc
+  static void setNativeCallbacks(
+      {Function()? onNativeLoaded,
+      Function()? onNativeFailedToLoad,
+      Function()? onNativeShown,
+      Function()? onNativeShowFailed,
+      Function()? onNativeClicked,
+      Function()? onNativeExpired}) {
+    {
+      _nativeChannel.setMethodCallHandler((call) async {
+        switch (call.method) {
+          case 'onNativeLoaded':
+            onNativeLoaded?.call();
+            break;
+          case 'onNativeFailedToLoad':
+            onNativeFailedToLoad?.call();
+            break;
+          case 'onNativeShown':
+            onNativeShown?.call();
+            break;
+          case 'onNativeShowFailed':
+            onNativeShowFailed?.call();
+            break;
+          case 'onNativeClicked':
+            onNativeClicked?.call();
+            break;
+          case 'onNativeExpired':
+            onNativeExpired?.call();
+            break;
+        }
+      });
+    }
   }
 
   /// Set ad revenue callbacks

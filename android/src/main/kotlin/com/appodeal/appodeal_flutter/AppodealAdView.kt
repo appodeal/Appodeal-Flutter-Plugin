@@ -26,6 +26,7 @@ internal class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : Pl
     private fun toBannerType(size: HashMap<*, *>): Int = when (size["name"] as String) {
         "BANNER" -> Appodeal.BANNER_VIEW
         "MEDIUM_RECTANGLE" -> Appodeal.MREC
+        "NATIVE" -> Appodeal.NATIVE
         else -> error("Banner type doesn't support")
     }
 
@@ -36,9 +37,13 @@ internal class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : Pl
         Appodeal.BANNER_VIEW -> refBannerAdView.get() ?: run {
             Appodeal.getBannerView(context).also { refBannerAdView = WeakReference(it) }
         }
+        // TODO
+        Appodeal.NATIVE -> refNativeAdView.get() ?: run {
+            NativeAdView(context).also { refNativeAdView = WeakReference(it) }
         else -> error("Banner type doesn't support")
     }
 }
 
 private var refMrecAdView = WeakReference<View>(null)
 private var refBannerAdView = WeakReference<View>(null)
+private var refNativeAdView = WeakReference<View>(null)
