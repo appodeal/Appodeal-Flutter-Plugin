@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import com.appodeal.ads.Appodeal
+import com.appodeal.ads.NativeAdView
 import io.flutter.plugin.platform.PlatformView
 import java.lang.ref.WeakReference
 
@@ -40,6 +41,7 @@ internal class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : Pl
         // TODO
         Appodeal.NATIVE -> refNativeAdView.get() ?: run {
             NativeAdView(context).also { refNativeAdView = WeakReference(it) }
+        }
         else -> error("Banner type doesn't support")
     }
 }

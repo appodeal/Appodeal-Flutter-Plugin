@@ -55,7 +55,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         rewardedVideo.adChannel.setMethodCallHandler(null)
         banner.adChannel.setMethodCallHandler(null)
         mrec.adChannel.setMethodCallHandler(null)
-        native.adChanel.setMethodCallHandler(null)
+        native.adChannel.setMethodCallHandler(null)
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
@@ -315,12 +315,14 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     fun setPreferredNativeContentType(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val contentType = args["preferredNativeContentType"] as Int
-        Appodeal.setPreferredNativeContentType(contentType)
+//        //TODO in 3.2.0
+//        Appodeal.setPreferredNativeContentType(contentType)
         result.success(null)
     }
 
     fun getPreferredNativeContentType(call: MethodCall, result: Result) {
-        result.success(Appodeal.getPreferredNativeContentType())
+//        //TODO in 3.2.0
+//        result.success(Appodeal.getPreferredNativeContentType())
     }
 
     fun getAvailableNativeAdsCount(call: MethodCall, result: Result){
