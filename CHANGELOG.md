@@ -1,3 +1,9 @@
+## 3.1.3
+
+* Promoted the beta release to the stable version
+* Updated Appodeal iOS SDK to 3.1.3 stable
+* Updated Appodeal Android SDK to 3.1.3 stable
+
 ## 3.1.3-beta.3
 
 * Fixed issue with repeating consent window.
