@@ -9,7 +9,10 @@ import 'package:stack_appodeal_flutter/src/native_ad/native_ad.dart';
 
 class AppodealNative extends StatefulWidget {
   final NativeAd nativeAd;
-  final String placement;
+  final String? placement;
+
+  static const MethodChannel _nativeChannel =
+  const MethodChannel('appodeal_flutter/native');
 
   const AppodealNative({
     Key? key,

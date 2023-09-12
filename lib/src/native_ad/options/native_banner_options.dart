@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 class NativeBannerOptions {
   final NativeBannerViewPosition? viewPosition;
   final int? containerMargin,
@@ -8,7 +10,7 @@ class NativeBannerOptions {
       descriptionMargin,
       ctaTextSize,
       ctaMargin;
-  final double? titleColor, descriptionColor, ctaBackground, ctaTextColor;
+  final Color? titleColor, descriptionColor, ctaBackground, ctaTextColor;
 
   const NativeBannerOptions({
     this.viewPosition = NativeBannerViewPosition.ICON_START,
@@ -36,10 +38,10 @@ class NativeBannerOptions {
         'descriptionMargin': descriptionMargin,
         'ctaTextSize': ctaTextSize,
         'ctaMargin': ctaMargin,
-        'titleColor': titleColor,
-        'descriptionColor': descriptionColor,
-        'ctaBackground': ctaBackground,
-        'ctaTextColor': ctaTextColor,
+        'titleColor': titleColor?.value,
+        'descriptionColor': descriptionColor?.value,
+        'ctaBackground': ctaBackground?.value,
+        'ctaTextColor': ctaTextColor?.value,
       };
 }
 

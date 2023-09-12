@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/native_banner.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/native_full.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/native_template.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/native_banner_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/native_full_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/native_template_options.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
-
 
 class NativePage extends StatefulWidget {
   @override
@@ -47,7 +52,7 @@ class _NativePageState extends State<NativePage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isInitialized =
-                    await Appodeal.isInitialized(AppodealAdType.NativeAd);
+                        await Appodeal.isInitialized(AppodealAdType.NativeAd);
                     print('Native isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
@@ -62,8 +67,8 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isCanShow = await Appodeal.canShow(
-                        AppodealAdType.Banner);
+                    var isCanShow =
+                        await Appodeal.canShow(AppodealAdType.Banner);
                     print('Native canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
@@ -79,7 +84,11 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    /// todo NativeAdWidget.registerOnIteration()
+                    final nativeAd = NativeFull(
+                        nativeBanner:
+                            NativeBanner(options: NativeBannerOptions()),
+                        options: NativeFullOptions());
+                    AppodealNative(nativeAd: nativeAd, placement: "default");
                   },
                   child: const Text('CustomNativeAd'),
                 ),
@@ -93,7 +102,26 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    /// todo NativeAdWidget.registerOnIteration()
+                    final nativeAd =
+                        NativeBanner(options: NativeBannerOptions());
+                    AppodealNative(nativeAd: nativeAd, placement: "default");
+                  },
+                  child: const Text('CustomNativeAd'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
+                  onPressed: () {
+                    final nativeAd = NativeTemplate(
+                        templateType: TemplateType.NEWS_FEED,
+                        options: NativeTemplateOptions());
+                    AppodealNative(nativeAd: nativeAd, placement: "default");
                   },
                   child: const Text('NativeNewsFeed'),
                 ),
@@ -107,7 +135,10 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    /// todo NativeAdWidget.registerOnIteration()
+                    final nativeAd = NativeTemplate(
+                        templateType: TemplateType.APP_WALL,
+                        options: NativeTemplateOptions());
+                    AppodealNative(nativeAd: nativeAd);
                   },
                   child: const Text('NativeAppWall'),
                 ),
@@ -121,7 +152,10 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    /// todo NativeAdWidget.registerOnIteration()
+                    final nativeAd = NativeTemplate(
+                        templateType: TemplateType.CONTENT_STREAM,
+                        options: NativeTemplateOptions());
+                    AppodealNative(nativeAd: nativeAd);
                   },
                   child: const Text('NativeContentStream'),
                 ),
@@ -134,9 +168,7 @@ class _NativePageState extends State<NativePage> {
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
-                  onPressed: () {
-                    /// todo NativeAdWidget.registerOnIteration()
-                  },
+                  onPressed: () {},
                   child: const Text('HIDE NATIVE'),
                 ),
               ],

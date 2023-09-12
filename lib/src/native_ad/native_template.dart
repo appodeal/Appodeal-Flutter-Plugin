@@ -10,6 +10,11 @@ class NativeTemplate extends NativeAd {
       this.options,
       AdChoicePosition? adChoicePosition})
       : super(adChoicePosition: adChoicePosition);
+
+  Map<String, dynamic> get toMap => <String, dynamic>{
+    'templateType' : templateType,
+    'templateOptions': options?.toMap,
+  };
 }
 
 enum TemplateType {

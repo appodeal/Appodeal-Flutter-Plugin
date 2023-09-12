@@ -200,7 +200,7 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                           builder: (context) => NativePage()),
                     );
                   },
-                  child: const Text('NativeAd'),
+                  child: const Text('NATIVE AD'),
                 ),
               ),
             ],
