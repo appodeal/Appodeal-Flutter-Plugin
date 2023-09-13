@@ -13,7 +13,7 @@ class NativeFull extends NativeAd {
       : super(adChoicePosition: adChoicePosition);
 
   Map<String, dynamic> get toMap => <String, dynamic>{
-    'nativeBanner' : nativeBanner.toMap,
-    'nativeFullOptions': options.toMap,
+    // 'nativeBanner' : nativeBanner.toMap,
+    // 'nativeFullOptions': options.toMap,
   };
 }

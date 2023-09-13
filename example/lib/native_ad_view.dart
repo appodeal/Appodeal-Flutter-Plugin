@@ -13,9 +13,17 @@ class NativePage extends StatefulWidget {
 }
 
 class _NativePageState extends State<NativePage> {
+  AppodealNative? appodealNative;
+  bool isShow = false;
+
   @override
   void initState() {
     super.initState();
+
+    setState(() {
+      appodealNative = null;
+      isShow = false;
+    });
 
     Appodeal.setNativeCallbacks(
       onNativeLoaded: () => print('onNativeLoaded'),
@@ -68,7 +76,7 @@ class _NativePageState extends State<NativePage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
                     var isCanShow =
-                        await Appodeal.canShow(AppodealAdType.Banner);
+                        await Appodeal.canShow(AppodealAdType.NativeAd);
                     print('Native canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),
@@ -88,7 +96,11 @@ class _NativePageState extends State<NativePage> {
                         nativeBanner:
                             NativeBanner(options: NativeBannerOptions()),
                         options: NativeFullOptions());
-                    AppodealNative(nativeAd: nativeAd, placement: "default");
+                    setState(() {
+                      isShow = true;
+                      appodealNative = AppodealNative(
+                          nativeAd: nativeAd, placement: "default");
+                    });
                   },
                   child: const Text('CustomNativeAd'),
                 ),
@@ -173,7 +185,19 @@ class _NativePageState extends State<NativePage> {
                 ),
               ],
             ),
-            //Interstitial
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Visibility(
+                  visible: isShow,
+                  child: Container(
+                    width: 300,
+                    height: 300,
+                    color: Colors.red,
+                    child: appodealNative == null
+                        ? SizedBox.shrink()
+                        : appodealNative!,
+                  )),
+            ),
           ]),
         ),
       ),

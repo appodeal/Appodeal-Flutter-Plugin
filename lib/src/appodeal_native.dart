@@ -23,14 +23,13 @@ class AppodealNative extends StatefulWidget {
 
 class _AppodealNativeState extends State<AppodealNative> {
   final UniqueKey _key = UniqueKey();
-  final String _viewType = 'appodeal_flutter/native';
+  final String _viewType = 'appodeal_flutter/native_view';
   static const MethodChannel _nativeChannel =
-  const MethodChannel('appodeal_flutter/native');
+      const MethodChannel('appodeal_flutter/native');
 
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -104,7 +103,8 @@ class _AppodealNativeState extends State<AppodealNative> {
   }
 
   Map<String, dynamic> get _nativeCreationParams => {
-        'nativeAd': widget.nativeAd,
+        // 'nativeAd': widget.nativeAd,
+        'adSize': "NATIVE",
         'placement': widget.placement,
       };
 }

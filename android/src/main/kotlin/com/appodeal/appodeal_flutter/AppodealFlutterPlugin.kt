@@ -1,7 +1,6 @@
 package com.appodeal.appodeal_flutter
 
 import com.appodeal.ads.Appodeal
-import com.appodeal.ads.NativeAd
 import com.appodeal.ads.inapp.InAppPurchase
 import com.appodeal.ads.inapp.InAppPurchase.Type
 import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
@@ -116,14 +115,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         super.onAttachedToActivity(binding)
         pluginBinding.platformViewRegistry.apply {
-            registerViewFactory(
-                "appodeal_flutter/banner_view",
-                AppodealAdViewFactory(activity)
-            )
-            registerViewFactory(
-                "appodeal_flutter/native",
-                AppodealAdViewFactory(activity)
-            )
+            val viewFactory = AppodealAdViewFactory(activity)
+            registerViewFactory("appodeal_flutter/banner_view", viewFactory)
+            registerViewFactory("appodeal_flutter/native_view", viewFactory)
         }
     }
 

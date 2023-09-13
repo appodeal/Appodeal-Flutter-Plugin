@@ -29,7 +29,7 @@ class NativeBannerOptions {
   });
 
   Map<String, dynamic> get toMap => <String, dynamic>{
-        'viewPosition' : viewPosition,
+        'viewPosition': viewPosition,
         'containerMargin': containerMargin,
         'iconSize': iconSize,
         'iconMargin': iconMargin,
