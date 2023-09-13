@@ -103,7 +103,7 @@ class _AppodealNativeState extends State<AppodealNative> {
   }
 
   Map<String, dynamic> get _nativeCreationParams => {
-        // 'nativeAd': widget.nativeAd,
+        'nativeAd': widget.nativeAd.toMap(),
         'adSize': "NATIVE",
         'placement': widget.placement,
       };

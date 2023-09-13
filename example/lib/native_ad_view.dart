@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/native_banner.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/native_full.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/native_custom.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/native_template.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/native_banner_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/native_full_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/native_custom_options.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/native_template_options.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
@@ -92,17 +90,14 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAd = NativeFull(
-                        nativeBanner:
-                            NativeBanner(options: NativeBannerOptions()),
-                        options: NativeFullOptions());
+                    final nativeAd = NativeCustom(
+                        options: NativeCustomOptions(mediaViewPosition: null));
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNative(
-                          nativeAd: nativeAd, placement: "default");
+                      appodealNative = AppodealNative(nativeAd: nativeAd);
                     });
                   },
-                  child: const Text('CustomNativeAd'),
+                  child: const Text('NativeBanner'),
                 ),
               ],
             ),
@@ -114,11 +109,14 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAd =
-                        NativeBanner(options: NativeBannerOptions());
-                    AppodealNative(nativeAd: nativeAd, placement: "default");
+                    final nativeAd = NativeCustom(
+                        options: NativeCustomOptions());
+                    setState(() {
+                      isShow = true;
+                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                    });
                   },
-                  child: const Text('CustomNativeAd'),
+                  child: const Text('NativeFull'),
                 ),
               ],
             ),
@@ -133,7 +131,10 @@ class _NativePageState extends State<NativePage> {
                     final nativeAd = NativeTemplate(
                         templateType: TemplateType.NEWS_FEED,
                         options: NativeTemplateOptions());
-                    AppodealNative(nativeAd: nativeAd, placement: "default");
+                    setState(() {
+                      isShow = true;
+                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                    });
                   },
                   child: const Text('NativeNewsFeed'),
                 ),
@@ -150,7 +151,10 @@ class _NativePageState extends State<NativePage> {
                     final nativeAd = NativeTemplate(
                         templateType: TemplateType.APP_WALL,
                         options: NativeTemplateOptions());
-                    AppodealNative(nativeAd: nativeAd);
+                    setState(() {
+                      isShow = true;
+                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                    });
                   },
                   child: const Text('NativeAppWall'),
                 ),
@@ -167,7 +171,10 @@ class _NativePageState extends State<NativePage> {
                     final nativeAd = NativeTemplate(
                         templateType: TemplateType.CONTENT_STREAM,
                         options: NativeTemplateOptions());
-                    AppodealNative(nativeAd: nativeAd);
+                    setState(() {
+                      isShow = true;
+                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                    });
                   },
                   child: const Text('NativeContentStream'),
                 ),
@@ -190,9 +197,7 @@ class _NativePageState extends State<NativePage> {
               child: Visibility(
                   visible: isShow,
                   child: Container(
-                    width: 300,
-                    height: 300,
-                    color: Colors.red,
+                    height: 400,
                     child: appodealNative == null
                         ? SizedBox.shrink()
                         : appodealNative!,

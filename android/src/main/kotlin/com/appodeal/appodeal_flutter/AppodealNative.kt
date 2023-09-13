@@ -27,24 +27,20 @@ internal class AppodealNative(
             adChannel.invokeMethod("onNativeLoaded", null)
         }
 
-
         override fun onNativeFailedToLoad() {
             adChannel.invokeMethod("onNativeFailedToLoad", null)
         }
 
-
         override fun onNativeShown(nativeAd: NativeAd?) {
-            adChannel.invokeMethod("onNativeShown", mapOf("nativeAd" to nativeAd))
+            adChannel.invokeMethod("onNativeShown", null)
         }
-
 
         override fun onNativeShowFailed(nativeAd: NativeAd?) {
-            adChannel.invokeMethod("onNativeShowFailed", mapOf("nativeAd" to nativeAd))
+            adChannel.invokeMethod("onNativeShowFailed", null)
         }
 
-
         override fun onNativeClicked(nativeAd: NativeAd?) {
-            adChannel.invokeMethod("onNativeClicked", mapOf("nativeAd" to nativeAd))
+            adChannel.invokeMethod("onNativeClicked", null)
         }
 
         override fun onNativeExpired() {

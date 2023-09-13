@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'native_custom_options.dart';
+
 class NativeTemplateOptions {
   final int? iconSize;
   final int? titleTextSize;
   final int? ctaTextSize;
-  final int? descriptionViewTextSize;
+  final int? descriptionTextSize;
   final Color? adAttributionBackgroundColor;
   final Color? adAttributionTextColor;
 
@@ -12,7 +14,7 @@ class NativeTemplateOptions {
     this.iconSize,
     this.titleTextSize,
     this.ctaTextSize,
-    this.descriptionViewTextSize,
+    this.descriptionTextSize,
     this.adAttributionBackgroundColor,
     this.adAttributionTextColor,
   });
@@ -22,8 +24,8 @@ class NativeTemplateOptions {
     'titleTextSize': titleTextSize,
     'ctaTextSize': ctaTextSize,
     'ctaTextSize': ctaTextSize,
-    'descriptionViewTextSize': descriptionViewTextSize,
-    'adAttributionBackgroundColor': adAttributionBackgroundColor?.value,
-    'adAttributionTextColor': adAttributionTextColor?.value,
+    'descriptionTextSize': descriptionTextSize,
+    'adAttributionBackgroundColor': convertColorToInt(adAttributionBackgroundColor),
+    'adAttributionTextColor': convertColorToInt(adAttributionTextColor),
   };
 }

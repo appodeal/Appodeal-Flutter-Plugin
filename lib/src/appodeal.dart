@@ -630,7 +630,6 @@ class Appodeal {
     });
   }
 
-  /// TODO doc
   static void setNativeCallbacks(
       {Function()? onNativeLoaded,
       Function()? onNativeFailedToLoad,
