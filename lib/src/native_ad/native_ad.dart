@@ -1,11 +1,6 @@
 abstract class NativeAd {
   final AdChoicePosition? adChoicePosition;
-  NativeAd({this.adChoicePosition  = AdChoicePosition.start_top});
+  NativeAd({this.adChoicePosition  = AdChoicePosition.START_TOP});
 }
 
-enum AdChoicePosition {
-  start_top,
-  start_bottom,
-  end_top,
-  end_bottom,
-}
+enum AdChoicePosition { START_TOP, START_BOTTOM, END_TOP, END_BOTTOM }

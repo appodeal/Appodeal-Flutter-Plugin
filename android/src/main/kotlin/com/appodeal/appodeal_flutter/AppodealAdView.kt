@@ -5,7 +5,6 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import com.appodeal.ads.Appodeal
-import com.appodeal.ads.NativeAdView
 import io.flutter.plugin.platform.PlatformView
 import java.lang.ref.WeakReference
 

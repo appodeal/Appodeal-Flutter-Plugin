@@ -120,6 +120,10 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
                 "appodeal_flutter/banner_view",
                 AppodealAdViewFactory(activity)
             )
+            registerViewFactory(
+                "appodeal_flutter/native",
+                AppodealAdViewFactory(activity)
+            )
         }
     }
 

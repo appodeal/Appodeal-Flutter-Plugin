@@ -11,9 +11,6 @@ class AppodealNative extends StatefulWidget {
   final NativeAd nativeAd;
   final String? placement;
 
-  static const MethodChannel _nativeChannel =
-  const MethodChannel('appodeal_flutter/native');
-
   const AppodealNative({
     Key? key,
     required this.nativeAd,
@@ -27,6 +24,14 @@ class AppodealNative extends StatefulWidget {
 class _AppodealNativeState extends State<AppodealNative> {
   final UniqueKey _key = UniqueKey();
   final String _viewType = 'appodeal_flutter/native';
+  static const MethodChannel _nativeChannel =
+  const MethodChannel('appodeal_flutter/native');
+
+  @override
+  void initState() {
+    super.initState();
+
+  }
 
   @override
   Widget build(BuildContext context) {
