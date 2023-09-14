@@ -1,6 +1,7 @@
 package com.appodeal.appodeal_flutter
 
 import com.appodeal.ads.Appodeal
+import com.appodeal.ads.NativeMediaViewContentType
 import com.appodeal.ads.inapp.InAppPurchase
 import com.appodeal.ads.inapp.InAppPurchase.Type
 import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
@@ -312,15 +313,13 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     fun setPreferredNativeContentType(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
-        val contentType = args["preferredNativeContentType"] as Int
-//        //TODO in 3.2.0
-//        Appodeal.setPreferredNativeContentType(contentType)
+        val contentType = parseNativeContentType(args["preferredNativeContentType"] as String)
+        Appodeal.setPreferredNativeContentType(contentType)
         result.success(null)
     }
 
     fun getPreferredNativeContentType(call: MethodCall, result: Result) {
-//        //TODO in 3.2.0
-//        result.success(Appodeal.getPreferredNativeContentType())
+        result.success(Appodeal.getPreferredNativeContentType().contentName)
     }
 
     fun getAvailableNativeAdsCount(call: MethodCall, result: Result){
@@ -566,4 +565,13 @@ private fun List<ApdInitializationError>.toArg(): Map<String, List<String>> {
 private fun List<ServiceError>.toArg(): Map<String, List<String>> {
     val arg = this.map { "${it::class.simpleName} [${it.componentName}] ${it.description}" }
     return mapOf("errors" to arg)
+}
+
+private fun parseNativeContentType(contentType: String): NativeMediaViewContentType {
+    return when (contentType) {
+        "NativeMediaViewContentType.AUTO" -> NativeMediaViewContentType.Auto
+        "NativeMediaViewContentType.NO_VIDEO" -> NativeMediaViewContentType.NoVideo
+        "NativeMediaViewContentType.VIDEO" -> NativeMediaViewContentType.Video
+        else -> error("content type $contentType doesn't support")
+    }
 }

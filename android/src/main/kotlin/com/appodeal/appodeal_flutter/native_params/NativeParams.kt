@@ -12,12 +12,8 @@ class NativeParams(
     val adChoicePosition: AdChoicePosition,
     val customOptions: CustomParams?,
     val templateOptions: TemplateParams?,
-    val isTemplate: Boolean = customOptions == null
-) {
-    override fun toString(): String {
-        return "NativeParams: \nadChoicePosition=$adChoicePosition, \ncustomOptions=${customOptions.toString()}, \ntemplateOptions=${templateOptions.toString()}, \nisTemplate=$isTemplate"
-    }
-}
+    val isTemplate: Boolean = customOptions == null,
+)
 
 class CustomParams(
     val mediaViewPosition: MediaViewPosition,
@@ -34,25 +30,15 @@ class CustomParams(
     val titleColor: Int?,
     val descriptionColor: Int?,
     val ctaBackground: Int?,
-    val ctaTextColor: Int?
-) {
-    override fun toString(): String {
-        return "CustomParams: \nmediaViewPosition=$mediaViewPosition, \nviewPosition=$viewPosition, \ncontainerMargin=$containerMargin, \niconSize=$iconSize, \niconMargin=$iconMargin, \ntitleTextSize=$titleTextSize, \ntitleMargin=$titleMargin, \ndescriptionTextSize=$descriptionTextSize, \ndescriptionMargin=$descriptionMargin, \nctaTextSize=$ctaTextSize, \nctaMargin=$ctaMargin, \ntitleColor=$titleColor, \ndescriptionColor=$descriptionColor, \nctaBackground=$ctaBackground, \nctaTextColor=$ctaTextColor"
-    }
-}
+    val ctaTextColor: Int?,
+)
 
 class TemplateParams(
     val templateType: TemplateType,
     val iconSize: Int,
     val titleTextSize: Int,
     val ctaTextSize: Int,
-    val descriptionTextSize: Int?,
+    val descriptionTextSize: Int,
     val adAttributionBackgroundColor: Int?,
-    val adAttributionTextColor: Int?
-) {
-    override fun toString(): String {
-        return "TemplateParams: \ntemplateType=$templateType, \niconSize=$iconSize, \ntitleTextSize=$titleTextSize, \nctaTextSize=$ctaTextSize, \ndescriptionTextSize=$descriptionTextSize, \nadAttributionBackgroundColor=$adAttributionBackgroundColor, \nadAttributionTextColor=$adAttributionTextColor"
-    }
-
-}
-
+    val adAttributionTextColor: Int?,
+)

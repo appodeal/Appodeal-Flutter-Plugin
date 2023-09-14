@@ -1,6 +1,8 @@
 package com.appodeal.appodeal_flutter.native_params
 
+import android.content.Context
 import android.graphics.Color
+import android.util.TypedValue
 
 object ParserUtils {
     private const val defaultContainerMargin = 4
@@ -13,50 +15,51 @@ object ParserUtils {
     private const val defaultCtaMargin = 4
     private const val defaultTitleTextSize = 16
 
-    fun HashMap<*, *>?.parseNativeParams(): NativeParams {
+    fun HashMap<*, *>?.parseNativeParams(context: Context): NativeParams {
         println("parseNativeParams: ${toString()}\n")
         return NativeParams(
             adChoicePosition = parseAdChoicePosition(this?.get("adChoicePosition") as String?),
-            customOptions = parseCustomParams(),
-            templateOptions = parseTemplateParams()
+            customOptions = parseCustomParams(context),
+            templateOptions = parseTemplateParams(context)
         )
     }
 
-    private fun HashMap<*, *>?.parseCustomParams(): CustomParams? {
+    private fun HashMap<*, *>?.parseCustomParams(context: Context): CustomParams? {
         print("parseCustomParams: ${toString()}\n")
         (this?.get("customOptions") as? Map<*, *>)?.apply {
             return CustomParams(
                 mediaViewPosition = parseMediaViewPosition(this["mediaViewPosition"] as String?),
                 viewPosition = parseNativeBannerViewPosition(this["viewPosition"] as String?),
-                containerMargin = this["containerMargin"] as Int? ?: defaultContainerMargin,
-                iconSize = this["iconSize"] as Int? ?: defaultIconSize,
-                iconMargin = this["iconMargin"] as Int? ?: defaultIconMargin,
-                titleTextSize = this["titleTextSize"] as Int? ?: defaultTitleTextSize,
-                titleMargin = this["titleMargin"] as Int? ?: defaultTitleMargin,
+                containerMargin = convertToDp(context, this["containerMargin"] as Int? ?: defaultContainerMargin),
+                iconSize = convertToDp(context,this["iconSize"] as Int? ?: defaultIconSize),
+                iconMargin = convertToDp(context,this["iconMargin"] as Int? ?: defaultIconMargin),
+                titleTextSize =  this["titleTextSize"] as Int? ?: defaultTitleTextSize,
+                titleMargin = convertToDp(context,this["titleMargin"] as Int? ?: defaultTitleMargin),
                 descriptionTextSize = this["descriptionTextSize"] as Int? ?: defaultDescriptionTextSize,
-                descriptionMargin = this["descriptionMargin"] as Int? ?: defaultDescriptionMargin,
+                descriptionMargin = convertToDp(context,this["descriptionMargin"] as Int? ?: defaultDescriptionMargin),
                 ctaTextSize = this["ctaTextSize"] as Int? ?: defaultCtaTextSize,
-                ctaMargin = this["ctaMargin"] as Int? ?: defaultCtaMargin,
-                titleColor = convertColor(this["titleColor"] as Int?),
-                descriptionColor = convertColor(this["descriptionColor"] as Int?),
-                ctaBackground = convertColor(this["ctaBackground"] as Int?),
-                ctaTextColor = convertColor(this["ctaTextColor"] as Int?),
+                ctaMargin = convertToDp(context,this["ctaMargin"] as Int? ?: defaultCtaMargin),
+                titleColor = convertColor(this["titleColor"] as Long?),
+                descriptionColor = convertColor(this["descriptionColor"] as Long?),
+                ctaBackground = convertColor(this["ctaBackground"] as Long?),
+                ctaTextColor = convertColor(this["ctaTextColor"] as Long?),
             )
         }
         return null
     }
 
-    private fun HashMap<*, *>?.parseTemplateParams(): TemplateParams? {
+    private fun HashMap<*, *>?.parseTemplateParams(context: Context): TemplateParams? {
         print("parseTemplateParams: ${toString()}\n")
+        val templateType = parseTemplateType(this?.get("templateType") as String?)
         (this?.get("templateOptions") as? Map<*, *>)?.apply {
             return TemplateParams(
-                templateType = parseTemplateType(this["templateType"] as String?),
-                iconSize = this["iconSize"] as Int? ?: defaultIconSize,
+                templateType = templateType,
+                iconSize = convertToDp(context,this["iconSize"] as Int? ?: defaultIconSize),
                 titleTextSize = this["titleTextSize"] as Int? ?: defaultTitleTextSize,
                 ctaTextSize = this["ctaTextSize"] as Int? ?: defaultCtaTextSize,
-                descriptionTextSize = convertColor(this["descriptionTextSize"] as Int?) ?: defaultDescriptionTextSize,
-                adAttributionBackgroundColor = convertColor(this["adAttributionBackgroundColor"] as Int?),
-                adAttributionTextColor = convertColor(this["adAttributionTextColor"] as Int?),
+                descriptionTextSize = this["descriptionTextSize"] as Int? ?: defaultDescriptionTextSize,
+                adAttributionBackgroundColor = convertColor(this["adAttributionBackgroundColor"] as? Long?),
+                adAttributionTextColor = convertColor(this["adAttributionTextColor"] as? Long?),
             )
         }
         return null
@@ -66,7 +69,8 @@ object ParserUtils {
         return when (templateType) {
             "TemplateType.APP_WALL" -> TemplateType.APP_WALL
             "TemplateType.CONTENT_STREAM" -> TemplateType.CONTENT_STREAM
-            else -> TemplateType.NEWS_FEED
+            "TemplateType.NEWS_FEED" -> TemplateType.NEWS_FEED
+            else -> error("Template type doesn`t support")
         }
     }
 
@@ -93,11 +97,20 @@ object ParserUtils {
         }
     }
 
-    private fun convertColor(colorValue: Int?): Int? {
+    private fun convertColor(colorValue: Long?): Int? {
         colorValue ?: return null
-        val red: Int = (colorValue shr 16) and 0xFF
-        val green: Int = (colorValue shr 8) and 0xFF
-        val blue: Int = colorValue and 0xFF
-        return Color.rgb(red, green, blue)
+        val red: Long = (colorValue shr 16) and 0xFF
+        val green: Long = (colorValue shr 8) and 0xFF
+        val blue: Long = colorValue and 0xFF
+        return Color.rgb(red.toInt(), green.toInt(), blue.toInt())
+    }
+
+    private fun convertToDp(context: Context, size: Int): Int {
+        val r = context.resources
+        return TypedValue.applyDimension(
+            TypedValue.COMPLEX_UNIT_DIP,
+            size.toFloat(),
+            r.displayMetrics
+        ).toInt()
     }
 }

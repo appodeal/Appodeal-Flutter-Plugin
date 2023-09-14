@@ -36,70 +36,45 @@ class _AppodealNativeState extends State<AppodealNative> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: FutureBuilder<Map<String, double>>(
-        future: fetchViewSize(),
-        builder: (context, snapshot) {
-          final sizeMap = snapshot.data;
-          if (sizeMap == null) {
-            return SizedBox.shrink();
-          }
-
-          final width = sizeMap['width'] ?? 0.0;
-          final height = sizeMap['height'] ?? 0.0;
-
-          return SizedBox(
-            width: width,
-            height: height,
-            child: Platform.isAndroid
-                ? PlatformViewLink(
-                    key: _key,
+      child: Container(
+        width: double.infinity,
+        child: Platform.isAndroid
+            ? PlatformViewLink(
+                key: _key,
+                viewType: _viewType,
+                surfaceFactory:
+                    (BuildContext context, PlatformViewController controller) {
+                  return AndroidViewSurface(
+                    controller: controller as AndroidViewController,
+                    gestureRecognizers: const <Factory<
+                        OneSequenceGestureRecognizer>>{},
+                    hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                  );
+                },
+                onCreatePlatformView: (PlatformViewCreationParams params) {
+                  return PlatformViewsService.initSurfaceAndroidView(
+                    id: params.id,
                     viewType: _viewType,
-                    surfaceFactory: (BuildContext context,
-                        PlatformViewController controller) {
-                      return AndroidViewSurface(
-                        controller: controller as AndroidViewController,
-                        gestureRecognizers: const <Factory<
-                            OneSequenceGestureRecognizer>>{},
-                        hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-                      );
-                    },
-                    onCreatePlatformView: (PlatformViewCreationParams params) {
-                      return PlatformViewsService.initSurfaceAndroidView(
-                        id: params.id,
-                        viewType: _viewType,
-                        layoutDirection: TextDirection.ltr,
-                        creationParams: _nativeCreationParams,
-                        creationParamsCodec: const StandardMessageCodec(),
-                        onFocus: () {
-                          params.onFocusChanged(true);
-                        },
-                      )
-                        ..addOnPlatformViewCreatedListener(
-                            params.onPlatformViewCreated)
-                        ..create();
-                    },
-                  )
-                : UiKitView(
-                    key: _key,
-                    viewType: _viewType,
+                    layoutDirection: TextDirection.ltr,
                     creationParams: _nativeCreationParams,
                     creationParamsCodec: const StandardMessageCodec(),
-                  ),
-          );
-        },
+                    onFocus: () {
+                      params.onFocusChanged(true);
+                    },
+                  )
+                    ..addOnPlatformViewCreatedListener(
+                        params.onPlatformViewCreated)
+                    ..create();
+                },
+              )
+            : UiKitView(
+                key: _key,
+                viewType: _viewType,
+                creationParams: _nativeCreationParams,
+                creationParamsCodec: const StandardMessageCodec(),
+              ),
       ),
     );
-  }
-
-  Future<Map<String, double>> fetchViewSize() async {
-    if (Platform.isAndroid) {
-      final Map<String, dynamic> sizeMap =
-          //TODO get channel?
-          <String, dynamic>{'width': 300, 'height': 250};
-      return sizeMap.map((key, value) => MapEntry(key, value.toDouble()));
-    } else {
-      return {'width': 0.0, 'height': 0.0};
-    }
   }
 
   Map<String, dynamic> get _nativeCreationParams => {
