@@ -3,10 +3,10 @@ import 'package:stack_appodeal_flutter/src/native_ad/options/views/view_options.
 class NativeMediaOptions extends ViewOptions {
   final int? margin;
 
-  const NativeMediaOptions({this.margin = 4}) : super(margin: margin);
+  NativeMediaOptions({this.margin = 4});
 
   @override
-  Map<String, dynamic>? toMap() => {
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
       };
 }

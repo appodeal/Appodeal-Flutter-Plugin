@@ -8,12 +8,10 @@ class AdAttributionOptions extends ViewOptions {
   final int? margin;
   final Color? backgroundColor, textColor;
 
-  const AdAttributionOptions(
-      {this.margin = 4, this.backgroundColor, this.textColor})
-      : super(margin: margin);
+  AdAttributionOptions({this.margin = 4, this.backgroundColor, this.textColor});
 
   @override
-  Map<String, dynamic>? toMap() => {
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
         'background': Utils.convertColorToInt(backgroundColor),
         'textColor': Utils.convertColorToInt(textColor),

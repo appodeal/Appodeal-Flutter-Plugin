@@ -49,7 +49,7 @@ class NativeTemplate extends NativeAd {
         'widgetWidth': widgetWidth,
         'templateType': templateType.toString(),
         'adChoicePosition': adChoicePosition.toString(),
-        'templateOptions': options?.toMap,
+        'templateOptions': options.toMap,
       };
 }
 

@@ -8,25 +8,25 @@
         android:id="@+id/nativeIconView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/apd_icon_preview"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"/>
+        android:background="@drawable/apd_icon_preview" />
 
     <TextView
         android:id="@+id/adAttributionView"
         android:layout_width="@dimen/default_ad_attribution_size"
         android:layout_height="@dimen/default_ad_attribution_size"
+        android:layout_alignTop="@id/titleView"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
-        android:gravity="center"
         android:layout_toEndOf="@id/callToActionView"
         android:background="@color/ad_attribution_background"
+        android:gravity="center"
         android:maxLines="1"
         android:singleLine="true"
         android:text="@string/apd_ad_attribution"
-        android:layout_alignBaseline="@+id/titleView"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/ad_attribution_text_color" />
 
@@ -34,11 +34,11 @@
         android:id="@+id/titleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/adAttributionView"
         android:layout_marginStart="@dimen/default_margin"
         android:layout_marginTop="@dimen/default_margin"
         android:layout_marginEnd="@dimen/default_margin"
         android:layout_marginBottom="@dimen/default_margin"
+        android:layout_toEndOf="@id/adAttributionView"
         android:maxLines="1"
         android:singleLine="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"

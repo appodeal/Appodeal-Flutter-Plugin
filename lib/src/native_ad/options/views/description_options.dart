@@ -8,12 +8,10 @@ class DescriptionOptions extends ViewOptions {
   final int? margin, textSize;
   final Color? textColor;
 
-  const DescriptionOptions(
-      {this.margin = 4, this.textSize = 14, this.textColor})
-      : super(margin: margin);
+  DescriptionOptions({this.margin = 4, this.textSize = 14, this.textColor});
 
   @override
-  Map<String, dynamic>? toMap() => {
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
         'textSize': textSize,
         'textColor': Utils.convertColorToInt(textColor),

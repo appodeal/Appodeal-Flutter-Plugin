@@ -16,8 +16,7 @@ class NativeTemplateOptions extends NativeOptions {
     this.adAttributionTextColor,
   });
 
-  @override
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'iconSize': iconSize,
         'titleTextSize': titleTextSize,
         'ctaTextSize': ctaTextSize,

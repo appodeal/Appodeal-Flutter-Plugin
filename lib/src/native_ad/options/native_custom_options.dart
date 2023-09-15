@@ -30,17 +30,16 @@ class NativeCustomOptions extends NativeOptions {
     this.titleOptions,
   }) : super();
 
-  @override
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'mediaViewPosition': mediaViewPosition?.toString(),
         'viewPosition': viewPosition?.toString(),
         'containerMargin': containerMargin,
-        'adAttributionOptions': adAttributionOptions?.toMap(),
-        'ctaOptions': ctaOptions?.toMap(),
-        'descriptionOptions': descriptionOptions?.toMap(),
-        'nativeIconOptions': nativeIconOptions?.toMap(),
-        'nativeMediaOptions': nativeMediaOptions?.toMap(),
-        'titleOptions': titleOptions?.toMap(),
+        'adAttributionOptions': adAttributionOptions?.toMap,
+        'ctaOptions': ctaOptions?.toMap,
+        'descriptionOptions': descriptionOptions?.toMap,
+        'nativeIconOptions': nativeIconOptions?.toMap,
+        'nativeMediaOptions': nativeMediaOptions?.toMap,
+        'titleOptions': titleOptions?.toMap,
       };
 }
 

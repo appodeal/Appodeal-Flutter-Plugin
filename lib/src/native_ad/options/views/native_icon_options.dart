@@ -3,11 +3,10 @@ import 'package:stack_appodeal_flutter/src/native_ad/options/views/view_options.
 class NativeIconOptions extends ViewOptions {
   final int size, margin;
 
-  const NativeIconOptions({this.size = 70, this.margin = 4})
-      : super(margin: margin);
+  NativeIconOptions({this.size = 70, this.margin = 4});
 
   @override
-  Map<String, dynamic>? toMap() => {
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
         'size': size,
       };

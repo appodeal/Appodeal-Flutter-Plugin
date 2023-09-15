@@ -1,3 +1,3 @@
 abstract class NativeOptions {
-  Map<String, dynamic> toMap();
+  Map<String, dynamic> get toMap;
 }

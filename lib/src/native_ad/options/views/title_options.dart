@@ -8,14 +8,14 @@ class TitleOptions extends ViewOptions {
   final int? margin, textSize;
   final Color? textColor;
 
-  const TitleOptions({
+  TitleOptions({
     this.margin = 4,
     this.textSize = 16,
     this.textColor,
-  }) : super(margin: margin);
+  });
 
   @override
-  Map<String, dynamic>? toMap() => {
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
         'textSize': textSize,
         'textColor': Utils.convertColorToInt(textColor),

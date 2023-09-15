@@ -86,7 +86,7 @@ object ParserUtils {
                 titleColor = convertColor(this["textColor"] as Long?)
             }
             return CustomParams(
-                viewHeight = this["viewHeight"] as Int,
+                viewHeight = this["viewHeight"] as Int? ?:0,
                 mediaViewPosition = parseMediaViewPosition(this["mediaViewPosition"] as String?),
                 viewPosition = parseNativeBannerViewPosition(this["viewPosition"] as String?),
 

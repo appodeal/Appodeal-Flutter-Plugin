@@ -8,16 +8,15 @@ class CTAOptions extends ViewOptions {
   final int? textSize, margin, radius;
   final Color? background, textColor;
 
-  const CTAOptions(
+  CTAOptions(
       {this.textSize = 16,
       this.margin = 4,
       this.radius = 16,
       this.background,
-      this.textColor})
-      : super(margin: margin);
+      this.textColor});
 
   @override
-  Map<String, dynamic>? toMap() => {
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
         'textSize': textSize,
         'textColor': Utils.convertColorToInt(textColor),
