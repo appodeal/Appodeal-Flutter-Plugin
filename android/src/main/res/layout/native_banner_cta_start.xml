@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.appodeal.ads.nativead.NativeIconView
+        android:id="@+id/nativeIconView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/apd_icon_preview"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/adAttributionView"
+            android:layout_width="@dimen/default_ad_attribution_size"
+            android:layout_height="@dimen/default_ad_attribution_size"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_toEndOf="@id/nativeIconView"
+            android:gravity="center"
+            android:background="@color/ad_attribution_background"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="@string/apd_ad_attribution"
+            android:layout_alignBaseline="@+id/titleView"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="@color/ad_attribution_text_color" />
+
+        <TextView
+            android:id="@+id/titleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/adAttributionView"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            tools:text="@string/default_title" />
+
+        <TextView
+            android:id="@+id/descriptionView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/titleView"
+            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/default_margin"
+            android:layout_toEndOf="@id/nativeIconView"
+            android:ellipsize="end"
+            android:maxEms="100"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            tools:text="@string/default_description" />
+
+    <Button
+        android:id="@+id/callToActionView"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/default_cta_height"
+        android:background="@drawable/cta_background"
+        android:paddingEnd="@dimen/default_cta_padding"
+        android:paddingStart="@dimen/default_cta_padding"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        tools:text="@string/default_cta" />
+
+</RelativeLayout>

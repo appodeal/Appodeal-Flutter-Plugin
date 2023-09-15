@@ -16,7 +16,8 @@ class NativeParams(
 )
 
 class CustomParams(
-    val mediaViewPosition: MediaViewPosition,
+    val viewHeight: Int,
+    val mediaViewPosition: MediaViewPosition?,
     val viewPosition: NativeBannerViewPosition,
     val containerMargin: Int,
     val iconSize: Int,
@@ -27,10 +28,15 @@ class CustomParams(
     val descriptionMargin: Int,
     val ctaTextSize: Int,
     val ctaMargin: Int,
+    val adAttributionMargin: Int,
+    val mediaViewMargin: Int,
     val titleColor: Int?,
     val descriptionColor: Int?,
     val ctaBackground: Int?,
     val ctaTextColor: Int?,
+    val ctaRadius: Int,
+    val adAttributionBackgroundColor: Int?,
+    val adAttributionTextColor: Int?,
 )
 
 class TemplateParams(

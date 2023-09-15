@@ -1,12 +1,13 @@
 import 'dart:ui';
 
-import 'native_custom_options.dart';
+import 'native_options.dart';
+import 'views/utils.dart';
 
-class NativeTemplateOptions {
+class NativeTemplateOptions extends NativeOptions {
   final int? iconSize, titleTextSize, ctaTextSize, descriptionTextSize;
   final Color? adAttributionBackgroundColor, adAttributionTextColor;
 
-  const NativeTemplateOptions({
+  NativeTemplateOptions({
     this.iconSize,
     this.titleTextSize,
     this.ctaTextSize,
@@ -15,14 +16,13 @@ class NativeTemplateOptions {
     this.adAttributionTextColor,
   });
 
-  Map<String, dynamic> get toMap => <String, dynamic>{
+  @override
+  Map<String, dynamic> toMap() => {
         'iconSize': iconSize,
         'titleTextSize': titleTextSize,
         'ctaTextSize': ctaTextSize,
-        'ctaTextSize': ctaTextSize,
         'descriptionTextSize': descriptionTextSize,
-        'adAttributionBackgroundColor':
-            convertColorToInt(adAttributionBackgroundColor),
-        'adAttributionTextColor': convertColorToInt(adAttributionTextColor),
+        'adAttributionBackgroundColor': Utils.convertColorToInt(adAttributionBackgroundColor),
+        'adAttributionTextColor': Utils.convertColorToInt(adAttributionTextColor),
       };
 }

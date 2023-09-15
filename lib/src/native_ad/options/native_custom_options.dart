@@ -1,60 +1,47 @@
-import 'dart:ui';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/ad_attrubution_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/cta_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/description_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/native_icon_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/native_media_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/title_options.dart';
 
-class NativeCustomOptions {
+import 'native_options.dart';
+
+class NativeCustomOptions extends NativeOptions {
   final NativeBannerViewPosition? viewPosition;
   final MediaViewPosition? mediaViewPosition;
-  final int? containerMargin,
-      iconSize,
-      iconMargin,
-      titleTextSize,
-      titleMargin,
-      descriptionTextSize,
-      descriptionMargin,
-      ctaTextSize,
-      ctaMargin;
-  final Color? titleColor, descriptionColor, ctaBackground, ctaTextColor;
+  final int? containerMargin;
+  final AdAttributionOptions? adAttributionOptions;
+  final CTAOptions? ctaOptions;
+  final DescriptionOptions? descriptionOptions;
+  final NativeIconOptions? nativeIconOptions;
+  final NativeMediaOptions? nativeMediaOptions;
+  final TitleOptions? titleOptions;
 
-  const NativeCustomOptions({
+  NativeCustomOptions({
     this.viewPosition = NativeBannerViewPosition.ICON_START,
     this.mediaViewPosition,
     this.containerMargin,
-    this.iconSize,
-    this.iconMargin,
-    this.titleTextSize,
-    this.titleMargin,
-    this.descriptionTextSize,
-    this.descriptionMargin,
-    this.ctaTextSize,
-    this.ctaMargin,
-    this.titleColor,
-    this.descriptionColor,
-    this.ctaBackground,
-    this.ctaTextColor,
-  });
+    this.adAttributionOptions,
+    this.ctaOptions,
+    this.descriptionOptions,
+    this.nativeIconOptions,
+    this.nativeMediaOptions,
+    this.titleOptions,
+  }) : super();
 
-  Map<String, dynamic> get toMap => <String, dynamic>{
+  @override
+  Map<String, dynamic> toMap() => {
         'mediaViewPosition': mediaViewPosition?.toString(),
         'viewPosition': viewPosition?.toString(),
         'containerMargin': containerMargin,
-        'iconSize': iconSize,
-        'titleTextSize': titleTextSize,
-        'iconMargin': iconMargin,
-        'titleMargin': titleMargin,
-        'descriptionTextSize': descriptionTextSize,
-        'descriptionMargin': descriptionMargin,
-        'ctaTextSize': ctaTextSize,
-        'ctaMargin': ctaMargin,
-        'titleColor': convertColorToInt(titleColor),
-        'descriptionColor': convertColorToInt(descriptionColor),
-        'ctaBackground': convertColorToInt(ctaBackground),
-        'ctaTextColor': convertColorToInt(ctaTextColor),
+        'adAttributionOptions': adAttributionOptions?.toMap(),
+        'ctaOptions': ctaOptions?.toMap(),
+        'descriptionOptions': descriptionOptions?.toMap(),
+        'nativeIconOptions': nativeIconOptions?.toMap(),
+        'nativeMediaOptions': nativeMediaOptions?.toMap(),
+        'titleOptions': titleOptions?.toMap(),
       };
-}
-
-int? convertColorToInt(Color? color) {
-  if (color == null) return null;
-  final hexColor = color.value.toRadixString(16).toUpperCase();
-  return int.parse('0xFF$hexColor');
 }
 
 enum NativeBannerViewPosition { ICON_START, CTA_START }

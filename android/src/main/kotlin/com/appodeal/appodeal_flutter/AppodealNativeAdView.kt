@@ -2,6 +2,7 @@ package com.appodeal.appodeal_flutter
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.appodeal.ads.Appodeal
@@ -48,7 +49,13 @@ class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>) : Platf
                 else -> error("Native template type doesn't support")
             }
         } else {
-            NativeAdView(context)
+            ViewBuilder.buildCustomAdView(
+                context = context,
+                adChoicePosition = params.adChoicePosition,
+                params = checkNotNull(params.customOptions) {
+                    Log.e("NativeAdView", "customOptions cannot be null")
+                }
+            )
         }
         Appodeal.getNativeAds(1).firstOrNull()?.let {
             adView.registerView(it, placement)
