@@ -1,3 +1,3 @@
-abstract class ViewOptions {
+mixin AppodealPlatformArguments {
   Map<String, dynamic> get toMap;
 }

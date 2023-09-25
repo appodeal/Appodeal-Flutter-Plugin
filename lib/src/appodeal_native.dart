@@ -7,21 +7,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/native_ad.dart';
 
-class AppodealNative extends StatefulWidget {
+class AppodealNativeAd extends StatefulWidget {
   final NativeAd nativeAd;
   final String? placement;
 
-  const AppodealNative({
+  const AppodealNativeAd({
     Key? key,
     required this.nativeAd,
     this.placement = "default",
   }) : super(key: key);
 
   @override
-  _AppodealNativeState createState() => _AppodealNativeState();
+  _AppodealNativeAdState createState() => _AppodealNativeAdState();
 }
 
-class _AppodealNativeState extends State<AppodealNative> {
+class _AppodealNativeAdState extends State<AppodealNativeAd> {
   final UniqueKey _key = UniqueKey();
   final String _viewType = 'appodeal_flutter/native_view';
 
@@ -74,7 +74,7 @@ class _AppodealNativeState extends State<AppodealNative> {
   }
 
   Map<String, dynamic> get _nativeCreationParams => {
-        'nativeAd': widget.nativeAd.toMap(),
+        'nativeAd': widget.nativeAd.toMap,
         'adSize': "NATIVE",
         'placement': widget.placement,
       };

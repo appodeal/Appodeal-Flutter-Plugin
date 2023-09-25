@@ -1,4 +1,6 @@
-class AppodealBannerSize {
+import 'package:stack_appodeal_flutter/src/appodeal_platform_arguments.dart';
+
+class AppodealBannerSize with AppodealPlatformArguments {
   final int width, height;
   final String? name;
 
@@ -13,6 +15,7 @@ class AppodealBannerSize {
     this.name,
   });
 
+  @override
   Map<String, dynamic> get toMap => <String, dynamic>{
         'width': width,
         'height': height,

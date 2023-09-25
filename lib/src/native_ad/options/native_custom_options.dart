@@ -1,8 +1,8 @@
 import 'package:stack_appodeal_flutter/src/native_ad/options/views/ad_attrubution_options.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/views/cta_options.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/views/description_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/native_icon_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/native_media_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/icon_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/media_options.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/views/title_options.dart';
 
 import 'native_options.dart';
@@ -14,8 +14,8 @@ class NativeCustomOptions extends NativeOptions {
   final AdAttributionOptions? adAttributionOptions;
   final CTAOptions? ctaOptions;
   final DescriptionOptions? descriptionOptions;
-  final NativeIconOptions? nativeIconOptions;
-  final NativeMediaOptions? nativeMediaOptions;
+  final IconOptions? nativeIconOptions;
+  final MediaOptions? nativeMediaOptions;
   final TitleOptions? titleOptions;
 
   NativeCustomOptions({
@@ -30,6 +30,7 @@ class NativeCustomOptions extends NativeOptions {
     this.titleOptions,
   }) : super();
 
+  @override
   Map<String, dynamic> get toMap => <String, dynamic>{
         'mediaViewPosition': mediaViewPosition?.toString(),
         'viewPosition': viewPosition?.toString(),

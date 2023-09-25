@@ -1,23 +1,20 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/view_options.dart';
-
+import '../../../../stack_appodeal_flutter.dart';
 import 'utils.dart';
 
-class TitleOptions extends ViewOptions {
-  final int? margin, textSize;
-  final Color? textColor;
+class TitleOptions extends TextStyle with AppodealPlatformArguments {
+  final double margin;
 
   TitleOptions({
-    this.margin = 4,
-    this.textSize = 16,
-    this.textColor,
-  });
+    double fontSize = 16.0,
+    Color color = Colors.black,
+    this.margin = 4.0,
+  }) : super(fontSize: fontSize, color: color);
 
-  @override
   Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
-        'textSize': textSize,
-        'textColor': Utils.convertColorToInt(textColor),
+        'textSize': fontSize,
+        'textColor': Utils.convertColorToInt(color),
       };
 }

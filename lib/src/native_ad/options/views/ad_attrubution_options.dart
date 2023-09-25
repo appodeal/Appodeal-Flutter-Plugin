@@ -1,19 +1,22 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/view_options.dart';
-
+import '../../../../stack_appodeal_flutter.dart';
 import 'utils.dart';
 
-class AdAttributionOptions extends ViewOptions {
-  final int? margin;
-  final Color? backgroundColor, textColor;
+class AdAttributionOptions extends TextStyle with AppodealPlatformArguments {
+  final double margin;
+  final Color backgroundColor;
 
-  AdAttributionOptions({this.margin = 4, this.backgroundColor, this.textColor});
+  AdAttributionOptions({
+    Color color = Colors.black,
+    this.margin = 4.0,
+    this.backgroundColor = Colors.transparent,
+  }) : super(color: color);
 
   @override
   Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
         'background': Utils.convertColorToInt(backgroundColor),
-        'textColor': Utils.convertColorToInt(textColor),
+        'textColor': Utils.convertColorToInt(color),
       };
 }

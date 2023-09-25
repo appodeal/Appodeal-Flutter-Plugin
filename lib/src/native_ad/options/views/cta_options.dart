@@ -1,26 +1,27 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/view_options.dart';
-
+import '../../../../stack_appodeal_flutter.dart';
 import 'utils.dart';
 
-class CTAOptions extends ViewOptions {
-  final int? textSize, margin, radius;
-  final Color? background, textColor;
+class CTAOptions extends TextStyle with AppodealPlatformArguments {
+  final double margin;
+  final double radius;
+  final Color backgroundColor;
 
-  CTAOptions(
-      {this.textSize = 16,
-      this.margin = 4,
-      this.radius = 16,
-      this.background,
-      this.textColor});
+  CTAOptions({
+    double fontSize = 16.0,
+    Color color = Colors.black,
+    this.margin = 4.0,
+    this.radius = 16.0,
+    this.backgroundColor = Colors.transparent,
+  }) : super(fontSize: fontSize, color: color);
 
   @override
   Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
-        'textSize': textSize,
-        'textColor': Utils.convertColorToInt(textColor),
-        'background': Utils.convertColorToInt(background),
+        'textSize': fontSize,
+        'textColor': Utils.convertColorToInt(color),
+        'background': Utils.convertColorToInt(backgroundColor),
         'radius': radius,
       };
 }

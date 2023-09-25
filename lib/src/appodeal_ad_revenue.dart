@@ -1,6 +1,6 @@
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
-class AppodealAdRevenue {
+class AppodealAdRevenue with AppodealPlatformArguments {
   final AppodealAdType adType;
   final String networkName;
   final String demandSource;
@@ -20,6 +20,7 @@ class AppodealAdRevenue {
         currency = arguments['currency'],
         revenuePrecision = arguments['revenuePrecision'];
 
+  @override
   Map<String, dynamic> get toMap => <String, dynamic>{
         'adType': adType,
         'networkName': networkName,

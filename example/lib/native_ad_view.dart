@@ -7,9 +7,9 @@ import 'package:stack_appodeal_flutter/src/native_ad/options/native_template_opt
 import 'package:stack_appodeal_flutter/src/native_ad/options/views/ad_attrubution_options.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/views/cta_options.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/views/description_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/native_icon_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/native_media_options.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/views/title_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/media_options.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/options/views/icon_options.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class NativePage extends StatefulWidget {
@@ -18,7 +18,7 @@ class NativePage extends StatefulWidget {
 }
 
 class _NativePageState extends State<NativePage> {
-  AppodealNative? appodealNative;
+  AppodealNativeAd? appodealNative;
   bool isShow = false;
 
   @override
@@ -106,17 +106,17 @@ class _NativePageState extends State<NativePage> {
                         viewPosition: NativeBannerViewPosition.ICON_START,
                         mediaViewPosition: null,
                         containerMargin: 4,
-                        adAttributionOptions: AdAttributionOptions(margin: 4, textColor: Colors.black, backgroundColor: Colors.teal),
-                        ctaOptions: CTAOptions(margin: 4, textSize: 16, textColor: Colors.black, background: Colors.orangeAccent),
-                        descriptionOptions: DescriptionOptions(margin: 4, textSize: 14, textColor: Colors.black),
-                        nativeIconOptions: NativeIconOptions(margin: 4, size: 50),
-                        nativeMediaOptions: NativeMediaOptions(margin: 4),
-                        titleOptions: TitleOptions(margin: 4, textSize: 16, textColor: Colors.black),
+                        adAttributionOptions: AdAttributionOptions(margin: 4, color: Colors.black, backgroundColor: Colors.teal),
+                        ctaOptions: CTAOptions(margin: 4, fontSize: 16, color: Colors.black, backgroundColor: Colors.orangeAccent),
+                        descriptionOptions: DescriptionOptions(margin: 4, fontSize: 14, color: Colors.black),
+                        nativeIconOptions: IconOptions(margin: 4, size: 50),
+                        nativeMediaOptions: MediaOptions(margin: 4),
+                        titleOptions: TitleOptions(margin: 4, fontSize: 16, color: Colors.black),
                       ),
                     );
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                      appodealNative = AppodealNativeAd(nativeAd: nativeAd);
                     });
                   },
                   child: const Text('NativeBanner'),
@@ -140,16 +140,16 @@ class _NativePageState extends State<NativePage> {
                           viewPosition: NativeBannerViewPosition.ICON_START,
                           mediaViewPosition: MediaViewPosition.TOP,
                           containerMargin: 4,
-                          adAttributionOptions: AdAttributionOptions(margin: 4, textColor: Colors.black, backgroundColor: Colors.teal),
-                          ctaOptions: CTAOptions(margin: 4, textSize: 16, textColor: Colors.black, background: Colors.orangeAccent),
-                          descriptionOptions: DescriptionOptions(margin: 4, textSize: 14, textColor: Colors.black),
-                          nativeIconOptions: NativeIconOptions(margin: 4, size: 50),
-                          nativeMediaOptions: NativeMediaOptions(margin: 4),
-                          titleOptions: TitleOptions(margin: 4, textSize: 16, textColor: Colors.black),
+                          adAttributionOptions: AdAttributionOptions(margin: 4, color: Colors.black, backgroundColor: Colors.teal),
+                          ctaOptions: CTAOptions(margin: 4, fontSize: 16, color: Colors.black, backgroundColor: Colors.orangeAccent),
+                          descriptionOptions: DescriptionOptions(margin: 4, fontSize: 14, color: Colors.black),
+                          nativeIconOptions: IconOptions(margin: 4, size: 50),
+                          nativeMediaOptions: MediaOptions(margin: 4),
+                          titleOptions: TitleOptions(margin: 4, fontSize: 16, color: Colors.black),
                         ));
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                      appodealNative = AppodealNativeAd(nativeAd: nativeAd);
                     });
                   },
                   child: const Text('NativeFull'),
@@ -177,7 +177,7 @@ class _NativePageState extends State<NativePage> {
                             adAttributionTextColor: Colors.black));
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                      appodealNative = AppodealNativeAd(nativeAd: nativeAd);
                     });
                   },
                   child: const Text('NativeNewsFeed'),
@@ -205,7 +205,7 @@ class _NativePageState extends State<NativePage> {
                             adAttributionTextColor: Colors.black));
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                      appodealNative = AppodealNativeAd(nativeAd: nativeAd);
                     });
                   },
                   child: const Text('NativeAppWall'),
@@ -234,7 +234,7 @@ class _NativePageState extends State<NativePage> {
                             adAttributionTextColor: Colors.black));
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNative(nativeAd: nativeAd);
+                      appodealNative = AppodealNativeAd(nativeAd: nativeAd);
                     });
                   },
                   child: const Text('NativeContentStream'),

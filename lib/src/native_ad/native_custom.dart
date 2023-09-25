@@ -21,7 +21,7 @@ class NativeCustom extends NativeAd {
         );
 
   @override
-  Map<String, dynamic> toMap() => <String, dynamic>{
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'isTemplate': isTemplate,
         'widgetHeight': widgetHeight,
         'widgetWidth': widgetWidth,

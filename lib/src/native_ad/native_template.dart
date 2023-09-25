@@ -15,18 +15,16 @@ class NativeTemplate extends NativeAd {
     this.adChoicePosition = AdChoicePosition.START_TOP,
   }) : super(
           adChoicePosition: adChoicePosition,
-          widgetHeight: NativeTemplate.getWidgetHeight(context, templateType),
-          widgetWidth: NativeTemplate.getWidgetWidth(context),
+          widgetHeight: getWidgetHeight(context, templateType),
+          widgetWidth: getWidgetWidth(context),
           isTemplate: false,
           options: options,
         );
 
-  @override
   static double getWidgetWidth(BuildContext context) {
     return MediaQuery.of(context).size.width;
   }
 
-  @override
   static double getWidgetHeight(
       BuildContext context, TemplateType templateType) {
     double width = getWidgetWidth(context);
@@ -43,7 +41,7 @@ class NativeTemplate extends NativeAd {
   }
 
   @override
-  Map<String, dynamic> toMap() => <String, dynamic>{
+  Map<String, dynamic> get toMap => <String, dynamic>{
         'isTemplate': isTemplate,
         'widgetHeight': widgetHeight,
         'widgetWidth': widgetWidth,
