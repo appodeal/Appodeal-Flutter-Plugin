@@ -39,9 +39,7 @@ class Appodeal {
   /// Log level verbose for [setLogLevel] method.
   static const LogLevelVerbose = 2;
 
-  @Deprecated("Will be removed in future releases.")
   static final _functions = Map<String, Function(MethodCall call)?>();
-  @Deprecated("Will be removed in future releases.")
   static final Future<dynamic> Function(MethodCall call) _handler =
       (call) async {
     _functions[call.method]?.call(call);
@@ -702,7 +700,6 @@ class Appodeal {
   }
 }
 
-@Deprecated("Will be changed in future releases.")
 MethodChannel _defaultChannel(final Future Function(MethodCall call) handler) {
   const channel = MethodChannel('appodeal_flutter');
   channel.setMethodCallHandler(handler);

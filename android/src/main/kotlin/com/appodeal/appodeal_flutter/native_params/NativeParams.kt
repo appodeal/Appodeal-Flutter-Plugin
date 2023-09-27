@@ -8,25 +8,32 @@ enum class AdChoicePosition { START_TOP, START_BOTTOM, END_TOP, END_BOTTOM }
 
 enum class TemplateType { CONTENT_STREAM, APP_WALL, NEWS_FEED }
 
-class NativeParams(
+sealed class NativeParams(
     val adChoicePosition: AdChoicePosition,
-    val customOptions: CustomParams?,
-    val templateOptions: TemplateParams?,
-    val isTemplate: Boolean = customOptions == null,
+    val iconSize: Int,
+    val titleTextSize: Int,
+    val ctaTextSize: Int,
+    val descriptionTextSize: Int,
+    val adAttributionBackgroundColor: Int?,
+    val adAttributionTextColor: Int?,
+    val viewHeight: Int,
 )
 
 class CustomParams(
-    val viewHeight: Int,
+    iconSize: Int,
+    titleTextSize: Int,
+    descriptionTextSize: Int,
+    ctaTextSize: Int,
+    adAttributionBackgroundColor: Int?,
+    adAttributionTextColor: Int?,
+    adChoicePosition: AdChoicePosition,
+    viewHeight: Int,
     val mediaViewPosition: MediaViewPosition?,
     val viewPosition: NativeBannerViewPosition,
     val containerMargin: Int,
-    val iconSize: Int,
     val iconMargin: Int,
-    val titleTextSize: Int,
     val titleMargin: Int,
-    val descriptionTextSize: Int,
     val descriptionMargin: Int,
-    val ctaTextSize: Int,
     val ctaMargin: Int,
     val adAttributionMargin: Int,
     val mediaViewMargin: Int,
@@ -35,16 +42,35 @@ class CustomParams(
     val ctaBackground: Int?,
     val ctaTextColor: Int?,
     val ctaRadius: Int,
-    val adAttributionBackgroundColor: Int?,
-    val adAttributionTextColor: Int?,
+
+    ) : NativeParams(
+    adChoicePosition = adChoicePosition,
+    iconSize = iconSize,
+    titleTextSize = titleTextSize,
+    ctaTextSize = ctaTextSize,
+    descriptionTextSize = descriptionTextSize,
+    adAttributionBackgroundColor = adAttributionBackgroundColor,
+    adAttributionTextColor = adAttributionTextColor,
+    viewHeight = viewHeight,
 )
 
 class TemplateParams(
     val templateType: TemplateType,
-    val iconSize: Int,
-    val titleTextSize: Int,
-    val ctaTextSize: Int,
-    val descriptionTextSize: Int,
-    val adAttributionBackgroundColor: Int?,
-    val adAttributionTextColor: Int?,
+    viewHeight: Int,
+    iconSize: Int,
+    titleTextSize: Int,
+    ctaTextSize: Int,
+    descriptionTextSize: Int,
+    adAttributionBackgroundColor: Int?,
+    adAttributionTextColor: Int?,
+    adChoicePosition: AdChoicePosition,
+) : NativeParams(
+    adChoicePosition = adChoicePosition,
+    iconSize = iconSize,
+    titleTextSize = titleTextSize,
+    ctaTextSize = ctaTextSize,
+    descriptionTextSize = descriptionTextSize,
+    adAttributionBackgroundColor = adAttributionBackgroundColor,
+    adAttributionTextColor = adAttributionTextColor,
+    viewHeight = viewHeight,
 )

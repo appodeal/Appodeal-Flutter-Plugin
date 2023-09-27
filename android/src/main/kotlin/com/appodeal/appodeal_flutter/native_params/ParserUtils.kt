@@ -18,23 +18,14 @@ object ParserUtils {
     private const val defaultAdAttributionMargin = 4
     private const val defaultMediaViewMargin = 4
 
-    fun HashMap<*, *>?.parseNativeParams(context: Context): NativeParams {
+    fun Map<*, *>?.parseNativeParams(context: Context): NativeParams? {
         println("parseNativeParams: ${toString()}\n")
-        val customOptions = parseCustomParams(context)
-        val templateOptions = if (customOptions == null ) {
-            parseTemplateParams(context)
-        } else {
-            null
-        }
-        return NativeParams(
-            adChoicePosition = parseAdChoicePosition(this?.get("adChoicePosition") as String?),
-            customOptions = customOptions,
-            templateOptions = templateOptions
-        )
+        return parseCustomParams(context) ?: parseTemplateParams(context)
     }
 
-    private fun HashMap<*, *>?.parseCustomParams(context: Context): CustomParams? {
+    private fun Map<*, *>?.parseCustomParams(context: Context): CustomParams? {
         print("parseCustomParams: ${toString()}\n")
+        val adChoicePosition = parseAdChoicePosition(this?.get("adChoicePosition") as String?)
         (this?.get("customOptions") as? Map<*, *>)?.apply {
 
             var iconSize: Int? = null
@@ -86,7 +77,8 @@ object ParserUtils {
                 titleColor = convertColor(this["textColor"] as Long?)
             }
             return CustomParams(
-                viewHeight = this["viewHeight"] as Int? ?:0,
+                adChoicePosition = adChoicePosition,
+                viewHeight = this["widgetHeight"] as Int? ?:0,
                 mediaViewPosition = parseMediaViewPosition(this["mediaViewPosition"] as String?),
                 viewPosition = parseNativeBannerViewPosition(this["viewPosition"] as String?),
 
@@ -120,11 +112,14 @@ object ParserUtils {
         return null
     }
 
-    private fun HashMap<*, *>?.parseTemplateParams(context: Context): TemplateParams? {
+    private fun Map<*, *>?.parseTemplateParams(context: Context): TemplateParams? {
         print("parseTemplateParams: ${toString()}\n")
+        val adChoicePosition = parseAdChoicePosition(this?.get("adChoicePosition") as String?)
         val templateType = parseTemplateType(this?.get("templateType") as String?)
         (this?.get("templateOptions") as? Map<*, *>)?.apply {
             return TemplateParams(
+                viewHeight = this["widgetHeight"] as Int? ?:0,
+                adChoicePosition = adChoicePosition,
                 templateType = templateType,
                 iconSize = convertToDp(context,this["iconSize"] as Int?) ?: defaultIconSize,
                 titleTextSize = this["titleTextSize"] as Int? ?: defaultTitleTextSize,

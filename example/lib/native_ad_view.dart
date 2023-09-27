@@ -1,15 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/native_ad.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/native_custom.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/native_template.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/native_custom_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/native_template_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/ad_attrubution_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/cta_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/description_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/title_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/media_options.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/options/views/icon_options.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class NativePage extends StatefulWidget {
@@ -18,7 +7,7 @@ class NativePage extends StatefulWidget {
 }
 
 class _NativePageState extends State<NativePage> {
-  AppodealNativeAd? appodealNative;
+  AppodealNative? appodealNative;
   bool isShow = false;
 
   @override

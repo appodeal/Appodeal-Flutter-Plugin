@@ -30,8 +30,9 @@ class _AppodealNativeAdState extends State<AppodealNativeAd> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
+    return SizedBox(
+      width: widget.nativeAd.widgetWidth,
+      height: widget.nativeAd.widgetHeight,
       child: Container(
         width: double.infinity,
         child: Platform.isAndroid
