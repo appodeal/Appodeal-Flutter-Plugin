@@ -4,12 +4,12 @@ import '../../../../stack_appodeal_flutter.dart';
 import 'utils.dart';
 
 class AdAttributionOptions extends TextStyle with AppodealPlatformArguments {
-  final double margin;
+  final int margin;
   final Color backgroundColor;
 
   AdAttributionOptions({
     Color color = Colors.black,
-    this.margin = 4.0,
+    this.margin = 4,
     this.backgroundColor = Colors.transparent,
   }) : super(color: color);
 

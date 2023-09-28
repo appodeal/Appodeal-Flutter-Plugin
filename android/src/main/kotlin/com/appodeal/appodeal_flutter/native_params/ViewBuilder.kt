@@ -43,6 +43,7 @@ object ViewBuilder {
             (callToActionView as? Button)?.textSize = params.ctaTextSize.toFloat()
             iconView?.layoutParams = RelativeLayout.LayoutParams(params.iconSize, params.iconSize)
             (descriptionView as? TextView)?.textSize = params.descriptionTextSize.toFloat()
+            layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, params.viewHeight)
         }
     }
 
@@ -63,6 +64,7 @@ object ViewBuilder {
             (titleView as? TextView)?.textSize = params.titleTextSize.toFloat()
             (callToActionView as? Button)?.textSize = params.ctaTextSize.toFloat()
             (descriptionView as? TextView)?.textSize = params.descriptionTextSize.toFloat()
+            layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, params.viewHeight)
         }
     }
 
@@ -83,6 +85,7 @@ object ViewBuilder {
             (titleView as? TextView)?.textSize = params.titleTextSize.toFloat()
             (callToActionView as? Button)?.textSize = params.ctaTextSize.toFloat()
             (descriptionView as? TextView)?.textSize = params.descriptionTextSize.toFloat()
+            layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, params.viewHeight)
         }
     }
 
@@ -94,20 +97,22 @@ object ViewBuilder {
         val nativeAdView: NativeAdView =
             LayoutInflater.from(context)
                 .inflate(R.layout.custom_native_ad, null, false) as NativeAdView
+        nativeAdView.layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, params.viewHeight)
         val nativeBannerId = when (params.viewPosition) {
             NativeBannerViewPosition.ICON_START -> R.layout.native_banner_icon_start
             NativeBannerViewPosition.CTA_START -> R.layout.native_banner_cta_start
         }
 
         val container = nativeAdView.findViewById<LinearLayout>(R.id.native_container).apply {
-            layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-                setMargins(
-                    params.containerMargin,
-                    params.containerMargin,
-                    params.containerMargin,
-                    params.containerMargin,
-                )
-            }
+            layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, params.viewHeight)
+                .apply {
+                    setMargins(
+                        params.containerMargin,
+                        params.containerMargin,
+                        params.containerMargin,
+                        params.containerMargin,
+                    )
+                }
         }
 
         val nativeBanner = LayoutInflater.from(context).inflate(nativeBannerId, null, false)

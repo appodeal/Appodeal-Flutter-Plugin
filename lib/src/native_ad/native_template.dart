@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/native_ad.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/native_template_options.dart';
 
-class NativeTemplate extends NativeAd {
+class WidgetTemplateParams extends WidgetAdParams {
   final BuildContext context;
   final TemplateType templateType;
   final AdChoicePosition? adChoicePosition;
-  final NativeTemplateOptions options;
+  final NativeTemplateOptions widgetOptions;
 
-  NativeTemplate({
-    required this.options,
+  WidgetTemplateParams({
+    required this.widgetOptions,
     required this.context,
     required this.templateType,
     this.adChoicePosition = AdChoicePosition.START_TOP,
@@ -17,8 +17,7 @@ class NativeTemplate extends NativeAd {
           adChoicePosition: adChoicePosition,
           widgetHeight: getWidgetHeight(context, templateType),
           widgetWidth: getWidgetWidth(context),
-          isTemplate: false,
-          options: options,
+          widgetOptions: widgetOptions,
         );
 
   static double getWidgetWidth(BuildContext context) {
@@ -42,12 +41,11 @@ class NativeTemplate extends NativeAd {
 
   @override
   Map<String, dynamic> get toMap => <String, dynamic>{
-        'isTemplate': isTemplate,
-        'widgetHeight': widgetHeight,
-        'widgetWidth': widgetWidth,
+        'widgetHeight': widgetHeight.toInt(),
+        'widgetWidth': widgetWidth.toInt(),
         'templateType': templateType.toString(),
         'adChoicePosition': adChoicePosition.toString(),
-        'templateOptions': options.toMap,
+        'templateOptions': widgetOptions.toMap,
       };
 }
 

@@ -4,17 +4,17 @@ import '../../../../stack_appodeal_flutter.dart';
 import 'utils.dart';
 
 class TitleOptions extends TextStyle with AppodealPlatformArguments {
-  final double margin;
+  final int margin;
 
   TitleOptions({
-    double fontSize = 16.0,
+    int fontSize = 16,
     Color color = Colors.black,
-    this.margin = 4.0,
-  }) : super(fontSize: fontSize, color: color);
+    this.margin = 4,
+  }) : super(fontSize: fontSize.toDouble(), color: color);
 
   Map<String, dynamic> get toMap => <String, dynamic>{
         'margin': margin,
-        'textSize': fontSize,
+        'textSize': fontSize?.toInt(),
         'textColor': Utils.convertColorToInt(color),
       };
 }

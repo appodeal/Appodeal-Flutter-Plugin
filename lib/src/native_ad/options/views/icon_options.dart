@@ -1,11 +1,11 @@
 import '../../../../stack_appodeal_flutter.dart';
 
 class IconOptions with AppodealPlatformArguments {
-  final double margin, size;
+  final int margin, size;
 
   IconOptions({
-    this.margin = 4.0,
-    this.size = 70.0,
+    this.margin = 4,
+    this.size = 70,
   });
 
   @override

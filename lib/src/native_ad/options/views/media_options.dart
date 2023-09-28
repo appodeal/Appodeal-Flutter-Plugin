@@ -1,10 +1,10 @@
 import '../../../../stack_appodeal_flutter.dart';
 
 class MediaOptions with AppodealPlatformArguments {
-  final double margin;
+  final int margin;
 
   MediaOptions({
-    this.margin = 4.0,
+    this.margin = 4,
   });
 
   @override

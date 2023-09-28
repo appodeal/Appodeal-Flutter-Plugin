@@ -3,6 +3,8 @@ package com.appodeal.appodeal_flutter.native_params
 import android.content.Context
 import android.graphics.Color
 import android.util.TypedValue
+import com.appodeal.appodeal_flutter.native_params.ParserUtils.parseCustomParams
+import com.appodeal.appodeal_flutter.native_params.ParserUtils.parseTemplateParams
 
 object ParserUtils {
     private const val defaultContainerMargin = 4
@@ -19,13 +21,12 @@ object ParserUtils {
     private const val defaultMediaViewMargin = 4
 
     fun Map<*, *>?.parseNativeParams(context: Context): NativeParams? {
-        println("parseNativeParams: ${toString()}\n")
         return parseCustomParams(context) ?: parseTemplateParams(context)
     }
 
     private fun Map<*, *>?.parseCustomParams(context: Context): CustomParams? {
-        print("parseCustomParams: ${toString()}\n")
         val adChoicePosition = parseAdChoicePosition(this?.get("adChoicePosition") as String?)
+        val viewHeight = convertToDp(context, this?.get("widgetHeight") as Int?) ?: 0
         (this?.get("customOptions") as? Map<*, *>)?.apply {
 
             var iconSize: Int? = null
@@ -78,12 +79,11 @@ object ParserUtils {
             }
             return CustomParams(
                 adChoicePosition = adChoicePosition,
-                viewHeight = this["widgetHeight"] as Int? ?:0,
+                viewHeight = viewHeight,
                 mediaViewPosition = parseMediaViewPosition(this["mediaViewPosition"] as String?),
                 viewPosition = parseNativeBannerViewPosition(this["viewPosition"] as String?),
 
-                containerMargin = convertToDp(context, this["containerMargin"] as Int?)
-                    ?: defaultContainerMargin,
+                containerMargin = convertToDp(context, this["containerMargin"] as Int?) ?: defaultContainerMargin,
 
                 iconSize = iconSize ?: defaultIconSize,
                 iconMargin = iconMargin ?: defaultIconMargin,
@@ -113,15 +113,15 @@ object ParserUtils {
     }
 
     private fun Map<*, *>?.parseTemplateParams(context: Context): TemplateParams? {
-        print("parseTemplateParams: ${toString()}\n")
         val adChoicePosition = parseAdChoicePosition(this?.get("adChoicePosition") as String?)
         val templateType = parseTemplateType(this?.get("templateType") as String?)
+        val viewHeight = convertToDp(context, this?.get("widgetHeight") as Int?) ?: 0
         (this?.get("templateOptions") as? Map<*, *>)?.apply {
             return TemplateParams(
-                viewHeight = this["widgetHeight"] as Int? ?:0,
+                viewHeight = viewHeight,
                 adChoicePosition = adChoicePosition,
                 templateType = templateType,
-                iconSize = convertToDp(context,this["iconSize"] as Int?) ?: defaultIconSize,
+                iconSize = convertToDp(context, this["iconSize"] as Int?) ?: defaultIconSize,
                 titleTextSize = this["titleTextSize"] as Int? ?: defaultTitleTextSize,
                 ctaTextSize = this["ctaTextSize"] as Int? ?: defaultCtaTextSize,
                 descriptionTextSize = this["descriptionTextSize"] as Int? ?: defaultDescriptionTextSize,
@@ -174,7 +174,7 @@ object ParserUtils {
     }
 
     private fun convertToDp(context: Context, size: Int?): Int? {
-        size?:return null
+        size ?: return null
         val r = context.resources
         return TypedValue.applyDimension(
             TypedValue.COMPLEX_UNIT_DIP,
