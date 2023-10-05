@@ -12,7 +12,8 @@ class _InterstitialPageState extends State<InterstitialPage> {
     super.initState();
 
     Appodeal.setInterstitialCallbacks(
-        onInterstitialLoaded: (isPrecache) => print('onInterstitialLoaded: isPrecache - $isPrecache'),
+        onInterstitialLoaded: (isPrecache) =>
+            print('onInterstitialLoaded: isPrecache - $isPrecache'),
         onInterstitialFailedToLoad: () => print('onInterstitialFailedToLoad'),
         onInterstitialShown: () => print('onInterstitialShown'),
         onInterstitialShowFailed: () => print('onInterstitialShowFailed'),
@@ -45,8 +46,8 @@ class _InterstitialPageState extends State<InterstitialPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isInitialized =
-                        await Appodeal.isInitialized(AppodealAdType.Interstitial);
+                    var isInitialized = await Appodeal.isInitialized(
+                        AppodealAdType.Interstitial);
                     print('Interstitial isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),
