@@ -43,7 +43,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.1.3
+  stack_appodeal_flutter: 3.2.0-beta.1
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -61,29 +61,49 @@ $ flutter pub get
 source 'https://github.com/appodeal/CocoaPods.git'
 source 'https://cdn.cocoapods.org/'
 
-platform :ios, '12.0'
+platform :ios, '13.0'
+
+use_frameworks!
 
 def appodeal
-  pod 'APDAdColonyAdapter', '3.1.3.0'
-  pod 'BidMachineAdColonyAdapter', '~> 2.3.0.0'
-  pod 'APDAppLovinAdapter', '3.1.3.0'
-  pod 'APDBidMachineAdapter', '3.1.3.0' # Required
-  pod 'BidMachineMintegralAdapter', '~> 2.3.0.0'
-  pod 'BidMachineAmazonAdapter', '~> 2.3.0.0'
-  pod 'BidMachineCriteoAdapter', '~> 2.3.0.0'
-  pod 'BidMachineSmaatoAdapter', '~> 2.3.0.0'
-  pod 'BidMachineTapjoyAdapter', '~> 2.3.0.0'
-  pod 'BidMachinePangleAdapter', '~> 2.3.0.0'
-  pod 'APDGoogleAdMobAdapter', '3.1.3.0'
-  pod 'APDIronSourceAdapter', '3.1.3.0'
-  pod 'APDMetaAudienceNetworkAdapter', '3.1.3.0'
-  pod 'BidMachineMetaAudienceAdapter', '~> 2.3.0.0'
-  pod 'APDMyTargetAdapter', '3.1.3.0'
-  pod 'BidMachineMyTargetAdapter', '~> 2.3.0.0'
-  pod 'APDUnityAdapter', '3.1.3.0'
-  pod 'APDVungleAdapter', '3.1.3.0'
-  pod 'BidMachineVungleAdapter', '~> 2.3.0.0'
-  pod 'APDYandexAdapter', '3.1.3.0'
+  pod 'Appodeal', '3.2.0-beta.1'
+  pod 'APDAdColonyAdapter', '3.2.0.0-beta.1'
+  pod 'BidMachineAdColonyAdapter', '~> 2.3.0'
+  pod 'APDAppLovinAdapter', '3.2.0.0-beta.1'
+  pod 'BidonAdapterAppLovin', '~> 0.4'
+  pod 'APDBidMachineAdapter', '3.2.0.0-beta.1' # Required
+  pod 'BidMachineAmazonAdapter', '~> 2.3.0'
+  pod 'BidMachineCriteoAdapter', '~> 2.3.0'
+  pod 'BidMachineSmaatoAdapter', '~> 2.3.0'
+  pod 'BidMachineTapjoyAdapter', '~> 2.3.0'
+  pod 'BidMachinePangleAdapter', '~> 2.3.0'
+  pod 'APDBidonAdapter', '3.2.0.0-beta.1' # Required
+  pod 'BidonAdapterBidMachine', '~> 0.4'
+  pod 'APDBigoAdsAdapter', '3.2.0.0-beta.1'
+  pod 'BidonAdapterBigoAds', '~> 0.4'
+  pod 'APDDTExchangeAdapter', '3.2.0.0-beta.1'
+  pod 'BidonAdapterDTExchange', '~> 0.4'
+  pod 'APDGoogleAdMobAdapter', '3.2.0.0-beta.1'
+  pod 'BidonAdapterGoogleMobileAds', '~> 0.4'
+  pod 'APDIABAdapter', '3.2.0.0-beta.1' # Required
+  pod 'APDInMobiAdapter', '3.2.0.0-beta.1'
+  pod 'BidonAdapterInMobi', '~> 0.4'
+  pod 'APDIronSourceAdapter', '3.2.0.0-beta.1'
+  pod 'APDMetaAudienceNetworkAdapter', '3.2.0.0-beta.1'
+  pod 'BidMachineMetaAudienceAdapter', '~> 2.3.0'
+  pod 'BidonAdapterMetaAudienceNetwork', '~> 0.4'
+  pod 'APDMintegralAdapter', '3.2.0.0-beta.1'
+  pod 'BidMachineMintegralAdapter', '~> 2.3.0'
+  pod 'BidonAdapterMintegral', '~> 0.4'
+  pod 'APDMyTargetAdapter', '3.2.0.0-beta.1'
+  pod 'BidMachineMyTargetAdapter', '~> 2.3.0'
+  pod 'APDStackCrashReporterAdapter', '3.2.0.0-beta.1'
+  pod 'APDUnityAdapter', '3.2.0.0-beta.1'
+  pod 'BidonAdapterUnityAds', '~> 0.4'
+  pod 'APDVungleAdapter', '3.2.0.0-beta.1'
+  pod 'BidMachineVungleAdapter', '~> 2.3.0'
+  pod 'BidonAdapterVungle', '~> 0.4'
+  pod 'APDYandexAdapter', '3.2.0.0-beta.1'
 end
 
 target 'Runner' do
@@ -118,7 +138,7 @@ dictionary in your `Info.plist`.
 <details>
   <summary>There is SKAdNetworks IDs in Info.plist format</summary>
 
-``` xml
+```xml
 <key>SKAdNetworkItems</key>
 <array>
 	<dict>
@@ -727,10 +747,6 @@ dictionary in your `Info.plist`.
 	</dict>
 	<dict>
 		<key>SKAdNetworkIdentifier</key>
-		<string>r26jy69rpl.skadnetwork</string>
-	</dict>
-	<dict>
-		<key>SKAdNetworkIdentifier</key>
 		<string>633vhxswh4.skadnetwork</string>
 	</dict>
 	<dict>
@@ -927,6 +943,10 @@ dictionary in your `Info.plist`.
 	</dict>
 	<dict>
 		<key>SKAdNetworkIdentifier</key>
+		<string>r26jy69rpl.skadnetwork</string>
+	</dict>
+	<dict>
+		<key>SKAdNetworkIdentifier</key>
 		<string>jb7bn6koa5.skadnetwork</string>
 	</dict>
 	<dict>
@@ -1015,6 +1035,10 @@ dictionary in your `Info.plist`.
 	</dict>
 	<dict>
 		<key>SKAdNetworkIdentifier</key>
+		<string>bd757ywx3.skadnetwork</string>
+	</dict>
+	<dict>
+		<key>SKAdNetworkIdentifier</key>
 		<string>33r6p7g8nc.skadnetwork</string>
 	</dict>
 	<dict>
@@ -1023,7 +1047,6 @@ dictionary in your `Info.plist`.
 	</dict>
 </array>
 ```
-
 </details>
 
 ##### App Transport Security
@@ -1092,11 +1115,12 @@ Add dependencies into `build.gradle` (module: app)
 dependencies {
     ...
     // ... other project dependencies
-    implementation ('com.appodeal.ads:sdk:3.1.3.+') {
+    implementation ('com.appodeal.ads:sdk:3.2.0.0-beta.1') {
         exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'facebook_analytics'
+        exclude group: 'com.appodeal.ads.sdk.services', module: 'stack_analytics'
     }
     ...
 }
@@ -1109,7 +1133,7 @@ allprojects {
     repositories {
         ...
         jcenter()
-        maven { url "https://artifactory.appodeal.com/appodeal" }
+        maven { url "https://artifactory.appodeal.com/appodeal-beta-public" }
         ...
     }
 }
@@ -1177,7 +1201,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:adjust:3.1.3.0'
+    implementation 'com.appodeal.ads.sdk.services:adjust:3.2.0.0-beta.1'
 }
 ```
 
@@ -1186,7 +1210,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAdjustAdapter', '3.1.3.0'
+  pod 'APDAdjustAdapter', '3.2.0.0-beta.1'
 end
 ```
 
@@ -1197,7 +1221,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.1.3.0'
+  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.2.0.0-beta.1'
 }
 ```
 
@@ -1206,7 +1230,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAppsFlyerAdapter', '3.1.3.0'
+  pod 'APDAppsFlyerAdapter', '3.2.0.0-beta.1'
 end
 ```
 
@@ -1217,7 +1241,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:firebase:3.1.3.0'
+    implementation 'com.appodeal.ads.sdk.services:firebase:3.2.0.0-beta.1'
 }
 ```
 
@@ -1226,7 +1250,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFirebaseAdapter', '3.1.3.0'
+  pod 'APDFirebaseAdapter', '3.2.0.0-beta.1'
 end
 ```
 
@@ -1237,7 +1261,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.1.3.0'
+    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.2.0.0-beta.1'
 }
 ```
 
@@ -1246,7 +1270,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFacebookAdapter', '3.1.3.0'
+  pod 'APDFacebookAdapter', '3.2.0.0-beta.1'
 end
 ```
 

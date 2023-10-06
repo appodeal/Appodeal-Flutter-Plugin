@@ -1,3 +1,10 @@
+## 3.2.0-beta.1
+
+* Updated Gradle Plugin version to 7.3.1
+* Updated iOS Deployment Target version to 13.0
+* Updated Appodeal iOS SDK to 3.2.0-beta.1
+* Updated Appodeal Android SDK to 3.2.0-beta.1
+
 ## 3.1.3
 
 * Promoted the beta release to the stable version

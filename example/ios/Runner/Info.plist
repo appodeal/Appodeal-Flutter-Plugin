@@ -653,10 +653,6 @@
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
-                <string>r26jy69rpl.skadnetwork</string>
-            </dict>
-            <dict>
-                <key>SKAdNetworkIdentifier</key>
                 <string>633vhxswh4.skadnetwork</string>
             </dict>
             <dict>
@@ -853,6 +849,10 @@
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
+                <string>r26jy69rpl.skadnetwork</string>
+            </dict>
+            <dict>
+                <key>SKAdNetworkIdentifier</key>
                 <string>jb7bn6koa5.skadnetwork</string>
             </dict>
             <dict>
@@ -941,6 +941,10 @@
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
+                <string>bd757ywx3.skadnetwork</string>
+            </dict>
+            <dict>
+                <key>SKAdNetworkIdentifier</key>
                 <string>33r6p7g8nc.skadnetwork</string>
             </dict>
             <dict>
@@ -976,5 +980,7 @@
         <string>CLIENT-TOKEN</string>
         <key>FacebookDisplayName</key>
         <string>APP-NAME</string>
-    </dict>
+    	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+</dict>
 </plist>

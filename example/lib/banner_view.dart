@@ -20,7 +20,8 @@ class _BannerViewPageState extends State<BannerViewPage> {
     });
 
     Appodeal.setBannerCallbacks(
-        onBannerLoaded: (isPrecache) => print('onBannerLoaded: isPrecache - $isPrecache'),
+        onBannerLoaded: (isPrecache) =>
+            print('onBannerLoaded: isPrecache - $isPrecache'),
         onBannerFailedToLoad: () => print('onBannerFailedToLoad'),
         onBannerShown: () => print('onBannerShown'),
         onBannerShowFailed: () => print('onBannerShowFailed'),

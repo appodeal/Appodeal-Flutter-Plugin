@@ -12,12 +12,15 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
     super.initState();
 
     Appodeal.setRewardedVideoCallbacks(
-      onRewardedVideoLoaded: (isPrecache) => print('onRewardedVideoLoaded: isPrecache - $isPrecache'),
+      onRewardedVideoLoaded: (isPrecache) =>
+          print('onRewardedVideoLoaded: isPrecache - $isPrecache'),
       onRewardedVideoFailedToLoad: () => print('onRewardedVideoFailedToLoad'),
       onRewardedVideoShown: () => print('onRewardedVideoShown'),
       onRewardedVideoShowFailed: () => print('onRewardedVideoShowFailed'),
-      onRewardedVideoFinished: (amount, reward) => print('onRewardedVideoFinished: amount - $amount, reward - $reward'),
-      onRewardedVideoClosed: (isFinished) => print('onRewardedVideoClosed isFinished - $isFinished'),
+      onRewardedVideoFinished: (amount, reward) =>
+          print('onRewardedVideoFinished: amount - $amount, reward - $reward'),
+      onRewardedVideoClosed: (isFinished) =>
+          print('onRewardedVideoClosed isFinished - $isFinished'),
       onRewardedVideoExpired: () => print('onRewardedVideoExpired'),
       onRewardedVideoClicked: () => print('onRewardedVideoClicked'),
     );
@@ -47,8 +50,8 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isInitialized =
-                        await Appodeal.isInitialized(AppodealAdType.RewardedVideo);
+                    var isInitialized = await Appodeal.isInitialized(
+                        AppodealAdType.RewardedVideo);
                     print('Rewarded video isInitialized - $isInitialized');
                   },
                   child: const Text('IS INITIALIZED?'),

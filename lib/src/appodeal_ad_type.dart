@@ -18,7 +18,8 @@ class AppodealAdType {
   static const Interstitial = AppodealAdType._(android: 3, ios: 1, sios: 1);
 
   /// Ads that reward users for watching short videos and interacting with playable ads and surveys.
-  static const RewardedVideo = AppodealAdType._(android: 128, ios: 16, sios: 16);
+  static const RewardedVideo =
+      AppodealAdType._(android: 128, ios: 16, sios: 16);
 
   /// Rectangular ads (with defined size 300x250 dp) that appear at the view of the device screen.
   static const MREC = AppodealAdType._(android: 256, ios: 32, sios: 0);
