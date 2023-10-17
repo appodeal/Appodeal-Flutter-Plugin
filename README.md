@@ -1425,6 +1425,7 @@ Appodeal.setExtraData("attribuition_id", "some value");
 ``` dart
 // Enable or disable tablet banners.
 // SUPORTED ONLY FOR NON-VIEW DISPLAYING
+// THIS METHOD DOES NOT WORK CORRECTLY FOR BANNER VIEW BECAUSE BANNER VIEW DOES NOT SUPPORT TABLET FORMAT
 Appodeal.setTabletBanners(false); //default - false
 
 // Enable or disable smart banners. 
