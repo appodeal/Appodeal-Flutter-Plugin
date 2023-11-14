@@ -4,11 +4,12 @@ export 'src/appodeal_ad_type.dart';
 export 'src/appodeal_banner.dart';
 export 'src/appodeal_banner_size.dart';
 export 'src/appodeal_native.dart';
-
-//
+export 'src/appodeal_native_content_type.dart';
 export 'src/appodeal_platform_arguments.dart';
 export 'src/appodeal_purchase.dart';
 export 'src/appodeal_user_consent.dart';
+
+///
 export 'src/native_ad/native_ad.dart';
 export 'src/native_ad/native_custom.dart';
 export 'src/native_ad/native_template.dart';

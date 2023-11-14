@@ -8,10 +8,11 @@ import com.appodeal.ads.Appodeal
 import io.flutter.plugin.platform.PlatformView
 import java.lang.ref.WeakReference
 
-internal class AppodealAdView(activity: Activity, private val bannerType: Int, arguments: HashMap<*, *>) : PlatformView {
+internal class AppodealAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformView {
 
     private val placement: String = arguments["placement"] as? String ?: "default"
-    private val adView: View = getAdView(activity)
+    private val bannerType: Int = toBannerType(arguments["adSize"] as HashMap<*, *>)
+    private val adView: View = getAdView(activity.applicationContext)
 
     init {
         (adView.parent as? ViewGroup)?.removeView(adView)
@@ -21,6 +22,12 @@ internal class AppodealAdView(activity: Activity, private val bannerType: Int, a
     override fun getView(): View = adView
 
     override fun dispose() {}
+
+    private fun toBannerType(size: HashMap<*, *>): Int = when (size["name"] as String) {
+        "BANNER" -> Appodeal.BANNER_VIEW
+        "MEDIUM_RECTANGLE" -> Appodeal.MREC
+        else -> error("Banner type doesn't support")
+    }
 
     private fun getAdView(context: Context): View = when (bannerType) {
         Appodeal.MREC -> refMrecAdView.get() ?: run {

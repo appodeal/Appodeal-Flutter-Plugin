@@ -5,11 +5,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:stack_appodeal_flutter/src/native_ad/native_ad.dart';
+import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class AppodealNativeAd extends StatefulWidget {
   final WidgetAdParams nativeAdParams;
-  final String? placement;
+  final String placement;
 
   const AppodealNativeAd({
     Key? key,
@@ -22,64 +22,53 @@ class AppodealNativeAd extends StatefulWidget {
 }
 
 class _AppodealNativeAdState extends State<AppodealNativeAd> {
-  int _keyCounter = 0;
-  String get _currentKey => 'appodeal_native_ad_$_keyCounter';
-
+  final UniqueKey _key = UniqueKey();
   final String _viewType = 'appodeal_flutter/native_view';
-
-  @override
-  void initState() {
-    super.initState();
-    _keyCounter++;
-  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.nativeAdParams.widgetWidth,
-      height: widget.nativeAdParams.widgetHeight,
-      child: Platform.isAndroid
-          ? PlatformViewLink(
-              key: Key(_currentKey),
-              viewType: _viewType,
-              surfaceFactory:
-                  (BuildContext context, PlatformViewController controller) {
-                return AndroidViewSurface(
-                  controller: controller as AndroidViewController,
-                  gestureRecognizers: const <Factory<
-                      OneSequenceGestureRecognizer>>{},
-                  hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-                );
-              },
-              onCreatePlatformView: (PlatformViewCreationParams params) {
-                return PlatformViewsService.initSurfaceAndroidView(
-                  id: params.id,
-                  viewType: _viewType,
-                  layoutDirection: TextDirection.ltr,
-                  creationParams: _nativeCreationParams,
-                  creationParamsCodec: const StandardMessageCodec(),
-                  onFocus: () {
-                    params.onFocusChanged(true);
-                  },
-                )
-                  ..addOnPlatformViewCreatedListener(
-                      params.onPlatformViewCreated)
-                  ..create();
-              },
-            )
-          : UiKitView(
-              key: Key(_currentKey),
-              viewType: _viewType,
-              creationParams: _nativeCreationParams,
-              creationParamsCodec: const StandardMessageCodec(),
-            ),
-    );
+        width: widget.nativeAdParams.widgetWidth,
+        height: widget.nativeAdParams.widgetHeight,
+        child: Platform.isIOS
+            ? UiKitView(
+                key: _key,
+                viewType: _viewType,
+                creationParams: _nativeCreationParams,
+                creationParamsCodec: const StandardMessageCodec(),
+              )
+            : PlatformViewLink(
+                key: _key,
+                viewType: _viewType,
+                surfaceFactory:
+                    (BuildContext context, PlatformViewController controller) {
+                  return AndroidViewSurface(
+                    controller: controller as AndroidViewController,
+                    gestureRecognizers: const <Factory<
+                        OneSequenceGestureRecognizer>>{},
+                    hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+                  );
+                },
+                onCreatePlatformView: (PlatformViewCreationParams params) {
+                  return PlatformViewsService.initSurfaceAndroidView(
+                    id: params.id,
+                    viewType: _viewType,
+                    layoutDirection: TextDirection.ltr,
+                    creationParams: _nativeCreationParams,
+                    creationParamsCodec: const StandardMessageCodec(),
+                    onFocus: () {
+                      params.onFocusChanged(true);
+                    },
+                  )
+                    ..addOnPlatformViewCreatedListener(
+                        params.onPlatformViewCreated)
+                    ..create();
+                },
+              ));
   }
 
   Map<String, dynamic> get _nativeCreationParams => {
-        'key': _currentKey.toString(),
         'nativeAd': widget.nativeAdParams.toMap,
-        'adSize': "NATIVE",
         'placement': widget.placement,
       };
 }

@@ -15,7 +15,7 @@ import com.appodeal.appodeal_flutter.native_params.ViewBuilder
 import io.flutter.plugin.platform.PlatformView
 import java.lang.ref.WeakReference
 
-class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformView {
+internal class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformView {
     private val placement: String = arguments["placement"] as? String ?: "default"
     private val params: NativeParams? =
         (arguments["nativeAd"] as Map<*, *>?).parseNativeParams(context = activity)
