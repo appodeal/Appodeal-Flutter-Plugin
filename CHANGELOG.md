@@ -1,3 +1,8 @@
+## 3.2.0-beta.2
+
+* Updated Appodeal iOS SDK to [3.2.0-beta.2](https://docs.appodeal.com/ios/changelog)
+* Updated Appodeal Android SDK to [3.2.0.1-beta.2](https://docs.appodeal.com/android/changelog)
+
 ## 3.2.0-beta.1
 
 * Updated Gradle Plugin version to 7.3.1
