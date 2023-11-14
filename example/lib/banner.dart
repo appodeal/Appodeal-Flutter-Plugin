@@ -12,7 +12,8 @@ class _BannerPageState extends State<BannerPage> {
     super.initState();
 
     Appodeal.setBannerCallbacks(
-        onBannerLoaded: (isPrecache) => print('onBannerLoaded: isPrecache - $isPrecache'),
+        onBannerLoaded: (isPrecache) =>
+            print('onBannerLoaded: isPrecache - $isPrecache'),
         onBannerFailedToLoad: () => print('onBannerFailedToLoad'),
         onBannerShown: () => print('onBannerShown'),
         onBannerShowFailed: () => print('onBannerShowFailed'),
@@ -60,7 +61,8 @@ class _BannerPageState extends State<BannerPage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () async {
-                    var isCanShow = await Appodeal.canShow(AppodealAdType.Banner);
+                    var isCanShow =
+                        await Appodeal.canShow(AppodealAdType.Banner);
                     print('Banner canShow - $isCanShow');
                   },
                   child: const Text('CAN SHOW?'),

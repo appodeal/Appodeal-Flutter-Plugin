@@ -1,3 +1,21 @@
+## 3.2.0-beta.2
+
+* Updated Appodeal iOS SDK to [3.2.0-beta.2](https://docs.appodeal.com/ios/changelog)
+* Updated Appodeal Android SDK to [3.2.0.1-beta.2](https://docs.appodeal.com/android/changelog)
+
+## 3.2.0-beta.1
+
+* Updated Gradle Plugin version to 7.3.1
+* Updated iOS Deployment Target version to 13.0
+* Updated Appodeal iOS SDK to 3.2.0-beta.1
+* Updated Appodeal Android SDK to 3.2.0-beta.1
+
+## 3.1.3
+
+* Promoted the beta release to the stable version
+* Updated Appodeal iOS SDK to 3.1.3 stable
+* Updated Appodeal Android SDK to 3.1.3 stable
+
 ## 3.1.3-beta.3
 
 * Fixed issue with repeating consent window.

@@ -217,6 +217,10 @@
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
+                <string>7fmhfwg9en.skadnetwork</string>
+            </dict>
+            <dict>
+                <key>SKAdNetworkIdentifier</key>
                 <string>7rz58n8ntl.skadnetwork</string>
             </dict>
             <dict>
@@ -629,15 +633,27 @@
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
-                <string>7fmhfwg9en.skadnetwork</string>
+                <string>z959bm4gru.skadnetwork</string>
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
-                <string>6yxyv74ff7.skadnetwork</string>
+                <string>bmxgpxpgc.skadnetwork</string>
+            </dict>
+            <dict>
+                <key>SKAdNetworkIdentifier</key>
+                <string>9g2aggbj52.skadnetwork</string>
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
                 <string>mqn7fxpca7.skadnetwork</string>
+            </dict>
+            <dict>
+                <key>SKAdNetworkIdentifier</key>
+                <string>g6gcrrvk4p.skadnetwork</string>
+            </dict>
+            <dict>
+                <key>SKAdNetworkIdentifier</key>
+                <string>6yxyv74ff7.skadnetwork</string>
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
@@ -710,10 +726,6 @@
             <dict>
                 <key>SKAdNetworkIdentifier</key>
                 <string>c7g47wypnu.skadnetwork</string>
-            </dict>
-            <dict>
-                <key>SKAdNetworkIdentifier</key>
-                <string>9g2aggbj52.skadnetwork</string>
             </dict>
             <dict>
                 <key>SKAdNetworkIdentifier</key>
@@ -972,5 +984,7 @@
         <string>CLIENT-TOKEN</string>
         <key>FacebookDisplayName</key>
         <string>APP-NAME</string>
-    </dict>
+        <key>UIApplicationSupportsIndirectInputEvents</key>
+    <true/>
+</dict>
 </plist>
