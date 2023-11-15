@@ -3,30 +3,25 @@ import 'package:stack_appodeal_flutter/src/native_ad/native_ad.dart';
 import 'package:stack_appodeal_flutter/src/native_ad/options/native_template_options.dart';
 
 class WidgetTemplateParams extends WidgetAdParams {
-  final BuildContext context;
   final TemplateType templateType;
   final AdChoicePosition? adChoicePosition;
   final NativeTemplateOptions widgetOptions;
 
   WidgetTemplateParams({
     required this.widgetOptions,
-    required this.context,
+    context,
     required this.templateType,
     this.adChoicePosition = AdChoicePosition.START_TOP,
   }) : super(
           adChoicePosition: adChoicePosition,
-          widgetHeight: getWidgetHeight(context, templateType),
-          widgetWidth: getWidgetWidth(context),
+          widgetHeight: _getWidgetHeight(context, templateType),
+          widgetWidth: _getWidgetWidth(context),
           widgetOptions: widgetOptions,
         );
 
-  static double getWidgetWidth(BuildContext context) {
-    return MediaQuery.of(context).size.width;
-  }
-
-  static double getWidgetHeight(
+  static double _getWidgetHeight(
       BuildContext context, TemplateType templateType) {
-    double width = getWidgetWidth(context);
+    double width = _getWidgetWidth(context);
     switch (templateType) {
       case TemplateType.NEWS_FEED:
         return width * 0.146;
@@ -37,6 +32,10 @@ class WidgetTemplateParams extends WidgetAdParams {
       default:
         return 0.0;
     }
+  }
+
+  static double _getWidgetWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
   }
 
   @override

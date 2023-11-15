@@ -115,7 +115,7 @@ class _NativePageState extends State<NativePage> {
                     setState(() {
                       isShow = true;
                       appodealNative =
-                          AppodealNativeAd(nativeAdParams: nativeAdParams);
+                          AppodealNativeAd.custom(nativeAdParams: nativeAdParams);
                     });
                   },
                   child: const Text('NativeBanner'),
@@ -158,7 +158,7 @@ class _NativePageState extends State<NativePage> {
                     setState(() {
                       isShow = true;
                       appodealNative =
-                          AppodealNativeAd(nativeAdParams: nativeAdParams);
+                          AppodealNativeAd.custom(nativeAdParams: nativeAdParams);
                     });
                   },
                   child: const Text('NativeFull'),
@@ -188,7 +188,7 @@ class _NativePageState extends State<NativePage> {
                     setState(() {
                       isShow = true;
                       appodealNative =
-                          AppodealNativeAd(nativeAdParams: nativeAdParams);
+                          AppodealNativeAd.custom(nativeAdParams: nativeAdParams);
                     });
                   },
                   child: const Text('NativeNewsFeed'),
@@ -216,7 +216,7 @@ class _NativePageState extends State<NativePage> {
                             adAttributionTextColor: Colors.black));
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNativeAd(nativeAdParams: nativeAdParams);
+                      appodealNative = AppodealNativeAd.appWall(nativeAdParams: nativeAdParams);
                     });
                   },
                   child: const Text('NativeAppWall'),
@@ -250,7 +250,7 @@ class _NativePageState extends State<NativePage> {
                     }
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNativeAd(nativeAdParams: nativeAdParams);
+                      appodealNative = AppodealNativeAd.custom(nativeAdParams: nativeAdParams);
                     });
                   },
                   child: const Text('NativeContentStream'),

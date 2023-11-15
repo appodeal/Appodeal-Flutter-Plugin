@@ -9,13 +9,55 @@ import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class AppodealNativeAd extends StatefulWidget {
   final WidgetAdParams nativeAdParams;
+  final String type;
   final String placement;
 
-  const AppodealNativeAd({
+  const AppodealNativeAd._({
     Key? key,
+    required this.type,
     required this.nativeAdParams,
     this.placement = "default",
   }) : super(key: key);
+
+  const AppodealNativeAd.custom({
+    Key? key,
+    nativeAdParams,
+    placement = "default",
+  }) : this._(
+            key: key,
+            type: "custom",
+            nativeAdParams: nativeAdParams,
+            placement: placement);
+
+  AppodealNativeAd.appWall({
+    Key? key,
+    nativeAdParams,
+    placement = "default",
+  }) : this._(
+            key: key,
+            type: "appWall",
+            nativeAdParams: nativeAdParams,
+            placement: placement);
+
+  AppodealNativeAd.contentStream({
+    Key? key,
+    nativeAdParams,
+    placement = "default",
+  }) : this._(
+            key: key,
+            type: "contentStream",
+            nativeAdParams: nativeAdParams,
+            placement: placement);
+
+  AppodealNativeAd.newsFeed({
+    Key? key,
+    nativeAdParams,
+    placement = "default",
+  }) : this._(
+            key: key,
+            type: "newsFeed",
+            nativeAdParams: nativeAdParams,
+            placement: placement);
 
   @override
   _AppodealNativeAdState createState() => _AppodealNativeAdState();

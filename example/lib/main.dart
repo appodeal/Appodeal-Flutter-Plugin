@@ -10,6 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 import 'native_ad_view.dart';
+import 'native_custom_ad.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -196,15 +197,36 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                   onPressed: () async {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => NativePage()),
+                      MaterialPageRoute(builder: (context) => NativePage()),
                     );
                   },
                   child: const Text('NATIVE AD'),
                 ),
               ),
             ],
-          ),]),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 4.0, right: 4.0, top: 8.0, bottom: 4.0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
+                  onPressed: () async {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MediumSizeNativeAdScreen()),
+                    );
+                  },
+                  child: const Text('NATIVE CUSTOM AD'),
+                ),
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
