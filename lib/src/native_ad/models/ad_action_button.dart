@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:stack_appodeal_flutter/src/native_ad/native_color_apis.dart';
 
 import '../../../stack_appodeal_flutter.dart';
 
@@ -26,8 +27,8 @@ class AdActionButtonConfig with AppodealPlatformArguments {
   Map<String, dynamic> get toMap => <String, dynamic>{
         'visible': visible,
         'fontSize': fontSize,
-        'textColor': textColor.value,
-        'buttonColor': buttonColor.value,
+        'textColor': textColor.toHex(),
+        'buttonColor': buttonColor.toHex(),
         'margin': margin,
         'radius': radius,
       };

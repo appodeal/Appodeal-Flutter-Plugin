@@ -1,5 +1,6 @@
 package com.appodeal.appodeal_flutter
 
+import android.util.Log
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.NativeMediaViewContentType
 import com.appodeal.ads.inapp.InAppPurchase
@@ -571,4 +572,8 @@ private fun List<ApdInitializationError>.toArg(): Map<String, List<String>> {
 private fun List<ServiceError>.toArg(): Map<String, List<String>> {
     val arg = this.map { "${it::class.simpleName} [${it.componentName}] ${it.description}" }
     return mapOf("errors" to arg)
+}
+
+internal fun apdLog(message: String, any: Any? = null) {
+    if (BuildConfig.DEBUG) Log.d("AppodealFlutterPlugin", "$message ${any ?: ""}")
 }

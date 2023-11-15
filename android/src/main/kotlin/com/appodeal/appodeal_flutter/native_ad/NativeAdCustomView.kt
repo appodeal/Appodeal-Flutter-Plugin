@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.text.TextUtils
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -29,36 +30,35 @@ internal class NativeAdCustomView(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        params ?: return nativeAdView
+//        params ?: return nativeAdView
 
         // Create the inner layout (ConstraintLayout)
-        val rootLayout = ConstraintLayout(context)
-        rootLayout.layoutParams = ViewGroup.LayoutParams(
+        val constraintLayout = ConstraintLayout(context)
+        constraintLayout.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            ViewGroup.LayoutParams.MATCH_PARENT
         )
-        nativeAdView.addView(rootLayout)
 
         // Add NativeMediaView
         val mediaView = NativeMediaView(context)
         mediaView.id = View.generateViewId()
-        rootLayout.addView(mediaView)
+        constraintLayout.addView(mediaView)
 
         // Add NativeIconView
         val iconView = NativeIconView(context)
         iconView.id = View.generateViewId()
-        rootLayout.addView(iconView)
+        constraintLayout.addView(iconView)
 
         // Add TextView for title
         val titleTextView = TextView(context)
         titleTextView.id = View.generateViewId()
         titleTextView.ellipsize = TextUtils.TruncateAt.END
-        titleTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+        titleTextView.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
         titleTextView.maxLines = 1
         titleTextView.isSingleLine = true
         titleTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
 
-        rootLayout.addView(titleTextView)
+        constraintLayout.addView(titleTextView)
 
         // Add TextView for description
         val descriptionTextView = TextView(context)
@@ -67,7 +67,7 @@ internal class NativeAdCustomView(
         descriptionTextView.marqueeRepeatLimit = -1 // Equivalent to "marquee_forever"
         descriptionTextView.isSingleLine = true
         descriptionTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
-        rootLayout.addView(descriptionTextView)
+        constraintLayout.addView(descriptionTextView)
 
         // Add Button for CTA
         val ctaButton = Button(context)
@@ -76,11 +76,28 @@ internal class NativeAdCustomView(
         ctaButton.maxLines = 1
         ctaButton.isSingleLine = true
         ctaButton.setTextAppearance(context, android.R.style.TextAppearance_Small)
-        rootLayout.addView(ctaButton)
+        constraintLayout.addView(ctaButton)
+
+        // Add TextView for ad attribution
+        val adAttributionTextView = TextView(context)
+        adAttributionTextView.id = View.generateViewId()
+        adAttributionTextView.layoutParams = ConstraintLayout.LayoutParams(
+            ConstraintLayout.LayoutParams.WRAP_CONTENT,
+            ConstraintLayout.LayoutParams.WRAP_CONTENT
+        )
+        adAttributionTextView.gravity = Gravity.CENTER
+//        adAttributionTextView.setBackgroundResource(R.color.red)
+//        adAttributionTextView.elevation = context.resources.getDimension(R.dimen.base_elevation)
+        adAttributionTextView.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
+        adAttributionTextView.maxLines = 1
+        adAttributionTextView.isSingleLine = true
+        adAttributionTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
+//        adAttributionTextView.setTextColor(ContextCompat.getColor(this, R.color.black))
+        adAttributionTextView.text = "Ad"
 
         // Set constraints using ConstraintSet
         val set = ConstraintSet()
-        set.clone(rootLayout)
+        set.clone(constraintLayout)
 
         // Set constraints for NativeMediaView
         set.connect(
@@ -89,11 +106,11 @@ internal class NativeAdCustomView(
         )
         set.connect(
             mediaView.id, ConstraintSet.START,
-            rootLayout.id, ConstraintSet.START
+            constraintLayout.id, ConstraintSet.START
         )
         set.connect(
             mediaView.id, ConstraintSet.END,
-            rootLayout.id, ConstraintSet.END
+            constraintLayout.id, ConstraintSet.END
         )
 
         // Set constraints for NativeIconView
@@ -103,7 +120,7 @@ internal class NativeAdCustomView(
         )
         set.connect(
             iconView.id, ConstraintSet.START,
-            rootLayout.id, ConstraintSet.START
+            constraintLayout.id, ConstraintSet.START
         )
         set.setDimensionRatio(iconView.id, "H,1:1")
 
@@ -142,12 +159,31 @@ internal class NativeAdCustomView(
         )
         set.connect(
             ctaButton.id, ConstraintSet.END,
-            rootLayout.id, ConstraintSet.END
+            constraintLayout.id, ConstraintSet.END
         )
 
-        set.applyTo(rootLayout)
+        // Set constraints for adAttributionTextView
+        set.connect(
+            adAttributionTextView.id, ConstraintSet.TOP,
+            constraintLayout.id, ConstraintSet.TOP
+        )
+        set.connect(
+            adAttributionTextView.id, ConstraintSet.START,
+            constraintLayout.id, ConstraintSet.START
+        )
+//        set.constrainWidth(adAttributionTextView.id, ConstraintSet.WRAP_CONTENT)
+//        set.constrainHeight(adAttributionTextView.id, ConstraintSet.WRAP_CONTENT)
+
+        set.applyTo(constraintLayout)
 
         // Finally, return NativeAdView
+        nativeAdView.titleView = titleTextView
+        nativeAdView.callToActionView = ctaButton
+        nativeAdView.descriptionView = descriptionTextView
+        nativeAdView.iconView = iconView
+        nativeAdView.mediaView = mediaView
+        nativeAdView.adAttributionView = adAttributionTextView
+        nativeAdView.addView(constraintLayout)
         return nativeAdView
     }
 

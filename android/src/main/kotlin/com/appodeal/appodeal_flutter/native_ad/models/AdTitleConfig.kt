@@ -1,7 +1,8 @@
 package com.appodeal.appodeal_flutter.native_ad.models
 
 import android.graphics.Color
-import com.appodeal.appodeal_flutter.native_ad.parseColorInt
+import com.appodeal.appodeal_flutter.apdLog
+import com.appodeal.appodeal_flutter.native_ad.parseColor
 
 internal class AdTitleConfig(
     val visible: Boolean = true,
@@ -11,10 +12,11 @@ internal class AdTitleConfig(
 ) {
     companion object {
         fun toAdTitleConfig(map: Map<String, Any>): AdTitleConfig {
+            apdLog("toAdTitleConfig: $map")
             return AdTitleConfig(
                 visible = map["visible"] as? Boolean ?: true,
                 fontSize = map["fontSize"] as? Int ?: 16,
-                textColor = parseColorInt(map["textColor"] as? Int) ?: Color.BLACK,
+                textColor = parseColor(map["textColor"] as? String) ?: Color.BLACK,
                 margin = map["margin"] as? Int ?: 4,
             )
         }
