@@ -6,8 +6,7 @@ internal class AdStarsConfig {
     companion object {
         fun toAdStarsConfig(map: Map<String, Any>): AdStarsConfig {
             apdLog("toAdStarsConfig: $map")
-            return AdStarsConfig(
-            )
+            return AdStarsConfig()
         }
     }
 
