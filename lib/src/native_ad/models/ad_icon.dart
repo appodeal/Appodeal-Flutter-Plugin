@@ -10,12 +10,15 @@ class AdIconConfig with AppodealPlatformArguments {
   /// width in dp
   final int width;
 
+  final AdIconPosition position;
+
   final int margin;
 
   AdIconConfig({
     this.visible = true,
     this.height = 50,
     this.width = 50,
+    this.position = AdIconPosition.start,
     this.margin = 4,
   });
 
@@ -24,6 +27,9 @@ class AdIconConfig with AppodealPlatformArguments {
         'visible': visible,
         'height': height,
         'width': width,
+        'position': position.index,
         'margin': margin,
       };
 }
+
+enum AdIconPosition { start, end }

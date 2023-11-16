@@ -36,7 +36,7 @@ internal class NativeAdCustomView(
         val constraintLayout = ConstraintLayout(context)
         constraintLayout.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
+            ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
         // Add NativeMediaView

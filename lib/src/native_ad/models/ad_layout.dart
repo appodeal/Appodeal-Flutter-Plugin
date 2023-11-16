@@ -11,10 +11,14 @@ class AdLayoutConfig {
   /// Action container height that contains body and button
   final int adActionHeight;
 
+  /// Ad layout container margin
+  final int margin;
+
   AdLayoutConfig({
     this.mediaContentHeight = 250,
     this.adTileHeight = 70,
     this.adActionHeight = 50,
+    this.margin = 4,
   });
 
   Map<String, Object> get toMap {

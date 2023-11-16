@@ -14,6 +14,7 @@ export 'src/native_ad/custom_options.dart';
 ///
 export 'src/native_ad/models/ad_action_button.dart';
 export 'src/native_ad/models/ad_advertiser.dart';
+export 'src/native_ad/models/ad_choice.dart';
 export 'src/native_ad/models/ad_description.dart';
 export 'src/native_ad/models/ad_icon.dart';
 export 'src/native_ad/models/ad_layout.dart';

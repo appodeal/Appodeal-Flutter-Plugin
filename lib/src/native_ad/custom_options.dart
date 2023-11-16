@@ -2,6 +2,7 @@
 
 import 'models/ad_action_button.dart';
 import 'models/ad_advertiser.dart';
+import 'models/ad_choice.dart';
 import 'models/ad_description.dart';
 import 'models/ad_icon.dart';
 import 'models/ad_layout.dart';
@@ -17,6 +18,7 @@ class NativeAdCustomOptions {
   final AdStoreConfig adStoreConfig;
   final AdTitleConfig adTitleConfig;
   final AdAdvertiserConfig adAdvertiserConfig;
+  final AdChoiceConfig adChoiceConfig;
   final AdIconConfig adIconConfig;
   final AdDescriptionConfig adDescriptionConfig;
   final AdActionButtonConfig adActionButtonConfig;
@@ -29,6 +31,7 @@ class NativeAdCustomOptions {
     required this.adStoreConfig,
     required this.adTitleConfig,
     required this.adAdvertiserConfig,
+    required this.adChoiceConfig,
     required this.adIconConfig,
     required this.adDescriptionConfig,
     required this.adActionButtonConfig,
@@ -43,6 +46,7 @@ class NativeAdCustomOptions {
     AdStoreConfig? adStoreConfig,
     AdTitleConfig? adTitleConfig,
     AdAdvertiserConfig? adAdvertiserConfig,
+    AdChoiceConfig? adChoiceConfig,
     AdIconConfig? adIconConfig,
     AdDescriptionConfig? adDescriptionConfig,
     AdActionButtonConfig? adActionButtonConfig,
@@ -55,6 +59,7 @@ class NativeAdCustomOptions {
       adStoreConfig: adStoreConfig ?? AdStoreConfig(),
       adTitleConfig: adTitleConfig ?? AdTitleConfig(),
       adAdvertiserConfig: adAdvertiserConfig ?? AdAdvertiserConfig(),
+      adChoiceConfig: adChoiceConfig ?? AdChoiceConfig(),
       adIconConfig: adIconConfig ?? AdIconConfig(),
       adDescriptionConfig: adDescriptionConfig ?? AdDescriptionConfig(),
       adActionButtonConfig: adActionButtonConfig ?? AdActionButtonConfig(),
