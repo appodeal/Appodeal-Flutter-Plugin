@@ -11,7 +11,7 @@ import com.appodeal.appodeal_flutter.native_ad.models.AdStarsConfig
 import com.appodeal.appodeal_flutter.native_ad.models.AdStoreConfig
 import com.appodeal.appodeal_flutter.native_ad.models.AdTitleConfig
 
-internal class NativeAdCustomOptions(
+internal class NativeAdOptions(
     val adMediaConfig: AdMediaConfig,
     val adStarsConfig: AdStarsConfig,
     val adPriceConfig: AdPriceConfig,
@@ -24,8 +24,8 @@ internal class NativeAdCustomOptions(
     val adLayoutConfig: AdLayoutConfig
 ) {
     companion object {
-        fun toNativeAdCustomOptions(args: Map<String, Any>): NativeAdCustomOptions? = runCatching {
-            NativeAdCustomOptions(
+        fun toNativeAdOptions(args: Map<String, Any>): NativeAdOptions? = runCatching {
+            NativeAdOptions(
                 adMediaConfig = AdMediaConfig.toAdMediaConfig(args["adMediaConfig"] as Map<String, Any>),
                 adStarsConfig = AdStarsConfig.toAdStarsConfig(args["adStarsConfig"] as Map<String, Any>),
                 adPriceConfig = AdPriceConfig.toAdPriceConfig(args["adPriceConfig"] as Map<String, Any>),

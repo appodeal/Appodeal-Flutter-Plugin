@@ -3,14 +3,13 @@ export 'src/appodeal_ad_revenue.dart';
 export 'src/appodeal_ad_type.dart';
 export 'src/appodeal_banner.dart';
 export 'src/appodeal_banner_size.dart';
-export 'src/appodeal_native.dart';
-
-export 'src/appodeal_native_content_type.dart';
+export 'src/appodeal_native_ad.dart';
+export 'src/appodeal_native_ad_content_type.dart';
 export 'src/appodeal_platform_arguments.dart';
 export 'src/appodeal_purchase.dart';
 export 'src/appodeal_user_consent.dart';
 ///
-export 'src/native_ad/native_options.dart';
+export 'src/native_ad/native_ad_options.dart';
 ///
 export 'src/native_ad/models/ad_action_button.dart';
 export 'src/native_ad/models/ad_advertiser.dart';

@@ -18,7 +18,7 @@ import com.appodeal.ads.nativead.NativeMediaView
 @SuppressLint("ViewConstructor")
 internal class NativeAdCustomView(
     private val context: Context,
-    private val params: NativeAdCustomOptions?
+    private val params: NativeAdOptions?
 ) {
     @SuppressLint("InflateParams")
     fun bind(): NativeAdView {

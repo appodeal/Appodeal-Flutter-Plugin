@@ -6,15 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.nativead.NativeAdView
-import com.appodeal.appodeal_flutter.native_ad.NativeAdCustomOptions
+import com.appodeal.appodeal_flutter.native_ad.NativeAdOptions
 import com.appodeal.appodeal_flutter.native_ad.NativeAdCustomView
 import io.flutter.plugin.platform.PlatformView
 import java.lang.ref.WeakReference
 
 internal class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformView {
     private val placement: String = arguments["placement"] as? String ?: "default"
-    private val params: NativeAdCustomOptions? =
-        NativeAdCustomOptions.toNativeAdCustomOptions(arguments["nativeAd"] as Map<String, Any>)
+    private val params: NativeAdOptions? =
+        NativeAdOptions.toNativeAdOptions(arguments["nativeAd"] as Map<String, Any>)
 
     private val adView: WeakReference<NativeAdView> = WeakReference(getAdView(activity))
 

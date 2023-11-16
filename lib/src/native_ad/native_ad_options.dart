@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../stack_appodeal_flutter.dart';
 
-class NativeOptions with AppodealPlatformArguments {
+class NativeAdOptions with AppodealPlatformArguments {
   final AdStarsConfig adStarsConfig;
   final AdPriceConfig adPriceConfig;
   final AdStoreConfig adStoreConfig;
@@ -17,7 +17,7 @@ class NativeOptions with AppodealPlatformArguments {
   final AdLayoutConfig adLayoutConfig;
   final AdMediaConfig adMediaConfig;
 
-  NativeOptions._({
+  NativeAdOptions._({
     required this.adStarsConfig,
     required this.adPriceConfig,
     required this.adStoreConfig,
@@ -32,7 +32,7 @@ class NativeOptions with AppodealPlatformArguments {
   });
 
   /// Generates custom Native Ad View options
-  static NativeOptions customOptions({
+  static NativeAdOptions customOptions({
     AdStarsConfig? adStarsConfig,
     AdPriceConfig? adPriceConfig,
     AdStoreConfig? adStoreConfig,
@@ -45,7 +45,7 @@ class NativeOptions with AppodealPlatformArguments {
     AdLayoutConfig? adLayoutConfig,
     AdMediaConfig? adMediaConfig,
   }) {
-    return NativeOptions._(
+    return NativeAdOptions._(
       adStarsConfig: adStarsConfig ?? AdStarsConfig(),
       adPriceConfig: adPriceConfig ?? AdPriceConfig(),
       adStoreConfig: adStoreConfig ?? AdStoreConfig(),
@@ -61,7 +61,7 @@ class NativeOptions with AppodealPlatformArguments {
   }
 
   /// Generates template Native Ad View options
-  static NativeOptions templateOptions({
+  static NativeAdOptions templateOptions({
     int? adIconSize,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
@@ -70,7 +70,7 @@ class NativeOptions with AppodealPlatformArguments {
     Color? adAdvertiserBackgroundColor,
     AdChoicePosition? adChoicePosition,
   }) {
-    return NativeOptions.customOptions(
+    return NativeAdOptions.customOptions(
       adTitleConfig: AdTitleConfig(fontSize: adTitleFontSize ?? 16),
       adAdvertiserConfig: AdAdvertiserConfig(
           textColor: adAdvertiserTextColor ?? Colors.black,

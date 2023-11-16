@@ -34,7 +34,7 @@ class _MediumSizeNativeAdScreenState extends State<MediumSizeNativeAdScreen> {
   }
 
   Widget get _adWidget {
-    NativeOptions options = NativeOptions.customOptions(
+    NativeAdOptions options = NativeAdOptions.customOptions(
       adIconConfig: AdIconConfig(height: 55, width: 55),
       adAdvertiserConfig: AdAdvertiserConfig(textColor: Colors.black),
       adTitleConfig: AdTitleConfig(textColor: Colors.black),

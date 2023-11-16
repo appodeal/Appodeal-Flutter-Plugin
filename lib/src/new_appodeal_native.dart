@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class NewAppodealNativeAd extends StatefulWidget {
-  final NativeOptions options;
+  final NativeAdOptions options;
   final String placement;
 
   const NewAppodealNativeAd({
