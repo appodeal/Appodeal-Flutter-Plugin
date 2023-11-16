@@ -4,7 +4,6 @@ import '../../../stack_appodeal_flutter.dart';
 class AdMediaConfig with AppodealPlatformArguments {
   final bool visible;
   final AdMediaPosition position;
-
   final int margin;
 
   AdMediaConfig({

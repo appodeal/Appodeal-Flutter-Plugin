@@ -8,12 +8,11 @@ class AdTitleConfig with AppodealPlatformArguments {
   final bool visible;
   final int fontSize;
   final Color textColor;
-
   final int margin;
 
   AdTitleConfig({
     this.visible = true,
-    this.fontSize = 16,
+    this.fontSize = 14,
     this.textColor = Colors.black,
     this.margin = 4,
   });

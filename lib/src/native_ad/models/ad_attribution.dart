@@ -3,18 +3,17 @@ import 'package:stack_appodeal_flutter/src/native_ad/native_color_apis.dart';
 
 import '../../../stack_appodeal_flutter.dart';
 
-/// This is the configuration of advertiser text.
-class AdAdvertiserConfig with AppodealPlatformArguments {
+/// This is the configuration of ad attribution text.
+class AdAttributionConfig with AppodealPlatformArguments {
   final bool visible;
   final int fontSize;
   final Color textColor;
   final Color backgroundColor;
-
   final int margin;
 
-  AdAdvertiserConfig({
+  AdAttributionConfig({
     this.visible = true,
-    this.fontSize = 14,
+    this.fontSize = 12,
     this.textColor = Colors.black,
     this.backgroundColor = Colors.transparent,
     this.margin = 4,

@@ -10,7 +10,6 @@ class AdActionButtonConfig with AppodealPlatformArguments {
   final Color textColor;
   final Color buttonColor;
   final int fontSize;
-
   final int margin;
   final int radius;
 

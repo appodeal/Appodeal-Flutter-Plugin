@@ -8,7 +8,6 @@ class AdDescriptionConfig with AppodealPlatformArguments {
   final bool visible;
   final int fontSize;
   final Color textColor;
-
   final int margin;
 
   AdDescriptionConfig({
