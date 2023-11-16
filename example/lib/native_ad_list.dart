@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
-class MediumSizeNativeAdScreen extends StatefulWidget {
-  const MediumSizeNativeAdScreen({Key? key}) : super(key: key);
-
+class NativeAdListPage extends StatefulWidget {
   @override
-  State<MediumSizeNativeAdScreen> createState() =>
-      _MediumSizeNativeAdScreenState();
+  State<NativeAdListPage> createState() => _NativeAdListPageState();
 }
 
-class _MediumSizeNativeAdScreenState extends State<MediumSizeNativeAdScreen> {
+class _NativeAdListPageState extends State<NativeAdListPage> {
   List<Widget> adsList = [];
 
   /// Loads ad after every 5th widget
@@ -21,6 +18,15 @@ class _MediumSizeNativeAdScreenState extends State<MediumSizeNativeAdScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _initialize();
     });
+
+    Appodeal.setNativeCallbacks(
+      onNativeLoaded: () => print('onNativeLoaded'),
+      onNativeFailedToLoad: () => print('onNativeFailedToLoad'),
+      onNativeShown: () => print('onNativeShown'),
+      onNativeShowFailed: () => print('onNativeShowFailed'),
+      onNativeClicked: () => print('onNativeClicked'),
+      onNativeExpired: () => print('onNativeExpired'),
+    );
   }
 
   _initialize() {
@@ -79,7 +85,7 @@ class _MediumSizeNativeAdScreenState extends State<MediumSizeNativeAdScreen> {
           color: Colors.blueGrey.shade50,
         );
       },
-      itemBuilder: (BuildContext ctx2, int index) {
+      itemBuilder: (BuildContext context, int index) {
         int mainIndex = index;
         if ((index % showAdAfter == 0) && (index != 0)) {
           return _adWidget;
@@ -93,17 +99,19 @@ class _MediumSizeNativeAdScreenState extends State<MediumSizeNativeAdScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        title: const Text(
-          'Inline native ad example',
-          style: TextStyle(fontSize: 15),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Native Ad List'),
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
         ),
-        centerTitle: true,
+        body: _mainBody,
       ),
-      body: _mainBody,
     );
   }
 }
