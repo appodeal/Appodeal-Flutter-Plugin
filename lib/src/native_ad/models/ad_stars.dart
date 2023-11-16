@@ -1,5 +1,7 @@
+import '../../../stack_appodeal_flutter.dart';
+
 /// This is the configuration of ratings.
-class AdStarsConfig {
+class AdStarsConfig with AppodealPlatformArguments {
   final bool visible;
   final int size;
 
@@ -16,12 +18,11 @@ class AdStarsConfig {
     this.emptyStarsColor = '#FFFFFF',
   });
 
-  Map<String, Object> get toMap {
-    return {
-      'size': size,
-      'visible': visible,
-      'starsColor': starsColor.toLowerCase(),
-      'emptyStarsColor': emptyStarsColor.toLowerCase(),
-    };
-  }
+  @override
+  Map<String, dynamic> get toMap => <String, dynamic>{
+        'size': size,
+        'visible': visible,
+        'starsColor': starsColor.toLowerCase(),
+        'emptyStarsColor': emptyStarsColor.toLowerCase(),
+      };
 }

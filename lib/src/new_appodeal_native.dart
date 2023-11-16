@@ -8,12 +8,12 @@ import 'package:flutter/widgets.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class NewAppodealNativeAd extends StatefulWidget {
-  final NativeAdCustomOptions nativeAdCustomOptions;
+  final NativeOptions options;
   final String placement;
 
   const NewAppodealNativeAd({
     Key? key,
-    required this.nativeAdCustomOptions,
+    required this.options,
     this.placement = "default",
   }) : super(key: key);
 
@@ -64,7 +64,7 @@ class _AppodealNativeAdState extends State<NewAppodealNativeAd> {
   }
 
   Map<String, dynamic> get _nativeCreationParams => {
-        'nativeAd': widget.nativeAdCustomOptions.toMap,
+        'nativeAd': widget.options.toMap,
         'placement': widget.placement,
       };
 }

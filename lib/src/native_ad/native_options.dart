@@ -1,18 +1,10 @@
-/// Custom options builder
+/// Native options builder
 
-import 'models/ad_action_button.dart';
-import 'models/ad_advertiser.dart';
-import 'models/ad_choice.dart';
-import 'models/ad_description.dart';
-import 'models/ad_icon.dart';
-import 'models/ad_layout.dart';
-import 'models/ad_media.dart';
-import 'models/ad_price.dart';
-import 'models/ad_stars.dart';
-import 'models/ad_store.dart';
-import 'models/ad_title.dart';
+import 'package:flutter/material.dart';
 
-class NativeAdCustomOptions {
+import '../../stack_appodeal_flutter.dart';
+
+class NativeOptions with AppodealPlatformArguments {
   final AdStarsConfig adStarsConfig;
   final AdPriceConfig adPriceConfig;
   final AdStoreConfig adStoreConfig;
@@ -25,7 +17,7 @@ class NativeAdCustomOptions {
   final AdLayoutConfig adLayoutConfig;
   final AdMediaConfig adMediaConfig;
 
-  NativeAdCustomOptions({
+  NativeOptions._({
     required this.adStarsConfig,
     required this.adPriceConfig,
     required this.adStoreConfig,
@@ -39,8 +31,8 @@ class NativeAdCustomOptions {
     required this.adMediaConfig,
   });
 
-  /// Generates default options
-  static NativeAdCustomOptions defaultConfig({
+  /// Generates custom Native Ad View options
+  static NativeOptions customOptions({
     AdStarsConfig? adStarsConfig,
     AdPriceConfig? adPriceConfig,
     AdStoreConfig? adStoreConfig,
@@ -53,7 +45,7 @@ class NativeAdCustomOptions {
     AdLayoutConfig? adLayoutConfig,
     AdMediaConfig? adMediaConfig,
   }) {
-    return NativeAdCustomOptions(
+    return NativeOptions._(
       adStarsConfig: adStarsConfig ?? AdStarsConfig(),
       adPriceConfig: adPriceConfig ?? AdPriceConfig(),
       adStoreConfig: adStoreConfig ?? AdStoreConfig(),
@@ -65,6 +57,32 @@ class NativeAdCustomOptions {
       adActionButtonConfig: adActionButtonConfig ?? AdActionButtonConfig(),
       adLayoutConfig: adLayoutConfig ?? AdLayoutConfig(),
       adMediaConfig: adMediaConfig ?? AdMediaConfig(),
+    );
+  }
+
+  /// Generates template Native Ad View options
+  static NativeOptions templateOptions({
+    int? adIconSize,
+    int? adTitleFontSize,
+    int? adActionButtonTextSize,
+    int? adDescriptionFontSize,
+    Color? adAdvertiserTextColor,
+    Color? adAdvertiserBackgroundColor,
+    AdChoicePosition? adChoicePosition,
+  }) {
+    return NativeOptions.customOptions(
+      adTitleConfig: AdTitleConfig(fontSize: adTitleFontSize ?? 16),
+      adAdvertiserConfig: AdAdvertiserConfig(
+          textColor: adAdvertiserTextColor ?? Colors.black,
+          backgroundColor: adAdvertiserBackgroundColor ?? Colors.transparent),
+      adChoiceConfig: AdChoiceConfig(
+          position: adChoicePosition ?? AdChoicePosition.startTop),
+      adIconConfig:
+          AdIconConfig(height: adIconSize ?? 50, width: adIconSize ?? 50),
+      adDescriptionConfig:
+          AdDescriptionConfig(fontSize: adDescriptionFontSize ?? 14),
+      adActionButtonConfig:
+          AdActionButtonConfig(fontSize: adActionButtonTextSize ?? 12),
     );
   }
 
@@ -91,18 +109,18 @@ class NativeAdCustomOptions {
   }
 
   /// Convert to map to pass to customOptions in NativeAd
-  Map<String, Object> get toMap {
-    return {
-      'adMediaConfig': adMediaConfig.toMap,
-      'adStarsConfig': adStarsConfig.toMap,
-      'adPriceConfig': adPriceConfig.toMap,
-      'adStoreConfig': adStoreConfig.toMap,
-      'adTitleConfig': adTitleConfig.toMap,
-      'adAdvertiserConfig': adAdvertiserConfig.toMap,
-      'adIconConfig': adIconConfig.toMap,
-      'adDescriptionConfig': adDescriptionConfig.toMap,
-      'adActionButtonConfig': adActionButtonConfig.toMap,
-      'adLayoutConfig': adLayoutConfig.toMap,
-    };
-  }
+  @override
+  Map<String, dynamic> get toMap => <String, dynamic>{
+        'adMediaConfig': adMediaConfig.toMap,
+        'adStarsConfig': adStarsConfig.toMap,
+        'adPriceConfig': adPriceConfig.toMap,
+        'adStoreConfig': adStoreConfig.toMap,
+        'adTitleConfig': adTitleConfig.toMap,
+        'adAdvertiserConfig': adAdvertiserConfig.toMap,
+        'adChoiceConfig': adChoiceConfig.toMap,
+        'adIconConfig': adIconConfig.toMap,
+        'adDescriptionConfig': adDescriptionConfig.toMap,
+        'adActionButtonConfig': adActionButtonConfig.toMap,
+        'adLayoutConfig': adLayoutConfig.toMap,
+      };
 }

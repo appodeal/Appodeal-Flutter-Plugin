@@ -1,5 +1,7 @@
+import '../../../stack_appodeal_flutter.dart';
+
 /// This is the configuration of price text.
-class AdPriceConfig {
+class AdPriceConfig with AppodealPlatformArguments {
   final bool visible;
   final int fontSize;
 
@@ -12,11 +14,10 @@ class AdPriceConfig {
     this.textColor = '#FFFFFF',
   });
 
-  Map<String, Object> get toMap {
-    return {
-      'visible': visible,
-      'fontSize': fontSize,
-      'textColor': textColor.toLowerCase(),
-    };
-  }
+  @override
+  Map<String, dynamic> get toMap => <String, dynamic>{
+        'visible': visible,
+        'fontSize': fontSize,
+        'textColor': textColor.toLowerCase(),
+      };
 }

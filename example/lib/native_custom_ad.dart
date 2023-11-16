@@ -34,7 +34,7 @@ class _MediumSizeNativeAdScreenState extends State<MediumSizeNativeAdScreen> {
   }
 
   Widget get _adWidget {
-    NativeAdCustomOptions options = NativeAdCustomOptions.defaultConfig(
+    NativeOptions options = NativeOptions.customOptions(
       adIconConfig: AdIconConfig(height: 55, width: 55),
       adAdvertiserConfig: AdAdvertiserConfig(textColor: Colors.black),
       adTitleConfig: AdTitleConfig(textColor: Colors.black),
@@ -56,12 +56,11 @@ class _MediumSizeNativeAdScreenState extends State<MediumSizeNativeAdScreen> {
           ),
         ),
         Container(
-          height: options.getInlineAdHeight,
-          alignment: Alignment.center,
-          child: NewAppodealNativeAd(
-            nativeAdCustomOptions: options,
-          ),
-        ),
+            height: options.getInlineAdHeight,
+            alignment: Alignment.center,
+            child: NewAppodealNativeAd(
+              options: options,
+            )),
       ],
     );
   }

@@ -10,7 +10,7 @@ export 'src/appodeal_platform_arguments.dart';
 export 'src/appodeal_purchase.dart';
 export 'src/appodeal_user_consent.dart';
 ///
-export 'src/native_ad/custom_options.dart';
+export 'src/native_ad/native_options.dart';
 ///
 export 'src/native_ad/models/ad_action_button.dart';
 export 'src/native_ad/models/ad_advertiser.dart';
