@@ -68,8 +68,8 @@ class NativeAdOptions with AppodealPlatformArguments {
       adAttributionConfig: AdAttributionConfig(
           textColor: adAttributionTextColor ?? Colors.black,
           backgroundColor: adAttributionBackgroundColor ?? Colors.transparent),
-      adChoiceConfig: AdChoiceConfig(
-          position: adChoicePosition ?? AdChoicePosition.endTop),
+      adChoiceConfig:
+          AdChoiceConfig(position: adChoicePosition ?? AdChoicePosition.endTop),
       adIconConfig:
           AdIconConfig(height: adIconSize ?? 50, width: adIconSize ?? 50),
       adDescriptionConfig:
