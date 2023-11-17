@@ -7,7 +7,6 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -47,10 +46,11 @@ internal class NativeAdViewBinder(
         val adActionButtonFontSize = nativeAdOptions.adActionButtonConfig.fontSize.toFloat()
         (nativeAdView.callToActionView as? Button)?.textSize = adActionButtonFontSize
 
-        val adIconConfigWidth = nativeAdOptions.adIconConfig.width
-        val adIconConfigHeight = nativeAdOptions.adIconConfig.height
-        (nativeAdView.iconView)?.layoutParams =
-            RelativeLayout.LayoutParams(adIconConfigWidth, adIconConfigHeight)
+        // TODO: 17/11/2023 [glavatskikh] think about icon size in template
+//        val adIconConfigWidth = nativeAdOptions.adIconConfig.width
+//        val adIconConfigHeight = nativeAdOptions.adIconConfig.height
+//        (nativeAdView.iconView)?.layoutParams =
+//            RelativeLayout.LayoutParams(adIconConfigWidth, adIconConfigHeight)
 
         return nativeAdView
     }
