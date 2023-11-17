@@ -1,33 +1,29 @@
 package com.appodeal.appodeal_flutter
 
 import android.app.Activity
-import android.content.Context
 import android.view.View
-import android.view.ViewGroup
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.nativead.NativeAdView
-import com.appodeal.appodeal_flutter.native_ad.NativeAdOptions
 import com.appodeal.appodeal_flutter.native_ad.NativeAdCustomView
+import com.appodeal.appodeal_flutter.native_ad.NativeAdOptions
 import io.flutter.plugin.platform.PlatformView
 import java.lang.ref.WeakReference
 
 internal class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformView {
     private val placement: String = arguments["placement"] as? String ?: "default"
-    private val params: NativeAdOptions? =
-        NativeAdOptions.toNativeAdOptions(arguments["nativeAd"] as Map<String, Any>)
 
-    private val adView: WeakReference<NativeAdView> = WeakReference(getAdView(activity))
+    @Suppress("UNCHECKED_CAST")
+    private val nativeAdOptions: NativeAdOptions? =
+        NativeAdOptions.toNativeAdOptions(arguments["options"] as Map<String, Any>)
 
-    init {
-        (adView.get()?.parent as? ViewGroup)?.removeView(adView.get())
-    }
+    private val adView: WeakReference<NativeAdView> by lazy {
+        val nativeAd = Appodeal.getNativeAds(1).firstOrNull() ?: return@lazy WeakReference(null)
+        val nativeAdOptions = nativeAdOptions ?: return@lazy WeakReference(null)
 
-    private fun getAdView(context: Context): NativeAdView {
-        val adView = NativeAdCustomView(context, params).bind()
-        Appodeal.getNativeAds(1).firstOrNull()?.let {
-            adView.registerView(it, placement)
-        }
-        return adView
+        // when (nativeAdOptions) {}
+        val adView = NativeAdCustomView(activity, nativeAdOptions).bind()
+        adView.registerView(nativeAd, placement)
+        WeakReference(adView)
     }
 
     override fun getView(): View? = adView.get()
