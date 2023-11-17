@@ -18,7 +18,7 @@ import com.appodeal.ads.nativead.NativeMediaView
 @SuppressLint("ViewConstructor")
 internal class NativeAdCustomView(
     private val context: Context,
-    private val params: NativeAdOptions?
+    private val nativeAdOptions: NativeAdOptions
 ) {
     @SuppressLint("InflateParams")
     fun bind(): NativeAdView {
@@ -29,8 +29,6 @@ internal class NativeAdCustomView(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-
-//        params ?: return nativeAdView
 
         // Create the inner layout (ConstraintLayout)
         val constraintLayout = ConstraintLayout(context)
