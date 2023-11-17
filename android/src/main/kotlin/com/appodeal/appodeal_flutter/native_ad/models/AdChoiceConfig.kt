@@ -4,7 +4,7 @@ import com.appodeal.appodeal_flutter.apdLog
 import com.appodeal.ads.nativead.Position as NativeAdChoicePosition
 
 class AdChoiceConfig(
-    val position: NativeAdChoicePosition = NativeAdChoicePosition.START_TOP,
+    val position: NativeAdChoicePosition = NativeAdChoicePosition.END_TOP,
 ) {
     companion object {
         fun toAdChoiceConfig(map: Map<String, Any>): AdChoiceConfig {

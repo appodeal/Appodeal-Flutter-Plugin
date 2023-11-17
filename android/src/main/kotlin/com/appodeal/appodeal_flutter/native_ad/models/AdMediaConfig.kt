@@ -4,7 +4,7 @@ import com.appodeal.appodeal_flutter.apdLog
 
 internal class AdMediaConfig(
     val visible: Boolean = true,
-    val position: Int = 0,
+    val position: Int = 0, // TODO: 17/11/2023 [glavatskikh] fix position
     val margin: Int = 4,
 ) {
     companion object {

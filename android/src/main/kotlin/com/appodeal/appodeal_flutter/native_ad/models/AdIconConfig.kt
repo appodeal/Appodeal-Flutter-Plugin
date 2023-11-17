@@ -6,7 +6,7 @@ internal class AdIconConfig(
     val visible: Boolean = true,
     val height: Int = 50,
     val width: Int = 50,
-    val position: Int = 0,
+    val position: Int = 0, // TODO: 17/11/2023 [glavatskikh] fix position
     val margin: Int = 4,
 ) {
     companion object {
