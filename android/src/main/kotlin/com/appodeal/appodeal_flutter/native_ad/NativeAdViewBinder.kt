@@ -1,6 +1,5 @@
 package com.appodeal.appodeal_flutter.native_ad
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Typeface
 import android.text.TextUtils
@@ -8,20 +7,55 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.appodeal.ads.nativead.NativeAdView
+import com.appodeal.ads.nativead.NativeAdViewAppWall
+import com.appodeal.ads.nativead.NativeAdViewContentStream
+import com.appodeal.ads.nativead.NativeAdViewNewsFeed
 import com.appodeal.ads.nativead.NativeIconView
 import com.appodeal.ads.nativead.NativeMediaView
 
-@SuppressLint("ViewConstructor")
-internal class NativeAdCustomView(
+internal class NativeAdViewBinder(
     private val context: Context,
     private val nativeAdOptions: NativeAdOptions
 ) {
-    @SuppressLint("InflateParams")
-    fun bind(): NativeAdView {
+    fun bindTemplateAdView(nativeAdViewType: NativeAdViewType): NativeAdView {
+        val nativeAdView = when (nativeAdViewType) {
+            NativeAdViewType.ContentStream -> NativeAdViewContentStream(context)
+            NativeAdViewType.AppWall -> NativeAdViewAppWall(context)
+            NativeAdViewType.NewsFeed -> NativeAdViewNewsFeed(context)
+            else -> throw IllegalArgumentException("Unknown NativeAdViewType: $nativeAdViewType")
+        }
+
+        val adChoicePosition = nativeAdOptions.adChoiceConfig.position
+        nativeAdView.setAdChoicesPosition(adChoicePosition)
+
+        val adAttributionBackgroundColor = nativeAdOptions.adAttributionConfig.backgroundColor
+        nativeAdView.setAdAttributionBackground(adAttributionBackgroundColor)
+        val adAttributionTextColor = nativeAdOptions.adAttributionConfig.textColor
+        nativeAdView.setAdAttributionTextColor(adAttributionTextColor)
+
+        val adTitleConfigFontSize = nativeAdOptions.adTitleConfig.fontSize.toFloat()
+        (nativeAdView.titleView as? TextView)?.textSize = adTitleConfigFontSize
+
+        val adDescriptionFontSize = nativeAdOptions.adDescriptionConfig.fontSize.toFloat()
+        (nativeAdView.descriptionView as? TextView)?.textSize = adDescriptionFontSize
+
+        val adActionButtonFontSize = nativeAdOptions.adActionButtonConfig.fontSize.toFloat()
+        (nativeAdView.callToActionView as? Button)?.textSize = adActionButtonFontSize
+
+        val adIconConfigWidth = nativeAdOptions.adIconConfig.width
+        val adIconConfigHeight = nativeAdOptions.adIconConfig.height
+        (nativeAdView.iconView)?.layoutParams =
+            FrameLayout.LayoutParams(adIconConfigWidth, adIconConfigHeight)
+
+        return nativeAdView
+    }
+
+    fun bindCustomAdView(): NativeAdView {
         // Create the NativeAdView
         val nativeAdView = NativeAdView(context)
         nativeAdView.id = View.generateViewId()
@@ -184,5 +218,4 @@ internal class NativeAdCustomView(
         nativeAdView.addView(constraintLayout)
         return nativeAdView
     }
-
 }

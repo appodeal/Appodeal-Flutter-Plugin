@@ -10,6 +10,7 @@ import com.appodeal.appodeal_flutter.native_ad.models.AdMediaConfig
 import com.appodeal.appodeal_flutter.native_ad.models.AdTitleConfig
 
 internal class NativeAdOptions(
+    val nativeAdViewType: NativeAdViewType,
     val adActionButtonConfig: AdActionButtonConfig,
     val adAttributionConfig: AdAttributionConfig,
     val adChoiceConfig: AdChoiceConfig,
@@ -21,7 +22,10 @@ internal class NativeAdOptions(
 ) {
     companion object {
         fun toNativeAdOptions(args: Map<String, Any>): NativeAdOptions? = runCatching {
+            val idxNativeAdViewType = args["nativeAdType"] as? Int
+                ?: throw IllegalArgumentException("nativeAdType is required")
             NativeAdOptions(
+                nativeAdViewType = NativeAdViewType.values()[idxNativeAdViewType],
                 adActionButtonConfig = AdActionButtonConfig.toAdActionButtonConfig(args["adActionButtonConfig"] as Map<String, Any>),
                 adAttributionConfig = AdAttributionConfig.toAdAttributionConfig(args["adAttributionConfig"] as Map<String, Any>),
                 adChoiceConfig = AdChoiceConfig.toAdChoiceConfig(args["adChoiceConfig"] as Map<String, Any>),
@@ -34,3 +38,5 @@ internal class NativeAdOptions(
         }.getOrNull()
     }
 }
+
+internal enum class NativeAdViewType { Custom, ContentStream, AppWall, NewsFeed }

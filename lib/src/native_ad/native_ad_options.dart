@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../stack_appodeal_flutter.dart';
 
 class NativeAdOptions with AppodealPlatformArguments {
+  final _NativeAdType nativeAdType;
   final AdTitleConfig adTitleConfig;
   final AdAttributionConfig adAttributionConfig;
   final AdChoiceConfig adChoiceConfig;
@@ -15,6 +16,7 @@ class NativeAdOptions with AppodealPlatformArguments {
   final AdMediaConfig adMediaConfig;
 
   NativeAdOptions._({
+    required this.nativeAdType,
     required this.adTitleConfig,
     required this.adAttributionConfig,
     required this.adChoiceConfig,
@@ -37,6 +39,7 @@ class NativeAdOptions with AppodealPlatformArguments {
     AdMediaConfig? adMediaConfig,
   }) {
     return NativeAdOptions._(
+      nativeAdType: _NativeAdType.custom,
       adTitleConfig: adTitleConfig ?? AdTitleConfig(),
       adAttributionConfig: adAttributionConfig ?? AdAttributionConfig(),
       adChoiceConfig: adChoiceConfig ?? AdChoiceConfig(),
@@ -49,7 +52,8 @@ class NativeAdOptions with AppodealPlatformArguments {
   }
 
   /// Generates template Native Ad View options
-  static NativeAdOptions templateOptions({
+  static NativeAdOptions _templateOptions({
+    required _NativeAdType nativeAdType,
     int? adIconSize,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
@@ -71,6 +75,72 @@ class NativeAdOptions with AppodealPlatformArguments {
           AdDescriptionConfig(fontSize: adDescriptionFontSize ?? 12),
       adActionButtonConfig:
           AdActionButtonConfig(fontSize: adActionButtonTextSize ?? 12),
+    );
+  }
+
+  /// Generates Content Stream template Native Ad View options
+  static NativeAdOptions contentStreamOptions({
+    int? adIconSize,
+    int? adTitleFontSize,
+    int? adActionButtonTextSize,
+    int? adDescriptionFontSize,
+    Color? adAttributionTextColor,
+    Color? adAttributionBackgroundColor,
+    AdChoicePosition? adChoicePosition,
+  }) {
+    return NativeAdOptions._templateOptions(
+      nativeAdType: _NativeAdType.contentStream,
+      adIconSize: adIconSize,
+      adTitleFontSize: adTitleFontSize,
+      adActionButtonTextSize: adActionButtonTextSize,
+      adDescriptionFontSize: adDescriptionFontSize,
+      adAttributionTextColor: adAttributionTextColor,
+      adAttributionBackgroundColor: adAttributionBackgroundColor,
+      adChoicePosition: adChoicePosition,
+    );
+  }
+
+  /// Generates App Wall template Native Ad View options
+  static NativeAdOptions appWallOptions({
+    int? adIconSize,
+    int? adTitleFontSize,
+    int? adActionButtonTextSize,
+    int? adDescriptionFontSize,
+    Color? adAttributionTextColor,
+    Color? adAttributionBackgroundColor,
+    AdChoicePosition? adChoicePosition,
+  }) {
+    return NativeAdOptions._templateOptions(
+      nativeAdType: _NativeAdType.appWall,
+      adIconSize: adIconSize,
+      adTitleFontSize: adTitleFontSize,
+      adActionButtonTextSize: adActionButtonTextSize,
+      adDescriptionFontSize: adDescriptionFontSize,
+      adAttributionTextColor: adAttributionTextColor,
+      adAttributionBackgroundColor: adAttributionBackgroundColor,
+      adChoicePosition: adChoicePosition,
+    );
+  }
+
+  /// Generates News Feed template Native Ad View options
+  static NativeAdOptions newsFeedOptions({
+    int? adIconSize,
+    int? adTitleFontSize,
+    int? adActionButtonTextSize,
+    int? adDescriptionFontSize,
+    Color? adAttributionTextColor,
+    Color? adAttributionBackgroundColor,
+    AdChoicePosition? adChoicePosition,
+  }) {
+    return NativeAdOptions._templateOptions(
+      nativeAdType: _NativeAdType.newsFeed,
+      adIconSize: adIconSize,
+      adTitleFontSize: adTitleFontSize,
+      adActionButtonTextSize: adActionButtonTextSize,
+      adDescriptionFontSize: adDescriptionFontSize,
+      adAttributionTextColor: adAttributionTextColor,
+      adAttributionBackgroundColor: adAttributionBackgroundColor,
+      adChoicePosition: adChoicePosition,
     );
   }
 
@@ -96,6 +166,7 @@ class NativeAdOptions with AppodealPlatformArguments {
   /// Convert to map to pass to NativeAdOptions in NativeAd
   @override
   Map<String, dynamic> get toMap => <String, dynamic>{
+        'nativeAdType': nativeAdType.index,
         'adMediaConfig': adMediaConfig.toMap,
         'adTitleConfig': adTitleConfig.toMap,
         'adAttributionConfig': adAttributionConfig.toMap,
@@ -106,3 +177,5 @@ class NativeAdOptions with AppodealPlatformArguments {
         'adLayoutConfig': adLayoutConfig.toMap,
       };
 }
+
+enum _NativeAdType { custom, contentStream, appWall, newsFeed }

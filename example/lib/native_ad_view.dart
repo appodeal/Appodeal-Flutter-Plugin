@@ -172,7 +172,7 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAdParams = NativeAdOptions.templateOptions();
+                    final nativeAdParams = NativeAdOptions.newsFeedOptions();
                     // context: context,
                     // adChoicePosition: AdChoicePosition.END_BOTTOM,
                     // templateType: TemplateType.NEWS_FEED,
@@ -202,7 +202,7 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAdParams = NativeAdOptions.templateOptions();
+                    final nativeAdParams = NativeAdOptions.appWallOptions();
                     // context: context,
                     // adChoicePosition: AdChoicePosition.END_BOTTOM,
                     // templateType: TemplateType.APP_WALL,
@@ -231,7 +231,8 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAdOptions = NativeAdOptions.templateOptions();
+                    final nativeAdOptions =
+                        NativeAdOptions.contentStreamOptions();
                     // context: context,
                     // adChoicePosition: AdChoicePosition.END_BOTTOM,
                     // templateType: TemplateType.CONTENT_STREAM,
