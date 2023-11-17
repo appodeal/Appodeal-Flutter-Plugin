@@ -3,7 +3,6 @@ package com.appodeal.appodeal_flutter.native_ad
 import android.content.Context
 import android.graphics.Typeface
 import android.text.TextUtils
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -117,7 +116,7 @@ internal class NativeAdViewBinder(
             ConstraintLayout.LayoutParams.WRAP_CONTENT,
             ConstraintLayout.LayoutParams.WRAP_CONTENT
         )
-        adAttributionTextView.gravity = Gravity.CENTER
+//        adAttributionTextView.gravity = Gravity.CENTER
 //        adAttributionTextView.setBackgroundResource(R.color.red)
 //        adAttributionTextView.elevation = context.resources.getDimension(R.dimen.base_elevation)
         adAttributionTextView.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
@@ -126,6 +125,7 @@ internal class NativeAdViewBinder(
         adAttributionTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
 //        adAttributionTextView.setTextColor(ContextCompat.getColor(this, R.color.black))
         adAttributionTextView.text = "Ad"
+        constraintLayout.addView(adAttributionTextView)
 
         // Set constraints using ConstraintSet
         val set = ConstraintSet()
@@ -134,7 +134,7 @@ internal class NativeAdViewBinder(
         // Set constraints for NativeMediaView
         set.connect(
             mediaView.id, ConstraintSet.TOP,
-            nativeAdView.id, ConstraintSet.TOP
+            constraintLayout.id, ConstraintSet.TOP
         )
         set.connect(
             mediaView.id, ConstraintSet.START,
@@ -144,6 +144,11 @@ internal class NativeAdViewBinder(
             mediaView.id, ConstraintSet.END,
             constraintLayout.id, ConstraintSet.END
         )
+        set.constrainWidth(
+            descriptionTextView.id,
+            ConstraintSet.MATCH_CONSTRAINT
+        ) // Match the width
+        set.constrainHeight(descriptionTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the height
 
         // Set constraints for NativeIconView
         set.connect(
@@ -154,7 +159,19 @@ internal class NativeAdViewBinder(
             iconView.id, ConstraintSet.START,
             constraintLayout.id, ConstraintSet.START
         )
+        set.connect(
+            iconView.id, ConstraintSet.BOTTOM,
+            constraintLayout.id, ConstraintSet.BOTTOM
+        )
         set.setDimensionRatio(iconView.id, "H,1:1")
+        set.constrainWidth(
+            descriptionTextView.id,
+            ConstraintSet.MATCH_CONSTRAINT
+        ) // Match the width
+        set.constrainHeight(
+            descriptionTextView.id,
+            ConstraintSet.MATCH_CONSTRAINT
+        ) // Match the height
 
         // Set constraints for titleTextView
         set.connect(
@@ -169,6 +186,12 @@ internal class NativeAdViewBinder(
             titleTextView.id, ConstraintSet.END,
             ctaButton.id, ConstraintSet.START
         )
+        set.connect(
+            titleTextView.id, ConstraintSet.BOTTOM,
+            descriptionTextView.id, ConstraintSet.TOP
+        )
+        set.constrainWidth(titleTextView.id, ConstraintSet.MATCH_CONSTRAINT) // Match the width
+        set.constrainHeight(titleTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the height
 
         // Set constraints for descriptionTextView
         set.connect(
@@ -183,6 +206,15 @@ internal class NativeAdViewBinder(
             descriptionTextView.id, ConstraintSet.END,
             titleTextView.id, ConstraintSet.END
         )
+        set.connect(
+            descriptionTextView.id, ConstraintSet.BOTTOM,
+            constraintLayout.id, ConstraintSet.BOTTOM
+        )
+        set.constrainWidth(
+            descriptionTextView.id,
+            ConstraintSet.MATCH_CONSTRAINT
+        ) // Match the width
+        set.constrainHeight(descriptionTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the height
 
         // Set constraints for ctaButton
         set.connect(
@@ -190,21 +222,29 @@ internal class NativeAdViewBinder(
             mediaView.id, ConstraintSet.BOTTOM
         )
         set.connect(
+            ctaButton.id, ConstraintSet.START,
+            descriptionTextView.id, ConstraintSet.END,
+        )
+        set.connect(
             ctaButton.id, ConstraintSet.END,
             constraintLayout.id, ConstraintSet.END
         )
+        set.connect(
+            ctaButton.id, ConstraintSet.BOTTOM,
+            constraintLayout.id, ConstraintSet.BOTTOM
+        )
+        set.constrainWidth(descriptionTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the width
+        set.constrainHeight(descriptionTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the height
 
         // Set constraints for adAttributionTextView
-        set.connect(
-            adAttributionTextView.id, ConstraintSet.TOP,
-            constraintLayout.id, ConstraintSet.TOP
-        )
         set.connect(
             adAttributionTextView.id, ConstraintSet.START,
             constraintLayout.id, ConstraintSet.START
         )
-//        set.constrainWidth(adAttributionTextView.id, ConstraintSet.WRAP_CONTENT)
-//        set.constrainHeight(adAttributionTextView.id, ConstraintSet.WRAP_CONTENT)
+        set.connect(
+            adAttributionTextView.id, ConstraintSet.TOP,
+            constraintLayout.id, ConstraintSet.TOP
+        )
 
         set.applyTo(constraintLayout)
 
