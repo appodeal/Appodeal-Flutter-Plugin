@@ -47,28 +47,21 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
       adLayoutConfig: AdLayoutConfig(adTileHeight: 55),
       adMediaConfig: AdMediaConfig(visible: true),
     );
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-          child: const Text(
-            'Sponsored content',
-            style: TextStyle(
-              color: Colors.grey,
-              fontSize: 14,
-            ),
-          ),
-        ),
-        Container(
+    return Align(
+        alignment: Alignment.center,
+        child: Container(
             height: options.getInlineAdHeight,
             alignment: Alignment.center,
-            child: AppodealNativeAd(
-              options: options,
-            )),
-      ],
-    );
+            child: AppodealNativeAd(options: options)));
+
+    // ConstrainedBox(
+    //     constraints: const BoxConstraints(
+    //       minWidth: 300,
+    //       minHeight: 350,
+    //       maxHeight: 400,
+    //       maxWidth: 450,
+    //     ),
+    //     child: AppodealNativeAd(options: options)));
   }
 
   Widget get _mainBody {
@@ -86,13 +79,17 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
         );
       },
       itemBuilder: (BuildContext context, int index) {
-        int mainIndex = index;
-        if ((index % showAdAfter == 0) && (index != 0)) {
-          return _adWidget;
-        } else {
-          mainIndex = index - (index ~/ showAdAfter);
-        }
-        return adsList.elementAt(mainIndex);
+        return FutureBuilder<bool>(
+            future: Appodeal.isLoaded(AppodealAdType.NativeAd),
+            builder: (context, snapshot) {
+              bool isLoaded = snapshot.data ?? false;
+              if (index % showAdAfter == 0 && index != 0 && isLoaded) {
+                return _adWidget;
+              } else {
+                int mainIndex = index - (index ~/ showAdAfter);
+                return adsList.elementAt(mainIndex);
+              }
+            });
       },
     );
   }
