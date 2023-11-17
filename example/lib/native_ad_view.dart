@@ -87,35 +87,34 @@ class _NativePageState extends State<NativePage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () {
                     double screenWidth = MediaQuery.of(context).size.width;
-                    final nativeAdParams = WidgetCustomParams(
-                      widgetWidth: screenWidth,
-                      widgetHeight: screenWidth * 0.2,
-                      adChoicePosition: AdChoicePosition.END_BOTTOM,
-                      widgetOptions: NativeCustomOptions(
-                        viewPosition: NativeBannerViewPosition.ICON_START,
-                        mediaViewPosition: null,
-                        containerMargin: 4,
-                        adAttributionOptions: AdAttributionOptions(
-                            margin: 4,
-                            color: Colors.black,
-                            backgroundColor: Colors.teal),
-                        ctaOptions: CTAOptions(
-                            margin: 4,
-                            fontSize: 16,
-                            color: Colors.black,
-                            backgroundColor: Colors.orangeAccent),
-                        descriptionOptions: DescriptionOptions(
-                            margin: 4, fontSize: 14, color: Colors.black),
-                        nativeIconOptions: IconOptions(margin: 4, size: 50),
-                        nativeMediaOptions: MediaOptions(margin: 4),
-                        titleOptions: TitleOptions(
-                            margin: 4, fontSize: 16, color: Colors.black),
-                      ),
-                    );
+                    //      widgetWidth: screenWidth,
+                    //      widgetHeight: screenWidth * 0.2,
+                    //      adChoicePosition: AdChoicePosition.END_BOTTOM,
+                    //      widgetOptions: NativeCustomOptions(
+                    //        viewPosition: NativeBannerViewPosition.ICON_START,
+                    //        mediaViewPosition: null,
+                    //        containerMargin: 4,
+                    //        adAttributionOptions: AdAttributionOptions(
+                    //            margin: 4,
+                    //            color: Colors.black,
+                    //            backgroundColor: Colors.teal),
+                    //        ctaOptions: CTAOptions(
+                    //            margin: 4,
+                    //            fontSize: 16,
+                    //            color: Colors.black,
+                    //            backgroundColor: Colors.orangeAccent),
+                    //        descriptionOptions: DescriptionOptions(
+                    //            margin: 4, fontSize: 14, color: Colors.black),
+                    //        nativeIconOptions: IconOptions(margin: 4, size: 50),
+                    //        nativeMediaOptions: MediaOptions(margin: 4),
+                    //        titleOptions: TitleOptions(
+                    //            margin: 4, fontSize: 16, color: Colors.black),
+                    //      ),
+                    final nativeAdOptions = NativeAdOptions.customOptions();
                     setState(() {
                       isShow = true;
                       appodealNative =
-                          AppodealNativeAd.custom(nativeAdParams: nativeAdParams);
+                          AppodealNativeAd(options: nativeAdOptions);
                     });
                   },
                   child: const Text('NativeBanner'),
@@ -131,34 +130,34 @@ class _NativePageState extends State<NativePage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () {
                     double screenWidth = MediaQuery.of(context).size.width;
-                    final nativeAdParams = WidgetCustomParams(
-                        widgetWidth: screenWidth,
-                        widgetHeight: screenWidth * 0.7,
-                        adChoicePosition: AdChoicePosition.END_BOTTOM,
-                        widgetOptions: NativeCustomOptions(
-                          viewPosition: NativeBannerViewPosition.ICON_START,
-                          mediaViewPosition: MediaViewPosition.TOP,
-                          containerMargin: 4,
-                          adAttributionOptions: AdAttributionOptions(
-                              margin: 4,
-                              color: Colors.black,
-                              backgroundColor: Colors.teal),
-                          ctaOptions: CTAOptions(
-                              margin: 4,
-                              fontSize: 16,
-                              color: Colors.black,
-                              backgroundColor: Colors.orangeAccent),
-                          descriptionOptions: DescriptionOptions(
-                              margin: 4, fontSize: 14, color: Colors.black),
-                          nativeIconOptions: IconOptions(margin: 4, size: 50),
-                          nativeMediaOptions: MediaOptions(margin: 4),
-                          titleOptions: TitleOptions(
-                              margin: 4, fontSize: 16, color: Colors.black),
-                        ));
+                    final nativeAdOptions = NativeAdOptions.customOptions();
+                    // widgetWidth: screenWidth,
+                    // widgetHeight: screenWidth * 0.7,
+                    // adChoicePosition: AdChoicePosition.END_BOTTOM,
+                    // widgetOptions: NativeCustomOptions(
+                    //   viewPosition: NativeBannerViewPosition.ICON_START,
+                    //   mediaViewPosition: MediaViewPosition.TOP,
+                    //   containerMargin: 4,
+                    //   adAttributionOptions: AdAttributionOptions(
+                    //       margin: 4,
+                    //       color: Colors.black,
+                    //       backgroundColor: Colors.teal),
+                    //   ctaOptions: CTAOptions(
+                    //       margin: 4,
+                    //       fontSize: 16,
+                    //       color: Colors.black,
+                    //       backgroundColor: Colors.orangeAccent),
+                    //   descriptionOptions: DescriptionOptions(
+                    //       margin: 4, fontSize: 14, color: Colors.black),
+                    //   nativeIconOptions: IconOptions(margin: 4, size: 50),
+                    //   nativeMediaOptions: MediaOptions(margin: 4),
+                    //   titleOptions: TitleOptions(
+                    //       margin: 4, fontSize: 16, color: Colors.black),
+                    // ));
                     setState(() {
                       isShow = true;
                       appodealNative =
-                          AppodealNativeAd.custom(nativeAdParams: nativeAdParams);
+                          AppodealNativeAd(options: nativeAdOptions);
                     });
                   },
                   child: const Text('NativeFull'),
@@ -173,22 +172,22 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAdParams = WidgetTemplateParams(
-                        context: context,
-                        adChoicePosition: AdChoicePosition.END_BOTTOM,
-                        templateType: TemplateType.NEWS_FEED,
-                        widgetOptions: NativeTemplateOptions(
-                            iconSize: 50,
-                            titleTextSize: 14,
-                            ctaTextSize: 14,
-                            descriptionTextSize: 12,
-                            adAttributionBackgroundColor:
-                                Colors.deepOrangeAccent,
-                            adAttributionTextColor: Colors.black));
+                    final nativeAdParams = NativeAdOptions.templateOptions();
+                    // context: context,
+                    // adChoicePosition: AdChoicePosition.END_BOTTOM,
+                    // templateType: TemplateType.NEWS_FEED,
+                    // widgetOptions: NativeTemplateOptions(
+                    //     iconSize: 50,
+                    //     titleTextSize: 14,
+                    //     ctaTextSize: 14,
+                    //     descriptionTextSize: 12,
+                    //     adAttributionBackgroundColor:
+                    //         Colors.deepOrangeAccent,
+                    //     adAttributionTextColor: Colors.black));
                     setState(() {
                       isShow = true;
                       appodealNative =
-                          AppodealNativeAd.custom(nativeAdParams: nativeAdParams);
+                          AppodealNativeAd(options: nativeAdParams);
                     });
                   },
                   child: const Text('NativeNewsFeed'),
@@ -203,20 +202,21 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAdParams = WidgetTemplateParams(
-                        context: context,
-                        adChoicePosition: AdChoicePosition.END_BOTTOM,
-                        templateType: TemplateType.APP_WALL,
-                        widgetOptions: NativeTemplateOptions(
-                            iconSize: 70,
-                            titleTextSize: 20,
-                            ctaTextSize: 20,
-                            descriptionTextSize: 14,
-                            adAttributionBackgroundColor: Colors.green,
-                            adAttributionTextColor: Colors.black));
+                    final nativeAdParams = NativeAdOptions.templateOptions();
+                    // context: context,
+                    // adChoicePosition: AdChoicePosition.END_BOTTOM,
+                    // templateType: TemplateType.APP_WALL,
+                    // widgetOptions: NativeTemplateOptions(
+                    //     iconSize: 70,
+                    //     titleTextSize: 20,
+                    //     ctaTextSize: 20,
+                    //     descriptionTextSize: 14,
+                    //     adAttributionBackgroundColor: Colors.green,
+                    //     adAttributionTextColor: Colors.black));
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNativeAd.appWall(nativeAdParams: nativeAdParams);
+                      appodealNative =
+                          AppodealNativeAd(options: nativeAdParams);
                     });
                   },
                   child: const Text('NativeAppWall'),
@@ -231,18 +231,18 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAdParams = WidgetTemplateParams(
-                        context: context,
-                        adChoicePosition: AdChoicePosition.END_BOTTOM,
-                        templateType: TemplateType.CONTENT_STREAM,
-                        widgetOptions: NativeTemplateOptions(
-                            iconSize: 70,
-                            titleTextSize: 16,
-                            ctaTextSize: 16,
-                            descriptionTextSize: 14,
-                            adAttributionBackgroundColor:
-                                Colors.deepOrangeAccent,
-                            adAttributionTextColor: Colors.black));
+                    final nativeAdOptions = NativeAdOptions.templateOptions();
+                    // context: context,
+                    // adChoicePosition: AdChoicePosition.END_BOTTOM,
+                    // templateType: TemplateType.CONTENT_STREAM,
+                    // widgetOptions: NativeTemplateOptions(
+                    //     iconSize: 70,
+                    //     titleTextSize: 16,
+                    //     ctaTextSize: 16,
+                    //     descriptionTextSize: 14,
+                    //     adAttributionBackgroundColor:
+                    //         Colors.deepOrangeAccent,
+                    //     adAttributionTextColor: Colors.black));
                     if (isShow) {
                       setState(() {
                         isShow = false;
@@ -250,7 +250,8 @@ class _NativePageState extends State<NativePage> {
                     }
                     setState(() {
                       isShow = true;
-                      appodealNative = AppodealNativeAd.custom(nativeAdParams: nativeAdParams);
+                      appodealNative =
+                          AppodealNativeAd(options: nativeAdOptions);
                     });
                   },
                   child: const Text('NativeContentStream'),

@@ -6,13 +6,11 @@ import 'package:appodeal_flutter_example/banner_view.dart';
 import 'package:appodeal_flutter_example/interstitial.dart';
 import 'package:appodeal_flutter_example/mrec_view.dart';
 import 'package:appodeal_flutter_example/native_ad_list.dart';
+import 'package:appodeal_flutter_example/native_ad_view.dart';
 import 'package:appodeal_flutter_example/rewarded_video.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
-
-import 'native_ad_view.dart';
-import 'native_custom_ad.dart';
 
 void main() {
   runApp(MaterialApp(

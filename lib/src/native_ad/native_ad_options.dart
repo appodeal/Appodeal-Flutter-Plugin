@@ -93,7 +93,7 @@ class NativeAdOptions with AppodealPlatformArguments {
     return height.toDouble();
   }
 
-  /// Convert to map to pass to customOptions in NativeAd
+  /// Convert to map to pass to NativeAdOptions in NativeAd
   @override
   Map<String, dynamic> get toMap => <String, dynamic>{
         'adMediaConfig': adMediaConfig.toMap,

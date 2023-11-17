@@ -64,7 +64,7 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
         Container(
             height: options.getInlineAdHeight,
             alignment: Alignment.center,
-            child: NewAppodealNativeAd(
+            child: AppodealNativeAd(
               options: options,
             )),
       ],
