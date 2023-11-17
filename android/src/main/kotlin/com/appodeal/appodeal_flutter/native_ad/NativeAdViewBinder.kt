@@ -7,7 +7,7 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -50,7 +50,7 @@ internal class NativeAdViewBinder(
         val adIconConfigWidth = nativeAdOptions.adIconConfig.width
         val adIconConfigHeight = nativeAdOptions.adIconConfig.height
         (nativeAdView.iconView)?.layoutParams =
-            FrameLayout.LayoutParams(adIconConfigWidth, adIconConfigHeight)
+            RelativeLayout.LayoutParams(adIconConfigWidth, adIconConfigHeight)
 
         return nativeAdView
     }

@@ -27,6 +27,11 @@ class _AppodealNativeAdState extends State<AppodealNativeAd> {
 
   @override
   Widget build(BuildContext context) {
+
+    print("NativeAdOptions: ${widget.options.toMap}");
+
+
+
     return Platform.isIOS
         ? UiKitView(
             key: _key,

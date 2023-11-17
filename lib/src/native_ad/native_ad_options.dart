@@ -62,7 +62,8 @@ class NativeAdOptions with AppodealPlatformArguments {
     Color? adAttributionBackgroundColor,
     AdChoicePosition? adChoicePosition,
   }) {
-    return NativeAdOptions.customOptions(
+    return NativeAdOptions._(
+      nativeAdType: nativeAdType,
       adTitleConfig: AdTitleConfig(fontSize: adTitleFontSize ?? 14),
       adAttributionConfig: AdAttributionConfig(
           textColor: adAttributionTextColor ?? Colors.black,
@@ -75,6 +76,8 @@ class NativeAdOptions with AppodealPlatformArguments {
           AdDescriptionConfig(fontSize: adDescriptionFontSize ?? 12),
       adActionButtonConfig:
           AdActionButtonConfig(fontSize: adActionButtonTextSize ?? 12),
+      adLayoutConfig: AdLayoutConfig(),
+      adMediaConfig: AdMediaConfig(),
     );
   }
 
