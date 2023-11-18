@@ -8,7 +8,8 @@ internal class AdTitleConfig(
     val visible: Boolean = true,
     val fontSize: Int = 16,
     val textColor: Int = Color.BLACK,
-    val margin: Int = 4,
+    val backgroundColor: Int = Color.TRANSPARENT,
+    val margin: Int = 0,
 ) {
     companion object {
         fun toAdTitleConfig(map: Map<String, Any>): AdTitleConfig {
@@ -17,7 +18,8 @@ internal class AdTitleConfig(
                 visible = map["visible"] as? Boolean ?: true,
                 fontSize = map["fontSize"] as? Int ?: 16,
                 textColor = parseColor(map["textColor"] as? String) ?: Color.BLACK,
-                margin = map["margin"] as? Int ?: 4,
+                backgroundColor = parseColor(map["backgroundColor"] as? String) ?: Color.TRANSPARENT,
+                margin = map["margin"] as? Int ?: 0,
             )
         }
     }

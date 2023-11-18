@@ -8,18 +8,18 @@ import '../../../stack_appodeal_flutter.dart';
 class AdActionButtonConfig with AppodealPlatformArguments {
   final bool visible;
   final Color textColor;
-  final Color buttonColor;
+  final Color backgroundColor;
   final int fontSize;
   final int margin;
   final int radius;
 
   AdActionButtonConfig({
     this.visible = true,
-    this.fontSize = 12,
+    this.fontSize = 14,
     this.textColor = Colors.black,
-    this.buttonColor = Colors.transparent,
-    this.margin = 4,
-    this.radius = 16,
+    this.backgroundColor = Colors.transparent,
+    this.margin = 0,
+    this.radius = 8,
   });
 
   @override
@@ -27,7 +27,7 @@ class AdActionButtonConfig with AppodealPlatformArguments {
         'visible': visible,
         'fontSize': fontSize,
         'textColor': textColor.toHex(),
-        'buttonColor': buttonColor.toHex(),
+        'backgroundColor': backgroundColor.toHex(),
         'margin': margin,
         'radius': radius,
       };

@@ -19,7 +19,7 @@ class AdIconConfig with AppodealPlatformArguments {
     this.height = 50,
     this.width = 50,
     this.position = AdIconPosition.start,
-    this.margin = 4,
+    this.margin = 0,
   });
 
   @override

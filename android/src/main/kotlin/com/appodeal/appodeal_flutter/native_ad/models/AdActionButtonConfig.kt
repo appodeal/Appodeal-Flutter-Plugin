@@ -6,11 +6,11 @@ import com.appodeal.appodeal_flutter.native_ad.parseColor
 
 internal class AdActionButtonConfig(
     val visible: Boolean = true,
-    val fontSize: Int = 12,
+    val fontSize: Int = 14,
     val textColor: Int = Color.BLACK,
-    val buttonColor: Int = Color.TRANSPARENT,
-    val margin: Int = 4,
-    val radius: Int = 16,
+    val backgroundColor: Int = Color.TRANSPARENT,
+    val margin: Int = 0,
+    val radius: Int = 8,
 ) {
     companion object {
         fun toAdActionButtonConfig(map: Map<String, Any>): AdActionButtonConfig {
@@ -19,9 +19,9 @@ internal class AdActionButtonConfig(
                 visible = map["visible"] as? Boolean ?: true,
                 fontSize = map["fontSize"] as? Int ?: 12,
                 textColor = parseColor(map["textColor"] as? String) ?: Color.BLACK,
-                buttonColor = parseColor(map["buttonColor"] as? String) ?: Color.TRANSPARENT,
-                margin = map["margin"] as? Int ?: 4,
-                radius = map["radius"] as? Int ?: 16,
+                backgroundColor = parseColor(map["backgroundColor"] as? String) ?: Color.TRANSPARENT,
+                margin = map["margin"] as? Int ?: 0,
+                radius = map["radius"] as? Int ?: 8,
             )
         }
     }

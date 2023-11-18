@@ -7,9 +7,9 @@ import com.appodeal.appodeal_flutter.native_ad.parseColor
 internal class AdAttributionConfig(
     val visible: Boolean = true,
     val fontSize: Int = 14,
-    val textColor: Int = Color.BLACK,
-    val backgroundColor: Int = Color.TRANSPARENT,
-    val margin: Int = 4,
+    val textColor: Int = Color.WHITE,
+    val backgroundColor: Int = Color.RED,
+    val margin: Int = 0,
 ) {
     companion object {
         fun toAdAttributionConfig(map: Map<String, Any>): AdAttributionConfig {
@@ -17,10 +17,9 @@ internal class AdAttributionConfig(
             return AdAttributionConfig(
                 visible = map["visible"] as? Boolean ?: true,
                 fontSize = map["fontSize"] as? Int ?: 14,
-                textColor = parseColor(map["textColor"] as? String) ?: Color.BLACK,
-                backgroundColor = parseColor(map["backgroundColor"] as? String)
-                    ?: Color.TRANSPARENT,
-                margin = map["margin"] as? Int ?: 4,
+                textColor = parseColor(map["textColor"] as? String) ?: Color.WHITE,
+                backgroundColor = parseColor(map["backgroundColor"] as? String) ?: Color.RED,
+                margin = map["margin"] as? Int ?: 0,
             )
         }
     }

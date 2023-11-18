@@ -14,9 +14,9 @@ class AdAttributionConfig with AppodealPlatformArguments {
   AdAttributionConfig({
     this.visible = true,
     this.fontSize = 12,
-    this.textColor = Colors.black,
-    this.backgroundColor = Colors.transparent,
-    this.margin = 4,
+    this.textColor = Colors.white,
+    this.backgroundColor = Colors.red,
+    this.margin = 0,
   });
 
   @override

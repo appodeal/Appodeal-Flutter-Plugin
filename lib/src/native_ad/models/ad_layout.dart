@@ -20,7 +20,7 @@ class AdLayoutConfig with AppodealPlatformArguments {
     this.mediaContentHeight = 250,
     this.adTileHeight = 70,
     this.adActionHeight = 50,
-    this.margin = 4,
+    this.margin = 10,
   });
 
   @override
@@ -28,5 +28,6 @@ class AdLayoutConfig with AppodealPlatformArguments {
         'mediaContentHeight': mediaContentHeight,
         'adTileHeight': adTileHeight,
         'adActionHeight': adActionHeight,
+        'margin': margin,
       };
 }

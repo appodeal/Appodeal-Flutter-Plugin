@@ -64,7 +64,7 @@ class NativeAdOptions with AppodealPlatformArguments {
   }) {
     return NativeAdOptions._(
       nativeAdType: nativeAdType,
-      adTitleConfig: AdTitleConfig(fontSize: adTitleFontSize ?? 14),
+      adTitleConfig: AdTitleConfig(fontSize: adTitleFontSize ?? 16),
       adAttributionConfig: AdAttributionConfig(
           textColor: adAttributionTextColor ?? Colors.black,
           backgroundColor: adAttributionBackgroundColor ?? Colors.transparent),
@@ -73,9 +73,9 @@ class NativeAdOptions with AppodealPlatformArguments {
       adIconConfig:
           AdIconConfig(height: adIconSize ?? 50, width: adIconSize ?? 50),
       adDescriptionConfig:
-          AdDescriptionConfig(fontSize: adDescriptionFontSize ?? 12),
+          AdDescriptionConfig(fontSize: adDescriptionFontSize ?? 14),
       adActionButtonConfig:
-          AdActionButtonConfig(fontSize: adActionButtonTextSize ?? 12),
+          AdActionButtonConfig(fontSize: adActionButtonTextSize ?? 14),
       adLayoutConfig: AdLayoutConfig(),
       adMediaConfig: AdMediaConfig(),
     );

@@ -7,7 +7,7 @@ internal class AdIconConfig(
     val height: Int = 50,
     val width: Int = 50,
     val position: Int = 0, // TODO: 17/11/2023 [glavatskikh] fix position
-    val margin: Int = 4,
+    val margin: Int = 0,
 ) {
     companion object {
         fun toAdIconConfig(map: Map<String, Any>): AdIconConfig {
@@ -17,7 +17,7 @@ internal class AdIconConfig(
                 height = map["height"] as? Int ?: 50,
                 width = map["width"] as? Int ?: 50,
                 position = map["position"] as? Int ?: 0,
-                margin = map["margin"] as? Int ?: 4,
+                margin = map["margin"] as? Int ?: 0,
             )
         }
     }

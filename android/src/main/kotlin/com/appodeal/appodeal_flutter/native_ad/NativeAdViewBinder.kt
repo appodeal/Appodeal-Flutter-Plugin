@@ -2,8 +2,8 @@ package com.appodeal.appodeal_flutter.native_ad
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.TextUtils
 import android.util.TypedValue
@@ -83,6 +83,13 @@ internal class DefaultNativeAdViewBinder(
         // Create AdAttributionTextView
         val adAttributionTextView = TextView(context)
         adAttributionTextView.id = View.generateViewId()
+        // set ad attribution config
+        val adAttributionConfig = nativeAdOptions.adAttributionConfig
+        adAttributionTextView.textSize = adAttributionConfig.fontSize.toFloat()
+        adAttributionTextView.setTextColor(adAttributionConfig.textColor)
+        adAttributionTextView.setBackgroundColor(adAttributionConfig.backgroundColor)
+        // TODO: 18/11/2023 [glavatskikh] val margin: Int = 0,
+        // set default ad attribution
         adAttributionTextView.text = "Ad"
         adAttributionTextView.maxLines = 1
         adAttributionTextView.elevation = 2f.dpToPx
@@ -101,34 +108,51 @@ internal class DefaultNativeAdViewBinder(
         } else {
             adAttributionTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
         }
-        adAttributionTextView.setTextColor(Color.WHITE)
-        adAttributionTextView.setBackgroundColor(Color.RED)
 
         // Create the inner layout (ConstraintLayout)
         val constraintLayout = ConstraintLayout(context)
         constraintLayout.id = View.generateViewId()
+        // set ad layout config
+        val adLayoutConfig = nativeAdOptions.adLayoutConfig
         constraintLayout.layoutParams = ConstraintLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         ).apply {
-            val horizontalMargin = 10.dpToPx
-            val verticalMargin = 8.dpToPx
-            setMargins(horizontalMargin, verticalMargin, horizontalMargin, verticalMargin)
+            val margin = adLayoutConfig.margin.dpToPx
+            setMargins(margin, margin, margin, margin)
         }
 
         // Add NativeMediaView
         val mediaView = NativeMediaView(context)
         mediaView.id = View.generateViewId()
+        // set ad media config
+        val adMediaConfig = nativeAdOptions.adMediaConfig
+        mediaView.visibility = if (adMediaConfig.visible) View.VISIBLE else View.GONE
+        // TODO: 18/11/2023 [glavatskikh] val margin: Int = 0,
         constraintLayout.addView(mediaView)
 
         // Add NativeIconView
         val iconView = NativeIconView(context)
         iconView.id = View.generateViewId()
+        // set ad icon config
+        val adIconConfig = nativeAdOptions.adIconConfig
+        iconView.visibility = if (adIconConfig.visible) View.VISIBLE else View.GONE
+        val iconViewWidth = adIconConfig.width.dpToPx
+        val iconViewHeight = adIconConfig.height.dpToPx
+        iconView.layoutParams = ConstraintLayout.LayoutParams(iconViewWidth, iconViewHeight)
+        // TODO: 18/11/2023 [glavatskikh] val margin: Int = 0,
         constraintLayout.addView(iconView)
 
-        // Add AppCompatTextView for title
+        // Add TextView for title
         val titleTextView = TextView(context)
         titleTextView.id = View.generateViewId()
+        // set ad title config
+        val adTitleConfig = nativeAdOptions.adTitleConfig
+        titleTextView.textSize = adTitleConfig.fontSize.toFloat()
+        titleTextView.setTextColor(adTitleConfig.textColor)
+        titleTextView.setBackgroundColor(adTitleConfig.backgroundColor)
+        // TODO: 18/11/2023 [glavatskikh] val margin: Int = 0,
+        // set default ad title
         titleTextView.ellipsize = TextUtils.TruncateAt.END
         titleTextView.maxLines = 1
         titleTextView.isSingleLine = true
@@ -140,9 +164,16 @@ internal class DefaultNativeAdViewBinder(
         }
         constraintLayout.addView(titleTextView)
 
-        // Add AppCompatTextView for description
+        // Add TextView for description
         val descriptionTextView = TextView(context)
         descriptionTextView.id = View.generateViewId()
+        // set ad description config
+        val adDescriptionConfig = nativeAdOptions.adDescriptionConfig
+        descriptionTextView.textSize = adDescriptionConfig.fontSize.toFloat()
+        descriptionTextView.setTextColor(adDescriptionConfig.textColor)
+        descriptionTextView.setBackgroundColor(adDescriptionConfig.backgroundColor)
+        // TODO: 18/11/2023 [glavatskikh] val margin: Int = 0,
+        // set default ad description
         descriptionTextView.ellipsize = TextUtils.TruncateAt.MARQUEE
         descriptionTextView.marqueeRepeatLimit = -1 // Equivalent to "marquee_forever"
         descriptionTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
@@ -156,6 +187,19 @@ internal class DefaultNativeAdViewBinder(
         // Add Button for CTA
         val ctaButton = Button(context)
         ctaButton.id = View.generateViewId()
+        // set ad action button config
+        val adActionButtonConfig = nativeAdOptions.adActionButtonConfig
+        ctaButton.textSize = adActionButtonConfig.fontSize.toFloat()
+        ctaButton.setTextColor(adActionButtonConfig.textColor)
+        val ctaButtonBackground = GradientDrawable().apply {
+            shape = GradientDrawable.RECTANGLE
+            cornerRadius = adActionButtonConfig.radius.toFloat().dpToPx
+            setColor(adActionButtonConfig.backgroundColor)
+            setStroke(2, ctaButton.currentTextColor)
+        }
+        ctaButton.background = ctaButtonBackground
+        // TODO: 18/11/2023 [glavatskikh] val margin: Int = 0,
+        // set ad action button config
         ctaButton.maxLines = 1
         ctaButton.isSingleLine = true
         ctaButton.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)

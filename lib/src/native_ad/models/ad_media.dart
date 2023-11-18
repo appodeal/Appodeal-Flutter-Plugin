@@ -9,7 +9,7 @@ class AdMediaConfig with AppodealPlatformArguments {
   AdMediaConfig({
     this.visible = true,
     this.position = AdMediaPosition.top,
-    this.margin = 4,
+    this.margin = 0,
   });
 
   @override
