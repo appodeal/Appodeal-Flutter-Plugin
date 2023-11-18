@@ -1,11 +1,17 @@
 package com.appodeal.appodeal_flutter.native_ad
 
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Build
 import android.text.TextUtils
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.Keep
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -74,12 +80,41 @@ internal class DefaultNativeAdViewBinder(
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
+        // Create AdAttributionTextView
+        val adAttributionTextView = TextView(context)
+        adAttributionTextView.id = View.generateViewId()
+        adAttributionTextView.text = "Ad"
+        adAttributionTextView.maxLines = 1
+        adAttributionTextView.elevation = 2f.dpToPx
+        adAttributionTextView.isSingleLine = true
+        adAttributionTextView.gravity = Gravity.CENTER
+        adAttributionTextView.layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+        ).apply { gravity = Gravity.START or Gravity.TOP }
+        adAttributionTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+        adAttributionTextView.maxLines = 1
+        adAttributionTextView.isSingleLine = true
+        adAttributionTextView.gravity = Gravity.CENTER
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            adAttributionTextView.setTextAppearance(android.R.style.TextAppearance_Small)
+        } else {
+            adAttributionTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
+        }
+        adAttributionTextView.setTextColor(Color.WHITE)
+        adAttributionTextView.setBackgroundColor(Color.RED)
+
         // Create the inner layout (ConstraintLayout)
         val constraintLayout = ConstraintLayout(context)
-        constraintLayout.layoutParams = ViewGroup.LayoutParams(
+        constraintLayout.id = View.generateViewId()
+        constraintLayout.layoutParams = ConstraintLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
-        )
+        ).apply {
+            val horizontalMargin = 10.dpToPx
+            val verticalMargin = 8.dpToPx
+            setMargins(horizontalMargin, verticalMargin, horizontalMargin, verticalMargin)
+        }
 
         // Add NativeMediaView
         val mediaView = NativeMediaView(context)
@@ -91,172 +126,95 @@ internal class DefaultNativeAdViewBinder(
         iconView.id = View.generateViewId()
         constraintLayout.addView(iconView)
 
-        // Add TextView for title
+        // Add AppCompatTextView for title
         val titleTextView = TextView(context)
         titleTextView.id = View.generateViewId()
         titleTextView.ellipsize = TextUtils.TruncateAt.END
-        titleTextView.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
         titleTextView.maxLines = 1
         titleTextView.isSingleLine = true
-        titleTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
-
+        titleTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            titleTextView.setTextAppearance(android.R.style.TextAppearance_Small)
+        } else {
+            titleTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
+        }
         constraintLayout.addView(titleTextView)
 
-        // Add TextView for description
+        // Add AppCompatTextView for description
         val descriptionTextView = TextView(context)
         descriptionTextView.id = View.generateViewId()
         descriptionTextView.ellipsize = TextUtils.TruncateAt.MARQUEE
         descriptionTextView.marqueeRepeatLimit = -1 // Equivalent to "marquee_forever"
-        descriptionTextView.isSingleLine = true
-        descriptionTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
+        descriptionTextView.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            descriptionTextView.setTextAppearance(android.R.style.TextAppearance_Small)
+        } else {
+            descriptionTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
+        }
         constraintLayout.addView(descriptionTextView)
 
         // Add Button for CTA
         val ctaButton = Button(context)
         ctaButton.id = View.generateViewId()
-        ctaButton.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
         ctaButton.maxLines = 1
         ctaButton.isSingleLine = true
-        ctaButton.setTextAppearance(context, android.R.style.TextAppearance_Small)
+        ctaButton.typeface = Typeface.create("sans-serif-medium", Typeface.NORMAL)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ctaButton.setTextAppearance(android.R.style.TextAppearance_Small)
+        } else {
+            ctaButton.setTextAppearance(context, android.R.style.TextAppearance_Small)
+        }
         constraintLayout.addView(ctaButton)
-
-        // Add TextView for ad attribution
-        val adAttributionTextView = TextView(context)
-        adAttributionTextView.id = View.generateViewId()
-        adAttributionTextView.layoutParams = ConstraintLayout.LayoutParams(
-            ConstraintLayout.LayoutParams.WRAP_CONTENT,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
-        )
-//        adAttributionTextView.gravity = Gravity.CENTER
-//        adAttributionTextView.setBackgroundResource(R.color.red)
-//        adAttributionTextView.elevation = context.resources.getDimension(R.dimen.base_elevation)
-        adAttributionTextView.typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL)
-        adAttributionTextView.maxLines = 1
-        adAttributionTextView.isSingleLine = true
-        adAttributionTextView.setTextAppearance(context, android.R.style.TextAppearance_Small)
-//        adAttributionTextView.setTextColor(ContextCompat.getColor(this, R.color.black))
-        adAttributionTextView.text = "Ad"
-        constraintLayout.addView(adAttributionTextView)
 
         // Set constraints using ConstraintSet
         val set = ConstraintSet()
         set.clone(constraintLayout)
 
-        // Set constraints for NativeMediaView
-        set.connect(
-            mediaView.id, ConstraintSet.TOP,
-            constraintLayout.id, ConstraintSet.TOP
-        )
-        set.connect(
-            mediaView.id, ConstraintSet.START,
-            constraintLayout.id, ConstraintSet.START
-        )
-        set.connect(
-            mediaView.id, ConstraintSet.END,
-            constraintLayout.id, ConstraintSet.END
-        )
-        set.constrainWidth(
-            descriptionTextView.id,
-            ConstraintSet.MATCH_CONSTRAINT
-        ) // Match the width
-        set.constrainHeight(descriptionTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the height
+        // Set constraints for mediaView
+        set.connect(mediaView.id, ConstraintSet.TOP, constraintLayout.id, ConstraintSet.TOP)
+        set.connect(mediaView.id, ConstraintSet.START, constraintLayout.id, ConstraintSet.START)
+        set.connect(mediaView.id, ConstraintSet.END, constraintLayout.id, ConstraintSet.END)
+        set.constrainWidth(mediaView.id, ConstraintSet.MATCH_CONSTRAINT)
+        set.constrainHeight(mediaView.id, ConstraintSet.WRAP_CONTENT)
 
-        // Set constraints for NativeIconView
-        set.connect(
-            iconView.id, ConstraintSet.TOP,
-            mediaView.id, ConstraintSet.BOTTOM
-        )
-        set.connect(
-            iconView.id, ConstraintSet.START,
-            constraintLayout.id, ConstraintSet.START
-        )
-        set.connect(
-            iconView.id, ConstraintSet.BOTTOM,
-            constraintLayout.id, ConstraintSet.BOTTOM
-        )
+        // Set constraints for iconView
+        val iconMarginTop = 8.dpToPx
+        set.connect(iconView.id, ConstraintSet.TOP, mediaView.id, ConstraintSet.BOTTOM, iconMarginTop) // icon margin top
+        set.connect(iconView.id, ConstraintSet.START, constraintLayout.id, ConstraintSet.START)
+        set.connect(iconView.id, ConstraintSet.BOTTOM, constraintLayout.id, ConstraintSet.BOTTOM)
         set.setDimensionRatio(iconView.id, "H,1:1")
-        set.constrainWidth(
-            descriptionTextView.id,
-            ConstraintSet.MATCH_CONSTRAINT
-        ) // Match the width
-        set.constrainHeight(
-            descriptionTextView.id,
-            ConstraintSet.MATCH_CONSTRAINT
-        ) // Match the height
+        set.constrainWidth(iconView.id, ConstraintSet.MATCH_CONSTRAINT)
+        set.constrainHeight(iconView.id, ConstraintSet.MATCH_CONSTRAINT)
 
         // Set constraints for titleTextView
-        set.connect(
-            titleTextView.id, ConstraintSet.TOP,
-            mediaView.id, ConstraintSet.BOTTOM
-        )
-        set.connect(
-            titleTextView.id, ConstraintSet.START,
-            iconView.id, ConstraintSet.END
-        )
-        set.connect(
-            titleTextView.id, ConstraintSet.END,
-            ctaButton.id, ConstraintSet.START
-        )
-        set.connect(
-            titleTextView.id, ConstraintSet.BOTTOM,
-            descriptionTextView.id, ConstraintSet.TOP
-        )
-        set.constrainWidth(titleTextView.id, ConstraintSet.MATCH_CONSTRAINT) // Match the width
-        set.constrainHeight(titleTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the height
+        val titleMargin = 8.dpToPx
+        set.connect(titleTextView.id, ConstraintSet.TOP, mediaView.id, ConstraintSet.BOTTOM, titleMargin) // title margin top
+        set.connect(titleTextView.id, ConstraintSet.START, iconView.id, ConstraintSet.END, titleMargin) // title margin start
+        set.connect(titleTextView.id, ConstraintSet.END, ctaButton.id, ConstraintSet.START, titleMargin) // title margin end
+        set.connect(titleTextView.id, ConstraintSet.BOTTOM, descriptionTextView.id, ConstraintSet.TOP)
+        set.constrainWidth(titleTextView.id, ConstraintSet.MATCH_CONSTRAINT_SPREAD)
+        set.constrainHeight(titleTextView.id, ConstraintSet.WRAP_CONTENT)
 
         // Set constraints for descriptionTextView
-        set.connect(
-            descriptionTextView.id, ConstraintSet.TOP,
-            titleTextView.id, ConstraintSet.BOTTOM
-        )
-        set.connect(
-            descriptionTextView.id, ConstraintSet.START,
-            titleTextView.id, ConstraintSet.START
-        )
-        set.connect(
-            descriptionTextView.id, ConstraintSet.END,
-            titleTextView.id, ConstraintSet.END
-        )
-        set.connect(
-            descriptionTextView.id, ConstraintSet.BOTTOM,
-            constraintLayout.id, ConstraintSet.BOTTOM
-        )
-        set.constrainWidth(
-            descriptionTextView.id,
-            ConstraintSet.MATCH_CONSTRAINT
-        ) // Match the width
-        set.constrainHeight(descriptionTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the height
+        set.connect(descriptionTextView.id, ConstraintSet.TOP, titleTextView.id, ConstraintSet.BOTTOM)
+        set.connect(descriptionTextView.id, ConstraintSet.START, titleTextView.id, ConstraintSet.START)
+        set.connect(descriptionTextView.id, ConstraintSet.END, titleTextView.id, ConstraintSet.END)
+        val descriptionMarginBottom = 8.dpToPx
+        set.connect(descriptionTextView.id, ConstraintSet.BOTTOM, constraintLayout.id, ConstraintSet.BOTTOM, descriptionMarginBottom) // description margin bottom
+        set.constrainWidth(descriptionTextView.id, ConstraintSet.MATCH_CONSTRAINT_SPREAD)
+        set.constrainHeight(descriptionTextView.id, ConstraintSet.WRAP_CONTENT)
 
         // Set constraints for ctaButton
-        set.connect(
-            ctaButton.id, ConstraintSet.TOP,
-            mediaView.id, ConstraintSet.BOTTOM
-        )
-        set.connect(
-            ctaButton.id, ConstraintSet.START,
-            descriptionTextView.id, ConstraintSet.END,
-        )
-        set.connect(
-            ctaButton.id, ConstraintSet.END,
-            constraintLayout.id, ConstraintSet.END
-        )
-        set.connect(
-            ctaButton.id, ConstraintSet.BOTTOM,
-            constraintLayout.id, ConstraintSet.BOTTOM
-        )
-        set.constrainWidth(descriptionTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the width
-        set.constrainHeight(descriptionTextView.id, ConstraintSet.WRAP_CONTENT) // Wrap the height
+        val ctaButtonMarginTop = 8.dpToPx
+        set.connect(ctaButton.id, ConstraintSet.TOP, mediaView.id, ConstraintSet.BOTTOM, ctaButtonMarginTop) // cta button margin top
+        set.connect(ctaButton.id, ConstraintSet.END, constraintLayout.id, ConstraintSet.END)
+        set.connect(ctaButton.id, ConstraintSet.BOTTOM, constraintLayout.id, ConstraintSet.BOTTOM)
+        val ctaButtonHorizontalPadding = 20.dpToPx
+        ctaButton.setPadding(ctaButtonHorizontalPadding, ctaButton.paddingTop, ctaButtonHorizontalPadding, ctaButton.paddingBottom)
+        set.constrainWidth(ctaButton.id, ConstraintSet.WRAP_CONTENT)
+        set.constrainHeight(ctaButton.id, ConstraintSet.WRAP_CONTENT)
 
-        // Set constraints for adAttributionTextView
-        set.connect(
-            adAttributionTextView.id, ConstraintSet.START,
-            constraintLayout.id, ConstraintSet.START
-        )
-        set.connect(
-            adAttributionTextView.id, ConstraintSet.TOP,
-            constraintLayout.id, ConstraintSet.TOP
-        )
-
+        // Apply constraints
         set.applyTo(constraintLayout)
 
         // Finally, return NativeAdView
@@ -267,6 +225,21 @@ internal class DefaultNativeAdViewBinder(
         nativeAdView.mediaView = mediaView
         nativeAdView.adAttributionView = adAttributionTextView
         nativeAdView.addView(constraintLayout)
+        nativeAdView.addView(adAttributionTextView)
         return nativeAdView
     }
 }
+
+private val Int.dpToPx: Int
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this.toFloat(),
+        Resources.getSystem().displayMetrics
+    ).toInt()
+
+private val Float.dpToPx: Float
+    get() = TypedValue.applyDimension(
+        TypedValue.COMPLEX_UNIT_DIP,
+        this,
+        Resources.getSystem().displayMetrics
+    )
