@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.annotation.Keep
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import com.appodeal.ads.nativead.NativeAdView
@@ -16,12 +17,17 @@ import com.appodeal.ads.nativead.NativeAdViewNewsFeed
 import com.appodeal.ads.nativead.NativeIconView
 import com.appodeal.ads.nativead.NativeMediaView
 
-internal class NativeAdViewBinder(
+@Keep
+fun interface NativeAdViewBinder {
+    fun bind(): NativeAdView
+}
+
+internal class TemplateNativeAdViewBinder(
     private val context: Context,
-    private val nativeAdOptions: NativeAdOptions
-) {
-    fun bindTemplateAdView(nativeAdViewType: NativeAdViewType): NativeAdView {
-        val nativeAdView = when (nativeAdViewType) {
+    private val nativeAdOptions: NativeAdOptions,
+) : NativeAdViewBinder {
+    override fun bind(): NativeAdView {
+        val nativeAdView = when (val nativeAdViewType = nativeAdOptions.nativeAdViewType) {
             NativeAdViewType.ContentStream -> NativeAdViewContentStream(context)
             NativeAdViewType.AppWall -> NativeAdViewAppWall(context)
             NativeAdViewType.NewsFeed -> NativeAdViewNewsFeed(context)
@@ -53,8 +59,13 @@ internal class NativeAdViewBinder(
 
         return nativeAdView
     }
+}
 
-    fun bindCustomAdView(): NativeAdView {
+internal class DefaultNativeAdViewBinder(
+    private val context: Context,
+    private val nativeAdOptions: NativeAdOptions,
+) : NativeAdViewBinder {
+    override fun bind(): NativeAdView {
         // Create the NativeAdView
         val nativeAdView = NativeAdView(context)
         nativeAdView.id = View.generateViewId()
