@@ -16,7 +16,7 @@ class AdActionButtonConfig with AppodealPlatformArguments {
     this.fontSize = 14,
     this.textColor = Colors.black,
     this.backgroundColor = Colors.transparent,
-    this.margin = 0,
+    this.margin = 4,
     this.radius = 8,
   });
 

@@ -85,7 +85,6 @@ class NativeAdOptions with AppodealPlatformArguments {
 
   /// Generates Content Stream template Native Ad View options
   static NativeAdOptions contentStreamOptions({
-    int? adIconSize,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -95,7 +94,7 @@ class NativeAdOptions with AppodealPlatformArguments {
   }) {
     return NativeAdOptions._templateOptions(
       nativeAdType: _NativeAdType.contentStream,
-      adIconSize: adIconSize,
+      adIconSize: 90,
       adTitleFontSize: adTitleFontSize,
       adActionButtonTextSize: adActionButtonTextSize,
       adDescriptionFontSize: adDescriptionFontSize,
@@ -109,7 +108,6 @@ class NativeAdOptions with AppodealPlatformArguments {
 
   /// Generates App Wall template Native Ad View options
   static NativeAdOptions appWallOptions({
-    int? adIconSize,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -119,7 +117,7 @@ class NativeAdOptions with AppodealPlatformArguments {
   }) {
     return NativeAdOptions._templateOptions(
       nativeAdType: _NativeAdType.appWall,
-      adIconSize: adIconSize,
+      adIconSize: 70,
       adTitleFontSize: adTitleFontSize,
       adActionButtonTextSize: adActionButtonTextSize,
       adDescriptionFontSize: adDescriptionFontSize,
@@ -133,7 +131,6 @@ class NativeAdOptions with AppodealPlatformArguments {
 
   /// Generates News Feed template Native Ad View options
   static NativeAdOptions newsFeedOptions({
-    int? adIconSize,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -143,7 +140,7 @@ class NativeAdOptions with AppodealPlatformArguments {
   }) {
     return NativeAdOptions._templateOptions(
       nativeAdType: _NativeAdType.newsFeed,
-      adIconSize: adIconSize,
+      adIconSize: 50,
       adTitleFontSize: adTitleFontSize,
       adActionButtonTextSize: adActionButtonTextSize,
       adDescriptionFontSize: adDescriptionFontSize,
