@@ -40,28 +40,44 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
   }
 
   Widget get _adWidget {
-    NativeAdOptions options = NativeAdOptions.customOptions(
-      adIconConfig: AdIconConfig(size: 55),
-      adAttributionConfig: AdAttributionConfig(textColor: Colors.black),
-      adTitleConfig: AdTitleConfig(textColor: Colors.black),
-      adLayoutConfig: AdLayoutConfig(),
-      adMediaConfig: AdMediaConfig(visible: true),
+    final nativeAdOptions = NativeAdOptions.customOptions(
+        adTitleConfig: AdTitleConfig(
+            fontSize: 16,
+            textColor: Colors.black,
+            backgroundColor: Colors.transparent,
+            margin: 4),
+        adAttributionConfig: AdAttributionConfig(
+            fontSize: 12,
+            textColor: Colors.black,
+            backgroundColor: Colors.orangeAccent,
+            margin: 4),
+        adChoiceConfig: AdChoiceConfig(
+            position: AdChoicePosition.endBottom),
+        adIconConfig: AdIconConfig(
+            visible: true,
+            size: 70,
+            position: AdIconPosition.start,
+            margin: 4),
+        adDescriptionConfig: AdDescriptionConfig(
+            fontSize: 14,
+            textColor: Colors.black,
+            backgroundColor: Colors.transparent,
+            margin: 4),
+        adActionButtonConfig: AdActionButtonConfig(
+            textColor: Colors.black,
+            fontSize: 16,
+            backgroundColor: Colors.transparent,
+            margin: 4,
+            radius: 12),
+        adMediaConfig:
+            AdMediaConfig(visible: true, position: AdMediaPosition.top)
     );
     return Align(
         alignment: Alignment.center,
         child: Container(
-            height: options.getAdHeight,
+            height: nativeAdOptions.getWidgetHeight(context),
             alignment: Alignment.center,
-            child: AppodealNativeAd(options: options)));
-
-    // ConstrainedBox(
-    //     constraints: const BoxConstraints(
-    //       minWidth: 300,
-    //       minHeight: 350,
-    //       maxHeight: 400,
-    //       maxWidth: 450,
-    //     ),
-    //     child: AppodealNativeAd(options: options)));
+            child: AppodealNativeAd(options: nativeAdOptions)));
   }
 
   Widget get _mainBody {

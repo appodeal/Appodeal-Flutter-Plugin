@@ -86,7 +86,6 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    double screenWidth = MediaQuery.of(context).size.width;
                     final nativeAdOptions = NativeAdOptions.customOptions(
                         adTitleConfig: AdTitleConfig(
                             fontSize: 16,
@@ -116,11 +115,7 @@ class _NativePageState extends State<NativePage> {
                             backgroundColor: Colors.transparent,
                             margin: 4,
                             radius: 12),
-                        adLayoutConfig:
-                        AdLayoutConfig(mediaContentHeight: 250, margin: 8),
-                        adMediaConfig: AdMediaConfig(
-                          visible: false
-                        ));
+                        adMediaConfig: AdMediaConfig(visible: false));
                     setState(() {
                       isShow = true;
                       appodealNative =
@@ -169,8 +164,6 @@ class _NativePageState extends State<NativePage> {
                             backgroundColor: Colors.transparent,
                             margin: 4,
                             radius: 12),
-                        adLayoutConfig:
-                            AdLayoutConfig(mediaContentHeight: 250, margin: 8),
                         adMediaConfig: AdMediaConfig(
                           visible: true,
                           position: AdMediaPosition.top,
@@ -195,6 +188,7 @@ class _NativePageState extends State<NativePage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () {
                     final nativeAdParams = NativeAdOptions.newsFeedOptions(
+                        context: context,
                         adTitleFontSize: 14,
                         adActionButtonTextSize: 14,
                         adDescriptionFontSize: 12,
@@ -220,6 +214,7 @@ class _NativePageState extends State<NativePage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () {
                     final nativeAdParams = NativeAdOptions.appWallOptions(
+                        context: context,
                         adTitleFontSize: 20,
                         adActionButtonTextSize: 20,
                         adDescriptionFontSize: 14,
@@ -246,6 +241,7 @@ class _NativePageState extends State<NativePage> {
                   onPressed: () {
                     final nativeAdOptions =
                         NativeAdOptions.contentStreamOptions(
+                            context: context,
                             adTitleFontSize: 16,
                             adActionButtonTextSize: 16,
                             adDescriptionFontSize: 14,
@@ -290,7 +286,7 @@ class _NativePageState extends State<NativePage> {
               child: Visibility(
                   visible: isShow,
                   child: Container(
-                    height: appodealNative?.options.getAdHeight,
+                    height: appodealNative?.options.getWidgetHeight(context),
                     child: appodealNative == null
                         ? SizedBox.shrink()
                         : appodealNative!,
