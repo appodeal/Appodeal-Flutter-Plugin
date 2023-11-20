@@ -41,7 +41,7 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
 
   Widget get _adWidget {
     NativeAdOptions options = NativeAdOptions.customOptions(
-      adIconConfig: AdIconConfig(height: 55, width: 55),
+      adIconConfig: AdIconConfig(size: 55),
       adAttributionConfig: AdAttributionConfig(textColor: Colors.black),
       adTitleConfig: AdTitleConfig(textColor: Colors.black),
       adLayoutConfig: AdLayoutConfig(adTileHeight: 55),

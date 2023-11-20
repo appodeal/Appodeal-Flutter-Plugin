@@ -5,14 +5,12 @@ import '../../../stack_appodeal_flutter.dart';
 
 /// This is the configuration of title text.
 class AdTitleConfig with AppodealPlatformArguments {
-  final bool visible;
   final int fontSize;
   final Color textColor;
   final Color backgroundColor;
   final int margin;
 
   AdTitleConfig({
-    this.visible = true,
     this.fontSize = 16,
     this.textColor = Colors.black,
     this.backgroundColor = Colors.transparent,
@@ -21,7 +19,6 @@ class AdTitleConfig with AppodealPlatformArguments {
 
   @override
   Map<String, dynamic> get toMap => <String, dynamic>{
-        'visible': visible,
         'fontSize': fontSize,
         'textColor': textColor.toHex(),
         'backgroundColor': backgroundColor.toHex(),

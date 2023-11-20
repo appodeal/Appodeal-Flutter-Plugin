@@ -5,14 +5,12 @@ import '../../../stack_appodeal_flutter.dart';
 
 /// This is the configuration of ad attribution text.
 class AdAttributionConfig with AppodealPlatformArguments {
-  final bool visible;
   final int fontSize;
   final Color textColor;
   final Color backgroundColor;
   final int margin;
 
   AdAttributionConfig({
-    this.visible = true,
     this.fontSize = 12,
     this.textColor = Colors.white,
     this.backgroundColor = Colors.red,
@@ -21,7 +19,6 @@ class AdAttributionConfig with AppodealPlatformArguments {
 
   @override
   Map<String, dynamic> get toMap => <String, dynamic>{
-        'visible': visible,
         'fontSize': fontSize,
         'textColor': textColor.toHex(),
         'backgroundColor': backgroundColor.toHex(),

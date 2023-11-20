@@ -4,11 +4,8 @@ import '../../../stack_appodeal_flutter.dart';
 class AdIconConfig with AppodealPlatformArguments {
   final bool visible;
 
-  /// height in dp
-  final int height;
-
-  /// width in dp
-  final int width;
+  /// size in dp
+  final int size;
 
   final AdIconPosition position;
 
@@ -16,8 +13,7 @@ class AdIconConfig with AppodealPlatformArguments {
 
   AdIconConfig({
     this.visible = true,
-    this.height = 50,
-    this.width = 50,
+    this.size = 50,
     this.position = AdIconPosition.start,
     this.margin = 0,
   });
@@ -25,8 +21,7 @@ class AdIconConfig with AppodealPlatformArguments {
   @override
   Map<String, dynamic> get toMap => <String, dynamic>{
         'visible': visible,
-        'height': height,
-        'width': width,
+        'size': size,
         'position': position.index,
         'margin': margin,
       };

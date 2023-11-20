@@ -137,9 +137,8 @@ internal class DefaultNativeAdViewBinder(
         // set ad icon config
         val adIconConfig = nativeAdOptions.adIconConfig
         iconView.visibility = if (adIconConfig.visible) View.VISIBLE else View.GONE
-        val iconViewWidth = adIconConfig.width.dpToPx
-        val iconViewHeight = adIconConfig.height.dpToPx
-        iconView.layoutParams = ConstraintLayout.LayoutParams(iconViewWidth, iconViewHeight)
+        val iconViewSize = adIconConfig.size.dpToPx
+        iconView.layoutParams = ConstraintLayout.LayoutParams(iconViewSize, iconViewSize)
         // TODO: 18/11/2023 [glavatskikh] val margin: Int = 0,
         constraintLayout.addView(iconView)
 

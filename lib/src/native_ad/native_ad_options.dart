@@ -70,8 +70,7 @@ class NativeAdOptions with AppodealPlatformArguments {
           backgroundColor: adAttributionBackgroundColor ?? Colors.transparent),
       adChoiceConfig:
           AdChoiceConfig(position: adChoicePosition ?? AdChoicePosition.endTop),
-      adIconConfig:
-          AdIconConfig(height: adIconSize ?? 50, width: adIconSize ?? 50),
+      adIconConfig: AdIconConfig(size: adIconSize ?? 50),
       adDescriptionConfig:
           AdDescriptionConfig(fontSize: adDescriptionFontSize ?? 14),
       adActionButtonConfig:
@@ -148,17 +147,12 @@ class NativeAdOptions with AppodealPlatformArguments {
   }
 
   double get getInlineAdHeight {
-    int height = 0;
+    int height = adLayoutConfig.adActionHeight;
+    if (adIconConfig.visible) {
+      height = height + adLayoutConfig.adTileHeight;
+    }
     if (adMediaConfig.visible) {
       height = height + adLayoutConfig.mediaContentHeight;
-    }
-    if (adActionButtonConfig.visible || adDescriptionConfig.visible) {
-      height = height + adLayoutConfig.adActionHeight;
-    }
-    if (adIconConfig.visible ||
-        adTitleConfig.visible ||
-        adAttributionConfig.visible) {
-      height = height + adLayoutConfig.adTileHeight;
     }
     if (height != 0) {
       height = height + 10;
