@@ -27,6 +27,9 @@ class Appodeal {
   /// Rectangular ads (with defined size 300x250 dp) that appear at the view of the device screen.
   static const MREC = AppodealAdType.MREC;
 
+  /// Native ad is a flexible type of advertising. You can adapt the display to your UI by preparing a template.
+  static const NATIVE = AppodealAdType.NativeAd;
+
   /// Log level none for [setLogLevel] method.
   static const LogLevelNone = 0;
 
@@ -54,6 +57,8 @@ class Appodeal {
       const MethodChannel('appodeal_flutter/banner');
   static const MethodChannel _mrecChannel =
       const MethodChannel('appodeal_flutter/mrec');
+  static const MethodChannel _nativeChannel =
+  const MethodChannel('appodeal_flutter/native');
 
   /// Set [isTestMode] for get test advertising.
   static setTesting(bool isTestMode) {
@@ -623,6 +628,63 @@ class Appodeal {
     });
   }
 
+  static void setNativeCallbacks(
+      {Function()? onNativeLoaded,
+      Function()? onNativeFailedToLoad,
+      Function()? onNativeShown,
+      Function()? onNativeShowFailed,
+      Function()? onNativeClicked,
+      Function()? onNativeExpired}) {
+    {
+      _nativeChannel.setMethodCallHandler((call) async {
+        switch (call.method) {
+          case 'onNativeLoaded':
+            onNativeLoaded?.call();
+            break;
+          case 'onNativeFailedToLoad':
+            onNativeFailedToLoad?.call();
+            break;
+          case 'onNativeShown':
+            onNativeShown?.call();
+            break;
+          case 'onNativeShowFailed':
+            onNativeShowFailed?.call();
+            break;
+          case 'onNativeClicked':
+            onNativeClicked?.call();
+            break;
+          case 'onNativeExpired':
+            onNativeExpired?.call();
+            break;
+        }
+      });
+    }
+  }
+
+  /// Set preferred type of the requested Native ads
+  ///
+  /// @param contentType type of Native ads [NativeMediaViewContentType]
+  static void setPreferredNativeContentType(
+      NativeMediaViewContentType contentType) async {
+    _channel.invokeMethod('setPreferredNativeContentType',
+        {'preferredNativeContentType': contentType.name});
+  }
+
+  /// Check if smart banner is enabled (`false` by default).
+  ///
+  /// Returns `true` if smart banner is enabled, otherwise `false`.
+  static Future<NativeMediaViewContentType> getPreferredNativeContentType() async {
+    return parseNativeContentType(await _channel.invokeMethod('getPreferredNativeContentType'));
+  }
+
+
+  /// Check if smart banner is enabled (`false` by default).
+  ///
+  /// Returns `true` if smart banner is enabled, otherwise `false`.
+  static Future<int> getAvailableNativeAdsCount() async {
+    return await _channel.invokeMethod('getAvailableNativeAdsCount');
+  }
+
   /// Set ad revenue callbacks
   ///
   /// [onAdRevenueReceive] Called every time when SDK receives a revenue information for an ad.
@@ -672,4 +734,23 @@ class ApdConsentError {
   final String desctiption;
 
   ApdConsentError._(this.desctiption);
+}
+
+/// Enum class representing the preferred native media content type.
+/// The available content types are Auto, NoVideo and Video.
+///
+/// @property contentName The name of the content type.
+enum NativeMediaViewContentType { AUTO, NO_VIDEO, VIDEO }
+
+NativeMediaViewContentType parseNativeContentType(String contentType) {
+  switch (contentType) {
+    case "auto":
+      return NativeMediaViewContentType.AUTO;
+    case "static":
+      return NativeMediaViewContentType.NO_VIDEO;
+    case "video":
+      return NativeMediaViewContentType.VIDEO;
+    default:
+      throw ArgumentError("Content type $contentType doesn't support");
+  }
 }

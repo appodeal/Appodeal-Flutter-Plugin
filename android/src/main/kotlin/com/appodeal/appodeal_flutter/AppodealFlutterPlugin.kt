@@ -1,6 +1,7 @@
 package com.appodeal.appodeal_flutter
 
 import com.appodeal.ads.Appodeal
+import com.appodeal.ads.NativeMediaViewContentType
 import com.appodeal.ads.inapp.InAppPurchase
 import com.appodeal.ads.inapp.InAppPurchase.Type
 import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
@@ -38,6 +39,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private val rewardedVideo by lazy { AppodealRewarded(pluginBinding) }
     private val banner by lazy { AppodealBanner(pluginBinding) }
     private val mrec by lazy { AppodealMrec(pluginBinding) }
+    private val native by lazy { AppodealNative(pluginBinding) }
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         super.onAttachedToEngine(binding)
@@ -53,6 +55,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         rewardedVideo.adChannel.setMethodCallHandler(null)
         banner.adChannel.setMethodCallHandler(null)
         mrec.adChannel.setMethodCallHandler(null)
+        native.adChannel.setMethodCallHandler(null)
     }
 
     override fun onMethodCall(call: MethodCall, result: Result) {
@@ -103,6 +106,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "loadConsentForm" -> loadConsentForm(call, result)
             "showConsentForm" -> showConsentForm(call, result)
             "setCustomVendor" -> setCustomVendor(call, result)
+            "setPreferredNativeContentType" -> setPreferredNativeContentType(call, result)
+            "getPreferredNativeContentType" -> getPreferredNativeContentType(call, result)
+            "getAvailableNativeAdsCount" -> getAvailableNativeAdsCount(call, result)
             else -> result.notImplemented()
         }
     }
@@ -110,10 +116,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         super.onAttachedToActivity(binding)
         pluginBinding.platformViewRegistry.apply {
-            registerViewFactory(
-                "appodeal_flutter/banner_view",
-                AppodealAdViewFactory(activity)
-            )
+            val viewFactory = AppodealAdViewFactory(activity)
+            registerViewFactory("appodeal_flutter/banner_view", viewFactory)
+            registerViewFactory("appodeal_flutter/native_view", viewFactory)
         }
     }
 
@@ -168,6 +173,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         Appodeal.setRewardedVideoCallbacks(rewardedVideo.adListener)
         Appodeal.setBannerCallbacks(banner.adListener)
         Appodeal.setMrecCallbacks(mrec.adListener)
+        Appodeal.setNativeCallbacks(native.adListener)
         Appodeal.setSmartBanners(isSmartBannersEnabled)
         Appodeal.set728x90Banners(isTabletBannerEnabled)
         Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
@@ -303,6 +309,21 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val rightBannerRotation = args["rightBannerRotation"] as Int
         Appodeal.setBannerRotation(leftBannerRotation, rightBannerRotation)
         result.success(null)
+    }
+
+    fun setPreferredNativeContentType(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val contentType = parseNativeContentType(args["preferredNativeContentType"] as String)
+        Appodeal.setPreferredNativeContentType(contentType)
+        result.success(null)
+    }
+
+    fun getPreferredNativeContentType(call: MethodCall, result: Result) {
+        result.success(Appodeal.getPreferredNativeContentType().contentName)
+    }
+
+    fun getAvailableNativeAdsCount(call: MethodCall, result: Result){
+        result.success(Appodeal.getAvailableNativeAdsCount())
     }
 
     private fun disableNetwork(call: MethodCall, result: Result) {
@@ -544,4 +565,13 @@ private fun List<ApdInitializationError>.toArg(): Map<String, List<String>> {
 private fun List<ServiceError>.toArg(): Map<String, List<String>> {
     val arg = this.map { "${it::class.simpleName} [${it.componentName}] ${it.description}" }
     return mapOf("errors" to arg)
+}
+
+private fun parseNativeContentType(contentType: String): NativeMediaViewContentType {
+    return when (contentType) {
+        "NativeMediaViewContentType.AUTO" -> NativeMediaViewContentType.Auto
+        "NativeMediaViewContentType.NO_VIDEO" -> NativeMediaViewContentType.NoVideo
+        "NativeMediaViewContentType.VIDEO" -> NativeMediaViewContentType.Video
+        else -> error("content type $contentType doesn't support")
+    }
 }

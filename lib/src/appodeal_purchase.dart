@@ -1,6 +1,6 @@
-abstract class AppodealPurchase {
-  Map<String, dynamic> get toMap;
-}
+import '../stack_appodeal_flutter.dart';
+
+abstract class AppodealPurchase with AppodealPlatformArguments {}
 
 class AppodealAppStorePurchase extends AppodealPurchase {
   final int _type;
