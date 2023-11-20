@@ -13,7 +13,6 @@ export 'src/native_ad/models/ad_attribution.dart';
 export 'src/native_ad/models/ad_choice.dart';
 export 'src/native_ad/models/ad_description.dart';
 export 'src/native_ad/models/ad_icon.dart';
-export 'src/native_ad/models/ad_layout.dart';
 export 'src/native_ad/models/ad_media.dart';
 export 'src/native_ad/models/ad_title.dart';
 export 'src/native_ad/native_ad_options.dart';
