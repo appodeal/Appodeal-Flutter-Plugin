@@ -110,7 +110,11 @@ class _NativePageState extends State<NativePage> {
                     //        titleOptions: TitleOptions(
                     //            margin: 4, fontSize: 16, color: Colors.black),
                     //      ),
-                    final nativeAdOptions = NativeAdOptions.customOptions();
+                    final nativeAdOptions = NativeAdOptions.customOptions(
+                      adChoiceConfig:
+                          AdChoiceConfig(position: AdChoicePosition.endBottom),
+                      adMediaConfig: AdMediaConfig(visible: false),
+                    );
                     setState(() {
                       isShow = true;
                       appodealNative =
@@ -172,7 +176,9 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
-                    final nativeAdParams = NativeAdOptions.newsFeedOptions();
+                    final nativeAdParams = NativeAdOptions.newsFeedOptions(
+                      adChoicePosition: AdChoicePosition.endBottom,
+                    );
                     // context: context,
                     // adChoicePosition: AdChoicePosition.END_BOTTOM,
                     // templateType: TemplateType.NEWS_FEED,
@@ -282,7 +288,7 @@ class _NativePageState extends State<NativePage> {
               child: Visibility(
                   visible: isShow,
                   child: Container(
-                    height: 400,
+                    height: appodealNative?.options.getAdHeight,
                     child: appodealNative == null
                         ? SizedBox.shrink()
                         : appodealNative!,

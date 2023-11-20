@@ -44,13 +44,13 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
       adIconConfig: AdIconConfig(size: 55),
       adAttributionConfig: AdAttributionConfig(textColor: Colors.black),
       adTitleConfig: AdTitleConfig(textColor: Colors.black),
-      adLayoutConfig: AdLayoutConfig(adTileHeight: 55),
+      adLayoutConfig: AdLayoutConfig(),
       adMediaConfig: AdMediaConfig(visible: true),
     );
     return Align(
         alignment: Alignment.center,
         child: Container(
-            height: options.getInlineAdHeight,
+            height: options.getAdHeight,
             alignment: Alignment.center,
             child: AppodealNativeAd(options: options)));
 

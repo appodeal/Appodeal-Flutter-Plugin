@@ -61,6 +61,8 @@ class NativeAdOptions with AppodealPlatformArguments {
     Color? adAttributionTextColor,
     Color? adAttributionBackgroundColor,
     AdChoicePosition? adChoicePosition,
+    bool? adIconVisible,
+    bool? adMediaVisible,
   }) {
     return NativeAdOptions._(
       nativeAdType: nativeAdType,
@@ -70,13 +72,14 @@ class NativeAdOptions with AppodealPlatformArguments {
           backgroundColor: adAttributionBackgroundColor ?? Colors.transparent),
       adChoiceConfig:
           AdChoiceConfig(position: adChoicePosition ?? AdChoicePosition.endTop),
-      adIconConfig: AdIconConfig(size: adIconSize ?? 50),
+      adIconConfig:
+          AdIconConfig(visible: adIconVisible ?? true, size: adIconSize ?? 50),
       adDescriptionConfig:
           AdDescriptionConfig(fontSize: adDescriptionFontSize ?? 14),
       adActionButtonConfig:
           AdActionButtonConfig(fontSize: adActionButtonTextSize ?? 14),
       adLayoutConfig: AdLayoutConfig(),
-      adMediaConfig: AdMediaConfig(),
+      adMediaConfig: AdMediaConfig(visible: adMediaVisible ?? true),
     );
   }
 
@@ -99,6 +102,8 @@ class NativeAdOptions with AppodealPlatformArguments {
       adAttributionTextColor: adAttributionTextColor,
       adAttributionBackgroundColor: adAttributionBackgroundColor,
       adChoicePosition: adChoicePosition,
+      adIconVisible: false,
+      adMediaVisible: true,
     );
   }
 
@@ -121,6 +126,8 @@ class NativeAdOptions with AppodealPlatformArguments {
       adAttributionTextColor: adAttributionTextColor,
       adAttributionBackgroundColor: adAttributionBackgroundColor,
       adChoicePosition: adChoicePosition,
+      adIconVisible: false,
+      adMediaVisible: false,
     );
   }
 
@@ -143,16 +150,21 @@ class NativeAdOptions with AppodealPlatformArguments {
       adAttributionTextColor: adAttributionTextColor,
       adAttributionBackgroundColor: adAttributionBackgroundColor,
       adChoicePosition: adChoicePosition,
+      adIconVisible: false,
+      adMediaVisible: false,
     );
   }
 
-  double get getInlineAdHeight {
-    int height = adLayoutConfig.adActionHeight;
-    if (adIconConfig.visible) {
-      height = height + adLayoutConfig.adTileHeight;
-    }
+  double get getAdHeight {
+    int height = 0;
     if (adMediaConfig.visible) {
-      height = height + adLayoutConfig.mediaContentHeight;
+      height = height +
+          adLayoutConfig.mediaContentHeight; // adMediaConfig.mediaContentHeight
+    }
+    if (adIconConfig.visible) {
+      height = height + adIconConfig.size;
+    } else {
+      height = height + 70; // height + adIconConfig._defaultSize;
     }
     if (height != 0) {
       height = height + 10;
