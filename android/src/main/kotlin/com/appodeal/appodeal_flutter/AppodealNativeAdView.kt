@@ -18,7 +18,7 @@ internal class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>
     private val nativeAdOptions: NativeAdOptions? =
         NativeAdOptions.toNativeAdOptions(arguments["options"] as Map<String, Any>)
 
-    private val adView: WeakReference<NativeAdView> by lazy {
+    private val adView: WeakReference<NativeAdView?> by lazy {
         val nativeAd = Appodeal.getNativeAds(1).firstOrNull() ?: return@lazy WeakReference(null)
         val nativeAdOptions = nativeAdOptions ?: return@lazy WeakReference(null)
 
@@ -39,6 +39,7 @@ internal class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>
 
     override fun dispose() {
         adView.get()?.destroy()
+        adView.clear()
     }
 }
 

@@ -26,6 +26,8 @@ internal final class AppodealAdView: NSObject, FlutterPlatformView {
         getOrSetupBannerAdView()
     }
     
+    func dispose() {}
+    
     private func getOrSetupBannerAdView() -> APDBannerView {
         if let adView = adView {
             return adView
