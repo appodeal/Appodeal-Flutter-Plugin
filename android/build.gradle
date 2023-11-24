@@ -1,7 +1,7 @@
 group 'com.appodeal.appodeal_flutter'
 
 buildscript {
-    ext.kotlin_version = '1.7.20'
+    ext.kotlin_version = '1.8.10'
     repositories {
         google()
         mavenCentral()
@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version"))
     // Appodeal SDK 3.2.0.1-beta.2
     implementation 'com.appodeal.ads.sdk:core:3.2.0-beta.2'
     implementation 'com.appodeal.ads.sdk.networks:iab:3.2.0.0-beta.2'
