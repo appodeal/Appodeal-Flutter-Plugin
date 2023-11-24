@@ -28,6 +28,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
     compileSdk 33
+    namespace 'com.appodeal.appodeal_flutter_example'
 
     defaultConfig {
         minSdk 21
@@ -62,7 +63,7 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version"))
     // Appodeal SDK 3.2.0.1-beta.2
     implementation 'com.appodeal.ads:sdk:3.2.0.1-beta.2'
 }

@@ -43,7 +43,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.2.0-beta.2
+  stack_appodeal_flutter: 3.2.0-beta.3
 ```
 
 Install the plugin by running the command below in the terminal:
