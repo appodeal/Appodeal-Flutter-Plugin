@@ -7,9 +7,40 @@ internal final class AppodealNative {
     internal let adChannel: FlutterMethodChannel
     internal let adListener: Listener
     
+    private lazy var settings: APDNativeAdSettings = {
+        let adSettings = APDNativeAdSettings.default()
+        //        adSettings.adViewClass = NativeAdView.self
+        //        adSettings.autocacheMask = [.icon, .media]
+        //        adSettings.type = .video
+        return adSettings
+    }()
+    
+    private lazy var nativeAdQueue: APDNativeAdQueue = {
+        APDNativeAdQueue(
+            sdk: nil,
+            settings: settings,
+            delegate: adListener,
+            autocache: true
+        )
+    }()
+    
+    private lazy var nativeArray: [APDNativeAd] = []
+    
     init(registrar: FlutterPluginRegistrar) {
         adChannel = FlutterMethodChannel(name: "appodeal_flutter/native", binaryMessenger: registrar.messenger())
         adListener = Listener(adChannel: adChannel)
+    }
+    
+    func load() {
+        nativeAdQueue.setMaxAdSize(1)
+        nativeAdQueue.loadAd()
+    }
+    
+    func getNativeAd() -> APDNativeAd? {
+        let nativeAds = nativeAdQueue.getNativeAds(ofCount: 1)
+        let nativeAd = nativeAds.isEmpty ? nil : nativeAds.first
+        nativeAd?.delegate = adListener
+        return nativeAd
     }
     
     internal final class Listener: NSObject, APDNativeAdQueueDelegate, APDNativeAdPresentationDelegate {
@@ -22,6 +53,7 @@ internal final class AppodealNative {
         
         func adQueueAdIsAvailable(_ adQueue: APDNativeAdQueue, ofCount count: UInt) {
             adChannel.invokeMethod("onNativeLoaded", arguments: nil)
+            print("The value is \(adQueue.currentAdCount)")
         }
         
         func adQueue(_ adQueue: APDNativeAdQueue, failedWithError error: Error) {

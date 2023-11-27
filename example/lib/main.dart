@@ -40,10 +40,10 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.initialize(
         appKey: _appodealKey,
         adTypes: [
-          AppodealAdType.RewardedVideo,
-          AppodealAdType.Interstitial,
-          AppodealAdType.Banner,
-          AppodealAdType.MREC,
+          // AppodealAdType.RewardedVideo,
+          // AppodealAdType.Interstitial,
+          // AppodealAdType.Banner,
+          // AppodealAdType.MREC,
           AppodealAdType.NativeAd
         ],
         onInitializationFinished: (errors) {

@@ -86,6 +86,21 @@ class _NativePageState extends State<NativePage> {
                       textStyle: const TextStyle(fontSize: 20),
                       fixedSize: Size(300, 20)),
                   onPressed: () {
+                    Appodeal.cache(AppodealAdType.NativeAd);
+                  },
+                  child: const Text('CACHE NATIVE'),
+                ),
+              ],
+            ),
+            //Header
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(fontSize: 20),
+                      fixedSize: Size(300, 20)),
+                  onPressed: () {
                     double screenWidth = MediaQuery.of(context).size.width;
                     //      widgetWidth: screenWidth,
                     //      widgetHeight: screenWidth * 0.2,

@@ -171,6 +171,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let args = call.arguments as! [String: Any]
         let adType = AppodealAdType(rawValue: args["adType"] as! Int)
         Appodeal.cacheAd(adType)
+        native.load()
         result(nil)
     }
     
