@@ -58,7 +58,7 @@ class Appodeal {
   static const MethodChannel _mrecChannel =
       const MethodChannel('appodeal_flutter/mrec');
   static const MethodChannel _nativeChannel =
-  const MethodChannel('appodeal_flutter/native');
+      const MethodChannel('appodeal_flutter/native');
 
   /// Set [isTestMode] for get test advertising.
   static setTesting(bool isTestMode) {
@@ -145,7 +145,7 @@ class Appodeal {
     _channel.invokeMethod('cache', {'adType': adType.platformType});
   }
 
-  /// Check if ad is loaded. for [adType]
+  /// Check if ad is loaded for [adType].
   ///
   /// Returns `true` if ads currently loaded and can be shown, otherwise `false`.
   static Future<bool> isLoaded(AppodealAdType adType) async {
@@ -366,6 +366,39 @@ class Appodeal {
   /// Get SDK platform version.
   static Future<String> getPlatformSdkVersion() async {
     return await _channel.invokeMethod('getPlatformSdkVersion');
+  }
+
+  /// Set preferred type of the requested Native ads.
+  ///
+  /// [contentType] type of Native ads [NativeMediaViewContentType].
+  static void setPreferredNativeContentType(
+      NativeMediaViewContentType contentType) {
+    _channel.invokeMethod('setPreferredNativeContentType',
+        {'preferredNativeContentType': contentType.contentName});
+  }
+
+  /// Get preferred type of the requested Native ads.
+  ///
+  /// Returns [NativeMediaViewContentType] of Native ads.
+  static Future<NativeMediaViewContentType>
+      getPreferredNativeContentType() async {
+    String contentName =
+        await _channel.invokeMethod('getPreferredNativeContentType');
+    if (contentName == NativeMediaViewContentType.Auto.contentName) {
+      return NativeMediaViewContentType.Auto;
+    } else if (contentName == NativeMediaViewContentType.NoVideo.contentName) {
+      return NativeMediaViewContentType.NoVideo;
+    } else if (contentName == NativeMediaViewContentType.Video.contentName) {
+      return NativeMediaViewContentType.Video;
+    }
+    return NativeMediaViewContentType.Auto;
+  }
+
+  /// Get available native ads count.
+  ///
+  /// Returns count of available native ads.
+  static Future<int> getAvailableNativeAdsCount() async {
+    return await _channel.invokeMethod('getAvailableNativeAdsCount');
   }
 
   /// Logging event with [eventName] and [params] in all of connected service.
@@ -628,6 +661,14 @@ class Appodeal {
     });
   }
 
+  /// Set Native ads callbacks
+  ///
+  /// [onNativeLoaded] Called when Native Ad was loaded.
+  /// [onNativeFailedToLoad] Called when Native Ad is fail to load.
+  /// [onNativeShown] Called when Native Ad was shown.
+  /// [onNativeShowFailed] Called when Native Ad show failed.
+  /// [onNativeClicked] Called when Native Ad was clicked.
+  /// [onNativeExpired] Called when Native Ad was expired by time.
   static void setNativeCallbacks(
       {Function()? onNativeLoaded,
       Function()? onNativeFailedToLoad,
@@ -635,54 +676,28 @@ class Appodeal {
       Function()? onNativeShowFailed,
       Function()? onNativeClicked,
       Function()? onNativeExpired}) {
-    {
-      _nativeChannel.setMethodCallHandler((call) async {
-        switch (call.method) {
-          case 'onNativeLoaded':
-            onNativeLoaded?.call();
-            break;
-          case 'onNativeFailedToLoad':
-            onNativeFailedToLoad?.call();
-            break;
-          case 'onNativeShown':
-            onNativeShown?.call();
-            break;
-          case 'onNativeShowFailed':
-            onNativeShowFailed?.call();
-            break;
-          case 'onNativeClicked':
-            onNativeClicked?.call();
-            break;
-          case 'onNativeExpired':
-            onNativeExpired?.call();
-            break;
-        }
-      });
-    }
-  }
-
-  /// Set preferred type of the requested Native ads
-  ///
-  /// @param contentType type of Native ads [NativeMediaViewContentType]
-  static void setPreferredNativeContentType(
-      NativeMediaViewContentType contentType) async {
-    _channel.invokeMethod('setPreferredNativeContentType',
-        {'preferredNativeContentType': contentType.name});
-  }
-
-  /// Check if smart banner is enabled (`false` by default).
-  ///
-  /// Returns `true` if smart banner is enabled, otherwise `false`.
-  static Future<NativeMediaViewContentType> getPreferredNativeContentType() async {
-    return parseNativeContentType(await _channel.invokeMethod('getPreferredNativeContentType'));
-  }
-
-
-  /// Check if smart banner is enabled (`false` by default).
-  ///
-  /// Returns `true` if smart banner is enabled, otherwise `false`.
-  static Future<int> getAvailableNativeAdsCount() async {
-    return await _channel.invokeMethod('getAvailableNativeAdsCount');
+    _nativeChannel.setMethodCallHandler((call) async {
+      switch (call.method) {
+        case 'onNativeLoaded':
+          onNativeLoaded?.call();
+          break;
+        case 'onNativeFailedToLoad':
+          onNativeFailedToLoad?.call();
+          break;
+        case 'onNativeShown':
+          onNativeShown?.call();
+          break;
+        case 'onNativeShowFailed':
+          onNativeShowFailed?.call();
+          break;
+        case 'onNativeClicked':
+          onNativeClicked?.call();
+          break;
+        case 'onNativeExpired':
+          onNativeExpired?.call();
+          break;
+      }
+    });
   }
 
   /// Set ad revenue callbacks
@@ -734,23 +749,4 @@ class ApdConsentError {
   final String desctiption;
 
   ApdConsentError._(this.desctiption);
-}
-
-/// Enum class representing the preferred native media content type.
-/// The available content types are Auto, NoVideo and Video.
-///
-/// @property contentName The name of the content type.
-enum NativeMediaViewContentType { AUTO, NO_VIDEO, VIDEO }
-
-NativeMediaViewContentType parseNativeContentType(String contentType) {
-  switch (contentType) {
-    case "auto":
-      return NativeMediaViewContentType.AUTO;
-    case "static":
-      return NativeMediaViewContentType.NO_VIDEO;
-    case "video":
-      return NativeMediaViewContentType.VIDEO;
-    default:
-      throw ArgumentError("Content type $contentType doesn't support");
-  }
 }

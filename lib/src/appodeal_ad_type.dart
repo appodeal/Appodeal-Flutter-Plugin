@@ -3,7 +3,7 @@ import 'dart:io';
 class AppodealAdType {
   final int android, ios, sios;
 
-  /// Сonstant for SDK initialization without declaration types.
+  /// Constant for SDK initialization without declaration types.
   /// If you want to run attribution and session metrics before you use ads
   static const None = AppodealAdType._(android: 0, ios: 0, sios: 0);
 
@@ -24,7 +24,7 @@ class AppodealAdType {
   /// Rectangular ads (with defined size 300x250 dp) that appear at the view of the device screen.
   static const MREC = AppodealAdType._(android: 256, ios: 32, sios: 0);
 
-  /// In progress.
+  /// Native ad is a flexible type of advertising. You can adapt the display to your UI by preparing a template.
   static const NativeAd = AppodealAdType._(android: 512, ios: 8, sios: 0);
 
   /// Сonstant for internal SDK usage. We recommend using types separately and consciously.

@@ -1,11 +1,11 @@
 package com.appodeal.appodeal_flutter
 
+import android.util.Log
 import com.appodeal.ads.Appodeal
 import com.appodeal.ads.NativeMediaViewContentType
 import com.appodeal.ads.inapp.InAppPurchase
 import com.appodeal.ads.inapp.InAppPurchase.Type
 import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
-import com.appodeal.ads.initializing.ApdInitializationCallback
 import com.appodeal.ads.initializing.ApdInitializationError
 import com.appodeal.ads.initializing.ApdInitializationError.*
 import com.appodeal.ads.regulator.CCPAUserConsent
@@ -99,6 +99,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "setCustomFilter" -> setCustomFilter(call, result)
             "setExtraData" -> setExtraData(call, result)
             "getPlatformSdkVersion" -> getPlatformSdkVersion(call, result)
+            "setPreferredNativeContentType" -> setPreferredNativeContentType(call, result)
+            "getPreferredNativeContentType" -> getPreferredNativeContentType(call, result)
+            "getAvailableNativeAdsCount" -> getAvailableNativeAdsCount(call, result)
             //Services logic
             "logEvent" -> logEvent(call, result)
             "validateInAppPurchase" -> validateInAppPurchase(call, result)
@@ -106,9 +109,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "loadConsentForm" -> loadConsentForm(call, result)
             "showConsentForm" -> showConsentForm(call, result)
             "setCustomVendor" -> setCustomVendor(call, result)
-            "setPreferredNativeContentType" -> setPreferredNativeContentType(call, result)
-            "getPreferredNativeContentType" -> getPreferredNativeContentType(call, result)
-            "getAvailableNativeAdsCount" -> getAvailableNativeAdsCount(call, result)
             else -> result.notImplemented()
         }
     }
@@ -116,9 +116,14 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
         super.onAttachedToActivity(binding)
         pluginBinding.platformViewRegistry.apply {
-            val viewFactory = AppodealAdViewFactory(activity)
-            registerViewFactory("appodeal_flutter/banner_view", viewFactory)
-            registerViewFactory("appodeal_flutter/native_view", viewFactory)
+            registerViewFactory(
+                "appodeal_flutter/banner_view",
+                AppodealAdViewFactory(activity)
+            )
+            registerViewFactory(
+                "appodeal_flutter/native_view",
+                AppodealNativeAdViewFactory(activity)
+            )
         }
     }
 
@@ -179,10 +184,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         Appodeal.setBannerRotation(90, -90) // for iOS platform behavior sync
         Appodeal.setSharedAdsInstanceAcrossActivities(true)
         Appodeal.setFramework("flutter", sdkVersion)
-        Appodeal.initialize(activity, appKey, adTypes, object : ApdInitializationCallback {
-            override fun onInitializationFinished(errors: List<ApdInitializationError>?) =
-                channel.invokeMethod("onInitializationFinished", errors?.toArg())
-        })
+        Appodeal.initialize(activity, appKey, adTypes) { errors ->
+            channel.invokeMethod("onInitializationFinished", errors?.toArg())
+        }
         result.success(null)
     }
 
@@ -311,21 +315,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         result.success(null)
     }
 
-    fun setPreferredNativeContentType(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        val contentType = parseNativeContentType(args["preferredNativeContentType"] as String)
-        Appodeal.setPreferredNativeContentType(contentType)
-        result.success(null)
-    }
-
-    fun getPreferredNativeContentType(call: MethodCall, result: Result) {
-        result.success(Appodeal.getPreferredNativeContentType().contentName)
-    }
-
-    fun getAvailableNativeAdsCount(call: MethodCall, result: Result){
-        result.success(Appodeal.getAvailableNativeAdsCount())
-    }
-
     private fun disableNetwork(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val network = args["network"] as String
@@ -398,6 +387,24 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun getPlatformSdkVersion(call: MethodCall, result: Result) {
         result.success(Appodeal.getVersion())
+    }
+
+    private fun setPreferredNativeContentType(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val contentName = args["preferredNativeContentType"] as String
+        val contentType = NativeMediaViewContentType.values()
+            .firstOrNull { it.contentName == contentName }
+            ?: error("content type $contentName doesn't support")
+        Appodeal.setPreferredNativeContentType(contentType)
+        result.success(null)
+    }
+
+    private fun getPreferredNativeContentType(call: MethodCall, result: Result) {
+        result.success(Appodeal.getPreferredNativeContentType().contentName)
+    }
+
+    private fun getAvailableNativeAdsCount(call: MethodCall, result: Result) {
+        result.success(Appodeal.getAvailableNativeAdsCount())
     }
 
     //Services logic
@@ -567,11 +574,6 @@ private fun List<ServiceError>.toArg(): Map<String, List<String>> {
     return mapOf("errors" to arg)
 }
 
-private fun parseNativeContentType(contentType: String): NativeMediaViewContentType {
-    return when (contentType) {
-        "NativeMediaViewContentType.AUTO" -> NativeMediaViewContentType.Auto
-        "NativeMediaViewContentType.NO_VIDEO" -> NativeMediaViewContentType.NoVideo
-        "NativeMediaViewContentType.VIDEO" -> NativeMediaViewContentType.Video
-        else -> error("content type $contentType doesn't support")
-    }
+internal fun apdLog(message: String, any: Any? = null) {
+    if (BuildConfig.DEBUG) Log.d("AppodealFlutterPlugin", "$message ${any ?: ""}")
 }
