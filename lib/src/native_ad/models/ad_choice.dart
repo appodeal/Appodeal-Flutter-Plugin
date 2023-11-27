@@ -5,7 +5,7 @@ class AdChoiceConfig with AppodealPlatformArguments {
   final AdChoicePosition position;
 
   AdChoiceConfig({
-    this.position = AdChoicePosition.endBottom,
+    this.position = AdChoicePosition.endTop,
   });
 
   @override

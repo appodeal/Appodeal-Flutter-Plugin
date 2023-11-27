@@ -15,7 +15,7 @@ class AdIconConfig with AppodealPlatformArguments {
     this.visible = true,
     this.size = 50,
     this.position = AdIconPosition.start,
-    this.margin = 4,
+    this.margin = 0,
   });
 
   @override

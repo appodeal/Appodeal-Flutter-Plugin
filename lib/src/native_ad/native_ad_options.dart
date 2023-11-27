@@ -49,7 +49,6 @@ class NativeAdOptions with AppodealPlatformArguments {
 
   /// Generates template Native Ad View options
   static NativeAdOptions _templateOptions({
-    required BuildContext context,
     required _NativeAdType nativeAdType,
     int? adIconSize,
     int? adTitleFontSize,
@@ -81,7 +80,6 @@ class NativeAdOptions with AppodealPlatformArguments {
 
   /// Generates Content Stream template Native Ad View options
   static NativeAdOptions contentStreamOptions({
-    required BuildContext context,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -90,7 +88,6 @@ class NativeAdOptions with AppodealPlatformArguments {
     AdChoicePosition? adChoicePosition,
   }) {
     return NativeAdOptions._templateOptions(
-      context: context,
       nativeAdType: _NativeAdType.contentStream,
       adIconSize: 90,
       adTitleFontSize: adTitleFontSize,
@@ -106,7 +103,6 @@ class NativeAdOptions with AppodealPlatformArguments {
 
   /// Generates App Wall template Native Ad View options
   static NativeAdOptions appWallOptions({
-    required BuildContext context,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -115,7 +111,6 @@ class NativeAdOptions with AppodealPlatformArguments {
     AdChoicePosition? adChoicePosition,
   }) {
     return NativeAdOptions._templateOptions(
-      context: context,
       nativeAdType: _NativeAdType.appWall,
       adIconSize: 70,
       adTitleFontSize: adTitleFontSize,
@@ -131,7 +126,6 @@ class NativeAdOptions with AppodealPlatformArguments {
 
   /// Generates News Feed template Native Ad View options
   static NativeAdOptions newsFeedOptions({
-    required BuildContext context,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -140,7 +134,6 @@ class NativeAdOptions with AppodealPlatformArguments {
     AdChoicePosition? adChoicePosition,
   }) {
     return NativeAdOptions._templateOptions(
-      context: context,
       nativeAdType: _NativeAdType.newsFeed,
       adIconSize: 50,
       adTitleFontSize: adTitleFontSize,
@@ -172,14 +165,15 @@ class NativeAdOptions with AppodealPlatformArguments {
     return MediaQuery.of(context).size.width;
   }
 
+  // TODO: two methods for get height
   double getAdHeight(BuildContext context, double width) {
     double height = 0;
-    if(!adMediaConfig.visible && !adIconConfig.visible) {
+    if (!adMediaConfig.visible && !adIconConfig.visible) {
       return 0;
     }
 
     if (adMediaConfig.visible) {
-        height = width * 0.563; // 9:16
+      height = width * 0.563; // 9:16
     }
     if (adIconConfig.visible) {
       height = height + adIconConfig.size;

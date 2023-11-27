@@ -51,13 +51,9 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
             textColor: Colors.black,
             backgroundColor: Colors.orangeAccent,
             margin: 4),
-        adChoiceConfig: AdChoiceConfig(
-            position: AdChoicePosition.endBottom),
+        adChoiceConfig: AdChoiceConfig(position: AdChoicePosition.endBottom),
         adIconConfig: AdIconConfig(
-            visible: true,
-            size: 70,
-            position: AdIconPosition.start,
-            margin: 4),
+            visible: true, size: 70, position: AdIconPosition.start, margin: 4),
         adDescriptionConfig: AdDescriptionConfig(
             fontSize: 14,
             textColor: Colors.black,
@@ -70,8 +66,7 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
             margin: 4,
             radius: 12),
         adMediaConfig:
-            AdMediaConfig(visible: true, position: AdMediaPosition.top)
-    );
+            AdMediaConfig(visible: true, position: AdMediaPosition.top));
     return Align(
         alignment: Alignment.center,
         child: Container(

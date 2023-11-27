@@ -188,7 +188,6 @@ class _NativePageState extends State<NativePage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () {
                     final nativeAdParams = NativeAdOptions.newsFeedOptions(
-                        context: context,
                         adTitleFontSize: 14,
                         adActionButtonTextSize: 14,
                         adDescriptionFontSize: 12,
@@ -214,7 +213,6 @@ class _NativePageState extends State<NativePage> {
                       fixedSize: Size(300, 20)),
                   onPressed: () {
                     final nativeAdParams = NativeAdOptions.appWallOptions(
-                        context: context,
                         adTitleFontSize: 20,
                         adActionButtonTextSize: 20,
                         adDescriptionFontSize: 14,
@@ -241,7 +239,6 @@ class _NativePageState extends State<NativePage> {
                   onPressed: () {
                     final nativeAdOptions =
                         NativeAdOptions.contentStreamOptions(
-                            context: context,
                             adTitleFontSize: 16,
                             adActionButtonTextSize: 16,
                             adDescriptionFontSize: 14,
