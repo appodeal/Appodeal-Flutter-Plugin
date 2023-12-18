@@ -58,7 +58,14 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('Appodeal Flutter Demo'),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Appodeal Flutter Demo', style: TextStyle(fontSize: 20)),
+              Text('ver. ${Appodeal.getSDKVersion()}',
+                  style: TextStyle(fontSize: 14)),
+            ],
+          ),
         ),
         body: Column(children: [
           Row(
