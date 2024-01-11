@@ -19,6 +19,7 @@ Official Appodeal Flutter Plugin for your Flutter application.
 - [Installation](#installation)
     - [iOS](#ios)
     - [Android](#android)
+    - [Admob configuration](#admob-configuration)
 - [Services](#services)
     - [Adjust](#adjust)
     - [AppsFlyer](#appsflyer)
@@ -43,7 +44,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.2.0
+  stack_appodeal_flutter: 3.2.0+1
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -53,6 +54,11 @@ $ flutter pub get
 ```
 
 #### iOS
+
+> [!IMPORTANT]
+> - iOS 12.0 or higher. You still can integrate Appodeal SDK into a project with a lower value of minimum iOS version. However, on devices that don't support iOS 12.0+ our SDK will just be disabled.
+> - Appodeal SDK is compatible with both ARC and non-ARC projects.
+> - Use Xcode 14.3 or higher.
 
 1. Go to `ios/` folder and open *Podfile*
 2. Add Appodeal adapters. Add pods into `./ios/Podfile`:
@@ -1110,9 +1116,12 @@ To improve ad performance the following entries should be added:
 
 </details>
 
-6. Build your project (`Cmd+B`)
+6. Build your project
 
 #### Android
+
+> [!IMPORTANT]
+> - Android API level 21 (Android OS 5.0) or higher.
 
 1. Add Appodeal adapters.
 
@@ -1179,22 +1188,55 @@ In your *network_security_config.xml* file, add `base-config` that sets `clearte
 </network-security-config>
 ```
 
-3. Admob Configuration (if you use Admob adapter)
+3. Build your project
 
-``` xml
-<manifest>
-    <application>
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="[ADMOB_APP_ID]"/>
-    </application>
-</manifest>
-```
+#### Admob configuration
 
-For more information about Admob sync check out
-our [FAQ](https://faq.appodeal.com/en/articles/4185565-how-do-i-link-my-admob-account).
+> [!WARNING]  
+> Admob Bidding is now available since Appodeal SDK 3.2.0.\
+> Don't forget to download our newest version of Admob Sync tool from this page and perform sync.\
+> You can read more about Admob Sync in
+> our [guide](https://docs.appodeal.com/networks-setup/admob-sync).
 
-5. Run your project (`Cmd+R`)
+- **How to add Admob Ad Network to your project:**
+
+  Add your AdMob app id to `meta-data` tag:
+
+  ```xml
+  <manifest>
+      <application>
+          <!-- Add your AdMob App ID -->
+          <meta-data
+              android:name="com.google.android.gms.ads.APPLICATION_ID"
+              android:value="ca-app-pub-xxxxxxxxxxxxxxxx~yyyyyyyyyy"/>
+      </application>
+  </manifest>
+  ```
+
+- **How to remove Admob Ad Network from your project:**
+  
+  Change next dependencies into `build.gradle` (module: app)
+  
+  ``` groovy
+  dependencies {
+      ...
+      // ... other project dependencies
+      implementation ('com.appodeal.ads:sdk:3.2.0.+') {
+          exclude group: 'com.google.android.gms', module: 'play-services-ads'
+          // ad networks
+          exclude group: "com.appodeal.ads.sdk.networks", module: "admob"
+          exclude group: "com.appodeal.ads.sdk.networks", module: "bigo_ads"
+          // services
+          exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
+          exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
+          exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
+          exclude group: 'com.appodeal.ads.sdk.services', module: 'facebook_analytics'
+          exclude group: 'com.appodeal.ads.sdk.services', module: 'stack_analytics'
+      }
+      ...
+  }
+  
+  ```
 
 ## Services
 
