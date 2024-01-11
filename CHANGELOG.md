@@ -1,3 +1,7 @@
+## 3.2.0+1
+
+* Simplified Android Core Plugin dependencies
+
 ## 3.2.0
 
 * Updated Appodeal iOS SDK to [3.2.0](https://docs.appodeal.com/ios/changelog)
