@@ -6,6 +6,9 @@
 
 * Updated Appodeal iOS SDK to [3.2.0](https://docs.appodeal.com/ios/changelog)
 * Updated Appodeal Android SDK to [3.2.0](https://docs.appodeal.com/android/changelog)
+* **💥 AdMob Bidding Support**
+  - Download our newest version of AdMob Sync tool from this [page](https://amsa-updates.appodeal.com/) and perform sync.
+  - You can read more about AdMob Sync in our [guide](https://docs.appodeal.com/networks-setup/admob-sync).
 
 ## 3.2.0-beta.3
 
