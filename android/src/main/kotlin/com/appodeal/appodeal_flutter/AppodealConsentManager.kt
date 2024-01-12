@@ -12,7 +12,7 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
 internal class AppodealConsentManager(
-    private val flutterPlugin: AppodealFlutterPlugin,
+    private val flutterPlugin: AppodealBaseFlutterPlugin,
     private val flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
 ) : MethodChannel.MethodCallHandler {
 
@@ -31,6 +31,7 @@ internal class AppodealConsentManager(
             "show" -> show(call, result)
             "loadAndShowConsentFormIfRequired" -> loadAndShowConsentFormIfRequired(call, result)
             "revoke" -> revoke(call, result)
+            else -> result.notImplemented()
         }
     }
 
@@ -66,7 +67,10 @@ internal class AppodealConsentManager(
             context = flutterPlugin.context,
             successListener = { consentForm ->
                 this@AppodealConsentManager.consentForm = consentForm
-                adChannel.invokeMethod("onConsentFormLoadSuccess", null)
+                adChannel.invokeMethod(
+                    "onConsentFormLoadSuccess",
+                    mapOf("status" to ConsentManager.status.statusName)
+                )
             },
             failureListener = { error ->
                 adChannel.invokeMethod("onConsentFormLoadFailure", error.toArg())

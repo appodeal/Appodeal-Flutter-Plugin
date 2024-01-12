@@ -6,10 +6,11 @@ import com.appodeal.ads.inapp.InAppPurchase.Type
 import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
 import com.appodeal.ads.initializing.ApdInitializationCallback
 import com.appodeal.ads.initializing.ApdInitializationError
-import com.appodeal.ads.initializing.ApdInitializationError.*
+import com.appodeal.ads.initializing.ApdInitializationError.Critical
+import com.appodeal.ads.initializing.ApdInitializationError.InternalError
+import com.appodeal.ads.initializing.ApdInitializationError.NonCritical
 import com.appodeal.ads.service.ServiceError
 import com.appodeal.ads.utils.Log.LogLevel
-import com.appodeal.consent.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
