@@ -1153,7 +1153,7 @@ allprojects {
     repositories {
         ...
         jcenter()
-        maven { url "https://artifactory.appodeal.com/appodeal" }
+        maven { url "https://artifactory.appodeal.com/appodeal-beta-public" }
         ...
     }
 }
