@@ -43,6 +43,12 @@ class Appodeal {
     _functions.remove(call.method);
   };
 
+  static AppodealConsentForm? _ConsentForm;
+
+  /// Appodeal Consent form logic for iAB TCFv2 and Google UMP.
+  static AppodealConsentForm get ConsentForm =>
+      _ConsentForm ??= AppodealConsentForm();
+
   static MethodChannel _channel = _defaultChannel(_handler);
   static const MethodChannel _adrevenueChannel =
       const MethodChannel('appodeal_flutter/adrevenue');
@@ -72,22 +78,6 @@ class Appodeal {
   /// support log level: [LogLevelNone], [LogLevelDebug], [LogLevelVerbose]
   static setLogLevel(int logLevel) {
     _channel.invokeMethod('setLogLevel', {'logLevel': logLevel});
-  }
-
-  /// Update user consent for GDPR region [gdprUserConsent]
-  ///
-  /// support consents: [GDPRUserConsent.Personalized], [GDPRUserConsent.Unknown], [GDPRUserConsent.NonPersonalized]
-  static updateGDPRUserConsent(GDPRUserConsent gdprUserConsent) {
-    _channel.invokeMethod(
-        'updateGDPRUserConsent', {'gdprUserConsent': gdprUserConsent.rawValue});
-  }
-
-  /// Update user consent for CCPA region [ccpaUserConsent]
-  ///
-  /// support consents: [CCPAUserConsent.OptIn], [CCPAUserConsent.Unknown], [CCPAUserConsent.OptOut]
-  static updateCCPAUserConsent(CCPAUserConsent ccpaUserConsent) {
-    _channel.invokeMethod(
-        'updateCCPAUserConsent', {'ccpaUserConsent': ccpaUserConsent.rawValue});
   }
 
   /// Initialize the Appodeal SDK
@@ -355,7 +345,7 @@ class Appodeal {
 
   /// Get SDK version.
   static String getSDKVersion() {
-    return "3.2.0.1";
+    return "3.2.1-beta.1";
   }
 
   /// Get SDK platform version.
@@ -396,59 +386,6 @@ class Appodeal {
     if (Platform.isIOS) {
       _channel.invokeMethod('disableAppTrackingTransparencyRequest');
     }
-  }
-
-  /// Load consent form
-  static loadConsentForm(
-      {required String appKey,
-      Function? onLoaded,
-      Function(List<ApdConsentError> error)? onLoadFailed}) {
-    _functions["onConsentFormLoaded"] = (call) {
-      onLoaded?.call();
-    };
-    _functions["onConsentFormLoadError"] = (call) {
-      final error = List<ApdConsentError>.from(
-          call.arguments['errors'].map((e) => ApdConsentError._(e)));
-      onLoadFailed?.call(error);
-    };
-    _channel.invokeMethod('loadConsentForm', {'appKey': appKey});
-  }
-
-  /// Show the consent form to determine the user's consent
-  static showConsentForm(
-      {Function? onOpened,
-      Function(List<ApdConsentError> error)? onShowFailed,
-      Function? onClosed}) {
-    _functions["onConsentFormOpened"] = (call) {
-      onOpened?.call();
-    };
-    _functions["onConsentFormShowFailed"] = (call) {
-      final error = List<ApdConsentError>.from(
-          call.arguments['errors'].map((e) => ApdConsentError._(e)));
-      onShowFailed?.call(error);
-    };
-    _functions["onConsentFormClosed"] = (call) {
-      onClosed?.call();
-    };
-    _channel.invokeMethod('showConsentForm');
-  }
-
-  /// Set custom vendor for consent form
-  static setCustomVendor(
-      String vendorName,
-      String vendorBundle,
-      String vendorPolicyUrl,
-      List<int> vendorPurposeIds,
-      List<int> vendorFeatureIds,
-      List<int> vendorLegitimateInterestPurposeIds) {
-    _channel.invokeMethod('setCustomVendor', {
-      'name': vendorName,
-      'bundle': vendorBundle,
-      'policyUrl': vendorPolicyUrl,
-      'purposeIds': vendorPurposeIds,
-      'featureIds': vendorFeatureIds,
-      'legitimateInterestPurposeIds': vendorLegitimateInterestPurposeIds
-    });
   }
 
   /// Set Interstitial ads callbacks
@@ -649,9 +586,9 @@ MethodChannel _defaultChannel(final Future Function(MethodCall call) handler) {
 /// This class declares errors during initialization.
 ///
 class ApdInitializationError {
-  final String desctiption;
+  final String description;
 
-  ApdInitializationError._(this.desctiption);
+  ApdInitializationError._(this.description);
 }
 
 /// Appodeal SDK In-App Validation Error class.
@@ -659,17 +596,7 @@ class ApdInitializationError {
 /// This class declares errors during in-app validation.
 ///
 class ApdValidationError {
-  final String desctiption;
+  final String description;
 
-  ApdValidationError._(this.desctiption);
-}
-
-/// Appodeal SDK Consent Error class.
-///
-/// This class declares errors during consent behavor.
-///
-class ApdConsentError {
-  final String desctiption;
-
-  ApdConsentError._(this.desctiption);
+  ApdValidationError._(this.description);
 }

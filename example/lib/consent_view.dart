@@ -1,25 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
-class InterstitialPage extends StatefulWidget {
+import 'main.dart';
+
+class ConsentPage extends StatefulWidget {
   @override
-  _InterstitialPageState createState() => _InterstitialPageState();
+  _ConsentPageState createState() => _ConsentPageState();
 }
 
-class _InterstitialPageState extends State<InterstitialPage> {
+class _ConsentPageState extends State<ConsentPage> {
   @override
   void initState() {
     super.initState();
+  }
 
-    Appodeal.setInterstitialCallbacks(
-        onInterstitialLoaded: (isPrecache) =>
-            print('onInterstitialLoaded: isPrecache - $isPrecache'),
-        onInterstitialFailedToLoad: () => print('onInterstitialFailedToLoad'),
-        onInterstitialShown: () => print('onInterstitialShown'),
-        onInterstitialShowFailed: () => print('onInterstitialShowFailed'),
-        onInterstitialClicked: () => print('onInterstitialClicked'),
-        onInterstitialClosed: () => print('onInterstitialClosed'),
-        onInterstitialExpired: () => print('onInterstitialExpired'));
+  load() {
+    Appodeal.ConsentForm.load(
+        appKey: exampleAppodealKey,
+        onConsentFormLoadSuccess: (status) {
+          print("onConsentFormLoadSuccess: status - ${status.description}");
+        },
+        onConsentFormLoadFailure: (error) {
+          print("onConsentFormLoadFailure: error - ${error.description}");
+        });
+  }
+
+  show() {
+    Appodeal.ConsentForm.show(onConsentFormDismissed: (error) {
+      print("onConsentFormDismissed: error - ${error.description}");
+    });
+  }
+
+  loadAndShowConsentFormIfRequired() {
+    Appodeal.ConsentForm.loadAndShowConsentFormIfRequired(
+        appKey: exampleAppodealKey,
+        onConsentFormDismissed: (error) {
+          print("onConsentFormDismissed: error - ${error.description}");
+        });
+  }
+
+  revoke() {
+    Appodeal.ConsentForm.revoke();
   }
 
   @override
@@ -27,8 +48,8 @@ class _InterstitialPageState extends State<InterstitialPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Interstitial'),
-        // automaticallyImplyLeading: true,
+        title: const Text('Consent management platform'),
+        automaticallyImplyLeading: true,
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -40,43 +61,10 @@ class _InterstitialPageState extends State<InterstitialPage> {
                 style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20),
                     fixedSize: Size(300, 20)),
-                onPressed: () async {
-                  var isInitialized =
-                      await Appodeal.isInitialized(AppodealAdType.Interstitial);
-                  print('Interstitial isInitialized - $isInitialized');
-                },
-                child: const Text('IS INITIALIZED?'),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
-                    fixedSize: Size(300, 20)),
-                onPressed: () async {
-                  var isCanShow =
-                      await Appodeal.canShow(AppodealAdType.Interstitial);
-                  print('Interstitial canShow - $isCanShow');
-                },
-                child: const Text('CAN SHOW?'),
-              ),
-            ],
-          ),
-          //Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
-                    fixedSize: Size(300, 20)),
                 onPressed: () {
-                  Appodeal.cache(AppodealAdType.Interstitial);
+                  load();
                 },
-                child: const Text('CACHE INTERSTITIAL'),
+                child: const Text('LOAD CONSENT FORM'),
               ),
             ],
           ),
@@ -88,9 +76,41 @@ class _InterstitialPageState extends State<InterstitialPage> {
                     textStyle: const TextStyle(fontSize: 20),
                     fixedSize: Size(300, 20)),
                 onPressed: () {
-                  Appodeal.show(AppodealAdType.Interstitial);
+                  show();
                 },
-                child: const Text('SHOW INTERSTITIAL'),
+                child: const Text('SHOW CONSENT FORM'),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    fixedSize: Size.fromWidth(300)),
+                onPressed: () {
+                  loadAndShowConsentFormIfRequired();
+                },
+                child: const Text(
+                  'LOAD AND SHOW CONSENT FORM IF REQUIRED',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    fixedSize: Size(300, 20)),
+                onPressed: () {
+                  revoke();
+                },
+                child: const Text('REVOKE CONSENT'),
               ),
             ],
           ),
