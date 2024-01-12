@@ -94,7 +94,7 @@ class _ConsentPageState extends State<ConsentPage> {
                 },
                 child: const Text(
                   'LOAD AND SHOW CONSENT FORM IF REQUIRED',
-                  maxLines: 2,
+                  maxLines: 3,
                   textAlign: TextAlign.center,
                 ),
               ),
