@@ -2,7 +2,11 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## Appodeal SDK 3.0
+## Appodeal SDK 3.2
+
+- **💥 AdMob Bidding Support**
+  - Download our newest version of AdMob Sync tool from this [page](https://amsa-updates.appodeal.com/) and perform sync.
+  - You can read more about AdMob Sync in our [guide](https://docs.appodeal.com/networks-setup/admob-sync).
 
 - **Already included ready-made consent solution**
     - Appodeal SDK 3.0 in **first initialization** shows a ready-made consent window if the user is in the regions
