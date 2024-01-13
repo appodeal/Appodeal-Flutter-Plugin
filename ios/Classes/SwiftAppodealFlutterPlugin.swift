@@ -1,7 +1,6 @@
 import Flutter
 import UIKit
 import Appodeal
-import StackConsentManager.Private
 import AVFoundation
 
 public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
@@ -9,6 +8,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let instance = SwiftAppodealFlutterPlugin(registrar: registrar)
         registrar.addMethodCallDelegate(instance, channel: instance.channel)
+        registrar.addMethodCallDelegate(instance, channel: instance.adRevenueCallback.adChannel)
         registrar.addMethodCallDelegate(instance, channel: instance.interstitial.adChannel)
         registrar.addMethodCallDelegate(instance, channel: instance.rewardedVideo.adChannel)
         registrar.addMethodCallDelegate(instance, channel: instance.banner.adChannel)
@@ -20,6 +20,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     let channel: FlutterMethodChannel
     
+    private let consentManager: AppodealConsentManager
     private let adRevenueCallback: AppodealAdRevenueCallback
     
     private let interstitial: AppodealInterstitial
@@ -29,6 +30,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private init(registrar: FlutterPluginRegistrar) {
         channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
+        consentManager = AppodealConsentManager(registrar: registrar)
         adRevenueCallback = AppodealAdRevenueCallback(registrar: registrar)
         interstitial = AppodealInterstitial(registrar: registrar)
         rewardedVideo = AppodealRewarded(registrar: registrar)
@@ -41,8 +43,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "setTestMode": setTestMode(call, result)
         case "isTestMode": isTestMode(call, result)
         case "setLogLevel": setLogLevel(call, result)
-        case "updateGDPRUserConsent": updateGDPRUserConsent(call, result)
-        case "updateCCPAUserConsent": updateCCPAUserConsent(call, result)
         case "initialize": initialize(call, result)
         case "isInitialized": isInitialized(call, result)
         case "setAutoCache": setAutoCache(call, result)
@@ -73,11 +73,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
             //Services logic
         case "logEvent": logEvent(call, result)
         case "validateInAppPurchase": validateInAppPurchase(call, result)
-            // Consent Logic
-        case "disableAppTrackingTransparencyRequest": disableAppTrackingTransparencyRequest(call, result)
-        case "loadConsentForm": loadConsentForm(call, result)
-        case "showConsentForm": showConsentForm(call, result)
-        case "setCustomVendor": setCustomVendor(call, result)
         default: result(FlutterMethodNotImplemented)
         }
     }
@@ -100,28 +95,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case 1: Appodeal.setLogLevel(APDLogLevel.debug)
         case 2: Appodeal.setLogLevel(APDLogLevel.verbose)
         default:Appodeal.setLogLevel(APDLogLevel.off)
-        }
-        result(nil)
-    }
-    
-    private func updateGDPRUserConsent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let logLevel = args["gdprUserConsent"] as! Int
-        switch logLevel {
-        case -1: Appodeal.updateUserConsentGDPR(.nonPersonalized)
-        case 1: Appodeal.updateUserConsentGDPR(.personalized)
-        default: Appodeal.updateUserConsentGDPR(.unknown)
-        }
-        result(nil)
-    }
-    
-    private func updateCCPAUserConsent(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let logLevel = args["ccpaUserConsent"] as! Int
-        switch logLevel {
-        case -1: Appodeal.updateUserConsentCCPA(.optOut)
-        case 1: Appodeal.updateUserConsentCCPA(.optIn)
-        default: Appodeal.updateUserConsentCCPA(.unknown)
         }
         result(nil)
     }
@@ -337,66 +310,6 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
             )
         } else {
             channel.invokeMethod("onInAppPurchaseValidateFail", arguments: nil)
-        }
-        result(nil)
-    }
-    
-    // Consent Logic
-    
-    private func disableAppTrackingTransparencyRequest(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        STKConsentManager.shared().disableAppTrackingTransparencyRequest()
-        result(nil)
-    }
-    
-    private func loadConsentForm(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let appKey = args["appKey"] as! String
-        STKConsentManager.shared().synchronize(withAppKey: appKey) { [unowned self] error in
-            if let error = error {
-                let args: [String: [String]] = ["errors": [error.localizedDescription]]
-                channel.invokeMethod("onConsentFormLoadError", arguments: args)
-            } else {
-                STKConsentManager.shared().loadConsentDialog { [unowned self] error in
-                    if let error = error {
-                        let args: [String: [String]] = ["errors": [error.localizedDescription]]
-                        channel.invokeMethod("onConsentFormLoadError", arguments: args)
-                    } else {
-                        channel.invokeMethod("onConsentFormLoaded", arguments: nil)
-                    }
-                }
-            }
-        }
-        result(nil)
-    }
-    
-    private func showConsentForm(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        guard let controller = UIApplication.shared.keyWindow?.rootViewController, STKConsentManager.shared().isConsentDialogReady
-        else {
-            let args: [String: [String]] = ["errors": ["issue with controller (is ready: \(STKConsentManager.shared().isConsentDialogReady))"]]
-            channel.invokeMethod("onConsentFormShowFailed", arguments: args)
-            return
-        }
-        STKConsentManager.shared().showConsentDialog(fromRootViewController: controller, delegate: self)
-        result(nil)
-    }
-    
-    private func setCustomVendor(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        let args = call.arguments as! [String: Any]
-        let name = args["name"] as! String
-        let bundle = args["bundle"] as! String
-        let policyUrl = args["policyUrl"] as! String
-        let purposeIds = args["purposeIds"] as! [NSNumber]
-        let featureIds = args["featureIds"] as! [NSNumber]
-        let legitimateInterestPurposeIds = args["legitimateInterestPurposeIds"] as! [NSNumber]
-        
-        STKConsentManager.shared().registerCustomVendor { builder in
-            let _ = builder
-                .appendPolicyURL(URL(string: policyUrl)!)
-                .appendName(name)
-                .appendBundle(bundle)
-                .appendPurposesIds(purposeIds)
-                .appendFeaturesIds(featureIds)
-                .appendLegIntPurposeIds(legitimateInterestPurposeIds)
         }
         result(nil)
     }
