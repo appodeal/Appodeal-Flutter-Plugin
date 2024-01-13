@@ -25,7 +25,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private var _pluginBinding: FlutterPlugin.FlutterPluginBinding? = null
     private val pluginBinding get() = checkNotNull(_pluginBinding)
 
-    private val consentManager by lazy { AppodealConsentManager(this, pluginBinding) }
+    private var _consentManager: AppodealConsentManager? = null
+    private val consentManager get() = checkNotNull(_consentManager)
+
     private val adRevenueCallback by lazy { AppodealAdRevenueCallback(pluginBinding) }
 
     private val interstitial by lazy { AppodealInterstitial(pluginBinding) }
@@ -37,7 +39,8 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         super.onAttachedToEngine(binding)
         _pluginBinding = binding
         _channel = MethodChannel(binding.binaryMessenger, "appodeal_flutter")
-        channel.setMethodCallHandler(this)
+            .also { channel -> channel.setMethodCallHandler(this) }
+        _consentManager = AppodealConsentManager(this, binding)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {

@@ -18,7 +18,7 @@ class _ConsentPageState extends State<ConsentPage> {
     Appodeal.ConsentForm.load(
         appKey: exampleAppodealKey,
         onConsentFormLoadSuccess: (status) {
-          print("onConsentFormLoadSuccess: status - ${status.description}");
+          print("onConsentFormLoadSuccess: status - $status");
         },
         onConsentFormLoadFailure: (error) {
           print("onConsentFormLoadFailure: error - ${error.description}");
@@ -27,15 +27,23 @@ class _ConsentPageState extends State<ConsentPage> {
 
   show() {
     Appodeal.ConsentForm.show(onConsentFormDismissed: (error) {
-      print("onConsentFormDismissed: error - ${error.description}");
+      if (error != null) {
+        print("onConsentFormDismissed: error - ${error.description}");
+      } else {
+        print("onConsentFormDismissed: No error");
+      }
     });
   }
 
-  loadAndShowConsentFormIfRequired() {
-    Appodeal.ConsentForm.loadAndShowConsentFormIfRequired(
+  loadAndShowIfRequired() {
+    Appodeal.ConsentForm.loadAndShowIfRequired(
         appKey: exampleAppodealKey,
         onConsentFormDismissed: (error) {
-          print("onConsentFormDismissed: error - ${error.description}");
+          if (error != null) {
+            print("onConsentFormDismissed: error - ${error.description}");
+          } else {
+            print("onConsentFormDismissed: No error");
+          }
         });
   }
 
@@ -90,7 +98,7 @@ class _ConsentPageState extends State<ConsentPage> {
                     textStyle: const TextStyle(fontSize: 20),
                     fixedSize: Size.fromWidth(300)),
                 onPressed: () {
-                  loadAndShowConsentFormIfRequired();
+                  loadAndShowIfRequired();
                 },
                 child: const Text(
                   'LOAD AND SHOW CONSENT FORM IF REQUIRED',

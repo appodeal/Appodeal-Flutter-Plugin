@@ -17,7 +17,7 @@ internal final class AppodealConsentManager {
         switch call.method {
         case "load": load(call, result)
         case "show": show(call, result)
-        case "loadAndShowConsentFormIfRequired": loadAndShowConsentFormIfRequired(call, result)
+        case "loadAndShowIfRequired": loadAndShowIfRequired(call, result)
         case "revoke": revoke(call, result)
         default: result(FlutterMethodNotImplemented)
         }
@@ -47,7 +47,7 @@ internal final class AppodealConsentManager {
                     } else {
                         self.dialog = dialog
                         let status = ConsentManager.shared.status
-                        let args: [String: String] = ["status": String(describing: status)]
+                        let args: [String: UInt] = ["status": status.rawValue]
                         self.adChannel.invokeMethod("onConsentFormLoadSuccess", arguments: args)
                     }
                 }
@@ -65,6 +65,7 @@ internal final class AppodealConsentManager {
         
         if let dialog = self.dialog {
             dialog.present(rootViewController: rootViewController, completion: { error in
+                self.dialog = nil
                 if let error = error {
                     let args: [String: String] = ["error": error.localizedDescription]
                     self.adChannel.invokeMethod("onConsentFormDismissed", arguments: args)
@@ -80,7 +81,7 @@ internal final class AppodealConsentManager {
     }
     
     
-    private func loadAndShowConsentFormIfRequired(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+    private func loadAndShowIfRequired(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         let args = call.arguments as! [String: Any]
         let appKey = args["appKey"] as! String
         let tagForUnderAgeOfConsent = args["tagForUnderAgeOfConsent"] as! Bool
