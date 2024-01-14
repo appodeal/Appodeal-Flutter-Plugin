@@ -2,6 +2,13 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
+> [!IMPORTANT]
+> **[Appodeal SDK 3.2.1 BETA is Here!](https://github.com/appodeal/Appodeal-Flutter-Plugin/tree/release/3.2.1-beta.1)**
+>
+> This SDK version fully supports iAB TCFv2 and Google UMP. Set up your app to comply with the new European GDPR guidelines.
+> Otherwise, **all the apps without the GDPR consent message by January 16th may significantly impact their app ad revenues.**
+
+
 ## Appodeal SDK 3.2
 
 - **💥 AdMob Bidding Support**
