@@ -12,14 +12,15 @@ class _InterstitialPageState extends State<InterstitialPage> {
     super.initState();
 
     Appodeal.setInterstitialCallbacks(
-        onInterstitialLoaded: (isPrecache) =>
-            print('onInterstitialLoaded: isPrecache - $isPrecache'),
-        onInterstitialFailedToLoad: () => print('onInterstitialFailedToLoad'),
-        onInterstitialShown: () => print('onInterstitialShown'),
-        onInterstitialShowFailed: () => print('onInterstitialShowFailed'),
-        onInterstitialClicked: () => print('onInterstitialClicked'),
-        onInterstitialClosed: () => print('onInterstitialClosed'),
-        onInterstitialExpired: () => print('onInterstitialExpired'));
+      onInterstitialLoaded: (isPrecache) =>
+          print('onInterstitialLoaded: isPrecache - $isPrecache'),
+      onInterstitialFailedToLoad: () => print('onInterstitialFailedToLoad'),
+      onInterstitialShown: () => print('onInterstitialShown'),
+      onInterstitialShowFailed: () => print('onInterstitialShowFailed'),
+      onInterstitialClicked: () => print('onInterstitialClicked'),
+      onInterstitialClosed: () => print('onInterstitialClosed'),
+      onInterstitialExpired: () => print('onInterstitialExpired'),
+    );
   }
 
   @override

@@ -16,35 +16,39 @@ class _ConsentPageState extends State<ConsentPage> {
 
   load() {
     Appodeal.ConsentForm.load(
-        appKey: exampleAppodealKey,
-        onConsentFormLoadSuccess: (status) {
-          print("onConsentFormLoadSuccess: status - $status");
-        },
-        onConsentFormLoadFailure: (error) {
-          print("onConsentFormLoadFailure: error - ${error.description}");
-        });
+      appKey: exampleAppodealKey,
+      onConsentFormLoadSuccess: (status) {
+        print("onConsentFormLoadSuccess: status - $status");
+      },
+      onConsentFormLoadFailure: (error) {
+        print("onConsentFormLoadFailure: error - ${error.description}");
+      },
+    );
   }
 
   show() {
-    Appodeal.ConsentForm.show(onConsentFormDismissed: (error) {
-      if (error != null) {
-        print("onConsentFormDismissed: error - ${error.description}");
-      } else {
-        print("onConsentFormDismissed: No error");
-      }
-    });
+    Appodeal.ConsentForm.show(
+      onConsentFormDismissed: (error) {
+        if (error != null) {
+          print("onConsentFormDismissed: error - ${error.description}");
+        } else {
+          print("onConsentFormDismissed: No error");
+        }
+      },
+    );
   }
 
   loadAndShowIfRequired() {
     Appodeal.ConsentForm.loadAndShowIfRequired(
-        appKey: exampleAppodealKey,
-        onConsentFormDismissed: (error) {
-          if (error != null) {
-            print("onConsentFormDismissed: error - ${error.description}");
-          } else {
-            print("onConsentFormDismissed: No error");
-          }
-        });
+      appKey: exampleAppodealKey,
+      onConsentFormDismissed: (error) {
+        if (error != null) {
+          print("onConsentFormDismissed: error - ${error.description}");
+        } else {
+          print("onConsentFormDismissed: No error");
+        }
+      },
+    );
   }
 
   revoke() {

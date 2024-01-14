@@ -36,17 +36,18 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setUseSafeArea(true);
 
     Appodeal.initialize(
-        appKey: exampleAppodealKey,
-        adTypes: [
-          AppodealAdType.RewardedVideo,
-          AppodealAdType.Interstitial,
-          AppodealAdType.Banner,
-          AppodealAdType.MREC
-        ],
-        onInitializationFinished: (errors) {
-          errors?.forEach((error) => print(error.description));
-          print("onInitializationFinished: errors - ${errors?.length ?? 0}");
-        });
+      appKey: exampleAppodealKey,
+      adTypes: [
+        AppodealAdType.RewardedVideo,
+        AppodealAdType.Interstitial,
+        AppodealAdType.Banner,
+        AppodealAdType.MREC
+      ],
+      onInitializationFinished: (errors) {
+        errors?.forEach((error) => print(error.description));
+        print("onInitializationFinished: errors - ${errors?.length ?? 0}");
+      },
+    );
   }
 
   @override
