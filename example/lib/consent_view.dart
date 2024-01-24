@@ -1,29 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
-class RewardedVideoPage extends StatefulWidget {
+import 'main.dart';
+
+class ConsentPage extends StatefulWidget {
   @override
-  _RewardedVideoPageState createState() => _RewardedVideoPageState();
+  _ConsentPageState createState() => _ConsentPageState();
 }
 
-class _RewardedVideoPageState extends State<RewardedVideoPage> {
+class _ConsentPageState extends State<ConsentPage> {
   @override
   void initState() {
     super.initState();
+  }
 
-    Appodeal.setRewardedVideoCallbacks(
-      onRewardedVideoLoaded: (isPrecache) =>
-          print('onRewardedVideoLoaded: isPrecache - $isPrecache'),
-      onRewardedVideoFailedToLoad: () => print('onRewardedVideoFailedToLoad'),
-      onRewardedVideoShown: () => print('onRewardedVideoShown'),
-      onRewardedVideoShowFailed: () => print('onRewardedVideoShowFailed'),
-      onRewardedVideoFinished: (amount, reward) =>
-          print('onRewardedVideoFinished: amount - $amount, reward - $reward'),
-      onRewardedVideoClosed: (isFinished) =>
-          print('onRewardedVideoClosed isFinished - $isFinished'),
-      onRewardedVideoExpired: () => print('onRewardedVideoExpired'),
-      onRewardedVideoClicked: () => print('onRewardedVideoClicked'),
+  load() {
+    Appodeal.ConsentForm.load(
+      appKey: exampleAppodealKey,
+      onConsentFormLoadSuccess: (status) {
+        print("onConsentFormLoadSuccess: status - $status");
+      },
+      onConsentFormLoadFailure: (error) {
+        print("onConsentFormLoadFailure: error - ${error.description}");
+      },
     );
+  }
+
+  show() {
+    Appodeal.ConsentForm.show(
+      onConsentFormDismissed: (error) {
+        if (error != null) {
+          print("onConsentFormDismissed: error - ${error.description}");
+        } else {
+          print("onConsentFormDismissed: No error");
+        }
+      },
+    );
+  }
+
+  loadAndShowIfRequired() {
+    Appodeal.ConsentForm.loadAndShowIfRequired(
+      appKey: exampleAppodealKey,
+      onConsentFormDismissed: (error) {
+        if (error != null) {
+          print("onConsentFormDismissed: error - ${error.description}");
+        } else {
+          print("onConsentFormDismissed: No error");
+        }
+      },
+    );
+  }
+
+  revoke() {
+    Appodeal.ConsentForm.revoke();
   }
 
   @override
@@ -31,7 +60,7 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Rewarded Video'),
+        title: const Text('Consent management platform'),
         automaticallyImplyLeading: true,
       ),
       body: Padding(
@@ -44,43 +73,10 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
                 style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20),
                     fixedSize: Size(300, 20)),
-                onPressed: () async {
-                  var isInitialized = await Appodeal.isInitialized(
-                      AppodealAdType.RewardedVideo);
-                  print('Rewarded video isInitialized - $isInitialized');
-                },
-                child: const Text('IS INITIALIZED?'),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
-                    fixedSize: Size(300, 20)),
-                onPressed: () async {
-                  var isCanShow =
-                      await Appodeal.canShow(AppodealAdType.RewardedVideo);
-                  print('Rewarded video canShow - $isCanShow');
-                },
-                child: const Text('CAN SHOW?'),
-              ),
-            ],
-          ),
-          //Header
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 20),
-                    fixedSize: Size(300, 20)),
                 onPressed: () {
-                  Appodeal.cache(AppodealAdType.RewardedVideo);
+                  load();
                 },
-                child: const Text('CACHE REWARDED VIDEO'),
+                child: const Text('LOAD CONSENT FORM'),
               ),
             ],
           ),
@@ -92,9 +88,41 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
                     textStyle: const TextStyle(fontSize: 20),
                     fixedSize: Size(300, 20)),
                 onPressed: () {
-                  Appodeal.show(AppodealAdType.RewardedVideo);
+                  show();
                 },
-                child: const Text('SHOW REWARDED VIDEO'),
+                child: const Text('SHOW CONSENT FORM'),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    fixedSize: Size.fromWidth(300)),
+                onPressed: () {
+                  loadAndShowIfRequired();
+                },
+                child: const Text(
+                  'LOAD AND SHOW CONSENT FORM IF REQUIRED',
+                  maxLines: 3,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    fixedSize: Size(300, 20)),
+                onPressed: () {
+                  revoke();
+                },
+                child: const Text('REVOKE CONSENT'),
               ),
             ],
           ),
