@@ -76,11 +76,15 @@ class _RewardedVideoPageState extends State<RewardedVideoPage> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20),
-                    fixedSize: Size(300, 20)),
+                    fixedSize: Size.fromWidth(300)),
                 onPressed: () {
                   Appodeal.cache(AppodealAdType.RewardedVideo);
                 },
-                child: const Text('CACHE REWARDED VIDEO'),
+                child: const Text(
+                  'CACHE REWARDED VIDEO',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

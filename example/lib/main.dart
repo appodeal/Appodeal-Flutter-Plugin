@@ -195,14 +195,18 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20),
-                    fixedSize: Size(300, 20)),
+                    fixedSize: Size.fromWidth(300)),
                 onPressed: () async {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => ConsentPage()),
                   );
                 },
-                child: const Text('CONSENT MANAGEMENT'),
+                child: const Text(
+                  'CONSENT MANAGEMENT',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           ],
