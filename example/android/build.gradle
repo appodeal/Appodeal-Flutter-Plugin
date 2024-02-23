@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.8.10'
+    ext.kotlin_version = '1.8.22'
     repositories {
         google()
         mavenCentral()
@@ -16,7 +16,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven { url "https://artifactory.appodeal.com/appodeal" }
+        maven { url "https://artifactory.appodeal.com/appodeal-beta-public" }
     }
 }
 

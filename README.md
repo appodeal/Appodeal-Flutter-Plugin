@@ -2,9 +2,9 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## Appodeal SDK 3.2.1
+## Appodeal SDK 3.3.0-beta.1
 
-- **💥 Google CMP and TCF v2 Support**
+- **Google CMP and TCF v2 Support**
   - To enhance the relevance of ads for your users and comply with regulations like GDPR and CCPA,
     explicit user consent is required for collecting personal data.
   - We recommend using the Stack Consent Manager, built on Google User Messaging Platform (UMP),
@@ -17,9 +17,9 @@ Official Appodeal Flutter Plugin for your Flutter application.
   - Download our newest version of AdMob Sync tool from this [page](https://amsa-updates.appodeal.com/) and perform a sync.
   - Read more about AdMob Sync in our [guide](https://docs.appodeal.com/networks-setup/admob-sync).
 
-- **💥 Already included ready-made consent solution (New Breaking Changes)**
+- **Already included ready-made consent solution**
   - Starting from Appodeal SDK 3.0, during the **first initialization**, a ready-made consent window will be shown if the user is in regions
-    covered by GDPR and CCPA. [See more about this behavior](#step-2-appodeal-consent-new-breaking-changes)
+    covered by GDPR and CCPA. [See more about this behavior](#step-2-appodeal-consent-solution)
 
 - **Support Monetization + UA + Analytics data services**
   - Get insights and find out if your active UA campaigns bring you revenue or make you lose money.
@@ -46,7 +46,7 @@ Official Appodeal Flutter Plugin for your Flutter application.
     - [Ad View](#ad-view)
 - [Privacy Policy and Consent](#privacy-policy-and-consent)
     - [Step 1: Update Privacy Policy](#step-1-update-privacy-policy)
-    - [Step 2: Appodeal Consent Behavior (_**New Breaking Changes**_)](#step-2-appodeal-consent-new-breaking-changes)
+    - [Step 2: Appodeal Consent Solution](#step-2-appodeal-consent-solution)
 - [App-ads.txt](#app-adstxt)
 - [App Tracking Transparency](#app-tracking-transparency)
 - [Changelog](CHANGELOG.md)
@@ -57,7 +57,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.2.1
+  stack_appodeal_flutter: 3.3.0-beta.1
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -85,46 +85,64 @@ platform :ios, '13.0'
 use_frameworks!
 
 def appodeal
-  pod 'Appodeal', '3.2.1'
-  pod 'APDAdColonyAdapter', '3.2.1.0'
-  pod 'BidMachineAdColonyAdapter', '~> 2.4.0'
-  pod 'APDAppLovinAdapter', '3.2.1.0'
-  pod 'BidonAdapterAppLovin', '~> 0.4.7'
-  pod 'APDBidMachineAdapter', '3.2.1.0' # Required
-  pod 'BidMachineAmazonAdapter', '= 2.4.0'
-  pod 'BidMachineCriteoAdapter', '~> 2.4.0'
-  pod 'BidMachineSmaatoAdapter', '~> 2.4.0'
-  pod 'BidMachineTapjoyAdapter', '~> 2.4.0'
-  pod 'BidMachinePangleAdapter', '~> 2.4.0'
-  pod 'APDBidonAdapter', '3.2.1.0' # Required
-  pod 'BidonAdapterBidMachine', '~> 0.4.7.2'
+  pod 'Appodeal', '3.3.0-beta.1'
+  pod 'APDAdColonyAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachineAdColonyAdapter', '~> 2.4.0.0'
+  pod 'APDAmazonAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachineAmazonAdapter', '= 2.4.0.0'
   pod 'BidonAdapterAmazon', '~> 0.4.7'
-  pod 'APDBigoAdsAdapter', '3.2.1.0'
+  pod 'APDAppLovinAdapter', '3.3.0.0-beta.1'
+  pod 'BidonAdapterAppLovin', '~> 0.4.7'
+  pod 'APDAppLovinMAXAdapter', '3.3.0.0-beta.1'
+  pod 'APDBidMachineAdapter', '3.3.0.0-beta.1' # Required
+  pod 'AppLovinMediationBidMachineAdapter'
+  pod 'APDBidonAdapter', '3.3.0.0-beta.1' # Required
+  pod 'BidonAdapterBidMachine', '~> 0.4.7.2'
+  pod 'APDBigoAdsAdapter', '3.3.0.0-beta.1'
   pod 'BidonAdapterBigoAds', '~> 0.4.7'
-  pod 'APDDTExchangeAdapter', '3.2.1.0'
-  pod 'BidonAdapterDTExchange', '~> 0.4.7'
-  pod 'APDGoogleAdMobAdapter', '3.2.1.0'
+  pod 'APDCriteoAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachineCriteoAdapter', '~> 2.4.0.0'
+  pod 'APDDTExchangeAdapter', '3.3.0.0-beta.1'
+  pod 'BidonAdapterDTExchange', '~> 0.4.7.3'
+  pod 'AppLovinMediationFyberAdapter'
+  pod 'APDGoogleAdMobAdapter', '3.3.0.0-beta.1'
   pod 'BidonAdapterGoogleMobileAds', '~> 0.4.7'
   pod 'BidonAdapterGoogleAdManager', '~> 0.4.7'
-  pod 'APDIABAdapter', '3.2.1.0' # Required
-  pod 'APDInMobiAdapter', '3.2.1.0'
+  pod 'AppLovinMediationGoogleAdManagerAdapter'
+  pod 'AppLovinMediationGoogleAdapter'
+  pod 'APDIABAdapter', '3.3.0.0-beta.1' # Required
+  pod 'APDInMobiAdapter', '3.3.0.0-beta.1'
   pod 'BidonAdapterInMobi', '~> 0.4.7'
-  pod 'APDIronSourceAdapter', '3.2.1.0'
-  pod 'APDMetaAudienceNetworkAdapter', '3.2.1.0'
-  pod 'BidMachineMetaAudienceAdapter', '~> 2.4.0'
+  pod 'APDIronSourceAdapter', '3.3.0.0-beta.1'
+  pod 'AppLovinMediationIronSourceAdapter'
+  pod 'APDMetaAudienceNetworkAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachineMetaAudienceAdapter', '~> 2.4.0.1'
   pod 'BidonAdapterMetaAudienceNetwork', '~> 0.4.7'
-  pod 'APDMintegralAdapter', '3.2.1.0'
+  pod 'AppLovinMediationFacebookAdapter'
+  pod 'APDMintegralAdapter', '3.3.0.0-beta.1'
   pod 'BidMachineMintegralAdapter', '= 2.4.0.1'
   pod 'BidonAdapterMintegral', '~> 0.4.7.2'
-  pod 'APDMyTargetAdapter', '3.2.1.0'
-  pod 'BidMachineMyTargetAdapter', '~> 2.4.0'
-  pod 'APDStackCrashReporterAdapter', '3.2.1.0'
-  pod 'APDUnityAdapter', '3.2.1.0'
+  pod 'AppLovinMediationMintegralAdapter'
+  pod 'APDMyTargetAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachineMyTargetAdapter', '~> 2.4.0.1'
+  pod 'AppLovinMediationMyTargetAdapter'
+  pod 'APDPangleAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachinePangleAdapter', '~> 2.4.0.0'
+  pod 'APDSentryAdapter', '3.3.0.0-beta.1'
+  pod 'APDSmaatoAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachineSmaatoAdapter', '~> 2.4.0.0'
+  pod 'APDStackAnalyticsAdapter', '3.3.0.0-beta.1' # Required
+  pod 'APDTapjoyAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachineTapjoyAdapter', '~> 2.4.0.0'
+  pod 'APDUnityAdapter', '3.3.0.0-beta.1'
   pod 'BidonAdapterUnityAds', '~> 0.4.7'
-  pod 'APDVungleAdapter', '3.2.1.0'
-  pod 'BidMachineVungleAdapter', '~> 2.4.0'
+  pod 'AppLovinMediationUnityAdsAdapter'
+  pod 'APDVungleAdapter', '3.3.0.0-beta.1'
+  pod 'BidMachineVungleAdapter', '~> 2.4.0.1'
   pod 'BidonAdapterVungle', '~> 0.4.7.2'
-  pod 'APDYandexAdapter', '3.2.1.0'
+  pod 'AppLovinMediationVungleAdapter'
+  pod 'APDYandexAdapter', '3.3.0.0-beta.1'
+  pod 'AppLovinMediationYandexAdapter'
 end
 
 target 'Runner' do
@@ -1144,7 +1162,7 @@ Add dependencies into `build.gradle` (module: app)
 ``` groovy
 dependencies {
     // ... other project dependencies
-    implementation ('com.appodeal.ads:sdk:3.2.1.0') {
+    implementation ('com.appodeal.ads:sdk:3.3.0.0-beta.1') {
         exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
@@ -1161,7 +1179,7 @@ allprojects {
     repositories {
         ...
         jcenter()
-        maven { url "https://artifactory.appodeal.com/appodeal" }
+        maven { url "https://artifactory.appodeal.com/appodeal-beta-public" }
         ...
     }
 }
@@ -1241,11 +1259,13 @@ In your *network_security_config.xml* file, add `base-config` that sets `clearte
   dependencies {
       ...
       // ... other project dependencies
-      implementation ('com.appodeal.ads:sdk:3.2.1.0') {
-          exclude group: 'com.google.android.gms', module: 'play-services-ads'
+      implementation('com.appodeal.ads:sdk:3.3.0.0-beta.1') {
           // ad networks
           exclude group: "com.appodeal.ads.sdk.networks", module: "admob"
-          exclude group: "com.appodeal.ads.sdk.networks", module: "bigo_ads"
+          exclude group: "org.bidon", module: "admob-adapter"
+          exclude group: "org.bidon", module: "gam-adapter"
+          exclude group: "com.applovin.mediation", module: "google-adapter"
+          exclude group: "com.applovin.mediation", module: "google-ad-manager-adapter"
           // services
           exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
           exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
@@ -1259,9 +1279,11 @@ In your *network_security_config.xml* file, add `base-config` that sets `clearte
   Remove next pods from `Podfile`:
 
   ```ruby
-  pod 'APDGoogleAdMobAdapter', '3.2.1.0'
+  pod 'APDGoogleAdMobAdapter', '3.3.0.0-beta.1'
   pod 'BidonAdapterGoogleMobileAds', '~> 0.4.7'
   pod 'BidonAdapterGoogleAdManager', '~> 0.4.7'
+  pod 'AppLovinMediationGoogleAdManagerAdapter'
+  pod 'AppLovinMediationGoogleAdapter'
   ```
 
 ## Services
@@ -1276,7 +1298,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:adjust:3.2.1.0'
+    implementation 'com.appodeal.ads.sdk.services:adjust:3.3.0.0-beta.1'
 }
 ```
 
@@ -1285,7 +1307,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAdjustAdapter', '3.2.1.0'
+  pod 'APDAdjustAdapter', '3.3.0.0-beta.1'
 end
 ```
 
@@ -1296,7 +1318,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.2.1.0'
+  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.3.0.0-beta.1'
 }
 ```
 
@@ -1305,7 +1327,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAppsFlyerAdapter', '3.2.1.0'
+  pod 'APDAppsFlyerAdapter', '3.3.0.0-beta.1'
 end
 ```
 
@@ -1316,7 +1338,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:firebase:3.2.1.0'
+    implementation 'com.appodeal.ads.sdk.services:firebase:3.3.0.0-beta.1'
 }
 ```
 
@@ -1325,7 +1347,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFirebaseAdapter', '3.2.1.0'
+  pod 'APDFirebaseAdapter', '3.3.0.0-beta.1'
 end
 ```
 
@@ -1336,7 +1358,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.2.1.0'
+    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.3.0.0-beta.1'
 }
 ```
 
@@ -1345,7 +1367,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFacebookAdapter', '3.2.1.0'
+  pod 'APDFacebookAdapter', '3.3.0.0-beta.1'
 end
 ```
 
@@ -1703,7 +1725,7 @@ Here’s are two useful resources that you can utilize while working on your app
 > Note: Please note that although we’re always eager to back you up with valuable information, we’re not authorized to
 > provide any legal advice. It’s important to address your questions to lawyers who work specifically in this area.
 
-### Step 2: Appodeal Consent (_**New Breaking Changes**_)
+### Step 2: Appodeal Consent Solution
 
 In order for Appodeal and our ad providers to deliver ads that are more relevant to your users, as a
 mobile app publisher, you need to collect explicit user consent in the regions covered by GDPR and

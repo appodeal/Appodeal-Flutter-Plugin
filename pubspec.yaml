@@ -1,6 +1,6 @@
 name: stack_appodeal_flutter
 description: Official Flutter plugin to support Appodeal SDK for Android and iOS platforms. Support Consent Dialog for GDPR/CCPA zone.
-version: 3.2.1
+version: 3.3.0-beta.1
 homepage: https://github.com/appodeal
 repository: https://github.com/appodeal/Appodeal-Flutter-Plugin
 
