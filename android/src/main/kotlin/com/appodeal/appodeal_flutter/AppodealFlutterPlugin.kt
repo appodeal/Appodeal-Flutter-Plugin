@@ -7,12 +7,11 @@ import com.appodeal.ads.inapp.InAppPurchase
 import com.appodeal.ads.inapp.InAppPurchase.Type
 import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
 import com.appodeal.ads.initializing.ApdInitializationError
-import com.appodeal.ads.initializing.ApdInitializationError.*
-import com.appodeal.ads.regulator.CCPAUserConsent
-import com.appodeal.ads.regulator.GDPRUserConsent
+import com.appodeal.ads.initializing.ApdInitializationError.Critical
+import com.appodeal.ads.initializing.ApdInitializationError.InternalError
+import com.appodeal.ads.initializing.ApdInitializationError.NonCritical
 import com.appodeal.ads.service.ServiceError
 import com.appodeal.ads.utils.Log.LogLevel
-import com.appodeal.consent.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.MethodCall
@@ -27,11 +26,8 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private var _pluginBinding: FlutterPlugin.FlutterPluginBinding? = null
     private val pluginBinding get() = checkNotNull(_pluginBinding)
 
-    @Deprecated("Will be removed in future releases.")
-    private var _consentForm: ConsentForm? = null
-
-    @Deprecated("Will be removed in future releases.")
-    private val consentForm get() = checkNotNull(_consentForm)
+    private var _consentManager: AppodealConsentManager? = null
+    private val consentManager get() = checkNotNull(_consentManager)
 
     private val adRevenueCallback by lazy { AppodealAdRevenueCallback(pluginBinding) }
 
@@ -45,11 +41,13 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         super.onAttachedToEngine(binding)
         _pluginBinding = binding
         _channel = MethodChannel(binding.binaryMessenger, "appodeal_flutter")
-        channel.setMethodCallHandler(this)
+            .also { channel -> channel.setMethodCallHandler(this) }
+        _consentManager = AppodealConsentManager(this, binding)
     }
 
     override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
+        consentManager.adChannel.setMethodCallHandler(null)
         adRevenueCallback.adChannel.setMethodCallHandler(null)
         interstitial.adChannel.setMethodCallHandler(null)
         rewardedVideo.adChannel.setMethodCallHandler(null)
@@ -63,8 +61,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "setTestMode" -> setTestMode(call, result)
             "isTestMode" -> isTestMode(call, result)
             "setLogLevel" -> setLogLevel(call, result)
-            "updateGDPRUserConsent" -> updateGDPRUserConsent(call, result)
-            "updateCCPAUserConsent" -> updateCCPAUserConsent(call, result)
             "initialize" -> initialize(call, result)
             "isInitialized" -> isInitialized(call, result)
             "setAutoCache" -> setAutoCache(call, result)
@@ -105,10 +101,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             //Services logic
             "logEvent" -> logEvent(call, result)
             "validateInAppPurchase" -> validateInAppPurchase(call, result)
-            //Consent logic
-            "loadConsentForm" -> loadConsentForm(call, result)
-            "showConsentForm" -> showConsentForm(call, result)
-            "setCustomVendor" -> setCustomVendor(call, result)
             else -> result.notImplemented()
         }
     }
@@ -144,26 +136,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             1 -> Appodeal.setLogLevel(LogLevel.debug)
             2 -> Appodeal.setLogLevel(LogLevel.verbose)
             else -> Appodeal.setLogLevel(LogLevel.none)
-        }
-        result.success(null)
-    }
-
-    private fun updateGDPRUserConsent(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        when (args["gdprUserConsent"] as Int) {
-            -1 -> Appodeal.updateGDPRUserConsent(GDPRUserConsent.NonPersonalized)
-            0 -> Appodeal.updateGDPRUserConsent(GDPRUserConsent.Unknown)
-            1 -> Appodeal.updateGDPRUserConsent(GDPRUserConsent.Personalized)
-        }
-        result.success(null)
-    }
-
-    private fun updateCCPAUserConsent(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        when (args["ccpaUserConsent"] as Int) {
-            -1 -> Appodeal.updateCCPAUserConsent(CCPAUserConsent.OptOut)
-            0 -> Appodeal.updateCCPAUserConsent(CCPAUserConsent.Unknown)
-            1 -> Appodeal.updateCCPAUserConsent(CCPAUserConsent.OptIn)
         }
         result.success(null)
     }
@@ -463,87 +435,6 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             })
         result.success(null)
     }
-
-    // Consent Logic
-    private fun loadConsentForm(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        val appKey = args["appKey"] as String
-        ConsentManager.requestConsentInfoUpdate(
-            context,
-            appKey,
-            object : IConsentInfoUpdateListener {
-                override fun onConsentInfoUpdated(consent: Consent) {
-                    _consentForm = ConsentForm(
-                        context,
-                        object : IConsentFormListener {
-                            override fun onConsentFormClosed(consent: Consent) =
-                                channel.invokeMethod("onConsentFormClosed", null)
-
-                            override fun onConsentFormError(error: ConsentManagerError) =
-                                channel.invokeMethod("onConsentFormShowFailed", error.toArg())
-
-                            override fun onConsentFormLoaded(consentForm: ConsentForm) =
-                                channel.invokeMethod("onConsentFormLoaded", null)
-
-                            override fun onConsentFormOpened() =
-                                channel.invokeMethod("onConsentFormOpened", null)
-                        }
-                    )
-                    consentForm.load()
-                }
-
-                override fun onFailedToUpdateConsentInfo(error: ConsentManagerError) {
-                    channel.invokeMethod("onConsentFormLoadError", error.toArg())
-                }
-            }
-        )
-    }
-
-    private fun showConsentForm(call: MethodCall, result: Result) {
-        _consentForm = _consentForm ?: run {
-            ConsentForm(
-                context,
-                object : IConsentFormListener {
-                    override fun onConsentFormClosed(consent: Consent) =
-                        channel.invokeMethod("onConsentFormClosed", null)
-
-                    override fun onConsentFormError(error: ConsentManagerError) =
-                        channel.invokeMethod("onConsentFormShowFailed", error.toArg())
-
-                    override fun onConsentFormLoaded(consentForm: ConsentForm) =
-                        channel.invokeMethod("onConsentFormLoaded", null)
-
-                    override fun onConsentFormOpened() =
-                        channel.invokeMethod("onConsentFormOpened", null)
-                }
-            )
-        }
-        consentForm.show()
-        result.success(null)
-    }
-
-    private fun setCustomVendor(call: MethodCall, result: Result) {
-        val args = call.arguments as Map<*, *>
-        val name = args["name"] as String
-        val bundle = args["bundle"] as String
-        val policyUrl = args["policyUrl"] as String
-        @Suppress("UNCHECKED_CAST") val purposeIds: List<Int> =
-            (args["purposeIds"] as? List<Int>).orEmpty()
-        @Suppress("UNCHECKED_CAST") val featureIds: List<Int> =
-            (args["featureIds"] as? List<Int>).orEmpty()
-        @Suppress("UNCHECKED_CAST") val legitimateInterestPurposeIds =
-            (args["legitimateInterestPurposeIds"] as? List<Int>).orEmpty()
-        val vendor = Vendor.Builder(
-            name = name,
-            bundle = bundle,
-            policyUrl = policyUrl,
-            purposeIds = purposeIds,
-            featureIds = featureIds,
-            legitimateInterestPurposeIds = legitimateInterestPurposeIds
-        ).build()
-        ConsentManager.customVendors[name] = vendor
-        result.success(null)
-    }
 }
 
 private var isTestMode: Boolean = false
@@ -553,9 +444,6 @@ private var isBannerAnimationEnabled: Boolean = false
 private var isMuteVideosIfCallsMuted: Boolean = false
 private var isChildDirectedTreatment: Boolean = false
 private var isUseSafeArea: Boolean = false
-
-private fun ConsentManagerError.toArg(): Map<String, List<String>> =
-    mapOf("errors" to listOf("${this.event}: ${this.message}"))
 
 private fun List<ApdInitializationError>.toArg(): Map<String, List<String>> {
     val arg = this.map { error ->

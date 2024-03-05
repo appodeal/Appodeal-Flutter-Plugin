@@ -1,7 +1,83 @@
+# Changelog
+
+## 3.3.0-beta.2
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.3.0-beta.2](https://docs.appodeal.com/ios/changelog)
+- Updated Appodeal Android SDK to [3.3.0-beta.2](https://docs.appodeal.com/android/changelog)
+
+## 3.3.0-beta.1
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.3.0-beta.1](https://docs.appodeal.com/ios/changelog)
+- Updated Appodeal Android SDK to [3.3.0-beta.1](https://docs.appodeal.com/android/changelog)
+
+## 3.2.1
+
+### Promoted the beta release to the stable version
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.2.1](https://docs.appodeal.com/ios/changelog)
+- Updated Appodeal Android SDK to [3.2.1](https://docs.appodeal.com/android/changelog)
+
+## 3.2.1-beta.1
+
+### Features
+
+* **💥 Google CMP and TCF v2 Support**
+    - To enhance the relevance of ads for your users and comply with regulations like GDPR and CCPA,
+      explicit user consent is required for collecting personal data.
+    - We recommend using the Stack Consent Manager, built on Google User Messaging Platform (UMP),
+      as a ready-made solution to obtain user consent.
+    - Follow this [instruction](https://docs.appodeal.com/advanced/google-cmp-and-tcfv2-support) to
+      configure Google UMP and set up a consent form.
+    - If you have a question about Stack Consent Manager and Google UMP, please contact our support
+      team.
+
+* **Major Consent Api changes**
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.2.1-beta.1](https://docs.appodeal.com/ios/changelog)
+- Updated Appodeal Android SDK to [3.2.1-beta.1](https://docs.appodeal.com/android/changelog)
+
+### Removed
+
+- Removed `AppodealUserConsent` class.
+- Removed `GDPRUserConsent` class.
+- Removed `CCPAUserConsent` class.
+- Removed `ApdConsentError` class.
+- Removed `Appodeal.updateGDPRUserConsent` method.
+- Removed `Appodeal.updateCCPAUserConsent` method.
+- Removed `Appodeal.loadConsentForm` method.
+- Removed `Appodeal.showConsentForm` method.
+- Removed `Appodeal.setCustomVendor` method.
+- Removed `Appodeal.disableAppTrackingTransparencyRequest` method.
+
+### Added
+
+- Added `AppodealConsent` class.
+- Added `ConsentStatus` class.
+- Added `ConsentError` class.
+- Added `AppodealConsent.load` method.
+- Added `AppodealConsent.show` method.
+- Added `AppodealConsent.loadAndShowIfRequired` method.
+- Added `AppodealConsent.revoke` method.
+
+## 3.2.0+1
+
+* Simplified Android Core Plugin dependencies
+
 ## 3.2.0
 
 * Updated Appodeal iOS SDK to [3.2.0](https://docs.appodeal.com/ios/changelog)
 * Updated Appodeal Android SDK to [3.2.0](https://docs.appodeal.com/android/changelog)
+* **💥 AdMob Bidding Support**
+  - Download our newest version of AdMob Sync tool from this [page](https://amsa-updates.appodeal.com/) and perform sync.
+  - You can read more about AdMob Sync in our [guide](https://docs.appodeal.com/networks-setup/admob-sync).
 
 ## 3.2.0-beta.3
 
