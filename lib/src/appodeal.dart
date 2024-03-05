@@ -373,9 +373,9 @@ class Appodeal {
   ///
   /// Returns [NativeMediaViewContentType] of Native ads.
   static Future<NativeMediaViewContentType>
-  getPreferredNativeContentType() async {
+      getPreferredNativeContentType() async {
     String contentName =
-    await _channel.invokeMethod('getPreferredNativeContentType');
+        await _channel.invokeMethod('getPreferredNativeContentType');
     if (contentName == NativeMediaViewContentType.Auto.contentName) {
       return NativeMediaViewContentType.Auto;
     } else if (contentName == NativeMediaViewContentType.NoVideo.contentName) {

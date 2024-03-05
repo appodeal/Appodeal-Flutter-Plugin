@@ -1,5 +1,6 @@
 package com.appodeal.appodeal_flutter.native_ad
 
+import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
 import android.graphics.Typeface
@@ -25,14 +26,15 @@ import com.appodeal.ads.nativead.NativeMediaView
 
 @Keep
 fun interface NativeAdViewBinder {
-    fun bind(): NativeAdView
+    fun bind(activity: Activity): NativeAdView
 }
 
 internal class TemplateNativeAdViewBinder(
-    private val context: Context,
     private val nativeAdOptions: NativeAdOptions,
 ) : NativeAdViewBinder {
-    override fun bind(): NativeAdView {
+    override fun bind(activity: Activity): NativeAdView {
+        val context = activity.applicationContext
+        // Create the NativeAdView
         val nativeAdView = when (val nativeAdViewType = nativeAdOptions.nativeAdViewType) {
             NativeAdViewType.ContentStream -> NativeAdViewContentStream(context)
             NativeAdViewType.AppWall -> NativeAdViewAppWall(context)
@@ -40,20 +42,25 @@ internal class TemplateNativeAdViewBinder(
             else -> throw IllegalArgumentException("Unknown NativeAdViewType: $nativeAdViewType")
         }
 
+        // set ad choices config
         val adChoicePosition = nativeAdOptions.adChoiceConfig.position
         nativeAdView.setAdChoicesPosition(adChoicePosition)
 
+        // set ad attribution config
         val adAttributionBackgroundColor = nativeAdOptions.adAttributionConfig.backgroundColor
         nativeAdView.setAdAttributionBackground(adAttributionBackgroundColor)
         val adAttributionTextColor = nativeAdOptions.adAttributionConfig.textColor
         nativeAdView.setAdAttributionTextColor(adAttributionTextColor)
 
+        // set ad title config
         val adTitleConfigFontSize = nativeAdOptions.adTitleConfig.fontSize.toFloat()
         (nativeAdView.titleView as? TextView)?.textSize = adTitleConfigFontSize
 
+        // set ad description config
         val adDescriptionFontSize = nativeAdOptions.adDescriptionConfig.fontSize.toFloat()
         (nativeAdView.descriptionView as? TextView)?.textSize = adDescriptionFontSize
 
+        // set ad action button config
         val adActionButtonFontSize = nativeAdOptions.adActionButtonConfig.fontSize.toFloat()
         (nativeAdView.callToActionView as? Button)?.textSize = adActionButtonFontSize
 
@@ -68,10 +75,10 @@ internal class TemplateNativeAdViewBinder(
 }
 
 internal class DefaultNativeAdViewBinder(
-    private val context: Context,
     private val nativeAdOptions: NativeAdOptions,
 ) : NativeAdViewBinder {
-    override fun bind(): NativeAdView {
+    override fun bind(activity: Activity): NativeAdView {
+        val context = activity.applicationContext
         // Create the NativeAdView
         val nativeAdView = NativeAdView(context)
         nativeAdView.id = View.generateViewId()

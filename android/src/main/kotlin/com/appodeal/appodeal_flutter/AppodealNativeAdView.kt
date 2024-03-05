@@ -24,11 +24,12 @@ internal class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>
 
         val adView = when (nativeAdOptions.nativeAdViewType) {
             NativeAdViewType.Custom -> {
-                Appodeal.nativeAdViewBinder?.bind()
-                    ?: DefaultNativeAdViewBinder(activity, nativeAdOptions).bind()
+                Appodeal.nativeAdViewBinder?.bind(activity)
+                    ?: DefaultNativeAdViewBinder(nativeAdOptions).bind(activity)
             }
+
             else -> {
-                TemplateNativeAdViewBinder(activity, nativeAdOptions).bind()
+                TemplateNativeAdViewBinder(nativeAdOptions).bind(activity)
             }
         }
         adView.registerView(nativeAd, placement)

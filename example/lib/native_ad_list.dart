@@ -53,15 +53,6 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
             height: options.getInlineAdHeight,
             alignment: Alignment.center,
             child: AppodealNativeAd(options: options)));
-
-    // ConstrainedBox(
-    //     constraints: const BoxConstraints(
-    //       minWidth: 300,
-    //       minHeight: 350,
-    //       maxHeight: 400,
-    //       maxWidth: 450,
-    //     ),
-    //     child: AppodealNativeAd(options: options)));
   }
 
   Widget get _mainBody {
