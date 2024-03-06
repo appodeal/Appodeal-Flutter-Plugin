@@ -4,7 +4,7 @@ import android.graphics.Color
 import com.appodeal.appodeal_flutter.apdLog
 import com.appodeal.appodeal_flutter.native_ad.parseColor
 
-internal class AdTitleConfig(
+class AdTitleConfig(
     val fontSize: Int = 16,
     val textColor: Int = Color.BLACK,
     val backgroundColor: Int = Color.TRANSPARENT,

@@ -2,7 +2,7 @@ package com.appodeal.appodeal_flutter.native_ad.models
 
 import com.appodeal.appodeal_flutter.apdLog
 
-internal class AdLayoutConfig(
+class AdLayoutConfig(
     val margin: Int = 10,
 ) {
     companion object {

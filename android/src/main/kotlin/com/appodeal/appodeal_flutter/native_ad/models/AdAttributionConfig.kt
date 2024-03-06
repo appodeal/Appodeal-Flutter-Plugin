@@ -4,7 +4,7 @@ import android.graphics.Color
 import com.appodeal.appodeal_flutter.apdLog
 import com.appodeal.appodeal_flutter.native_ad.parseColor
 
-internal class AdAttributionConfig(
+class AdAttributionConfig(
     val fontSize: Int = 14,
     val textColor: Int = Color.WHITE,
     val backgroundColor: Int = Color.RED,

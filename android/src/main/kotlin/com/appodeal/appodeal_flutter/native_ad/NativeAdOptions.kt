@@ -10,7 +10,7 @@ import com.appodeal.appodeal_flutter.native_ad.models.AdLayoutConfig
 import com.appodeal.appodeal_flutter.native_ad.models.AdMediaConfig
 import com.appodeal.appodeal_flutter.native_ad.models.AdTitleConfig
 
-internal class NativeAdOptions(
+class NativeAdOptions(
     val nativeAdViewType: NativeAdViewType,
     val adActionButtonConfig: AdActionButtonConfig,
     val adAttributionConfig: AdAttributionConfig,
@@ -47,4 +47,4 @@ internal class NativeAdOptions(
     }
 }
 
-internal enum class NativeAdViewType { Custom, ContentStream, AppWall, NewsFeed }
+enum class NativeAdViewType { Custom, ContentStream, AppWall, NewsFeed }

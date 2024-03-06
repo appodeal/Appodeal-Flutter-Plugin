@@ -2,10 +2,10 @@ package com.appodeal.appodeal_flutter.native_ad.models
 
 import com.appodeal.appodeal_flutter.apdLog
 
-internal class AdIconConfig(
+class AdIconConfig(
     val visible: Boolean = true,
     val size: Int = 50,
-    val position: Int = 0, // TODO: 17/11/2023 [glavatskikh] fix position
+    val position: AdIconPosition = AdIconPosition.Start,
     val margin: Int = 0,
 ) {
     companion object {
@@ -14,9 +14,11 @@ internal class AdIconConfig(
             return AdIconConfig(
                 visible = map["visible"] as? Boolean ?: true,
                 size = map["size"] as? Int ?: 50,
-                position = map["position"] as? Int ?: 0,
+                position = AdIconPosition.values()[map["position"] as? Int ?: 0],
                 margin = map["margin"] as? Int ?: 0,
             )
         }
     }
 }
+
+enum class AdIconPosition { Start, End }
