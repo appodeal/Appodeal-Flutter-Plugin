@@ -2,7 +2,6 @@ package com.appodeal.appodeal_flutter.native_ad
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.TextView
 import androidx.annotation.Keep
@@ -17,7 +16,7 @@ fun interface NativeAdViewBinder {
     fun bind(activity: Activity, nativeAdOptions: NativeAdOptions): NativeAdView
 }
 
-internal class TemplateNativeAdViewBinder : NativeAdViewBinder {
+internal object TemplateNativeAdViewBinder : NativeAdViewBinder {
     override fun bind(activity: Activity, nativeAdOptions: NativeAdOptions): NativeAdView {
         val context = activity.applicationContext
         // Create the NativeAdView
@@ -60,13 +59,10 @@ internal class TemplateNativeAdViewBinder : NativeAdViewBinder {
     }
 }
 
-internal class DefaultNativeAdViewBinder : NativeAdViewBinder {
+internal object DefaultNativeAdViewBinder : NativeAdViewBinder {
     @SuppressLint("InflateParams")
     override fun bind(activity: Activity, nativeAdOptions: NativeAdOptions): NativeAdView {
-        val context = activity.applicationContext
-        val layoutInflater = LayoutInflater.from(context)
-        val nativeAdView =
-            layoutInflater.inflate(R.layout.apd_native_ad_view_custom, null, false) as NativeAdView
-        return nativeAdView
+        val layoutInflater = activity.layoutInflater
+        return layoutInflater.inflate(R.layout.apd_native_ad_view_custom, null) as NativeAdView
     }
 }
