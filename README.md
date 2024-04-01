@@ -1185,6 +1185,7 @@ Add the Network Security Configuration file to your AndroidManifest.xml:
 ```
 
 In your *network_security_config.xml* file, add `base-config` that sets `cleartextTrafficPermitted` to `true` :
+* If the file does not exists, create it under `res>xml>network_security_config.xml`
 
 ``` xml
 <?xml version="1.0" encoding="utf-8"?>
