@@ -98,11 +98,6 @@
 * Updated Kotlin to 1.8.10 and use bom for align all kotlin versions
 * Added android namespace for AGP version > 8;
 
-## 3.3.0
-
-* Updated Appodeal iOS SDK to [3.3.0](https://docs.appodeal.com/ios/changelog)
-* Updated Appodeal Android SDK to [3.3.0.0](https://docs.appodeal.com/android/changelog)
-
 ## 3.2.0-beta.2
 
 * Updated Appodeal iOS SDK to [3.2.0-beta.2](https://docs.appodeal.com/ios/changelog)
