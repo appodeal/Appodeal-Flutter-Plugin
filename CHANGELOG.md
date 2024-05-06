@@ -1,5 +1,33 @@
 # Changelog
 
+## 3.3.0
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.3.0](https://docs.appodeal.com/ios/changelog)
+- Updated Appodeal Android SDK to [3.3.0](https://docs.appodeal.com/android/changelog)
+
+## 3.3.0-beta.3
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.3.0-beta.3](https://docs.appodeal.com/ios/changelog)
+- Updated Appodeal Android SDK to [3.3.0-beta.3](https://docs.appodeal.com/android/changelog)
+
+## 3.3.0-beta.2
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.3.0-beta.2](https://docs.appodeal.com/ios/changelog)
+- Updated Appodeal Android SDK to [3.3.0-beta.2](https://docs.appodeal.com/android/changelog)
+
+## 3.3.0-beta.1
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.3.0-beta.1](https://docs.appodeal.com/ios/changelog)
+- Updated Appodeal Android SDK to [3.3.0-beta.1](https://docs.appodeal.com/android/changelog)
+
 ## 3.2.1
 
 ### Promoted the beta release to the stable version
