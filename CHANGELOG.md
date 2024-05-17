@@ -1,5 +1,10 @@
 # Changelog
 
+## develop
+
+### Internal fix
+- APDM-324: Disabled smart banners
+
 ## 3.3.0
 
 ### Updated SDKs
