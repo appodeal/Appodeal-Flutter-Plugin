@@ -213,9 +213,7 @@ class Appodeal {
 
   /// Sets [isSmartBannersEnabled] (`false` by default).
   static setSmartBanners(bool isSmartBannersEnabled) {
-    _channel.invokeMethod('setSmartBanners', {
-      'isSmartBannersEnabled': isSmartBannersEnabled,
-    });
+    print('Smart banners are disabled for Flutter framework');
   }
 
   /// Checks if smart banners are enabled (`false` by default).
