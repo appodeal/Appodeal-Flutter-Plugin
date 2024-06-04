@@ -347,7 +347,7 @@ class Appodeal {
 
   /// Gets SDK version.
   static String getSDKVersion() {
-    return "3.3.0";
+    return "3.3.1";
   }
 
   /// Gets SDK platform version.
