@@ -64,7 +64,7 @@ class AppodealPlayStorePurchase extends AppodealPurchase {
   String? developerPayload;
   String? sku;
   String? purchaseToken;
-  int purchaseTimestamp = 0;
+  String? purchaseTimestamp;
   Map<String, String> additionalParameters = {};
 
   AppodealPlayStorePurchase.inapp(

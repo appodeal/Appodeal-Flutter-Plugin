@@ -372,7 +372,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
         val sku = args["sku"] as? String?
         val orderId = args["orderId"] as? String?
         val purchaseToken = args["purchaseToken"] as? String?
-        val purchaseTimestamp = args["purchaseTimestamp"] as Int
+        val purchaseTimestamp = args["purchaseTimestamp"] as? String
         @Suppress("UNCHECKED_CAST") val additionalParameters =
             args["additionalParameters"] as Map<String, String>
         val purchase: InAppPurchase = when (type) {
@@ -388,7 +388,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             .withSku(sku)
             .withOrderId(orderId)
             .withPurchaseToken(purchaseToken)
-            .withPurchaseTimestamp(purchaseTimestamp.toLong())
+            .withPurchaseTimestamp(purchaseTimestamp?.toLongOrNull() ?: 0L)
             .withAdditionalParams(additionalParameters)
             .build()
         Appodeal.validateInAppPurchase(
