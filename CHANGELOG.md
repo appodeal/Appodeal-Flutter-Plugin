@@ -1,5 +1,9 @@
 # Changelog
 
+## Develop
+
+* Fixed purchaseTimestamp cast error
+
 ## 3.3.2
 
 ### Updated SDKs
