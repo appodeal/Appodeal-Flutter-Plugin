@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.3
+
+### Updated SDKs
+
+- Updated Appodeal Android SDK to [3.3.3](https://docs.appodeal.com/android/changelog)
+
 ## 3.3.2
 
 ### Updated SDKs

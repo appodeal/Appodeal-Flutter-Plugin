@@ -2,7 +2,7 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## Appodeal SDK 3.3.2
+## Appodeal SDK 3.3.3
 
 - **Google CMP and TCF v2 Support**
   - To enhance the relevance of ads for your users and comply with regulations like GDPR and CCPA,
@@ -57,7 +57,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.3.2
+  stack_appodeal_flutter: 3.3.3
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -1198,7 +1198,7 @@ Add dependencies into `build.gradle` (module: app)
 ``` groovy
 dependencies {
     // ... other project dependencies
-    implementation ('com.appodeal.ads:sdk:3.3.2.0') {
+    implementation ('com.appodeal.ads:sdk:3.3.3.0') {
         exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
         exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
@@ -1295,7 +1295,7 @@ In your *network_security_config.xml* file, add `base-config` that sets `clearte
   dependencies {
       ...
       // ... other project dependencies
-      implementation('com.appodeal.ads:sdk:3.3.2.0') {
+      implementation('com.appodeal.ads:sdk:3.3.3.0') {
           // ad networks
           exclude group: "com.appodeal.ads.sdk.networks", module: "admob"
           exclude group: "org.bidon", module: "admob-adapter"
@@ -1334,7 +1334,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:adjust:3.3.2.0'
+    implementation 'com.appodeal.ads.sdk.services:adjust:3.3.3.0'
 }
 ```
 
@@ -1354,7 +1354,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.3.2.0'
+  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.3.3.0'
 }
 ```
 
@@ -1374,7 +1374,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:firebase:3.3.2.0'
+    implementation 'com.appodeal.ads.sdk.services:firebase:3.3.3.0'
 }
 ```
 
@@ -1394,7 +1394,7 @@ Add dependencies into build.gradle (module: app)
 ```groovy
 dependencies {
     // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.3.2.0'
+    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.3.3.0'
 }
 ```
 
