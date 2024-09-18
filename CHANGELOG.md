@@ -5,6 +5,8 @@
 ### Updated SDKs
 
 - Updated Appodeal Android SDK to [3.3.3](https://docs.appodeal.com/android/changelog)
+- Fixed AppodealPlayStorePurchase `purchaseTimestamp` cast
+  error [#81](https://github.com/appodeal/Appodeal-Flutter-Plugin/issues/81)
 
 ## 3.3.2
 
@@ -110,8 +112,10 @@
 * Updated Appodeal iOS SDK to [3.2.0](https://docs.appodeal.com/ios/changelog)
 * Updated Appodeal Android SDK to [3.2.0](https://docs.appodeal.com/android/changelog)
 * **💥 AdMob Bidding Support**
-  - Download our newest version of AdMob Sync tool from this [page](https://amsa-updates.appodeal.com/) and perform sync.
-  - You can read more about AdMob Sync in our [guide](https://docs.appodeal.com/networks-setup/admob-sync).
+    - Download our newest version of AdMob Sync tool from
+      this [page](https://amsa-updates.appodeal.com/) and perform sync.
+    - You can read more about AdMob Sync in
+      our [guide](https://docs.appodeal.com/networks-setup/admob-sync).
 
 ## 3.2.0-beta.3
 
@@ -201,27 +205,31 @@
 ## 1.1.0
 
 * **Major Api changes**:
-  * `Appodeal.initializeWithConsent` - removed, use `Appodeal.initialize` without boolConsent:
-    > example: `Appodeal.initialize(appodealKey, [Appodeal.REWARDED_VIDEO])`
-  * `Appodeal.canShowWithPlacement` - removed, use `Appodeal.canShow` with placement - second param:
-    > example: `Appodeal.canShow(Appodeal.INTERSTITIAL, "default")`
-  * `Appodeal.showWithPlacement` - removed, use `Appodeal.show` with placement - second param:
-    > example: `Appodeal.show(Appodeal.INTERSTITIAL, "default")`
-  * `Appodeal.disableNetworkForSpecificAdType` - removed, use `Appodeal.disableNetwork` with adtype - second param (default it's all ad types):
-    > example: `Appodeal.disableNetwork("admob", Appodeal.INTERSTITIAL)`
-  * `Appodeal.setExtra` - instead `setExtraDataBool, setExtraDataInt, setExtraDataDouble, setExtraDataString`
-  * `Appodeal.setCustomFilter` - instead `setCustomFilterBool, setCustomFilterInt, setCustomFilterDouble, setCustomFilter`
-  * **Callbacks** Now, we can use only neded callback method:
-    > example:
-    > ```
+    * `Appodeal.initializeWithConsent` - removed, use `Appodeal.initialize` without boolConsent:
+      > example: `Appodeal.initialize(appodealKey, [Appodeal.REWARDED_VIDEO])`
+    * `Appodeal.canShowWithPlacement` - removed, use `Appodeal.canShow` with placement - second
+      param:
+      > example: `Appodeal.canShow(Appodeal.INTERSTITIAL, "default")`
+    * `Appodeal.showWithPlacement` - removed, use `Appodeal.show` with placement - second param:
+      > example: `Appodeal.show(Appodeal.INTERSTITIAL, "default")`
+    * `Appodeal.disableNetworkForSpecificAdType` - removed, use `Appodeal.disableNetwork` with
+      adtype - second param (default it's all ad types):
+      > example: `Appodeal.disableNetwork("admob", Appodeal.INTERSTITIAL)`
+    * `Appodeal.setExtra` -
+      instead `setExtraDataBool, setExtraDataInt, setExtraDataDouble, setExtraDataString`
+    * `Appodeal.setCustomFilter` -
+      instead `setCustomFilterBool, setCustomFilterInt, setCustomFilterDouble, setCustomFilter`
+    * **Callbacks** Now, we can use only neded callback method:
+      > example:
+      > ```
     > Appodeal.setBannerCallbacks(
     >     onBannerLoaded: (isPrecache) => log('onBannerLoaded')
     >     onBannerShown: () => log('onBannerShown')
     > );
     > ```
-  * **Banner View / Mrec View** Got a new api:
-    > example:
-    > ```
+    * **Banner View / Mrec View** Got a new api:
+      > example:
+      > ```
     > AppodealBanner(
     >     adSize: AppodealBannerSize.BANNER,
     >     //or adSize: AppodealBannerSize.MEDIUM_RECTANGLE for MREC
@@ -251,7 +259,7 @@
 
 ## 1.0.2-beta
 
-* Updated initializeWithConsent() method 
+* Updated initializeWithConsent() method
 
 ## 1.0.1-beta
 
