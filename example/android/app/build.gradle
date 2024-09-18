@@ -27,12 +27,12 @@ apply plugin: 'com.google.gms.google-services'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdk 33
+    compileSdk 34
     namespace 'com.appodeal.appodeal_flutter_example'
 
     defaultConfig {
         minSdk 21
-        targetSdk 33
+        targetSdk 34
         applicationId "com.appodealstack.demo"
         versionName flutterVersionName
         versionCode flutterVersionCode.toInteger()
@@ -64,6 +64,6 @@ flutter {
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version"))
-    // Appodeal SDK 3.3.2.0
-    implementation 'com.appodeal.ads:sdk:3.3.2.0'
+    // Appodeal SDK 3.3.3.0
+    implementation 'com.appodeal.ads:sdk:3.3.3.0'
 }
