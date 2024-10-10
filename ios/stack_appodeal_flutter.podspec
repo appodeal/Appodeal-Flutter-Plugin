@@ -20,8 +20,8 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.dependency 'Flutter'
-  s.dependency "Appodeal", "3.3.2"
-  s.dependency "APDIABAdapter", "3.3.2.0"
+  s.dependency "Appodeal", "3.4.0-beta.2"
+  s.dependency "APDIABAdapter", "3.4.0.0-beta.2"
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
