@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.3.3+1
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.3.3](https://docs.appodeal.com/android/changelog)
+- Support Xcode 16 and iOS 18.0
+
 ## 3.3.3
 
 ### Updated SDKs
