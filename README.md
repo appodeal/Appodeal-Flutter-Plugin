@@ -2,7 +2,7 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## Appodeal SDK 3.3.3
+## Appodeal SDK 3.3.3.1
 
 - **Google CMP and TCF v2 Support**
   - To enhance the relevance of ads for your users and comply with regulations like GDPR and CCPA,
@@ -57,7 +57,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.3.3
+  stack_appodeal_flutter: 3.3.3+1
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -69,9 +69,9 @@ $ flutter pub get
 #### iOS
 
 > [!IMPORTANT]
-> - iOS 12.0 or higher. You still can integrate Appodeal SDK into a project with a lower value of minimum iOS version. However, on devices that don't support iOS 12.0+ our SDK will just be disabled.
+> - iOS 13.0 or higher. You still can integrate Appodeal SDK into a project with a lower value of minimum iOS version. However, on devices that don't support iOS 12.0+ our SDK will just be disabled.
 > - Appodeal SDK is compatible with both ARC and non-ARC projects.
-> - Use Xcode 14.3 or higher.
+> - Use Xcode 15.3 or higher.
 
 1. Go to `ios/` folder and open *Podfile*
 2. Add Appodeal adapters. Add pods into `./ios/Podfile`:
@@ -86,59 +86,57 @@ platform :ios, '13.0'
 use_frameworks!
 
 def appodeal
-  pod 'Appodeal', '3.3.2'
-  pod 'APDAmazonAdapter', '3.3.2.0'
-  pod 'APDAppLovinAdapter', '3.3.2.0'
-  pod 'APDAppLovinMAXAdapter', '3.3.2.0'
-  pod 'APDBidMachineAdapter', '3.3.2.0'
-  pod 'APDBidonAdapter', '3.3.2.0'
-  pod 'APDBigoAdsAdapter', '3.3.2.0'
-  pod 'APDDTExchangeAdapter', '3.3.2.0'
-  pod 'APDGoogleAdMobAdapter', '3.3.2.0'
-  pod 'APDIABAdapter', '3.3.2.0'
-  pod 'APDInMobiAdapter', '3.3.2.0'
-  pod 'APDIronSourceAdapter', '3.3.2.0'
-  pod 'APDMetaAudienceNetworkAdapter', '3.3.2.0'
-  pod 'APDMintegralAdapter', '3.3.2.0'
-  pod 'APDMyTargetAdapter', '3.3.2.0'
-  pod 'APDPangleAdapter', '3.3.2.0'
-  pod 'APDSentryAdapter', '3.3.2.0'
-  pod 'APDUnityAdapter', '3.3.2.0'
-  pod 'APDVungleAdapter', '3.3.2.0'
-  pod 'APDYandexAdapter', '3.3.2.0'
-  pod 'AmazonPublisherServicesSDK', '4.9.2'
-  pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '4.9.2.0'
-  pod 'AppLovinMediationBidMachineAdapter', '2.6.0.0'
-  pod 'AppLovinMediationFacebookAdapter', '6.15.0.0'
-  pod 'AppLovinMediationFyberAdapter', '8.3.1.0'
-  pod 'AppLovinMediationGoogleAdManagerAdapter', '11.5.0.0'
-  pod 'AppLovinMediationGoogleAdapter', '11.5.0.0'
-  pod 'AppLovinMediationInMobiAdapter', '10.7.2.0'
-  pod 'AppLovinMediationIronSourceAdapter', '8.1.0.0.1'
-  pod 'AppLovinMediationMintegralAdapter', '7.6.1.0.0'
-  pod 'AppLovinMediationMyTargetAdapter', '5.20.1.1'
-  pod 'AppLovinMediationUnityAdsAdapter', '4.11.3.2'
-  pod 'AppLovinMediationVungleAdapter', '7.3.0.0'
+  pod 'Appodeal', '3.3.3'
+  pod 'APDAmazonAdapter', '3.3.3.0'
+  pod 'APDAppLovinAdapter', '3.3.3.0'
+  pod 'APDAppLovinMAXAdapter', '3.3.3.0'
+  pod 'APDBidMachineAdapter', '3.3.3.0'
+  pod 'APDBidonAdapter', '3.3.3.0'
+  pod 'APDBigoAdsAdapter', '3.3.3.0'
+  pod 'APDDTExchangeAdapter', '3.3.3.0'
+  pod 'APDGoogleAdMobAdapter', '3.3.3.0'
+  pod 'APDIABAdapter', '3.3.3.0'
+  pod 'APDInMobiAdapter', '3.3.3.0'
+  pod 'APDIronSourceAdapter', '3.3.3.0'
+  pod 'APDMetaAudienceNetworkAdapter', '3.3.3.0'
+  pod 'APDMintegralAdapter', '3.3.3.0'
+  pod 'APDMyTargetAdapter', '3.3.3.0'
+  pod 'APDPangleAdapter', '3.3.3.0'
+  pod 'APDSentryAdapter', '3.3.3.0'
+  pod 'APDUnityAdapter', '3.3.3.0'
+  pod 'APDVungleAdapter', '3.3.3.0'
+  pod 'APDYandexAdapter', '3.3.3.0'
+  pod 'AmazonPublisherServicesSDK', '4.9.7'
+  pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '4.9.7.0'
+  pod 'AppLovinMediationBidMachineAdapter', '3.0.1.0.0'
+  pod 'AppLovinMediationFacebookAdapter', '6.15.2.1'
+  pod 'AppLovinMediationFyberAdapter', '8.3.2.1'
+  pod 'AppLovinMediationGoogleAdManagerAdapter', '11.9.0.1'
+  pod 'AppLovinMediationGoogleAdapter', '11.9.0.1'
+  pod 'AppLovinMediationInMobiAdapter', '10.7.5.1'
+  pod 'AppLovinMediationIronSourceAdapter', '8.3.0.0.2'
+  pod 'AppLovinMediationMintegralAdapter', '7.7.2.0.1'
+  pod 'AppLovinMediationMyTargetAdapter', '5.21.8.0'
+  pod 'AppLovinMediationUnityAdsAdapter', '4.12.2.1'
+  pod 'AppLovinMediationVungleAdapter', '7.4.1.1'
   pod 'AppLovinMediationYandexAdapter', '5.2.1.0'
-  pod 'BidMachineAmazonAdapter', '2.6.0.1'
-  pod 'BidMachineMetaAudienceAdapter', '2.6.0.0'
-  pod 'BidMachineMintegralAdapter', '2.6.0.0'
-  pod 'BidMachineMyTargetAdapter', '2.6.0.0'
-  pod 'BidMachinePangleAdapter', '2.6.0.0'
-  pod 'BidMachineVungleAdapter', '2.6.0.0'
-  pod 'BidonAdapterAmazon', '0.6.0.0'
-  pod 'BidonAdapterAppLovin', '0.6.0.0'
-  pod 'BidonAdapterBidMachine', '0.6.0.0'
-  pod 'BidonAdapterBigoAds', '0.6.0.0'
-  pod 'BidonAdapterDTExchange', '0.6.0.0'
-  pod 'BidonAdapterGoogleAdManager', '0.6.0.0'
-  pod 'BidonAdapterGoogleMobileAds', '0.6.0.0'
-  pod 'BidonAdapterInMobi', '0.6.0.0'
-  pod 'BidonAdapterMetaAudienceNetwork', '0.6.0.0'
-  pod 'BidonAdapterMintegral', '0.6.0.0'
-  pod 'BidonAdapterUnityAds', '0.6.0.0'
-  pod 'BidonAdapterVungle', '0.6.0.0'
-  pod 'myTrackerSDK', '3.1.7'
+  pod 'BidMachineAmazonAdapter', '3.0.1.0'
+  pod 'BidMachineMetaAudienceAdapter', '3.0.1.0'
+  pod 'BidMachineMintegralAdapter', '3.0.1.0'
+  pod 'BidMachineMyTargetAdapter', '3.0.1.1'
+  pod 'BidMachinePangleAdapter', '3.0.1.0'
+  pod 'BidMachineVungleAdapter', '3.0.1.0'
+  pod 'BidonAdapterAppLovin', '0.6.1.0'
+  pod 'BidonAdapterBidMachine', '0.6.1.0'
+  pod 'BidonAdapterBigoAds', '0.6.1.0'
+  pod 'BidonAdapterDTExchange', '0.6.1.0'
+  pod 'BidonAdapterGoogleAdManager', '0.6.1.0'
+  pod 'BidonAdapterGoogleMobileAds', '0.6.1.0'
+  pod 'BidonAdapterInMobi', '0.6.1.0'
+  pod 'BidonAdapterMetaAudienceNetwork', '0.6.1.0'
+  pod 'BidonAdapterMintegral', '0.6.1.0'
+  pod 'BidonAdapterUnityAds', '0.6.1.0'
+  pod 'BidonAdapterVungle', '0.6.1.0'
 end
 
 target 'Runner' do
@@ -1315,11 +1313,11 @@ In your *network_security_config.xml* file, add `base-config` that sets `clearte
   Remove next pods from `Podfile`:
 
   ```ruby
-  pod 'APDGoogleAdMobAdapter', '3.3.2.0'
-  pod 'BidonAdapterGoogleAdManager', '0.6.0.0'
-  pod 'BidonAdapterGoogleMobileAds', '0.6.0.0'
-  pod 'AppLovinMediationGoogleAdManagerAdapter', '11.5.0.0'
-  pod 'AppLovinMediationGoogleAdapter', '11.5.0.0'
+  pod 'APDGoogleAdMobAdapter', '3.3.3.0'
+  pod 'BidonAdapterGoogleAdManager', '0.6.1.0'
+  pod 'BidonAdapterGoogleMobileAds', '0.6.1.0'
+  pod 'AppLovinMediationGoogleAdManagerAdapter', '11.9.0.1'
+  pod 'AppLovinMediationGoogleAdapter', '11.9.0.1'
   ```
 
 ## Services
@@ -1343,7 +1341,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAdjustAdapter', '3.3.2.0'
+  pod 'APDAdjustAdapter', '3.3.3.0'
 end
 ```
 
@@ -1363,7 +1361,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDAppsFlyerAdapter', '3.3.2.0'
+  pod 'APDAppsFlyerAdapter', '3.3.3.0'
 end
 ```
 
@@ -1383,7 +1381,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFirebaseAdapter', '3.3.2.0'
+  pod 'APDFirebaseAdapter', '3.3.3.0'
 end
 ```
 
@@ -1403,7 +1401,7 @@ Add dependencies into _Podfile_
 ```ruby
 def appodeal
   // ... other project pods
-  pod 'APDFacebookAdapter', '3.3.2.0'
+  pod 'APDFacebookAdapter', '3.3.3.0'
 end
 ```
 
