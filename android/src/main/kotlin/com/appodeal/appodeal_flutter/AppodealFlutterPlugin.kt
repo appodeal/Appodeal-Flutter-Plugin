@@ -463,5 +463,5 @@ private fun List<ServiceError>.toArg(): Map<String, List<String>> {
 }
 
 internal fun apdLog(message: String, any: Any? = null) {
-    if (BuildConfig.DEBUG) Log.d("AppodealFlutterPlugin", "$message ${any ?: ""}")
+    if (true) Log.d("AppodealFlutterPlugin", "$message ${any ?: ""}")
 }

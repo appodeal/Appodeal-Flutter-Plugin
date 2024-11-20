@@ -12,6 +12,11 @@ import java.lang.ref.WeakReference
 
 internal class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>) : PlatformView {
 
+    init {
+        apdLog("AppodealNativeAdView#init")
+    }
+
+
     private val placement: String = arguments["placement"] as? String ?: "default"
 
     @Suppress("UNCHECKED_CAST")
@@ -19,28 +24,46 @@ internal class AppodealNativeAdView(activity: Activity, arguments: HashMap<*, *>
         NativeAdOptions.toNativeAdOptions(arguments["options"] as Map<String, Any>)
 
     private val adView: WeakReference<NativeAdView?> by lazy {
+
+        apdLog("AppodealNativeAdView#adView-lazy")
+
         val nativeAd = Appodeal.getNativeAds(1).firstOrNull()
             ?: return@lazy WeakReference(null)
+
+        apdLog("AppodealNativeAdView#adView-lazy-nativeAd: $nativeAd")
+
         val nativeAdOptions = nativeAdOptions
             ?: return@lazy WeakReference(null)
 
+        apdLog("AppodealNativeAdView#adView-lazy-nativeAdOptions: $nativeAdOptions")
+
         val adView = when (nativeAdOptions.nativeAdViewType) {
             NativeAdViewType.Custom -> {
+
+                apdLog("AppodealNativeAdView#adView-lazy-nativeAdViewType: Custom")
                 val customNativeAdViewBinder = Appodeal.nativeAdViewBinder
                     ?: throw IllegalArgumentException("NativeAdViewBinder is not set")
                 customNativeAdViewBinder.bind(activity, nativeAdOptions)
+
+
             }
 
             else -> {
+
+                apdLog("AppodealNativeAdView#adView-lazy-nativeAdViewType: else")
                 val templateNativeAdViewBinder = templateNativeAdViewBinder
                 templateNativeAdViewBinder.bind(activity, nativeAdOptions)
             }
         }
+        apdLog("AppodealNativeAdView#adView-lazy-registerView: $adView")
         adView.registerView(nativeAd, placement)
         WeakReference(adView)
     }
 
-    override fun getView(): View? = adView.get()
+    override fun getView(): View? {
+        apdLog("AppodealNativeAdView#adView: ${adView.get()}")
+        return adView.get()
+    }
 
     override fun dispose() {
         adView.get()?.destroy()

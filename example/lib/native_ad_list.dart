@@ -40,55 +40,56 @@ class _NativeAdListPageState extends State<NativeAdListPage> {
   }
 
   Widget get _adWidget {
-    //final nativeAdOptions = NativeAdOptions.customOptions(
-    //         adTitleConfig: AdTitleConfig(
-    //             fontSize: 16,
-    //             textColor: Colors.black,
-    //             backgroundColor: Colors.transparent,
-    //             margin: 4),
-    //         adAttributionConfig: AdAttributionConfig(
-    //             fontSize: 12,
-    //             textColor: Colors.black,
-    //             backgroundColor: Colors.orangeAccent,
-    //             margin: 4),
-    //         adChoiceConfig: AdChoiceConfig(position: AdChoicePosition.endBottom),
-    //         adIconConfig: AdIconConfig(
-    //             visible: true, size: 70, position: AdIconPosition.start, margin: 4),
-    //         adDescriptionConfig: AdDescriptionConfig(
-    //             fontSize: 14,
-    //             textColor: Colors.black,
-    //             backgroundColor: Colors.transparent,
-    //             margin: 4),
-    //         adActionButtonConfig: AdActionButtonConfig(
-    //             textColor: Colors.black,
-    //             fontSize: 16,
-    //             backgroundColor: Colors.transparent,
-    //             margin: 4,
-    //             radius: 12),
-    //         adMediaConfig:
-    //             AdMediaConfig(visible: true, position: AdMediaPosition.top));
-    //
-    // return Align(
-    //     alignment: Alignment.center,
-    //     child: Container(
-    //         height: nativeAdOptions.getWidgetHeight(context),
-    //         alignment: Alignment.center,
-    //         child: AppodealNativeAd(options: nativeAdOptions)));
-    //
+    final nativeAdOptions = NativeAdOptions.customOptions(
+            adTitleConfig: AdTitleConfig(
+                fontSize: 16,
+                textColor: Colors.black,
+                backgroundColor: Colors.transparent,
+                margin: 4),
+            adAttributionConfig: AdAttributionConfig(
+                fontSize: 12,
+                textColor: Colors.black,
+                backgroundColor: Colors.orangeAccent,
+                margin: 4),
+            adChoiceConfig: AdChoiceConfig(position: AdChoicePosition.endBottom),
+            adIconConfig: AdIconConfig(
+                visible: true, size: 70, position: AdIconPosition.start, margin: 4),
+            adDescriptionConfig: AdDescriptionConfig(
+                fontSize: 14,
+                textColor: Colors.black,
+                backgroundColor: Colors.transparent,
+                margin: 4),
+            adActionButtonConfig: AdActionButtonConfig(
+                textColor: Colors.black,
+                fontSize: 16,
+                backgroundColor: Colors.transparent,
+                margin: 4,
+                radius: 12),
+            adMediaConfig:
+                AdMediaConfig(visible: true, position: AdMediaPosition.top));
 
-    NativeAdOptions options = NativeAdOptions.customOptions(
-      adIconConfig: AdIconConfig(size: 55),
-      adAttributionConfig: AdAttributionConfig(textColor: Colors.black),
-      adTitleConfig: AdTitleConfig(textColor: Colors.black),
-      adLayoutConfig: AdLayoutConfig(adTileHeight: 55),
-      adMediaConfig: AdMediaConfig(visible: true),
-    );
     return Align(
         alignment: Alignment.center,
         child: Container(
-            height: options.getInlineAdHeight,
+            height: nativeAdOptions.getWidgetHeight(context),
             alignment: Alignment.center,
-            child: AppodealNativeAd(options: options)));
+            child: AppodealNativeAd(options: nativeAdOptions)));
+
+
+
+    // NativeAdOptions options = NativeAdOptions.customOptions(
+    //   adIconConfig: AdIconConfig(size: 55),
+    //   adAttributionConfig: AdAttributionConfig(textColor: Colors.black),
+    //   adTitleConfig: AdTitleConfig(textColor: Colors.black),
+    //   adLayoutConfig: AdLayoutConfig(adTileHeight: 55),
+    //   adMediaConfig: AdMediaConfig(visible: true),
+    // );
+    // return Align(
+    //     alignment: Alignment.center,
+    //     child: Container(
+    //         height: options.getInlineAdHeight,
+    //         alignment: Alignment.center,
+    //         child: AppodealNativeAd(options: options)));
   }
 
   Widget get _mainBody {
