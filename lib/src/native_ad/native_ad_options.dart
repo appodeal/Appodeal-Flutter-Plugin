@@ -12,7 +12,6 @@ class NativeAdOptions with AppodealPlatformArguments {
   final AdIconConfig adIconConfig;
   final AdDescriptionConfig adDescriptionConfig;
   final AdActionButtonConfig adActionButtonConfig;
-  final AdLayoutConfig adLayoutConfig;
   final AdMediaConfig adMediaConfig;
 
   NativeAdOptions._({
@@ -23,7 +22,6 @@ class NativeAdOptions with AppodealPlatformArguments {
     required this.adIconConfig,
     required this.adDescriptionConfig,
     required this.adActionButtonConfig,
-    required this.adLayoutConfig,
     required this.adMediaConfig,
   });
 
@@ -35,7 +33,6 @@ class NativeAdOptions with AppodealPlatformArguments {
     AdIconConfig? adIconConfig,
     AdDescriptionConfig? adDescriptionConfig,
     AdActionButtonConfig? adActionButtonConfig,
-    AdLayoutConfig? adLayoutConfig,
     AdMediaConfig? adMediaConfig,
   }) {
     return NativeAdOptions._(
@@ -46,7 +43,6 @@ class NativeAdOptions with AppodealPlatformArguments {
       adIconConfig: adIconConfig ?? AdIconConfig(),
       adDescriptionConfig: adDescriptionConfig ?? AdDescriptionConfig(),
       adActionButtonConfig: adActionButtonConfig ?? AdActionButtonConfig(),
-      adLayoutConfig: adLayoutConfig ?? AdLayoutConfig(),
       adMediaConfig: adMediaConfig ?? AdMediaConfig(),
     );
   }
@@ -61,6 +57,8 @@ class NativeAdOptions with AppodealPlatformArguments {
     Color? adAttributionTextColor,
     Color? adAttributionBackgroundColor,
     AdChoicePosition? adChoicePosition,
+    bool? adIconVisible,
+    bool? adMediaVisible,
   }) {
     return NativeAdOptions._(
       nativeAdType: nativeAdType,
@@ -70,19 +68,18 @@ class NativeAdOptions with AppodealPlatformArguments {
           backgroundColor: adAttributionBackgroundColor ?? Colors.transparent),
       adChoiceConfig:
           AdChoiceConfig(position: adChoicePosition ?? AdChoicePosition.endTop),
-      adIconConfig: AdIconConfig(size: adIconSize ?? 50),
+      adIconConfig:
+          AdIconConfig(visible: adIconVisible ?? true, size: adIconSize ?? 50),
       adDescriptionConfig:
           AdDescriptionConfig(fontSize: adDescriptionFontSize ?? 14),
       adActionButtonConfig:
           AdActionButtonConfig(fontSize: adActionButtonTextSize ?? 14),
-      adLayoutConfig: AdLayoutConfig(),
-      adMediaConfig: AdMediaConfig(),
+      adMediaConfig: AdMediaConfig(visible: adMediaVisible ?? true),
     );
   }
 
   /// Generates Content Stream template Native Ad View options
   static NativeAdOptions contentStreamOptions({
-    int? adIconSize,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -92,19 +89,20 @@ class NativeAdOptions with AppodealPlatformArguments {
   }) {
     return NativeAdOptions._templateOptions(
       nativeAdType: _NativeAdType.contentStream,
-      adIconSize: adIconSize,
+      adIconSize: 90,
       adTitleFontSize: adTitleFontSize,
       adActionButtonTextSize: adActionButtonTextSize,
       adDescriptionFontSize: adDescriptionFontSize,
       adAttributionTextColor: adAttributionTextColor,
       adAttributionBackgroundColor: adAttributionBackgroundColor,
       adChoicePosition: adChoicePosition,
+      adIconVisible: false,
+      adMediaVisible: true,
     );
   }
 
   /// Generates App Wall template Native Ad View options
   static NativeAdOptions appWallOptions({
-    int? adIconSize,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -114,19 +112,20 @@ class NativeAdOptions with AppodealPlatformArguments {
   }) {
     return NativeAdOptions._templateOptions(
       nativeAdType: _NativeAdType.appWall,
-      adIconSize: adIconSize,
+      adIconSize: 70,
       adTitleFontSize: adTitleFontSize,
       adActionButtonTextSize: adActionButtonTextSize,
       adDescriptionFontSize: adDescriptionFontSize,
       adAttributionTextColor: adAttributionTextColor,
       adAttributionBackgroundColor: adAttributionBackgroundColor,
       adChoicePosition: adChoicePosition,
+      adIconVisible: false,
+      adMediaVisible: false,
     );
   }
 
   /// Generates News Feed template Native Ad View options
   static NativeAdOptions newsFeedOptions({
-    int? adIconSize,
     int? adTitleFontSize,
     int? adActionButtonTextSize,
     int? adDescriptionFontSize,
@@ -136,26 +135,50 @@ class NativeAdOptions with AppodealPlatformArguments {
   }) {
     return NativeAdOptions._templateOptions(
       nativeAdType: _NativeAdType.newsFeed,
-      adIconSize: adIconSize,
+      adIconSize: 50,
       adTitleFontSize: adTitleFontSize,
       adActionButtonTextSize: adActionButtonTextSize,
       adDescriptionFontSize: adDescriptionFontSize,
       adAttributionTextColor: adAttributionTextColor,
       adAttributionBackgroundColor: adAttributionBackgroundColor,
       adChoicePosition: adChoicePosition,
+      adIconVisible: false,
+      adMediaVisible: false,
     );
   }
 
-  double get getInlineAdHeight {
-    int height = adLayoutConfig.adActionHeight;
-    if (adIconConfig.visible) {
-      height = height + adLayoutConfig.adTileHeight;
+  double getWidgetHeight(BuildContext context) {
+    double width = getWidgetWidth(context);
+    switch (nativeAdType) {
+      case _NativeAdType.newsFeed:
+        return width * 0.146;
+      case _NativeAdType.appWall:
+        return width * 0.195;
+      case _NativeAdType.contentStream:
+        return width * 0.764;
+      default:
+        return getAdHeight(context, width);
     }
+  }
+
+  double getWidgetWidth(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
+
+  // TODO: two methods for get height
+  double getAdHeight(BuildContext context, double width) {
+    double height = 0;
+    if (!adMediaConfig.visible && !adIconConfig.visible) {
+      return 0;
+    }
+
     if (adMediaConfig.visible) {
-      height = height + adLayoutConfig.mediaContentHeight;
+      height = width * 0.563; // 9:16
     }
-    if (height != 0) {
-      height = height + 10;
+    if (adIconConfig.visible) {
+      height = height + adIconConfig.size;
+    } else {
+      height = height + 50; // height + adIconConfig._defaultSize;
     }
     return height.toDouble();
   }
@@ -170,8 +193,7 @@ class NativeAdOptions with AppodealPlatformArguments {
         'adChoiceConfig': adChoiceConfig.toMap,
         'adIconConfig': adIconConfig.toMap,
         'adDescriptionConfig': adDescriptionConfig.toMap,
-        'adActionButtonConfig': adActionButtonConfig.toMap,
-        'adLayoutConfig': adLayoutConfig.toMap,
+        'adActionButtonConfig': adActionButtonConfig.toMap
       };
 }
 

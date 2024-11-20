@@ -13,6 +13,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         registrar.addMethodCallDelegate(instance, channel: instance.rewardedVideo.adChannel)
         registrar.addMethodCallDelegate(instance, channel: instance.banner.adChannel)
         registrar.addMethodCallDelegate(instance, channel: instance.mrec.adChannel)
+        registrar.addMethodCallDelegate(instance, channel: instance.native.adChannel)
         registrar.register(AppodealAdViewFactory(mrecChannel: instance.mrec.adChannel,
                                                  bannerChannel: instance.banner.adChannel),
                            withId: "appodeal_flutter/banner_view")
@@ -27,6 +28,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     private let rewardedVideo: AppodealRewarded
     private let banner: AppodealBanner
     private let mrec: AppodealMrec
+    private let native: AppodealNative
     
     private init(registrar: FlutterPluginRegistrar) {
         channel = FlutterMethodChannel(name: "appodeal_flutter", binaryMessenger: registrar.messenger())
@@ -36,6 +38,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         rewardedVideo = AppodealRewarded(registrar: registrar)
         banner = AppodealBanner(registrar: registrar)
         mrec = AppodealMrec(registrar: registrar)
+        native = AppodealNative(registrar: registrar)
     }
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -141,6 +144,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let args = call.arguments as! [String: Any]
         let adType = AppodealAdType(rawValue: args["adType"] as! Int)
         Appodeal.cacheAd(adType)
+        native.load()
         result(nil)
     }
     
