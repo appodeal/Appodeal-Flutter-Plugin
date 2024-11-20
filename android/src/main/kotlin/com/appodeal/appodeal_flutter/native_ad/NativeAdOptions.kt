@@ -26,6 +26,7 @@ class NativeAdOptions(
     }
 
     companion object {
+        @Suppress("UNCHECKED_CAST")
         fun toNativeAdOptions(args: Map<String, Any>): NativeAdOptions? = runCatching {
             apdLog("toNativeAdOptions: $args")
             val idxNativeAdViewType = args["nativeAdType"] as? Int
