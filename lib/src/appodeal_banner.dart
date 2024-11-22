@@ -8,7 +8,11 @@ import 'package:flutter/widgets.dart';
 import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
 
 class AppodealBanner extends StatefulWidget {
+  /// The size of the banner to display.
   final AppodealBannerSize adSize;
+
+  /// The placement identifier for the banner ad.
+  /// Defaults to "default".
   final String placement;
 
   const AppodealBanner({
@@ -24,67 +28,78 @@ class AppodealBanner extends StatefulWidget {
 class _AppodealBannerState extends State<AppodealBanner> {
   final UniqueKey _key = UniqueKey();
   final String _viewType = 'appodeal_flutter/banner_view';
-  Future<Size>? adSize;
+
+  late final Future<Size> _adSizeFuture;
 
   @override
   void initState() {
     super.initState();
-    adSize = Future.value(Size(
+    _adSizeFuture = _getAdSize();
+  }
+
+  Future<Size> _getAdSize() async {
+    return Size(
       widget.adSize.width.toDouble(),
       widget.adSize.height.toDouble(),
-    ));
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<Size>(
-      future: adSize,
+      future: _adSizeFuture,
       builder: (context, snapshot) {
-        final adSize = snapshot.data;
-        if (adSize == null) {
-          return SizedBox.shrink();
+        if (!snapshot.hasData) {
+          return const SizedBox.shrink();
         }
+        final adSize = snapshot.data!;
         return SizedBox.fromSize(
-            size: adSize,
-            child: Platform.isIOS
-                ? UiKitView(
-                    key: _key,
-                    viewType: _viewType,
-                    creationParams: _bannerCreationParams,
-                    creationParamsCodec: const StandardMessageCodec(),
-                  )
-                : PlatformViewLink(
-                    key: _key,
-                    viewType: _viewType,
-                    surfaceFactory: (BuildContext context,
-                        PlatformViewController controller) {
-                      return AndroidViewSurface(
-                        controller: controller as AndroidViewController,
-                        gestureRecognizers: const <Factory<
-                            OneSequenceGestureRecognizer>>{},
-                        hitTestBehavior: PlatformViewHitTestBehavior.opaque,
-                      );
-                    },
-                    onCreatePlatformView: (PlatformViewCreationParams params) {
-                      return PlatformViewsService.initSurfaceAndroidView(
-                        id: params.id,
-                        viewType: _viewType,
-                        layoutDirection: TextDirection.ltr,
-                        creationParams: _bannerCreationParams,
-                        creationParamsCodec: const StandardMessageCodec(),
-                        onFocus: () {
-                          params.onFocusChanged(true);
-                        },
-                      )
-                        ..addOnPlatformViewCreatedListener(
-                            params.onPlatformViewCreated)
-                        ..create();
-                    },
-                  ));
+          size: adSize,
+          child: _buildPlatformSpecificView(),
+        );
       },
     );
   }
 
+  /// Builds the platform-specific view for displaying the banner.
+  Widget _buildPlatformSpecificView() {
+    if (Platform.isIOS) {
+      return UiKitView(
+        key: _key,
+        viewType: _viewType,
+        creationParams: _bannerCreationParams,
+        creationParamsCodec: const StandardMessageCodec(),
+      );
+    } else if (Platform.isAndroid) {
+      return PlatformViewLink(
+        key: _key,
+        viewType: _viewType,
+        surfaceFactory: (context, controller) {
+          return AndroidViewSurface(
+            controller: controller as AndroidViewController,
+            gestureRecognizers: const <Factory<OneSequenceGestureRecognizer>>{},
+            hitTestBehavior: PlatformViewHitTestBehavior.opaque,
+          );
+        },
+        onCreatePlatformView: (params) {
+          return PlatformViewsService.initSurfaceAndroidView(
+            id: params.id,
+            viewType: _viewType,
+            layoutDirection: TextDirection.ltr,
+            creationParams: _bannerCreationParams,
+            creationParamsCodec: const StandardMessageCodec(),
+            onFocus: () => params.onFocusChanged(true),
+          )
+            ..addOnPlatformViewCreatedListener(params.onPlatformViewCreated)
+            ..create();
+        },
+      );
+    } else {
+      return const SizedBox.shrink(); // Fallback for unsupported platforms.
+    }
+  }
+
+  /// The parameters to pass to the native banner view.
   Map<String, dynamic> get _bannerCreationParams => {
         'adSize': widget.adSize.toMap,
         'placement': widget.placement,
