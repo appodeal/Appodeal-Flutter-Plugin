@@ -64,6 +64,6 @@ flutter {
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version"))
-    // Appodeal SDK 3.4.0.0-beta.1
-    implementation 'com.appodeal.ads:sdk:3.4.0.0-beta.1'
+    // Appodeal SDK 3.4.1.0
+    implementation 'com.appodeal.ads:sdk:3.4.1.0'
 }

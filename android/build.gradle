@@ -18,7 +18,6 @@ rootProject.allprojects {
         google()
         mavenCentral()
         maven { url "https://artifactory.appodeal.com/appodeal" }
-        maven { url "https://artifactory.appodeal.com/appodeal-beta-public" }
     }
 }
 
@@ -54,7 +53,7 @@ android {
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version"))
-    // Appodeal SDK 3.4.0.0-beta.1
-    implementation 'com.appodeal.ads.sdk:core:3.4.0-beta.1'
-    implementation 'com.appodeal.ads.sdk.networks:iab:3.4.0.0-beta.1'
+    // Appodeal SDK 3.4.1.0
+    implementation 'com.appodeal.ads.sdk:core:3.4.1'
+    implementation 'com.appodeal.ads.sdk.networks:iab:3.4.1.0'
 }
