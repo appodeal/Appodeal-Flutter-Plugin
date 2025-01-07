@@ -69,9 +69,9 @@ $ flutter pub get
 #### iOS
 
 > [!IMPORTANT]
-> - iOS 12.0 or higher. You still can integrate Appodeal SDK into a project with a lower value of minimum iOS version. However, on devices that don't support iOS 12.0+ our SDK will just be disabled.
+> - iOS 13.0 or higher. You still can integrate Appodeal SDK into a project with a lower value of minimum iOS version. However, on devices that don't support iOS 12.0+ our SDK will just be disabled.
 > - Appodeal SDK is compatible with both ARC and non-ARC projects.
-> - Use Xcode 14.3 or higher.
+> - Use Xcode 15.3 or higher.
 
 1. Go to `ios/` folder and open *Podfile*
 2. Add Appodeal adapters. Add pods into `./ios/Podfile`:
