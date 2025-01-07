@@ -18,6 +18,13 @@
 - Updated Appodeal iOS SDK to [3.4.0-beta.2](https://docs.appodeal.com/ios/next/get-started)
 - Updated Appodeal Android SDK to [3.4.0-beta.1](https://docs.appodeal.com/android/next/get-started)
 
+## 3.3.3+1
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.3.3](https://docs.appodeal.com/android/changelog)
+- Support Xcode 16 and iOS 18.0
+
 ## 3.3.3
 
 ### Updated SDKs
