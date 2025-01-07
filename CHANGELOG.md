@@ -1,5 +1,23 @@
 # Changelog
 
+## 3.4.1
+
+- Migrated AppodealAdType and AppodealBannerSize to enums
+- Migrated to [Flutter plugin loader](https://docs.flutter.dev/release/breaking-changes/flutter-gradle-plugin-apply)
+- Fixed revenue callback ad type information for Android
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.4.1](https://docs.appodeal.com/ios/next/get-started)
+- Updated Appodeal Android SDK to [3.4.1](https://docs.appodeal.com/android/next/get-started)
+
+## 3.4.0-beta.1
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.4.0-beta.2](https://docs.appodeal.com/ios/next/get-started)
+- Updated Appodeal Android SDK to [3.4.0-beta.1](https://docs.appodeal.com/android/next/get-started)
+
 ## 3.3.3+1
 
 ### Updated SDKs

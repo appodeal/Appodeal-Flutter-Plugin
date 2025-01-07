@@ -2,37 +2,37 @@ import 'package:flutter/services.dart';
 
 /// Class representing the Appodeal Consent Form logic for IAB TCFv2 and Google UMP.
 class AppodealConsentForm {
-  const AppodealConsentForm();
-
+  /// Private method channel for communicating with native platform.
   final MethodChannel _consentManagerChannel =
       const MethodChannel('appodeal_flutter/consent_manager');
+
+  const AppodealConsentForm();
 
   /// Load consent form to determine the user's consent preferences.
   ///
   /// Parameters:
-  /// - `appKey`: The Appodeal application key.
-  /// - `tagForUnderAgeOfConsent`: Flag to tag the user as under the age of consent.
-  /// - `onConsentFormLoadSuccess`: Callback for successful consent form loading.
-  /// - `onConsentFormLoadFailure`: Callback for failed consent form loading.
+  /// - [appKey]: The Appodeal application key.
+  /// - [tagForUnderAgeOfConsent]: Flag to tag the user as under the age of consent.
+  /// - [onConsentFormLoadSuccess]: Callback for successful consent form loading.
+  /// - [onConsentFormLoadFailure]: Callback for failed consent form loading.
   void load({
     required String appKey,
     bool tagForUnderAgeOfConsent = false,
-    Function(ConsentStatus)? onConsentFormLoadSuccess,
-    Function(ConsentError)? onConsentFormLoadFailure,
+    void Function(ConsentStatus)? onConsentFormLoadSuccess,
+    void Function(ConsentError)? onConsentFormLoadFailure,
   }) {
-    _consentManagerChannel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case 'onConsentFormLoadSuccess':
-          onConsentFormLoadSuccess
-              ?.call(_ConsentStatusExt._fromInt(call.arguments['status']));
-          break;
-        case 'onConsentFormLoadFailure':
-          onConsentFormLoadFailure
-              ?.call(ConsentError._(call.arguments['error']));
-          break;
-      }
+    _setHandler({
+      'onConsentFormLoadSuccess': (arguments) {
+        final status = _ConsentStatusExtension._fromInt(arguments['status']);
+        onConsentFormLoadSuccess?.call(status);
+      },
+      'onConsentFormLoadFailure': (arguments) {
+        final error = ConsentError._(arguments['error']);
+        onConsentFormLoadFailure?.call(error);
+      },
     });
-    _consentManagerChannel.invokeMethod('load', {
+
+    _invokeMethod('load', {
       'appKey': appKey,
       'tagForUnderAgeOfConsent': tagForUnderAgeOfConsent,
     });
@@ -41,41 +41,43 @@ class AppodealConsentForm {
   /// Show the consent form to determine the user's consent.
   ///
   /// Parameters:
-  /// - `onConsentFormDismissed`: Callback for when the consent form is dismissed.
-  void show({Function(ConsentError? error)? onConsentFormDismissed}) {
-    _consentManagerChannel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case 'onConsentFormDismissed':
-          final error = call.arguments?['error'];
-          onConsentFormDismissed
-              ?.call(error != null ? ConsentError._(error) : null);
-          break;
-      }
+  /// - [onConsentFormDismissed]: Callback for when the consent form is dismissed.
+  void show({
+    void Function(ConsentError? error)? onConsentFormDismissed,
+  }) {
+    _setHandler({
+      'onConsentFormDismissed': (arguments) {
+        final error = arguments?['error'] != null
+            ? ConsentError._(arguments['error'])
+            : null;
+        onConsentFormDismissed?.call(error);
+      },
     });
-    _consentManagerChannel.invokeMethod('show');
+
+    _invokeMethod('show');
   }
 
   /// Load and show the consent form to determine the user's consent if required.
   ///
   /// Parameters:
-  /// - `appKey`: The Appodeal application key.
-  /// - `tagForUnderAgeOfConsent`: Flag to tag the user as under the age of consent.
-  /// - `onConsentFormDismissed`: Callback for when the consent form is dismissed.
+  /// - [appKey]: The Appodeal application key.
+  /// - [tagForUnderAgeOfConsent]: Flag to tag the user as under the age of consent.
+  /// - [onConsentFormDismissed]: Callback for when the consent form is dismissed.
   void loadAndShowIfRequired({
     required String appKey,
     bool tagForUnderAgeOfConsent = false,
-    Function(ConsentError? error)? onConsentFormDismissed,
+    void Function(ConsentError? error)? onConsentFormDismissed,
   }) {
-    _consentManagerChannel.setMethodCallHandler((call) async {
-      switch (call.method) {
-        case 'onConsentFormDismissed':
-          final error = call.arguments?['error'];
-          onConsentFormDismissed
-              ?.call(error != null ? ConsentError._(error) : null);
-          break;
-      }
+    _setHandler({
+      'onConsentFormDismissed': (arguments) {
+        final error = arguments?['error'] != null
+            ? ConsentError._(arguments['error'])
+            : null;
+        onConsentFormDismissed?.call(error);
+      },
     });
-    _consentManagerChannel.invokeMethod('loadAndShowIfRequired', {
+
+    _invokeMethod('loadAndShowIfRequired', {
       'appKey': appKey,
       'tagForUnderAgeOfConsent': tagForUnderAgeOfConsent,
     });
@@ -83,7 +85,22 @@ class AppodealConsentForm {
 
   /// Revokes the user's consent.
   void revoke() {
-    _consentManagerChannel.invokeMethod('revoke');
+    _invokeMethod('revoke');
+  }
+
+  /// Helper method to set a method call handler with specific callbacks.
+  void _setHandler(Map<String, Function(dynamic arguments)> handlers) {
+    _consentManagerChannel.setMethodCallHandler((call) async {
+      final handler = handlers[call.method];
+      if (handler != null) {
+        handler(call.arguments);
+      }
+    });
+  }
+
+  /// Helper method to invoke a method on the platform channel.
+  void _invokeMethod(String method, [Map<String, dynamic>? arguments]) {
+    _consentManagerChannel.invokeMethod(method, arguments);
   }
 }
 
@@ -91,9 +108,13 @@ class AppodealConsentForm {
 ///
 /// This class declares errors during consent behavior.
 class ConsentError {
+  /// A description of the consent error.
   final String description;
 
   ConsentError._(this.description);
+
+  @override
+  String toString() => 'ConsentError(description: $description)';
 }
 
 /// Appodeal SDK Consent Status enum.
@@ -112,7 +133,8 @@ enum ConsentStatus {
 }
 
 /// Extension on [ConsentStatus] for converting from integer values.
-extension _ConsentStatusExt on ConsentStatus {
+extension _ConsentStatusExtension on ConsentStatus {
+  /// Converts an integer to a [ConsentStatus] enum value.
   static ConsentStatus _fromInt(int value) {
     switch (value) {
       case 0:

@@ -35,6 +35,10 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
     Appodeal.setAutoCache(AppodealAdType.RewardedVideo, false);
     Appodeal.setUseSafeArea(true);
 
+    Appodeal.setAdRevenueCallbacks(onAdRevenueReceive: (adRevenue) {
+      print("onAdRevenueReceive: $adRevenue");
+    });
+
     Appodeal.initialize(
       appKey: exampleAppodealKey,
       adTypes: [

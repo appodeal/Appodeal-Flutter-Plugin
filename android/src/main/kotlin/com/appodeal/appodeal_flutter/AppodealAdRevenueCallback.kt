@@ -1,5 +1,6 @@
 package com.appodeal.appodeal_flutter
 
+import com.appodeal.ads.Appodeal
 import com.appodeal.ads.revenue.AdRevenueCallbacks
 import com.appodeal.ads.revenue.RevenueInfo
 import io.flutter.embedding.engine.plugins.FlutterPlugin
@@ -26,7 +27,7 @@ internal class AppodealAdRevenueCallback(
             adChannel.invokeMethod(
                 "onAdRevenueReceive",
                 mapOf(
-                    "adType" to revenueInfo.adType,
+                    "adType" to resolveAdType(revenueInfo.adType),
                     "networkName" to revenueInfo.networkName,
                     "demandSource" to revenueInfo.demandSource,
                     "adUnitName" to revenueInfo.adUnitName,
@@ -37,5 +38,17 @@ internal class AppodealAdRevenueCallback(
                 )
             )
         }
+
+        // FIXME: ad type for banners isn't correct from native side
+        private fun resolveAdType(adType: Int): Int {
+            return if (adType == BANNER_ALL) Appodeal.BANNER else adType
+        }
     }
 }
+
+private const val BANNER_ALL = Appodeal.BANNER or
+        Appodeal.BANNER_BOTTOM or
+        Appodeal.BANNER_TOP or
+        Appodeal.BANNER_VIEW or
+        Appodeal.BANNER_LEFT or
+        Appodeal.BANNER_RIGHT
