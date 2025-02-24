@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.4.2
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.4.2](https://docs.appodeal.com/ios/get-started)
+- Updated Appodeal Android SDK to [3.4.2](https://docs.appodeal.com/android/get-started)
+
 ## 3.4.1
 
 - Migrated AppodealAdType and AppodealBannerSize to enums
