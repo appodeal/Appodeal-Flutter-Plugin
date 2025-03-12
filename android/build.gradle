@@ -53,7 +53,7 @@ android {
 
 dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version"))
-    // Appodeal SDK 3.4.2.0
-    implementation 'com.appodeal.ads.sdk:core:3.4.2'
-    implementation 'com.appodeal.ads.sdk.networks:iab:3.4.2.0'
+    // Appodeal SDK 3.5.0.0
+    implementation 'com.appodeal.ads.sdk:core:3.5.0'
+    implementation 'com.appodeal.ads.sdk.networks:iab:3.5.0.0'
 }

@@ -574,6 +574,21 @@ class Appodeal {
       }
     });
   }
+
+  ///  Set self-hosted Bidon environment endpoint
+  ///
+  ///  @param [endpoint] Bidon environment endpoint
+  static Future<void> setBidonEndpoint(String endpoint) async {
+    await _channel.invokeMethod('setBidonEndpoint', {'endpoint': endpoint});
+  }
+
+  /// Get self-hosted Bidon environment endpoint
+  ///
+  /// @return Bidon environment endpoint
+  static Future<String?> getBidonEndpoint() async {
+    final String? endpoint = await _channel.invokeMethod('getBidonEndpoint');
+    return endpoint;
+  }
 }
 
 MethodChannel _defaultChannel(final Future Function(MethodCall call) handler) {

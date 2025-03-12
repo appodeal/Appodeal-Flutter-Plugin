@@ -95,6 +95,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             //Services logic
             "logEvent" -> logEvent(call, result)
             "validateInAppPurchase" -> validateInAppPurchase(call, result)
+            //Bidon self hosted
+            "setBidonEndpoint" -> setBidonEndpoint(call, result)
+            "getBidonEndpoint" -> getBidonEndpoint(call, result)
             else -> result.notImplemented()
         }
     }
@@ -406,6 +409,21 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
                 ) = channel.invokeMethod("onInAppPurchaseValidateSuccess", errors?.toArg())
             })
         result.success(null)
+    }
+
+    private fun setBidonEndpoint(call: MethodCall, result: Result) {
+        val endpoint = call.argument<String>("endpoint")
+        if (endpoint != null) {
+            Appodeal.setBidonEndpoint(endpoint)
+            result.success(null)
+        } else {
+            result.error("INVALID_ARGUMENT", "BidonEndpoint is null", null)
+        }
+    }
+
+    private fun getBidonEndpoint(call: MethodCall, result: Result) {
+        val endpoint = Appodeal.getBidonEndpoint()
+        result.success(endpoint)
     }
 }
 
