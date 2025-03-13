@@ -331,8 +331,6 @@ allprojects {
       implementation('com.appodeal.ads:sdk:3.5.0.0') {
           // ad networks
           exclude group: "com.appodeal.ads.sdk.networks", module: "admob"
-          exclude group: "org.bidon", module: "admob-adapter"
-          exclude group: "org.bidon", module: "gam-adapter"
           exclude group: "com.applovin.mediation", module: "google-adapter"
           exclude group: "com.applovin.mediation", module: "google-ad-manager-adapter"
           // services
