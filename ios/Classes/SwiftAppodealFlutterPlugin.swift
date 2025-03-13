@@ -73,6 +73,9 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
             //Services logic
         case "logEvent": logEvent(call, result)
         case "validateInAppPurchase": validateInAppPurchase(call, result)
+            //Bidon self hosted
+        case "setBidonEndpoint": setBidonEndpoint(call, result)
+        case "getBidonEndpoint": getBidonEndpoint(call, result)
         default: result(FlutterMethodNotImplemented)
         }
     }
@@ -312,6 +315,18 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
             channel.invokeMethod("onInAppPurchaseValidateFail", arguments: nil)
         }
         result(nil)
+    }
+
+    private func setBidonEndpoint(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        let endpoint = args["endpoint"] as! String
+        Appodeal.setBidonEndpoint(endpoint)
+        result(nil)
+    }
+
+    private func getBidonEndpoint(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let endpoint = Appodeal.getBidonEndpoint()
+        result(endpoint)
     }
 }
 

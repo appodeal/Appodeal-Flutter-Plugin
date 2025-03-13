@@ -347,7 +347,7 @@ class Appodeal {
 
   /// Gets SDK version.
   static String getSDKVersion() {
-    return "3.4.2";
+    return "3.5.0";
   }
 
   /// Gets SDK platform version.
@@ -573,6 +573,20 @@ class Appodeal {
           break;
       }
     });
+  }
+
+  ///  Set self-hosted Bidon environment endpoint
+  ///
+  ///  @param [endpoint] Bidon environment endpoint
+  static void setBidonEndpoint(String endpoint) {
+    _channel.invokeMethod('setBidonEndpoint', {'endpoint': endpoint});
+  }
+
+  /// Get self-hosted Bidon environment endpoint
+  ///
+  /// @return Bidon environment endpoint
+  static Future<String?> getBidonEndpoint() async {
+    return await _channel.invokeMethod('getBidonEndpoint');
   }
 }
 
