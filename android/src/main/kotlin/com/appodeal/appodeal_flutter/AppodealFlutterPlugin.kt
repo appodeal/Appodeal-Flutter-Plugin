@@ -412,13 +412,10 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     }
 
     private fun setBidonEndpoint(call: MethodCall, result: Result) {
-        val endpoint = call.argument<String>("endpoint")
-        if (endpoint != null) {
-            Appodeal.setBidonEndpoint(endpoint)
-            result.success(null)
-        } else {
-            result.error("INVALID_ARGUMENT", "BidonEndpoint is null", null)
-        }
+        val args = call.arguments as Map<*, *>
+        val endpoint = args["endpoint"] as String
+        Appodeal.setBidonEndpoint(endpoint)
+        result.success(null)
     }
 
     private fun getBidonEndpoint(call: MethodCall, result: Result) {

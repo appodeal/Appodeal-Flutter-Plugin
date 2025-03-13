@@ -318,13 +318,10 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     }
 
     private func setBidonEndpoint(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
-        if let args = call.arguments as? [String: Any],
-           let endpoint = args["endpoint"] as? String {
-            Appodeal.setBidonEndpoint(endpoint)
-            result(nil)
-        } else {
-            result(FlutterError(code: "INVALID_ARGUMENT", message: "BidonEndpoint is nil", details: nil))
-        }
+        let args = call.arguments as! [String: Any]
+        let endpoint = args["endpoint"] as! String
+        Appodeal.setBidonEndpoint(endpoint)
+        result(nil)
     }
 
     private func getBidonEndpoint(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
