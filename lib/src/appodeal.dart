@@ -347,7 +347,7 @@ class Appodeal {
 
   /// Gets SDK version.
   static String getSDKVersion() {
-    return "3.5.0";
+    return "3.5.2";
   }
 
   /// Gets SDK platform version.
@@ -355,10 +355,17 @@ class Appodeal {
     return await _channel.invokeMethod('getPlatformSdkVersion');
   }
 
-  /// Logs an event with [eventName] and [params] in all connected services.
-  static logEvent(String eventName, Map<String, dynamic> params) {
-    _channel
-        .invokeMethod('logEvent', {"eventName": eventName, "params": params});
+  /// Logs an event with [eventName] and [params], sending to [service] or all services by default.
+  static void logEvent(
+    String eventName,
+    Map<String, dynamic> params, [
+    int service = AppodealServices.ALL,
+  ]) {
+    _channel.invokeMethod('logEvent', {
+      'eventName': eventName,
+      'params': params,
+      'service': service,
+    });
   }
 
   /// Validates in-app [purchase] in one of the connected attribution services.

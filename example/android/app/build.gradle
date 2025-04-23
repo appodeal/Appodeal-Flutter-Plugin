@@ -60,6 +60,6 @@ flutter {
 }
 
 dependencies {
-    // Appodeal SDK 3.5.0.0
-    implementation 'com.appodeal.ads:sdk:3.5.0.0'
+    // Appodeal SDK 3.5.2.0
+    implementation 'com.appodeal.ads:sdk:3.5.2.0'
 }

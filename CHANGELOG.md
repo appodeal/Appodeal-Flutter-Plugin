@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.5.2
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [3.5.2](https://docs.appodeal.com/ios/get-started)
+- Updated Appodeal Android SDK to [3.5.2](https://docs.appodeal.com/android/get-started)
+
 ## 3.5.0
 
 ### Updated SDKs
