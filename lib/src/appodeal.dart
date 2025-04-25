@@ -361,10 +361,15 @@ class Appodeal {
     Map<String, dynamic> params, [
     int service = AppodealServices.ALL,
   ]) {
+    final int validService =
+        (service & ~AppodealServices.ALL) == 0 ? service : 0;
+    if (validService == 0) {
+        print('Appodeal logEvent: No services were found');
+    }
     _channel.invokeMethod('logEvent', {
       'eventName': eventName,
       'params': params,
-      'service': service,
+      'service': validService,
     });
   }
 

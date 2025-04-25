@@ -284,9 +284,9 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let params = args["params"] as! [String: Any]
         let maskNumber = args["service"] as? NSNumber
 
-        let maskUInt64 = maskNumber?.uint64Value
-        let maskUInt = maskUInt64 != nil ? UInt(maskUInt64!) : APDAnalyticsService.all.rawValue
-        let analyticsServicesFlag = APDAnalyticsService(rawValue: maskUInt)
+        let analyticsServicesFlag = maskNumber.map {
+            APDAnalyticsService(rawValue: UInt($0.uint64Value))
+        } ?? []
 
         Appodeal.trackEvent(eventName,
                             customParameters: params,
