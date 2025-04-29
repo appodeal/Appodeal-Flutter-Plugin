@@ -282,7 +282,15 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         let args = call.arguments as! [String: Any]
         let eventName = args["eventName"] as! String
         let params = args["params"] as! [String: Any]
-        Appodeal.trackEvent(eventName, customParameters: params)
+        let maskNumber = args["service"] as? NSNumber
+
+        let analyticsServicesFlag = maskNumber.map {
+            APDAnalyticsService(rawValue: UInt($0.uint64Value))
+        } ?? []
+
+        Appodeal.trackEvent(eventName,
+                            customParameters: params,
+                            analytics: analyticsServicesFlag)
         result(nil)
     }
     

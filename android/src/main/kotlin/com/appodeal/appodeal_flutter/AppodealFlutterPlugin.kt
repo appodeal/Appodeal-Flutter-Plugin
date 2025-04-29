@@ -1,6 +1,7 @@
 package com.appodeal.appodeal_flutter
 
 import com.appodeal.ads.Appodeal
+import com.appodeal.ads.AppodealServices
 import com.appodeal.ads.inapp.InAppPurchase
 import com.appodeal.ads.inapp.InAppPurchase.Type
 import com.appodeal.ads.inapp.InAppPurchaseValidateCallback
@@ -358,8 +359,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
     private fun logEvent(call: MethodCall, result: Result) {
         val args = call.arguments as Map<*, *>
         val eventName = args["eventName"] as String
+        val service = args["service"] as Int? ?: AppodealServices.ALL
         @Suppress("UNCHECKED_CAST") val params = args["params"] as Map<String, *>
-        Appodeal.logEvent(eventName, params)
+        Appodeal.logEvent(eventName, params, service)
         result.success(null)
     }
 
