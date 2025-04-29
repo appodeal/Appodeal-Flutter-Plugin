@@ -507,8 +507,8 @@ Appodeal.validateInAppPurchase(
 
 ##### Event tracking
 
-Appodeal SDK allows you to send events to analytic services such as Firebase, AppsFlyer, Adjust and Meta using a single
-method:
+Appodeal SDK allows you to send events to all analytic services such as Firebase, AppsFlyer, Adjust 
+and Meta using a single method:
 
 ```dart
 Appodeal.logEvent("example_event_name", {
@@ -516,6 +516,27 @@ Appodeal.logEvent("example_event_name", {
   "example_param_2": 123
 });
 ```
+
+Use this method for send event for a specific service:
+
+```dart
+Appodeal.logEvent("example_event_name", { 
+  "example_param_1": "example_param_value_1",
+  "example_param_2": 123 
+  },
+  AppodealServices.APPSFLYER
+);
+```
+
+You can use one or more of these values to select the service to send the event to:
+- `AppodealServices.ADJUST` - for Adjust service;
+- `AppodealServices.APPSFLYER` - for Appsflyer service;
+- `AppodealServices.FACEBOOK` - for Facebook service;
+- `AppodealServices.FIREBASE` - for Firebase service;
+- `AppodealServices.ALL` - for ALl services;
+
+or you may combine these values, for example, to sent event to Appsflyer and Firebase services:
+- `AppodealServices.APPSFLYER | AppodealServices.FIREBASE`
 
 ## Usage
 
