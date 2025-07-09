@@ -2,10 +2,10 @@
 
 ## 3.8.0
 
-### Updated SDKs
-
 - **Migrated to Kotlin 2.1.0**
 - **Min sdk api increased to 23**
+
+### Updated SDKs
 - Updated Appodeal iOS SDK to [3.8.0](https://docs.appodeal.com/ios/get-started)
 - Updated Appodeal Android SDK to [3.8.0](https://docs.appodeal.com/android/get-started)
 
