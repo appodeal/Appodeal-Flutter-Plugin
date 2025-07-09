@@ -1,5 +1,3 @@
-import 'package:stack_appodeal_flutter/stack_appodeal_flutter.dart';
-
 class AppodealServices {
   static const int ADJUST      = 0x01; // 0b0001
   static const int APPSFLYER   = 0x02; // 0b0010

@@ -24,12 +24,12 @@ if (flutterVersionName == null) {
 }
 
 android {
-    compileSdk 34
+    compileSdk 35
     namespace 'com.appodeal.appodeal_flutter_example'
 
     defaultConfig {
-        minSdk 21
-        targetSdk 34
+        minSdk 23
+        targetSdk 35
         applicationId "com.appodealstack.demo"
         versionName flutterVersionName
         versionCode flutterVersionCode.toInteger()
@@ -60,6 +60,6 @@ flutter {
 }
 
 dependencies {
-    // Appodeal SDK 3.5.2.0
-    implementation 'com.appodeal.ads:sdk:3.5.2.0'
+    // Appodeal SDK 3.8.0.0
+    implementation 'com.appodeal.ads:sdk:3.8.0.0'
 }
