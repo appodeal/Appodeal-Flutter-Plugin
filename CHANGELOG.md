@@ -1,5 +1,10 @@
 # Changelog
 
+## 3.8.1
+
+- Updated Appodeal iOS SDK to [3.8.1](https://docs.appodeal.com/ios/get-started)
+- Updated Appodeal Android SDK to [3.8.1](https://docs.appodeal.com/android/get-started)
+
 ## 3.8.0
 
 - **Migrated to Kotlin 2.1.0**
