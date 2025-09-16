@@ -28,7 +28,7 @@ android {
     namespace 'com.appodeal.appodeal_flutter_example'
 
     defaultConfig {
-        minSdk 23
+        minSdkVersion 23
         targetSdk 35
         applicationId "com.appodealstack.demo"
         versionName flutterVersionName
@@ -60,6 +60,6 @@ flutter {
 }
 
 dependencies {
-    // Appodeal SDK 3.8.1.0
-    implementation 'com.appodeal.ads:sdk:3.8.1.0'
+    // Appodeal SDK 3.10.0.0
+    implementation 'com.appodeal.ads:sdk:3.10.0.0'
 }
