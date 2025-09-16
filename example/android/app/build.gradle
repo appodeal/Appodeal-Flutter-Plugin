@@ -28,7 +28,7 @@ android {
     namespace 'com.appodeal.appodeal_flutter_example'
 
     defaultConfig {
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 23
         targetSdk 35
         applicationId "com.appodealstack.demo"
         versionName flutterVersionName
