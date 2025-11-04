@@ -189,7 +189,7 @@ See [docs](https://docs.appodeal.com/en/ios/get-started#getstarted-Step1.ImportS
 
 3. Call `pod install`
 4. Open `.xcworkspace`
-5. Configfure `info.plist`.
+5. Configure `Info.plist`.
 
 ##### SKAdNetworkIds
 
@@ -292,15 +292,15 @@ allprojects {
 
 2. Build your project
 
-#### Admob configuration
+#### AdMob configuration
 
 > [!WARNING]  
-> Admob Bidding is now available since Appodeal SDK 3.2.0.\
-> Don't forget to download our newest version of Admob Sync tool from this page and perform sync.\
-> You can read more about Admob Sync in
+> AdMob Bidding is now available since Appodeal SDK 3.2.0.\
+> Don't forget to download our newest version of AdMob Sync tool from this page and perform sync.\
+> You can read more about AdMob Sync in
 > our [guide](https://docs.appodeal.com/networks-setup/admob-sync).
 
-- **How to add Admob Ad Network to your project:**
+- **How to add AdMob Ad Network to your project:**
 
   Add your AdMob app id to `meta-data` tag:
 
@@ -323,7 +323,7 @@ allprojects {
   <string>YOUR_ADMOB_APP_ID</string>
   ```
 
-- **How to remove Admob Ad Network from your project:**
+- **How to remove AdMob Ad Network from your project:**
 
   Change next dependencies into `build.gradle` (module: app)
 
@@ -577,7 +577,7 @@ Use the type codes below to set the preferred ad format:
 
 * General configuration
 
-> Call this method before initilisation
+> Call this method before initialization
 
 ``` dart
 // Set ad auto caching enabled or disabled
@@ -590,7 +590,7 @@ Appodeal.setTesting(false); //default - false
 // Set Appodeal SDK logging level
 Appodeal.setLogLevel(Appodeal.LogLevelVerbose); //default - Appodeal.LogLevelNone
 
-// Enable or disable child direct threatment
+// Enable or disable child direct treatment
 Appodeal.setChildDirectedTreatment(false); //default - false
 
 // Disable network for specific ad type
@@ -781,7 +781,7 @@ Europe are required to comply with GDPR or risk facing heavy fines. The Californ
 effect on January 1, 2020. **We have put together some resources below to help publishers understand better the steps
 they need to take to be GDPR compliant.**
 
-> Note: You can learn more about GDPR and CCPA and their.
+> Note: You can learn more about GDPR and CCPA and their differences.
 > differences [here](https://iapp.org/resources/article/ccpa-and-gdpr-comparison-chart/).
 
 ### Step 1: Update Privacy Policy
