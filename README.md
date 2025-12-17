@@ -69,8 +69,8 @@ $ flutter pub get
 #### iOS
 
 > [!IMPORTANT]
-> - iOS 13.0 or higher.
-> - iOS 15.0 or higher for Firebase service.
+> - iOS 13.0 or higher for using the Appodeal Flutter plugin (base SDK).
+> - If you integrate the optional Firebase service (see [Firebase](#firebase)), your iOS deployment target must be 15.0 or higher.
 > - Appodeal SDK is compatible with both ARC and non-ARC projects.
 > - Use Xcode 15.3 or higher.
 
