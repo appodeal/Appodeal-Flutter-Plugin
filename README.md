@@ -106,7 +106,7 @@ def appodeal
    pod 'APDSentryAdapter', '3.12.0.0'
    pod 'APDUnityAdapter', '3.12.0.0'
    pod 'APDVungleAdapter', '3.12.0.0'
-   pod 'APDYandexAdapter', '3.12.0.0'
+   pod 'APDYandexAdapter', '3.12.0.1'
    pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '5.3.2.0'
    pod 'AppLovinMediationBidMachineAdapter', '3.5.0.0.0'
    pod 'AppLovinMediationBigoAdsAdapter', '5.0.0.0'
