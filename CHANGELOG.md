@@ -1,5 +1,14 @@
 # Changelog
 
+## 4.1.0
+
+- **Android SDK now uses individual adapter dependencies instead of a single umbrella SDK**
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [4.1.0](https://docs.appodeal.com/ios/get-started)
+- Updated Appodeal Android SDK to [4.1.0](https://docs.appodeal.com/android/get-started)
+
 ## 3.12.0
 
 - Updated Appodeal iOS SDK to [3.12.0](https://docs.appodeal.com/ios/get-started)

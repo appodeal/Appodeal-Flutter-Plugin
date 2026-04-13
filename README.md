@@ -2,7 +2,7 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## Appodeal SDK 3.12.0
+## Appodeal SDK 4.1.0
 
 - **Google CMP and TCF v2 Support**
   - To enhance the relevance of ads for your users and comply with regulations like GDPR and CCPA,
@@ -33,10 +33,6 @@ Official Appodeal Flutter Plugin for your Flutter application.
     - [Android](#android)
     - [Admob configuration](#admob-configuration)
 - [Services](#services)
-    - [Adjust](#adjust)
-    - [AppsFlyer](#appsflyer)
-    - [Firebase](#firebase)
-    - [Meta](#meta)
     - [Tracking In-App Purchases](#tracking-in-app-purchases)
     - [Event tracking](#event-tracking)
 - [Usage](#usage)
@@ -57,7 +53,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 3.12.0
+  stack_appodeal_flutter: 4.1.0
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -87,78 +83,10 @@ platform :ios, '13.0'
 use_frameworks!
 
 def appodeal
-   pod 'Appodeal', '3.12.0'
-   pod 'APDAmazonAdapter', '3.12.0.0'
-   pod 'APDAppLovinAdapter', '3.12.0.0'
-   pod 'APDAppLovinMAXAdapter', '3.12.0.0'
-   pod 'APDBidMachineAdapter', '3.12.0.0'
-   pod 'APDBidonAdapter', '3.12.0.0'
-   pod 'APDBigoAdsAdapter', '3.12.0.0'
-   pod 'APDDTExchangeAdapter', '3.12.0.0'
-   pod 'APDGoogleAdMobAdapter', '3.12.0.0'
-   pod 'APDIABAdapter', '3.12.0.0'
-   pod 'APDInMobiAdapter', '3.12.0.0'
-   pod 'APDIronSourceAdapter', '3.12.0.0'
-   pod 'APDLevelPlayAdapter', '3.12.0.0'
-   pod 'APDMetaAudienceNetworkAdapter', '3.12.0.0'
-   pod 'APDMintegralAdapter', '3.12.0.0'
-   pod 'APDMyTargetAdapter', '3.12.0.0'
-   pod 'APDSentryAdapter', '3.12.0.0'
-   pod 'APDUnityAdapter', '3.12.0.0'
-   pod 'APDVungleAdapter', '3.12.0.0'
-   pod 'APDYandexAdapter', '3.12.0.1'
-   pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '5.3.2.0'
-   pod 'AppLovinMediationBidMachineAdapter', '3.5.0.0.0'
-   pod 'AppLovinMediationBigoAdsAdapter', '5.0.0.0'
-   pod 'AppLovinMediationByteDanceAdapter', '7.7.0.7.0'
-   pod 'AppLovinMediationChartboostAdapter', '9.10.1.0'
-   pod 'AppLovinMediationFacebookAdapter', '6.20.1.0'
-   pod 'AppLovinMediationFyberAdapter', '8.4.1.0'
-   pod 'AppLovinMediationGoogleAdManagerAdapter', '12.13.0.0'
-   pod 'AppLovinMediationGoogleAdapter', '12.13.0.0'
-   pod 'AppLovinMediationInMobiAdapter', '11.1.0.0'
-   pod 'AppLovinMediationIronSourceAdapter', '9.1.0.0.0'
-   pod 'AppLovinMediationMintegralAdapter', '7.7.9.0.0'
-   pod 'AppLovinMediationMobileFuseAdapter', '1.9.3.0'
-   pod 'AppLovinMediationMolocoAdapter', '4.1.0.0'
-   pod 'AppLovinMediationMyTargetAdapter', '5.36.2.0'
-   pod 'AppLovinMediationPubMaticAdapter', '4.10.0.0'
-   pod 'AppLovinMediationUnityAdsAdapter', '4.16.3.0'
-   pod 'AppLovinMediationVerveAdapter', '3.7.0.0'
-   pod 'AppLovinMediationVungleAdapter', '7.6.2.0'
-   pod 'AppLovinMediationYandexAdapter', '7.17.0.0'
-   pod 'BidMachineIronSourceCustomAdapter', '3.5.0.2'
-   pod 'BidonAdapterAmazon', '5.3.2.0'
-   pod 'BidonAdapterAppLovin', '13.5.1.0'
-   pod 'BidonAdapterBidMachine', '3.5.0.0'
-   pod 'BidonAdapterBigoAds', '5.0.0.0'
-   pod 'BidonAdapterChartboost', '9.10.1.0'
-   pod 'BidonAdapterDTExchange', '8.4.1.0'
-   pod 'BidonAdapterInMobi', '11.1.0.0'
-   pod 'BidonAdapterIronSource', '9.1.0.0.0'
-   pod 'BidonAdapterMetaAudienceNetwork', '6.20.1.0'
-   pod 'BidonAdapterMintegral', '7.7.9.0'
-   pod 'BidonAdapterMobileFuse', '1.9.3.0'
-   pod 'BidonAdapterMoloco', '4.1.0.0'
-   pod 'BidonAdapterMyTarget', '5.36.2.0'
-   pod 'BidonAdapterTaurusX', '1.9.2.0'
-   pod 'BidonAdapterUnityAds', '4.16.3.0'
-   pod 'BidonAdapterVungle', '7.6.2.0'
-   pod 'BidonAdapterYandex', '7.17.0.0'
-   pod 'IronSourceAdMobAdapter', '5.3.0.0'
-   pod 'IronSourceBidMachineAdapter', '5.1.0.0'
-   pod 'IronSourceBigoAdapter', '5.1.0.0'
-   pod 'IronSourceFacebookAdapter', '5.0.0.0'
-   pod 'IronSourceFyberAdapter', '5.2.0.0'
-   pod 'IronSourceInMobiAdapter', '5.3.0.0'
-   pod 'IronSourceMintegralAdapter', '5.1.0.0'
-   pod 'IronSourceMobileFuseAdapter', '5.0.0.0'
-   pod 'IronSourceMolocoAdapter', '5.2.0.0'
-   pod 'IronSourceMyTargetAdapter', '5.3.0.0'
-   pod 'IronSourcePangleAdapter', '5.5.0.0'
-   pod 'IronSourceUnityAdsAdapter', '5.2.0.0'
-   pod 'IronSourceVerveAdapter', '5.1.0.0'
-   pod 'IronSourceVungleAdapter', '5.3.0.0'
+   pod 'Appodeal', '4.1.0'
+   # Add adapter pods here.
+   # Use the Appodeal Dependencies Wizard to generate an up-to-date list:
+   # https://docs.appodeal.com/ios/advanced/configure-mediated-networks
 end
 
 target 'Runner' do
@@ -170,8 +98,8 @@ target 'Runner' do
 end
 ```
 
-You can change following implementation to use custom mediation setup.
-See [docs](https://docs.appodeal.com/en/ios/get-started#getstarted-Step1.ImportSDK).
+> [!TIP]
+> Use the [Appodeal Dependencies Wizard](https://docs.appodeal.com/ios/advanced/configure-mediated-networks) to configure mediated networks and generate an always up-to-date dependency list for your Podfile.
 
 > Note: Appodeal requires to use `use_frameworks!`. You need to remove Flipper dependency from Podfile and AppDelegate.
 
@@ -186,9 +114,7 @@ which means ad networks are able to attribute an app install even when IDFA is u
 enable this functionality, you will need to update the `SKAdNetworkItems` key with an additional
 dictionary in your `Info.plist`.
 
-- Select **Info.plist** in the Project navigator in Xcode
-- Right-click on **Info.plist** file → Open as → Source Code
-- Add *SKAdNetworkIds* according to [doc](https://docs.appodeal.com/ios/get-started#add-skadnetworkids)
+The up-to-date list of SKAdNetworkIds is available in the [official documentation](https://docs.appodeal.com/ios/get-started#add-skadnetworkids).
 
 ##### App Transport Security
 
@@ -252,13 +178,11 @@ Add dependencies into `build.gradle` (module: app)
 ``` groovy
 dependencies {
     // ... other project dependencies
-    implementation ('com.appodeal.ads:sdk:3.12.0.0') {
-        exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
-        exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
-        exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
-        exclude group: 'com.appodeal.ads.sdk.services', module: 'facebook_analytics'
-    }
-    ...
+    // Appodeal SDK 4.1.0
+    implementation("com.appodeal.ads.sdk:core:4.1.0")
+    // Add adapter dependencies here.
+    // Use the Appodeal Dependencies Wizard to generate an up-to-date list:
+    // https://docs.appodeal.com/android/advanced/configure-mediated-networks
 }
 ```
 
@@ -268,15 +192,15 @@ Add repository into `build.gradle` (module: project)
 allprojects {
     repositories {
         ...
-        jcenter()
         maven { url "https://artifactory.appodeal.com/appodeal" }
         ...
     }
 }
 ```
 
-> Note: You can change following implementation to use custom mediation setup.
-> See [Docs](https://docs.appodeal.com/en/android/get-started#getstarted-ImportSDK).
+> [!TIP]
+> Starting from Appodeal SDK 4.1.0, Android uses individual adapter dependencies (same approach as iOS).
+> Use the [Appodeal Dependencies Wizard](https://docs.appodeal.com/android/advanced/configure-mediated-networks) to configure mediated networks and generate an always up-to-date dependency list for your `build.gradle`.
 
 2. Build your project
 
@@ -315,119 +239,20 @@ allprojects {
 
   Change next dependencies into `build.gradle` (module: app)
 
-  ```groovy
-  dependencies {
-      ...
-      // ... other project dependencies
-      implementation('com.appodeal.ads:sdk:3.12.0.0') {
-          // ad networks
-          exclude group: "com.appodeal.ads.sdk.networks", module: "admob"
-          exclude group: "com.applovin.mediation", module: "google-adapter"
-          exclude group: "com.applovin.mediation", module: "google-ad-manager-adapter"
-          exclude group: "com.unity3d.ads-mediation", module: "admob-adapter"
-          // services
-          exclude group: 'com.appodeal.ads.sdk.services', module: 'adjust'
-          exclude group: 'com.appodeal.ads.sdk.services', module: 'appsflyer'
-          exclude group: 'com.appodeal.ads.sdk.services', module: 'firebase'
-          exclude group: 'com.appodeal.ads.sdk.services', module: 'facebook_analytics'
-      }
-      ...
-  }
-  ```
-
-  Remove next pods from `Podfile`:
-
-  ```ruby
-  pod 'APDGoogleAdMobAdapter', '3.12.0.0'
-  pod 'AppLovinMediationGoogleAdManagerAdapter', '12.13.0.0'
-  pod 'AppLovinMediationGoogleAdapter', '12.13.0.0'
-  pod 'IronSourceAdMobAdapter', '5.3.0.0'
-  ```
+  Starting from Appodeal SDK 4.1.0, dependencies are added individually.
+  Simply do not include AdMob-related adapters in your `build.gradle` / `Podfile`.
+  Use the [Dependencies Wizard](https://docs.appodeal.com/android/advanced/configure-mediated-networks) to generate the correct dependency list without AdMob.
 
 ## Services
 
 Please, read iOS and Android docs at [wiki](https://docs.appodeal.com/) to get deeper understanding how
 Appodeal SDK Services works.
 
-#### Adjust
+Appodeal SDK supports the following services: **Adjust**, **AppsFlyer**, **Firebase**, and **Meta**.
 
-Add dependencies into build.gradle (module: app)
-
-```groovy
-dependencies {
-    // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:adjust:3.12.0.0'
-}
-```
-
-Add dependencies into _Podfile_
-
-```ruby
-def appodeal
-  // ... other project pods
-  pod 'APDAdjustAdapter', '3.12.0.0'
-end
-```
-
-#### AppsFlyer
-
-Add dependencies into build.gradle (module: app)
-
-```groovy
-dependencies {
-    // ... other project dependencies
-  implementation 'com.appodeal.ads.sdk.services:appsflyer:3.12.0.0'
-}
-```
-
-Add dependencies into _Podfile_
-
-```ruby
-def appodeal
-  // ... other project pods
-  pod 'APDAppsFlyerAdapter', '3.12.0.0'
-end
-```
-
-#### Firebase
-
-Add dependencies into build.gradle (module: app)
-
-```groovy
-dependencies {
-    // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:firebase:3.12.0.0'
-}
-```
-
-Add dependencies into _Podfile_
-
-```ruby
-def appodeal
-  // ... other project pods
-  pod 'APDFirebaseAdapter', '3.12.0.0'
-end
-```
-
-#### Meta
-
-Add dependencies into build.gradle (module: app)
-
-```groovy
-dependencies {
-    // ... other project dependencies
-    implementation 'com.appodeal.ads.sdk.services:facebook_analytics:3.12.0.0'
-}
-```
-
-Add dependencies into _Podfile_
-
-```ruby
-def appodeal
-  // ... other project pods
-  pod 'APDFacebookAdapter', '3.12.0.0'
-end
-```
+To add service adapters to your project, use the Dependencies Wizard:
+- [Android](https://docs.appodeal.com/android/advanced/configure-mediated-networks)
+- [iOS](https://docs.appodeal.com/ios/advanced/configure-mediated-networks)
 
 ##### Tracking In-App Purchases
 
