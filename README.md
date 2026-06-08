@@ -73,6 +73,7 @@ $ flutter pub get
 1. Go to `ios/` folder and open *Podfile*
 2. Add Appodeal adapters. Add pods into `./ios/Podfile`:
 
+<!-- appodeal-deps:ios:start -->
 ```ruby
 source 'https://cdn.cocoapods.org'
 source 'https://github.com/appodeal/CocoaPods.git'
@@ -97,6 +98,7 @@ target 'Runner' do
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
 end
 ```
+<!-- appodeal-deps:ios:end -->
 
 > [!TIP]
 > Use the [Appodeal Dependencies Wizard](https://docs.appodeal.com/ios/advanced/configure-mediated-networks) to configure mediated networks and generate an always up-to-date dependency list for your Podfile.
@@ -175,6 +177,7 @@ To improve ad performance the following entries should be added:
 
 Add dependencies into `build.gradle` (module: app)
 
+<!-- appodeal-deps:android:start -->
 ``` groovy
 dependencies {
     // ... other project dependencies
@@ -185,6 +188,7 @@ dependencies {
     // https://docs.appodeal.com/android/advanced/configure-mediated-networks
 }
 ```
+<!-- appodeal-deps:android:end -->
 
 Add repository into `build.gradle` (module: project)
 
