@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // Updates the README.md dependency blocks from the Appodeal Wizard API.
-// API output is used verbatim; only the iOS Podfile target gets Flutter linking injected.
+// API output is used verbatim; the iOS Podfile target additionally gets
+// `use_modular_headers!` and the Flutter autolinking call injected.
 
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
@@ -78,9 +79,10 @@ async function fetchDependencyBlock(platform, version, lang) {
   return (await depsRes.text()).replace(/\t/g, '    ');
 }
 
-/** Wrap rendered code in a fenced Markdown block. */
-function fenced(lang, body) {
-  return `${lang}\n${body.trimEnd()}\n\`\`\``;
+/** Wrap rendered code in a fenced Markdown block. `fence` is the full opening fence
+ *  including backticks, e.g. "``` groovy" or "```ruby". */
+function fenced(fence, body) {
+  return `${fence}\n${body.trimEnd()}\n\`\`\``;
 }
 
 /**
@@ -98,10 +100,10 @@ function androidDependenciesOnly(text) {
 }
 
 /**
- * Inject the Flutter linking line into the iOS Podfile target. The Wizard renders a plain
- * native target (`target 'Sample' do ... end`); Flutter apps additionally need the
- * autolinking call, otherwise the copied Podfile won't build. Everything else from the
- * API response is left untouched.
+ * Adapt the Wizard's iOS Podfile target for Flutter. The Wizard renders a plain native
+ * target (`target 'Sample' do ... end`); Flutter apps additionally need `use_modular_headers!`
+ * and the `flutter_install_all_ios_pods` autolinking call, otherwise the copied Podfile
+ * won't build. Everything else from the API response is left untouched.
  */
 function addFlutterLinking(podfile) {
   const linking = [
@@ -142,9 +144,9 @@ async function main() {
   const version = await getVersion();
   console.log(`Updating README dependency lists for Appodeal SDK ${version}`);
 
-  // android uses kts (`kt`) verbatim; ios ignores the language, returns Ruby, and gets
-  // the Flutter linking injected into its target.
-  const android = androidDependenciesOnly(await fetchDependencyBlock('android', version, 'kt'));
+  // android uses the Groovy DSL (matches the README's `build.gradle` / groovy fence); ios
+  // ignores the language, returns Ruby, and gets the Flutter linking injected into its target.
+  const android = androidDependenciesOnly(await fetchDependencyBlock('android', version, 'groovy'));
   const ios = addFlutterLinking(await fetchDependencyBlock('ios', version));
 
   let readme = await readFile(README, 'utf8');
