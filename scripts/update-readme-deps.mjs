@@ -27,7 +27,9 @@ async function getVersion() {
   const pubspec = await readFile(join(ROOT, 'pubspec.yaml'), 'utf8');
   const match = pubspec.match(/^version:\s*(.+)$/m);
   if (!match) throw new Error('pubspec.yaml has no "version" field');
-  return match[1].trim();
+  // Strip any build metadata (e.g. `4.1.0+4` -> `4.1.0`): the Wizard API endpoints
+  // expect a plain SDK version, a `+...` suffix would break the request path.
+  return match[1].trim().split('+')[0];
 }
 
 async function apiFetch(path, options = {}) {
