@@ -55,6 +55,24 @@ class _ConsentPageState extends State<ConsentPage> {
     Appodeal.ConsentForm.revoke();
   }
 
+  getPrivacyOptionsRequirementStatus() async {
+    final status =
+        await Appodeal.ConsentForm.getPrivacyOptionsRequirementStatus();
+    print("getPrivacyOptionsRequirementStatus: status - $status");
+  }
+
+  showPrivacyOptionsForm() {
+    Appodeal.ConsentForm.showPrivacyOptionsForm(
+      onConsentFormDismissed: (error) {
+        if (error != null) {
+          print("showPrivacyOptionsForm dismissed: error - ${error.description}");
+        } else {
+          print("showPrivacyOptionsForm dismissed: No error");
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +83,7 @@ class _ConsentPageState extends State<ConsentPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: Column(children: [
+        child: Column(spacing: 12, children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -123,6 +141,42 @@ class _ConsentPageState extends State<ConsentPage> {
                   revoke();
                 },
                 child: const Text('REVOKE CONSENT'),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    fixedSize: Size.fromWidth(300)),
+                onPressed: () {
+                  getPrivacyOptionsRequirementStatus();
+                },
+                child: const Text(
+                  'PRIVACY OPTIONS REQUIREMENT STATUS',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    fixedSize: Size.fromWidth(300)),
+                onPressed: () {
+                  showPrivacyOptionsForm();
+                },
+                child: const Text(
+                  'SHOW PRIVACY OPTIONS FORM',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),

@@ -19,6 +19,8 @@ internal final class AppodealConsentManager {
         case "show": show(call, result)
         case "loadAndShowIfRequired": loadAndShowIfRequired(call, result)
         case "revoke": revoke(call, result)
+        case "getPrivacyOptionsRequirementStatus": getPrivacyOptionsRequirementStatus(call, result)
+        case "showPrivacyOptionsForm": showPrivacyOptionsForm(call, result)
         default: result(FlutterMethodNotImplemented)
         }
     }
@@ -120,6 +122,36 @@ internal final class AppodealConsentManager {
     
     private func revoke(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         ConsentManager.shared.revoke()
+        result(nil)
+    }
+
+    private func getPrivacyOptionsRequirementStatus(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        // Normalized to match the Dart PrivacyOptionsRequirementStatus enum and the Android side:
+        // 0 = unknown, 1 = required, 2 = notRequired.
+        let normalized: Int
+        switch ConsentManager.shared.privacyOptionsRequirementStatus {
+        case .required: normalized = 1
+        case .notRequired: normalized = 2
+        default: normalized = 0
+        }
+        result(normalized)
+    }
+
+    private func showPrivacyOptionsForm(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        guard let rootViewController = UIApplication.shared.keyWindow?.rootViewController else {
+            let args: [String: String] = ["error": "Root view controller is nil"]
+            self.adChannel.invokeMethod("onConsentFormDismissed", arguments: args)
+            return
+        }
+
+        ConsentManager.shared.showPrivacyOptionsForm(rootViewController: rootViewController) { error in
+            if let error = error {
+                let args: [String: String] = ["error": error.localizedDescription]
+                self.adChannel.invokeMethod("onConsentFormDismissed", arguments: args)
+            } else {
+                self.adChannel.invokeMethod("onConsentFormDismissed", arguments: nil)
+            }
+        }
         result(nil)
     }
 }
