@@ -2,7 +2,7 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## Appodeal SDK 4.1.0
+## Appodeal SDK 4.2.0
 
 - **Google CMP and TCF v2 Support**
   - To enhance the relevance of ads for your users and comply with regulations like GDPR and CCPA,
@@ -53,7 +53,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 4.1.0
+  stack_appodeal_flutter: 4.2.0
 ```
 
 Install the plugin by running the command below in the terminal:
