@@ -865,6 +865,47 @@ Appodeal.ConsentForm.loadAndShowIfRequired(
 Appodeal.ConsentForm.revoke();
 ```
 
+- Privacy Entry Point (US State Regulations / GDPR re-consent)
+
+US state privacy laws (CCPA, CPA, VCDPA, and others) follow an opt-out model: data processing
+is allowed by default, but users must be given a permanent way to opt out — typically a
+"Do Not Sell or Share My Personal Information" button (the Privacy Entry Point). In the US zone
+no form is shown on initialization; the opt-out form must be presented on demand, in response to
+a user tap.
+
+Both APIs become available only after `requestConsentInfoUpdate` has completed (i.e. after a
+`load` / `loadAndShowIfRequired` call).
+
+Use `getPrivacyOptionsRequirementStatus()` to decide whether to render the opt-out button. It
+returns `PrivacyOptionsRequirementStatus.required` for users in regulated US states and in the
+EEA (for GDPR re-consent), `.notRequired` elsewhere, and `.unknown` before
+`requestConsentInfoUpdate` has completed.
+
+```dart
+final status = await Appodeal.ConsentForm.getPrivacyOptionsRequirementStatus();
+if (status == PrivacyOptionsRequirementStatus.required) {
+  // Show a "Do Not Sell or Share My Personal Information" / Privacy Settings button
+}
+```
+
+Call `showPrivacyOptionsForm()` from the action handler of that button. This is the only way to
+display the US opt-out form (or the GDPR re-consent form in the EEA), and it must be triggered by
+an explicit user interaction — not at app launch.
+
+```dart
+Appodeal.ConsentForm.showPrivacyOptionsForm(
+  onConsentFormDismissed: (error) {
+    // A non-null error means the form could not be presented.
+  },
+);
+```
+
+> [!NOTE]
+> Once the user interacts with the US opt-out form, Stack Consent Manager writes the corresponding
+> `IABGPP_*` keys to the platform's default storage, where ad networks read them. Before the form
+> has been shown at least once, these keys remain empty and ad networks may treat the user as
+> "no consent collected".
+
 
 ## App-ads.txt
 
