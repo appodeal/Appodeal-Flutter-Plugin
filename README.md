@@ -187,6 +187,15 @@ end
 
 > Note: Appodeal requires to use `use_frameworks!`. You need to remove Flipper dependency from Podfile and AppDelegate.
 
+> [!NOTE]
+> The Appodeal dependency list pulls pods from three sources (`appodeal`, `bidon-io`, `cdn.cocoapods.org`). Because some pods are published in more than one of them, CocoaPods prints a `Found multiple specifications` warning for each. Add the following to the top of your `Podfile` to silence those warnings and speed up project generation on this large dependency graph:
+>
+> ```ruby
+> install! 'cocoapods',
+>   :deterministic_uuids => false,
+>   :warn_for_multiple_pod_sources => false
+> ```
+
 3. Call `pod install`
 4. Open `.xcworkspace`
 5. Configure `Info.plist`.
