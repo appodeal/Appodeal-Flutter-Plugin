@@ -6,6 +6,8 @@ import com.appodeal.consent.ConsentInfoUpdateCallback
 import com.appodeal.consent.ConsentManager
 import com.appodeal.consent.ConsentManagerError
 import com.appodeal.consent.ConsentUpdateRequestParameters
+import com.appodeal.consent.OnConsentFormDismissedListener
+import com.appodeal.consent.PrivacyOptionsRequirementStatus
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -28,6 +30,8 @@ internal class AppodealConsentManager(
             "show" -> show(call, result)
             "loadAndShowIfRequired" -> loadAndShowIfRequired(call, result)
             "revoke" -> revoke(call, result)
+            "getPrivacyOptionsRequirementStatus" -> getPrivacyOptionsRequirementStatus(call, result)
+            "showPrivacyOptionsForm" -> showPrivacyOptionsForm(call, result)
             else -> result.notImplemented()
         }
     }
@@ -121,6 +125,31 @@ internal class AppodealConsentManager(
 
     private fun revoke(call: MethodCall, result: MethodChannel.Result) {
         ConsentManager.revoke(flutterPlugin.context)
+        result.success(null)
+    }
+
+    private fun getPrivacyOptionsRequirementStatus(call: MethodCall, result: MethodChannel.Result) {
+        // Normalized to match the Dart PrivacyOptionsRequirementStatus enum and the iOS side:
+        // 0 = unknown, 1 = required, 2 = notRequired.
+        val normalized = when (ConsentManager.getPrivacyOptionsRequirementStatus()) {
+            PrivacyOptionsRequirementStatus.Required -> 1
+            PrivacyOptionsRequirementStatus.NotRequired -> 2
+            else -> 0
+        }
+        result.success(normalized)
+    }
+
+    private fun showPrivacyOptionsForm(call: MethodCall, result: MethodChannel.Result) {
+        val activity = flutterPlugin.activity
+        ConsentManager.showPrivacyOptionsForm(
+            activity,
+            object : OnConsentFormDismissedListener {
+                override fun onConsentFormDismissed(error: ConsentManagerError?) {
+                    val invokeArgs = error?.let { mapOf("error" to it.localizedMessage) }
+                    adChannel.invokeMethod("onConsentFormDismissed", invokeArgs)
+                }
+            }
+        )
         result.success(null)
     }
 }

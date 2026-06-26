@@ -88,6 +88,48 @@ class AppodealConsentForm {
     _invokeMethod('revoke');
   }
 
+  /// Returns whether a Privacy Entry Point button must be surfaced in the app UI.
+  ///
+  /// US state privacy laws (CCPA, CPA, VCDPA, and others) follow an opt-out model:
+  /// data processing is allowed by default, but users must be given a permanent way
+  /// to opt out — typically a "Do Not Sell or Share My Personal Information" button.
+  ///
+  /// Returns [PrivacyOptionsRequirementStatus.required] for users in regulated US
+  /// states and in the EEA (for GDPR re-consent), [PrivacyOptionsRequirementStatus.notRequired]
+  /// elsewhere, and [PrivacyOptionsRequirementStatus.unknown] before
+  /// [load] / [loadAndShowIfRequired] (i.e. requestConsentInfoUpdate) has completed.
+  Future<PrivacyOptionsRequirementStatus>
+      getPrivacyOptionsRequirementStatus() async {
+    final value = await _consentManagerChannel
+        .invokeMethod<int>('getPrivacyOptionsRequirementStatus');
+    return _PrivacyOptionsRequirementStatusExtension._fromInt(value ?? 0);
+  }
+
+  /// Shows the US opt-out form (or the GDPR re-consent form in the EEA).
+  ///
+  /// Call this from the action handler of your Privacy Entry Point button. This is
+  /// the only way to display the US opt-out form, and it must be triggered by an
+  /// explicit user interaction — not at app launch. Available only after
+  /// [load] / [loadAndShowIfRequired] (i.e. requestConsentInfoUpdate) has completed.
+  ///
+  /// Parameters:
+  /// - [onConsentFormDismissed]: Callback for when the form is dismissed. A non-null
+  ///   [ConsentError] means the form could not be presented.
+  void showPrivacyOptionsForm({
+    void Function(ConsentError? error)? onConsentFormDismissed,
+  }) {
+    _setHandler({
+      'onConsentFormDismissed': (arguments) {
+        final error = arguments?['error'] != null
+            ? ConsentError._(arguments['error'])
+            : null;
+        onConsentFormDismissed?.call(error);
+      },
+    });
+
+    _invokeMethod('showPrivacyOptionsForm');
+  }
+
   /// Helper method to set a method call handler with specific callbacks.
   void _setHandler(Map<String, Function(dynamic arguments)> handlers) {
     _consentManagerChannel.setMethodCallHandler((call) async {
@@ -147,6 +189,37 @@ extension _ConsentStatusExtension on ConsentStatus {
         return ConsentStatus.obtained;
       default:
         return ConsentStatus.unknown;
+    }
+  }
+}
+
+/// Appodeal SDK Privacy Options Requirement Status enum.
+///
+/// Indicates whether a Privacy Entry Point button (US opt-out / GDPR re-consent)
+/// must be surfaced in the app UI.
+enum PrivacyOptionsRequirementStatus {
+  /// Status is not yet known (requestConsentInfoUpdate has not completed).
+  unknown,
+
+  /// A Privacy Entry Point button is required (regulated US state or EEA re-consent).
+  required,
+
+  /// A Privacy Entry Point button is not required.
+  notRequired
+}
+
+/// Extension on [PrivacyOptionsRequirementStatus] for converting from integer values.
+extension _PrivacyOptionsRequirementStatusExtension
+    on PrivacyOptionsRequirementStatus {
+  /// Converts a normalized integer (sent by the native side) to an enum value.
+  static PrivacyOptionsRequirementStatus _fromInt(int value) {
+    switch (value) {
+      case 1:
+        return PrivacyOptionsRequirementStatus.required;
+      case 2:
+        return PrivacyOptionsRequirementStatus.notRequired;
+      default:
+        return PrivacyOptionsRequirementStatus.unknown;
     }
   }
 }

@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'stack_appodeal_flutter'
-  s.version          = '4.1.0'
+  s.version          = '4.2.0'
   s.summary          = 'Appodeal flutter plugin'
   s.description      = <<-DESC
   Flutter plugin for Appodeal SDK. It supports interstitial, rewarded video and banner ads.
@@ -20,8 +20,8 @@ Pod::Spec.new do |s|
   s.static_framework = true
 
   s.dependency 'Flutter'
-  s.dependency "Appodeal", "4.1.0"
-  s.dependency "AppodealIABAdapter", "3.4.7.0"
+  s.dependency "Appodeal", "4.2.0"
+  s.dependency "AppodealIABAdapter", "3.5.0.0"
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

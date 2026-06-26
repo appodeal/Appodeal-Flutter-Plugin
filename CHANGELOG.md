@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.2.0
+
+- **Minimum Android API level raised from 23 (Android 6.0) to 24 (Android 7.0)**
+- **Added Privacy Entry Point support (US State Regulations / GDPR re-consent)**: `Appodeal.ConsentForm.getPrivacyOptionsRequirementStatus()` and `Appodeal.ConsentForm.showPrivacyOptionsForm(...)`
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [4.2.0](https://docs.appodeal.com/ios/get-started)
+- Updated Appodeal Android SDK to [4.2.0](https://docs.appodeal.com/android/get-started)
+
 ## 4.1.0
 
 - **Android SDK now uses individual adapter dependencies instead of a single umbrella SDK**
