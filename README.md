@@ -232,16 +232,26 @@ in `Info.plist` of your app:
 
 ##### Other feature usage descriptions
 
-To improve ad performance the following entries should be added:
+**All of the entries below are optional.** None of them is required by the Appodeal SDK itself —
+add only the ones that match the networks you actually integrate and the permissions you are
+willing to request.
 
-- **NSUserTrackingUsageDescription** - Starting from iOS 14, using IDFA requires permission from the user. The following
-  entry must be added in order to improve ad performance.
-- **NSLocationWhenInUseUsageDescription** - Entry is required if your application allows Appodeal SDK to use location
-  data.
-- **NSCalendarsUsageDescription** - Recommended by some ad networks.
+- **NSUserTrackingUsageDescription** - Starting from iOS 14, reading the IDFA requires permission
+  from the user. Add this entry if you call the App Tracking Transparency prompt (see
+  [App Tracking Transparency](#app-tracking-transparency)). Without the IDFA, ad revenue is
+  typically lower, so this is the one entry we do recommend adding.
+- **NSLocationWhenInUseUsageDescription** - **Not needed for Appodeal.** The Appodeal SDK does not
+  link `CoreLocation` and never requests location. Add this entry only if you integrate a network
+  that uses location — in the current recommended set that is Amazon
+  (`AppodealAmazonAdapter`, `BidonAdapterAmazon`) and BidMachine (`AppodealBidMachineAdapter`).
+  If you do not use those, omit it.
+- **NSCalendarsUsageDescription** - **Not needed for Appodeal.** Requested by some ad networks for
+  "add to calendar" creatives. Omit it unless a network you integrate requires it.
 
 <details>
   <summary>There is Other feature usage descriptions settings in Info.plist format</summary>
+
+Add only the keys you need — see the notes above.
 
 ``` xml
 <key>NSUserTrackingUsageDescription</key>
