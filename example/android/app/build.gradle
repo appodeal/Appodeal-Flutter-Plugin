@@ -108,7 +108,12 @@ dependencies {
     implementation "org.bidon:vkads-adapter:5.47.1.0"
     implementation "org.bidon:vungle-adapter:7.7.4.0"
     implementation "org.bidon:yandex-adapter:7.17.0.0"
-    implementation "org.bidon:zmaticoo-adapter:2.0.7.0.0"
+    // Pinned one version below the Wizard's recommendation (README lists 2.0.7.0.0).
+    // 2.0.7.0.0 ships kotlin-stdlib 2.3.0, whose metadata the Kotlin 2.1.0 compiler this
+    // example builds with cannot read. 2.0.6.0.0 is the last release on kotlin-stdlib 2.1.0.
+    // Drop this pin once the adapter is republished against an older Kotlin, or once the
+    // example moves to Kotlin 2.2.20+ (which can read 2.3.0 metadata).
+    implementation "org.bidon:zmaticoo-adapter:2.0.6.0.0"
     // Level Play
     implementation "com.unity3d.ads-mediation:admob-adapter:5.7.0"
     implementation "com.unity3d.ads-mediation:applovin-adapter:5.8.0"
