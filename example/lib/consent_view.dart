@@ -9,6 +9,8 @@ class ConsentPage extends StatefulWidget {
 }
 
 class _ConsentPageState extends State<ConsentPage> {
+  bool _isNonPersonalized = false;
+
   @override
   void initState() {
     super.initState();
@@ -71,6 +73,12 @@ class _ConsentPageState extends State<ConsentPage> {
         }
       },
     );
+  }
+
+  toggleNonPersonalized() {
+    setState(() => _isNonPersonalized = !_isNonPersonalized);
+    Appodeal.setNonPersonalized(_isNonPersonalized);
+    print("setNonPersonalized: $_isNonPersonalized");
   }
 
   @override
@@ -174,6 +182,24 @@ class _ConsentPageState extends State<ConsentPage> {
                 },
                 child: const Text(
                   'SHOW PRIVACY OPTIONS FORM',
+                  maxLines: 2,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    fixedSize: Size.fromWidth(300)),
+                onPressed: () {
+                  toggleNonPersonalized();
+                },
+                child: Text(
+                  'NON-PERSONALIZED: ${_isNonPersonalized ? 'ON' : 'OFF'}',
                   maxLines: 2,
                   textAlign: TextAlign.center,
                 ),

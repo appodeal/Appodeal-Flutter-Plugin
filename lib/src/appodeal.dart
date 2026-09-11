@@ -305,6 +305,17 @@ class Appodeal {
     return await _channel.invokeMethod('isChildDirectedTreatment');
   }
 
+  /// Requests non-personalized advertising and disables the collection of data used for
+  /// ad personalization (`false` by default).
+  ///
+  /// A publisher-set [isNonPersonalized] value takes precedence over the consent resolved
+  /// by the consent management platform, so set it before [initialize] if you enforce
+  /// non-personalized ads on your side.
+  static setNonPersonalized(bool isNonPersonalized) {
+    _channel.invokeMethod(
+        'setNonPersonalized', {'isNonPersonalized': isNonPersonalized});
+  }
+
   /// Sets use safe area [isUseSafeArea] for `Android` platform (`false` by default).
   ///
   /// Appodeal SDK will consider safe area when an ad is shown.
@@ -347,7 +358,7 @@ class Appodeal {
 
   /// Gets SDK version.
   static String getSDKVersion() {
-    return "4.2.0";
+    return "4.3.0";
   }
 
   /// Gets SDK platform version.

@@ -65,6 +65,7 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
         case "disableNetwork": disableNetwork(call, result)
         case "setChildDirectedTreatment": setChildDirectedTreatment(call, result)
         case "isChildDirectedTreatment": isChildDirectedTreatment(call, result)
+        case "setNonPersonalized": setNonPersonalized(call, result)
         case "setUserId": setUserId(call, result)
         case "getUserId": getUserId(call, result)
         case "setCustomFilter": setCustomFilter(call, result)
@@ -243,6 +244,12 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
     
     private func isChildDirectedTreatment(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
         result(isChildDirectedTreatmentEnabled)
+    }
+
+    private func setNonPersonalized(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        let args = call.arguments as! [String: Any]
+        Appodeal.setNonPersonalized(args["isNonPersonalized"] as! Bool)
+        result(nil)
     }
     
     private func setUserId(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
