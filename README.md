@@ -2,7 +2,7 @@
 
 Official Appodeal Flutter Plugin for your Flutter application.
 
-## Appodeal SDK 4.2.0
+## Appodeal SDK 4.3.0
 
 - **Google CMP and TCF v2 Support**
   - To enhance the relevance of ads for your users and comply with regulations like GDPR and CCPA,
@@ -53,7 +53,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 4.2.0
+  stack_appodeal_flutter: 4.3.0
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -65,10 +65,9 @@ $ flutter pub get
 #### iOS
 
 > [!IMPORTANT]
-> - iOS 13.0 or higher for using the Appodeal Flutter plugin (base SDK).
-> - If you integrate the optional Firebase service (see [Firebase](#firebase)), your iOS deployment target must be 15.0 or higher.
+> - iOS 15.0 or higher for using the Appodeal Flutter plugin.
 > - Appodeal SDK is compatible with both ARC and non-ARC projects.
-> - Use Xcode 15.3 or higher.
+> - Use Xcode 15.3 or higher. Xcode 27 and iOS 27 are supported starting from 4.3.0.
 
 1. Go to `ios/` folder and open *Podfile*
 2. Add Appodeal adapters. Add pods into `./ios/Podfile`:
@@ -84,91 +83,90 @@ source 'https://cdn.cocoapods.org'
 use_frameworks!
 
 def appodeal
-    pod 'Appodeal', '4.2.0'
-    # AppLovin MAX
-    pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '5.3.2.0'
-    pod 'AppLovinMediationBidMachineAdapter', '3.7.1.0.0'
-    pod 'AppLovinMediationBigoAdsAdapter', '5.0.0.0'
-    pod 'AppLovinMediationByteDanceAdapter', '7.7.0.7.0'
-    pod 'AppLovinMediationChartboostAdapter', '9.10.1.0'
-    pod 'AppLovinMediationFacebookAdapter', '6.20.1.0'
-    pod 'AppLovinMediationFyberAdapter', '8.4.1.0'
-    pod 'AppLovinMediationGoogleAdManagerAdapter', '12.13.0.0'
-    pod 'AppLovinMediationGoogleAdapter', '12.13.0.0'
-    pod 'AppLovinMediationInMobiAdapter', '11.1.0.0'
-    pod 'AppLovinMediationIronSourceAdapter', '9.1.0.0.0'
-    pod 'AppLovinMediationMintegralAdapter', '7.7.9.0.0'
-    pod 'AppLovinMediationMobileFuseAdapter', '1.9.3.0'
-    pod 'AppLovinMediationMolocoAdapter', '4.1.0.0'
-    pod 'AppLovinMediationOguryPresageAdapter', '5.1.1.0'
-    pod 'AppLovinMediationPubMaticAdapter', '4.10.0.0'
-    pod 'AppLovinMediationSmaatoAdapter', '23.1.0.0'
-    pod 'AppLovinMediationUnityAdsAdapter', '4.16.3.0'
-    pod 'AppLovinMediationVerveAdapter', '3.8.1.0'
-    pod 'AppLovinMediationVungleAdapter', '7.6.2.0'
-    pod 'AppLovinMediationYandexAdapter', '7.17.0.0'
+    pod 'Appodeal', '4.3.0'
     # Level Play
-    pod 'IronSourceAdMobAdapter', '5.3.0.0'
-    pod 'IronSourceAppLovinAdapter', '5.3.0.0'
+    pod 'IronSourceAdMobAdapter', '5.10.0.0'
     pod 'IronSourceBidMachineAdapter', '5.7.0.0'
-    pod 'IronSourceBigoAdapter', '5.1.0.0'
-    pod 'IronSourceFacebookAdapter', '5.0.0.0'
-    pod 'IronSourceFyberAdapter', '5.2.0.0'
-    pod 'IronSourceInMobiAdapter', '5.3.0.0'
-    pod 'IronSourceMintegralAdapter', '5.1.0.0'
+    pod 'IronSourceBigoAdapter', '5.9.0.0'
+    pod 'IronSourceFacebookAdapter', '5.3.0.0'
+    pod 'IronSourceFyberAdapter', '5.8.0.0'
+    pod 'IronSourceInMobiAdapter', '5.7.0.0'
+    pod 'IronSourceMintegralAdapter', '5.13.0.0'
     pod 'IronSourceMobileFuseAdapter', '5.0.0.0'
-    pod 'IronSourceMolocoAdapter', '5.2.0.0'
-    pod 'IronSourceMyTargetAdapter', '5.3.0.0'
+    pod 'IronSourceMolocoAdapter', '5.5.0.0'
+    pod 'IronSourceMyTargetAdapter', '5.9.0.0'
     pod 'IronSourceOguryAdapter', '5.0.0.0'
     pod 'IronSourcePangleAdapter', '5.5.0.0'
-    pod 'IronSourceSmaatoAdapter', '5.2.0.0'
-    pod 'IronSourceUnityAdsAdapter', '5.2.0.0'
-    pod 'IronSourceVerveAdapter', '5.5.0.0'
-    pod 'IronSourceVungleAdapter', '5.3.0.0'
+    pod 'IronSourceSmaatoAdapter', '5.3.0.0'
+    pod 'IronSourceUnityAdsAdapter', '5.6.0.0'
+    pod 'IronSourceVerveAdapter', '5.1.0.0'
+    pod 'IronSourceVungleAdapter', '5.9.0.0'
+    pod 'IronSourceYandexAdapter', '5.7.0.0'
+    # Bidon
+    pod 'BidonAdapterAmazon', '5.5.0.0'
+    pod 'BidonAdapterBidMachine', '3.7.1.1'
+    pod 'BidonAdapterBigoAds', '5.2.1.0'
+    pod 'BidonAdapterChartboost', '9.10.1.0'
+    pod 'BidonAdapterDTExchange', '8.4.7.0'
+    pod 'BidonAdapterInMobi', '11.3.0.0'
+    pod 'BidonAdapterIronSource', '9.4.0.0.0'
+    pod 'BidonAdapterMetaAudienceNetwork', '6.21.1.1'
+    pod 'BidonAdapterMintegral', '8.1.3.0'
+    pod 'BidonAdapterMobileFuse', '1.9.3.0'
+    pod 'BidonAdapterMoloco', '4.3.0.0'
+    pod 'BidonAdapterMyTarget', '5.43.0.0'
+    pod 'BidonAdapterStartIo', '4.11.0.0'
+    pod 'BidonAdapterTaurusX', '1.9.2.0'
+    pod 'BidonAdapterUnityAds', '4.17.0.0'
+    pod 'BidonAdapterVungle', '7.7.3.0'
+    pod 'BidonAdapterYandex', '7.18.4.0'
+    pod 'BidonAdapterZmaticoo', '2.2.0.0'
     # Appodeal
-    pod 'AppodealAdjustAdapter', '5.4.6.1'
-    pod 'AppodealAmazonAdapter', '5.3.2.0'
-    pod 'AppodealAppLovinAdapter', '13.5.1.0'
-    pod 'AppodealAppLovinMAXAdapter', '13.5.1.1'
-    pod 'AppodealAppsFlyerAdapter', '6.17.7.1'
+    pod 'AppodealAdjustAdapter', '5.7.0.1'
+    pod 'AppodealAmazonAdapter', '5.5.0.0'
+    pod 'AppodealAppLovinAdapter', '13.6.4.0'
+    pod 'AppodealAppLovinMAXAdapter', '13.6.4.2'
+    pod 'AppodealAppsFlyerAdapter', '6.18.0.2'
     pod 'AppodealBidMachineAdapter', '3.7.1.0'
     pod 'AppodealBidonAdapter', '0.15.0.0'
-    pod 'AppodealBigoAdsAdapter', '5.0.0.0'
-    pod 'AppodealDTExchangeAdapter', '8.4.1.0'
-    pod 'AppodealFacebookAdapter', '18.0.1.0'
-    pod 'AppodealFirebaseAdapter', '12.4.0.1'
-    pod 'AppodealGoogleAdMobAdapter', '12.13.0.0'
-    pod 'AppodealIABAdapter', '3.5.0.0'
-    pod 'AppodealInMobiAdapter', '11.1.0.0'
-    pod 'AppodealIronSourceAdapter', '9.1.0.0.0'
-    pod 'AppodealLevelPlayAdapter', '9.1.0.0.0'
-    pod 'AppodealMetaAudienceNetworkAdapter', '6.20.1.0'
-    pod 'AppodealMintegralAdapter', '7.7.9.0'
-    pod 'AppodealMyTargetAdapter', '5.36.2.0'
+    pod 'AppodealBigoAdsAdapter', '5.2.1.0'
+    pod 'AppodealDTExchangeAdapter', '8.4.7.0'
+    pod 'AppodealFacebookAdapter', '18.0.3.0'
+    pod 'AppodealFirebaseAdapter', '12.15.0.1'
+    pod 'AppodealGoogleAdMobAdapter', '13.5.0.0'
+    pod 'AppodealIABAdapter', '3.5.2.0'
+    pod 'AppodealInMobiAdapter', '11.3.0.0'
+    pod 'AppodealIronSourceAdapter', '9.4.0.0.0'
+    pod 'AppodealLevelPlayAdapter', '9.4.0.0.0'
+    pod 'AppodealMetaAudienceNetworkAdapter', '6.21.1.0'
+    pod 'AppodealMintegralAdapter', '8.1.3.0'
+    pod 'AppodealMyTargetAdapter', '5.43.0.0'
     pod 'AppodealSentryAdapter', '8.57.2.1'
-    pod 'AppodealUnityAdapter', '4.16.3.0'
-    pod 'AppodealVungleAdapter', '7.6.2.0'
-    pod 'AppodealYandexAdapter', '7.17.0.1'
-    # Bidon
-    pod 'BidonAdapterAmazon', '5.3.2.0'
-    pod 'BidonAdapterAppLovin', '13.5.1.0'
-    pod 'BidonAdapterBidMachine', '3.7.1.1'
-    pod 'BidonAdapterBigoAds', '5.0.0.0'
-    pod 'BidonAdapterChartboost', '9.10.1.0'
-    pod 'BidonAdapterDTExchange', '8.4.1.0'
-    pod 'BidonAdapterInMobi', '11.1.0.0'
-    pod 'BidonAdapterIronSource', '9.1.0.0.0'
-    pod 'BidonAdapterMetaAudienceNetwork', '6.20.1.0'
-    pod 'BidonAdapterMintegral', '7.7.9.0'
-    pod 'BidonAdapterMobileFuse', '1.9.3.0'
-    pod 'BidonAdapterMoloco', '4.1.0.0'
-    pod 'BidonAdapterMyTarget', '5.36.2.0'
-    pod 'BidonAdapterStartIo', '4.13.0.0'
-    pod 'BidonAdapterTaurusX', '1.15.0.0'
-    pod 'BidonAdapterUnityAds', '4.16.3.0'
-    pod 'BidonAdapterVungle', '7.6.2.0'
-    pod 'BidonAdapterYandex', '7.17.0.0'
-    pod 'BidonAdapterZmaticoo', '2.2.0.0'
+    pod 'AppodealUnityAdapter', '4.17.0.0'
+    pod 'AppodealVungleAdapter', '7.7.3.0'
+    pod 'AppodealYandexAdapter', '7.18.4.1'
+    # AppLovin MAX
+    pod 'AppLovinMediationAmazonAdMarketplaceAdapter', '5.5.0.0'
+    pod 'AppLovinMediationBidMachineAdapter', '3.7.1.0.0'
+    pod 'AppLovinMediationBigoAdsAdapter', '5.2.1.0'
+    pod 'AppLovinMediationByteDanceAdapter', '7.7.0.7.0'
+    pod 'AppLovinMediationChartboostAdapter', '9.10.1.0'
+    pod 'AppLovinMediationFacebookAdapter', '6.21.1.0'
+    pod 'AppLovinMediationFyberAdapter', '8.4.7.0'
+    pod 'AppLovinMediationGoogleAdManagerAdapter', '13.5.0.0'
+    pod 'AppLovinMediationGoogleAdapter', '13.5.0.0'
+    pod 'AppLovinMediationInMobiAdapter', '11.3.0.1'
+    pod 'AppLovinMediationIronSourceAdapter', '9.4.0.0.0'
+    pod 'AppLovinMediationMintegralAdapter', '8.1.3.0.0'
+    pod 'AppLovinMediationMobileFuseAdapter', '1.9.3.0'
+    pod 'AppLovinMediationMolocoAdapter', '4.3.0.0'
+    pod 'AppLovinMediationOguryPresageAdapter', '5.1.1.0'
+    pod 'AppLovinMediationPubMaticAdapter', '4.10.0.0'
+    pod 'AppLovinMediationSmaatoAdapter', '23.2.0.0'
+    pod 'AppLovinMediationUnityAdsAdapter', '4.17.0.0'
+    pod 'AppLovinMediationVerveAdapter', '3.7.0.0'
+    pod 'AppLovinMediationVungleAdapter', '7.7.3.0'
+    pod 'AppLovinMediationYandexAdapter', '7.18.4.0'
 end
 
 target 'Sample' do
@@ -234,16 +232,26 @@ in `Info.plist` of your app:
 
 ##### Other feature usage descriptions
 
-To improve ad performance the following entries should be added:
+**All of the entries below are optional.** None of them is required by the Appodeal SDK itself —
+add only the ones that match the networks you actually integrate and the permissions you are
+willing to request.
 
-- **NSUserTrackingUsageDescription** - Starting from iOS 14, using IDFA requires permission from the user. The following
-  entry must be added in order to improve ad performance.
-- **NSLocationWhenInUseUsageDescription** - Entry is required if your application allows Appodeal SDK to use location
-  data.
-- **NSCalendarsUsageDescription** - Recommended by some ad networks.
+- **NSUserTrackingUsageDescription** - Starting from iOS 14, reading the IDFA requires permission
+  from the user. Add this entry if you call the App Tracking Transparency prompt (see
+  [App Tracking Transparency](#app-tracking-transparency)). Without the IDFA, ad revenue is
+  typically lower, so this is the one entry we do recommend adding.
+- **NSLocationWhenInUseUsageDescription** - **Not needed for Appodeal.** The Appodeal SDK does not
+  link `CoreLocation` and never requests location. Add this entry only if you integrate a network
+  that uses location — in the current recommended set that is Amazon
+  (`AppodealAmazonAdapter`, `BidonAdapterAmazon`) and BidMachine (`AppodealBidMachineAdapter`).
+  If you do not use those, omit it.
+- **NSCalendarsUsageDescription** - **Not needed for Appodeal.** Requested by some ad networks for
+  "add to calendar" creatives. Omit it unless a network you integrate requires it.
 
 <details>
   <summary>There is Other feature usage descriptions settings in Info.plist format</summary>
+
+Add only the keys you need — see the notes above.
 
 ``` xml
 <key>NSUserTrackingUsageDescription</key>
@@ -261,7 +269,7 @@ To improve ad performance the following entries should be added:
 #### Android
 
 > [!IMPORTANT]
-> - Android API level 23 (Android OS 6.0) or higher.
+> - Android API level 24 (Android OS 7.0) or higher.
 
 1. Add Appodeal adapters.
 
@@ -270,105 +278,104 @@ Add dependencies into `build.gradle` (module: app)
 <!-- appodeal-deps:android:start -->
 ``` groovy
 dependencies {
-    implementation "com.appodeal.ads.sdk:core:4.2.0"
+    implementation "com.appodeal.ads.sdk:core:4.3.0"
+    // BidMachine
+    implementation "io.bidmachine:ads.networks.amazon:12.0.0.0"
+    implementation "io.bidmachine:ads.networks.meta_audience:6.21.0.1"
+    implementation "io.bidmachine:ads.networks.mintegral:17.1.61.1"
+    implementation "io.bidmachine:ads.networks.my_target:5.47.1.2"
+    implementation "io.bidmachine:ads.networks.vungle:7.7.4.0"
     // AppLovin MAX
-    implementation "com.applovin.mediation:amazon-tam-adapter:11.3.0.0"
+    implementation "com.applovin.mediation:amazon-tam-adapter:11.3.1.0"
     implementation "com.applovin.mediation:bidmachine-adapter:3.7.1.0"
-    implementation "com.applovin.mediation:bigoads-adapter:5.6.2.0"
+    implementation "com.applovin.mediation:bigoads-adapter:5.9.0.0"
     implementation "com.applovin.mediation:bytedance-adapter:8.1.0.3.0"
     implementation "com.applovin.mediation:chartboost-adapter:9.10.2.0"
     implementation "com.applovin.mediation:facebook-adapter:6.21.0.0"
-    implementation "com.applovin.mediation:fyber-adapter:8.4.1.0"
-    implementation "com.applovin.mediation:google-ad-manager-adapter:24.7.0.0"
-    implementation "com.applovin.mediation:google-adapter:24.7.0.0"
-    implementation "com.applovin.mediation:inmobi-adapter:11.1.0.0"
-    implementation "com.applovin.mediation:ironsource-adapter:9.1.0.0.0"
+    implementation "com.applovin.mediation:fyber-adapter:8.4.6.0"
+    implementation "com.applovin.mediation:google-ad-manager-adapter:25.2.0.0"
+    implementation "com.applovin.mediation:google-adapter:25.2.0.0"
+    implementation "com.applovin.mediation:inmobi-adapter:11.3.0.1"
+    implementation "com.applovin.mediation:ironsource-adapter:9.4.4.0.0"
     implementation "com.applovin.mediation:mintegral-adapter:17.1.61.0"
-    implementation "com.applovin.mediation:mobilefuse-adapter:1.9.3.0"
+    implementation "com.applovin.mediation:mobilefuse-adapter:1.11.0.0"
     implementation "com.applovin.mediation:moloco-adapter:4.3.1.0"
     implementation "com.applovin.mediation:ogury-presage-adapter:6.2.0.0"
     implementation "com.applovin.mediation:pubmatic-adapter:4.10.0.0"
     implementation "com.applovin.mediation:smaato-adapter:22.7.2.3"
     implementation "com.applovin.mediation:unityads-adapter:4.17.0.0"
     implementation "com.applovin.mediation:verve-adapter:3.7.1.0"
-    implementation "com.applovin.mediation:vungle-adapter:7.6.1.0"
+    implementation "com.applovin.mediation:vungle-adapter:7.7.4.0"
     implementation "com.applovin.mediation:yandex-adapter:7.17.0.0"
-    // Level Play
-    implementation "com.unity3d.ads-mediation:admob-adapter:5.2.0"
-    implementation "com.unity3d.ads-mediation:applovin-adapter:5.2.0"
-    implementation "com.unity3d.ads-mediation:bidmachine-adapter:5.7.0"
-    implementation "com.unity3d.ads-mediation:bigo-adapter:5.3.0"
-    implementation "com.unity3d.ads-mediation:facebook-adapter:5.3.0"
-    implementation "com.unity3d.ads-mediation:fyber-adapter:5.2.0"
-    implementation "com.unity3d.ads-mediation:inmobi-adapter:5.3.0"
-    implementation "com.unity3d.ads-mediation:mintegral-adapter:5.18.0"
-    implementation "com.unity3d.ads-mediation:mobilefuse-adapter:5.1.0"
-    implementation "com.unity3d.ads-mediation:moloco-adapter:5.5.0"
-    implementation "com.unity3d.ads-mediation:mytarget-adapter:5.5.0"
-    implementation "com.unity3d.ads-mediation:ogury-adapter:5.2.0"
-    implementation "com.unity3d.ads-mediation:pangle-adapter:5.18.0"
-    implementation "com.unity3d.ads-mediation:smaato-adapter:5.0.0"
-    implementation "com.unity3d.ads-mediation:unityads-adapter:5.6.0"
-    implementation "com.unity3d.ads-mediation:verve-adapter:5.2.0"
-    implementation "com.unity3d.ads-mediation:vungle-adapter:5.4.0"
-    // BidMachine
-    implementation "io.bidmachine:ads.networks.amazon:11.3.0.2"
-    implementation "io.bidmachine:ads.networks.meta_audience:6.21.0.1"
-    implementation "io.bidmachine:ads.networks.mintegral:17.1.61.1"
-    implementation "io.bidmachine:ads.networks.my_target:5.47.1.2"
-    implementation "io.bidmachine:ads.networks.vungle:7.6.1.2"
     // Bidon
-    implementation "org.bidon:amazon-adapter:11.3.0.0"
-    implementation "org.bidon:applovin-adapter:13.5.1.0"
+    implementation "org.bidon:amazon-adapter:12.0.0.0"
+    implementation "org.bidon:applovin-adapter:13.6.3.0"
     implementation "org.bidon:bidmachine-adapter:3.7.1.1"
-    implementation "org.bidon:bigoads-adapter:5.6.2.0"
+    implementation "org.bidon:bigoads-adapter:5.9.0.0"
     implementation "org.bidon:chartboost-adapter:9.10.2.0"
-    implementation "org.bidon:dtexchange-adapter:8.4.1.0"
-    implementation "org.bidon:inmobi-adapter:11.1.0.0"
-    implementation "org.bidon:ironsource-adapter:9.1.0.0"
+    implementation "org.bidon:dtexchange-adapter:8.4.6.0"
+    implementation "org.bidon:inmobi-adapter:11.3.0.0"
+    implementation "org.bidon:ironsource-adapter:9.4.4.0"
     implementation "org.bidon:meta-adapter:6.21.0.0"
     implementation "org.bidon:mintegral-adapter:17.1.61.0"
-    implementation "org.bidon:mobilefuse-adapter:1.9.3.0"
+    implementation "org.bidon:mobilefuse-adapter:1.11.0.0"
     implementation "org.bidon:moloco-adapter:4.3.1.0"
     implementation "org.bidon:startio-adapter:5.2.4.1"
     implementation "org.bidon:taurusx-adapter:1.12.2.0"
     implementation "org.bidon:unityads-adapter:4.17.0.0"
     implementation "org.bidon:vkads-adapter:5.47.1.0"
-    implementation "org.bidon:vungle-adapter:7.6.1.0"
+    implementation "org.bidon:vungle-adapter:7.7.4.0"
     implementation "org.bidon:yandex-adapter:7.17.0.0"
     implementation "org.bidon:zmaticoo-adapter:2.0.7.0.0"
+    // Level Play
+    implementation "com.unity3d.ads-mediation:admob-adapter:5.7.0"
+    implementation "com.unity3d.ads-mediation:applovin-adapter:5.8.0"
+    implementation "com.unity3d.ads-mediation:bidmachine-adapter:5.7.0"
+    implementation "com.unity3d.ads-mediation:bigo-adapter:5.8.0"
+    implementation "com.unity3d.ads-mediation:facebook-adapter:5.3.0"
+    implementation "com.unity3d.ads-mediation:fyber-adapter:5.9.0"
+    implementation "com.unity3d.ads-mediation:inmobi-adapter:5.7.0"
+    implementation "com.unity3d.ads-mediation:mintegral-adapter:5.18.0"
+    implementation "com.unity3d.ads-mediation:mobilefuse-adapter:5.3.0"
+    implementation "com.unity3d.ads-mediation:moloco-adapter:5.6.0"
+    implementation "com.unity3d.ads-mediation:mytarget-adapter:5.5.0"
+    implementation "com.unity3d.ads-mediation:ogury-adapter:5.2.0"
+    implementation "com.unity3d.ads-mediation:pangle-adapter:5.18.0"
+    implementation "com.unity3d.ads-mediation:unityads-adapter:5.6.0"
+    implementation "com.unity3d.ads-mediation:verve-adapter:5.2.0"
+    implementation "com.unity3d.ads-mediation:vungle-adapter:5.10.0"
     // Appodeal
     implementation "com.appodeal.ads.sdk.adapters:adjust:5.7.0.0"
-    implementation "com.appodeal.ads.sdk.adapters:admob:24.7.0.0"
-    implementation "com.appodeal.ads.sdk.adapters:amazon:11.3.0.0"
-    implementation "com.appodeal.ads.sdk.adapters:applovin:13.5.1.0"
-    implementation "com.appodeal.ads.sdk.adapters:applovin_max:13.5.1.1"
+    implementation "com.appodeal.ads.sdk.adapters:admob:25.2.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:amazon:12.0.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:applovin:13.6.3.0"
+    implementation "com.appodeal.ads.sdk.adapters:applovin_max:13.6.3.1"
     implementation "com.appodeal.ads.sdk.adapters:appsflyer:6.18.0.1"
     implementation "com.appodeal.ads.sdk.adapters:bidmachine:3.7.1.0"
     implementation "com.appodeal.ads.sdk.adapters:bidon:0.14.0.0"
-    implementation "com.appodeal.ads.sdk.adapters:bigo_ads:5.6.2.0"
+    implementation "com.appodeal.ads.sdk.adapters:bigo_ads:5.9.0.0"
     implementation "com.appodeal.ads.sdk.adapters:chartboost:9.10.2.0"
-    implementation "com.appodeal.ads.sdk.adapters:dt_exchange:8.4.1.0"
-    implementation "com.appodeal.ads.sdk.adapters:facebook_analytics:18.0.3.0"
-    implementation "com.appodeal.ads.sdk.adapters:firebase:23.0.0.1"
+    implementation "com.appodeal.ads.sdk.adapters:dt_exchange:8.4.6.0"
+    implementation "com.appodeal.ads.sdk.adapters:facebook_analytics:18.3.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:firebase:23.2.0.0"
     implementation "com.appodeal.ads.sdk.adapters:iab:1.8.1.0"
-    implementation "com.appodeal.ads.sdk.adapters:inmobi:11.1.0.0"
-    implementation "com.appodeal.ads.sdk.adapters:ironsource:9.1.0.0"
-    implementation "com.appodeal.ads.sdk.adapters:level_play:9.1.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:inmobi:11.3.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:ironsource:9.4.4.0"
+    implementation "com.appodeal.ads.sdk.adapters:level_play:9.4.4.0"
     implementation "com.appodeal.ads.sdk.adapters:meta:6.21.0.0"
     implementation "com.appodeal.ads.sdk.adapters:mintegral:17.1.61.0"
-    implementation "com.appodeal.ads.sdk.adapters:mobilefuse:1.9.3.0"
+    implementation "com.appodeal.ads.sdk.adapters:mobilefuse:1.11.0.0"
     implementation "com.appodeal.ads.sdk.adapters:moloco:4.3.1.0"
     implementation "com.appodeal.ads.sdk.adapters:my_target:5.47.1.0"
     implementation "com.appodeal.ads.sdk.adapters:ogury:6.2.0.0"
     implementation "com.appodeal.ads.sdk.adapters:pubmatic:4.10.0.0"
-    implementation "com.appodeal.ads.sdk.adapters:sentry_analytics:8.26.0.0"
+    implementation "com.appodeal.ads.sdk.adapters:sentry_analytics:8.44.1.0"
     implementation "com.appodeal.ads.sdk.adapters:smaato:22.7.2.0"
     implementation "com.appodeal.ads.sdk.adapters:startio:5.2.4.0"
     implementation "com.appodeal.ads.sdk.adapters:taurusx:1.12.2.0"
     implementation "com.appodeal.ads.sdk.adapters:unity_ads:4.17.0.0"
     implementation "com.appodeal.ads.sdk.adapters:verve:3.7.1.0"
-    implementation "com.appodeal.ads.sdk.adapters:vungle:7.6.1.0"
+    implementation "com.appodeal.ads.sdk.adapters:vungle:7.7.4.0"
     implementation "com.appodeal.ads.sdk.adapters:yandex:7.17.0.0"
 }
 ```
@@ -903,6 +910,23 @@ Appodeal.ConsentForm.showPrivacyOptionsForm(
 > `IABGPP_*` keys to the platform's default storage, where ad networks read them. Before the form
 > has been shown at least once, these keys remain empty and ad networks may treat the user as
 > "no consent collected".
+
+- Non-personalized advertising (publisher-side consent control)
+
+Starting from Appodeal SDK 4.3.0 the SDK ships an on-device consent-enforcement layer
+(IAB TCF v2.3): it resolves consent from the CMP/TCF signals and from the publisher-set value,
+then applies the result to the use of restricted data categories — advertising ID, location,
+device fingerprint and demographics.
+
+If you collect consent yourself, or you need to force non-personalized ads regardless of what
+the CMP resolved, use `setNonPersonalized`. The publisher-set value **takes precedence** over the
+CMP-resolved consent, so set it before `Appodeal.initialize` to have it applied from the first
+ad request.
+
+```dart
+// Request non-personalized ads and disable collection of data used for ad personalization.
+Appodeal.setNonPersonalized(true);
+```
 
 
 ## App-ads.txt

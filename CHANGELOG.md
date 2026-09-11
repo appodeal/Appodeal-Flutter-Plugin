@@ -1,5 +1,15 @@
 # Changelog
 
+## 4.3.0
+
+- **Minimum iOS deployment target raised from 13.0 to 15.0**
+- **Added `Appodeal.setNonPersonalized(bool)`**: requests non-personalized advertising and disables the collection of data used for ad personalization. A publisher-set value takes precedence over the consent resolved from the CMP
+
+### Updated SDKs
+
+- Updated Appodeal iOS SDK to [4.3.0](https://docs.appodeal.com/ios/get-started)
+- Updated Appodeal Android SDK to [4.3.0](https://docs.appodeal.com/android/get-started)
+
 ## 4.2.0
 
 - **Minimum Android API level raised from 23 (Android 6.0) to 24 (Android 7.0)**

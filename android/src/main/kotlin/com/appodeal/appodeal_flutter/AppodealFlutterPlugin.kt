@@ -86,6 +86,7 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             "isMuteVideosIfCallsMuted" -> isMuteVideosIfCallsMuted(call, result)
             "setChildDirectedTreatment" -> setChildDirectedTreatment(call, result)
             "isChildDirectedTreatment" -> isChildDirectedTreatment(call, result)
+            "setNonPersonalized" -> setNonPersonalized(call, result)
             "setUseSafeArea" -> setUseSafeArea(call, result)
             "isUseSafeArea" -> isUseSafeArea(call, result)
             "setUserId" -> setUserId(call, result)
@@ -309,6 +310,12 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
 
     private fun isChildDirectedTreatment(call: MethodCall, result: Result) {
         result.success(isChildDirectedTreatment)
+    }
+
+    private fun setNonPersonalized(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        Appodeal.setNonPersonalized(args["isNonPersonalized"] as Boolean)
+        result.success(null)
     }
 
     private fun setUseSafeArea(call: MethodCall, result: Result) {

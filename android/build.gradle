@@ -1,7 +1,6 @@
 group 'com.appodeal.appodeal_flutter'
 
 buildscript {
-    ext.kotlin_version = '2.1.0'
     repositories {
         google()
         mavenCentral()
@@ -9,7 +8,6 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:8.8.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -22,7 +20,13 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+
+// Built-in Kotlin (Flutter 3.44+ / AGP 9): the plugin does NOT apply the Kotlin
+// Gradle Plugin and does not put KGP on its buildscript classpath. On legacy hosts
+// the Flutter tooling applies KGP to plugin modules automatically (from the app's
+// root Kotlin plugin); on Built-in Kotlin hosts AGP provides Kotlin compilation.
+// Self-applying KGP would double-apply it (current Flutter warns, future Flutter
+// rejects) and is a hard error under AGP 9 Built-in Kotlin.
 
 android {
     // Conditional for compatibility with AGP <4.2.
@@ -42,18 +46,23 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
+// Set the Kotlin JVM target once KGP is applied (by the Flutter tooling on legacy
+// hosts). Deferred via withId so it doesn't require KGP on our buildscript classpath.
+plugins.withId('org.jetbrains.kotlin.android') {
+    project.kotlin {
+        compilerOptions {
+            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_1_8
+        }
+    }
+}
+
 dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom:$kotlin_version"))
-    // Appodeal SDK 4.2.0
-    implementation 'com.appodeal.ads.sdk:core:4.2.0'
+    // Appodeal SDK 4.3.0
+    implementation 'com.appodeal.ads.sdk:core:4.3.0'
     implementation 'com.appodeal.ads.sdk.adapters:iab:1.8.1.0'
 }
