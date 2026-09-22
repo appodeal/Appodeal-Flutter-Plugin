@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.3.1
+
+- **Added `Appodeal.setEndpoint(String)` / `Appodeal.getEndpoint()`**: overrides the default Appodeal SDK endpoint with a custom URL provided by Appodeal support (native SDK custom endpoint API). Must be called before `Appodeal.initialize`
+
 ## 4.3.0
 
 - **Minimum iOS deployment target raised from 13.0 to 15.0**

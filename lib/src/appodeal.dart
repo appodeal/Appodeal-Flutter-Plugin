@@ -358,7 +358,7 @@ class Appodeal {
 
   /// Gets SDK version.
   static String getSDKVersion() {
-    return "4.3.0";
+    return "4.3.1";
   }
 
   /// Gets SDK platform version.
@@ -596,6 +596,24 @@ class Appodeal {
           break;
       }
     });
+  }
+
+  /// Overrides the default Appodeal SDK endpoint with a custom [endpoint] URL.
+  ///
+  /// Use it when the default Appodeal endpoint is unreachable in some regions.
+  /// The URL is provided by Appodeal support, do not set arbitrary values.
+  ///
+  /// Must be called before [initialize]: the SDK reads the endpoint during
+  /// initialization and ignores any change made after it.
+  static Future<void> setEndpoint(String endpoint) {
+    return _channel.invokeMethod('setEndpoint', {'endpoint': endpoint});
+  }
+
+  /// Gets the currently active Appodeal SDK endpoint URL.
+  ///
+  /// Returns the custom endpoint set with [setEndpoint], or the SDK default one.
+  static Future<String> getEndpoint() async {
+    return await _channel.invokeMethod('getEndpoint');
   }
 
   ///  Set self-hosted Bidon environment endpoint

@@ -74,6 +74,9 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
             //Services logic
         case "logEvent": logEvent(call, result)
         case "validateInAppPurchase": validateInAppPurchase(call, result)
+            //Custom endpoint
+        case "setEndpoint": setEndpoint(call, result)
+        case "getEndpoint": getEndpoint(call, result)
             //Bidon self hosted
         case "setBidonEndpoint": setBidonEndpoint(call, result)
         case "getBidonEndpoint": getBidonEndpoint(call, result)
@@ -330,6 +333,22 @@ public class SwiftAppodealFlutterPlugin: NSObject, FlutterPlugin {
             channel.invokeMethod("onInAppPurchaseValidateFail", arguments: nil)
         }
         result(nil)
+    }
+
+    private func setEndpoint(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        guard let args = call.arguments as? [String: Any],
+              let endpoint = args["endpoint"] as? String else {
+            result(FlutterError(code: "INVALID_ARGUMENTS",
+                                message: "setEndpoint expects an 'endpoint' string argument",
+                                details: nil))
+            return
+        }
+        Appodeal.setEndpoint(endpoint)
+        result(nil)
+    }
+
+    private func getEndpoint(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {
+        result(Appodeal.getEndpoint())
     }
 
     private func setBidonEndpoint(_ call: FlutterMethodCall, _ result: @escaping FlutterResult) {

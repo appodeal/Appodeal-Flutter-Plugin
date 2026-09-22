@@ -97,6 +97,9 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
             //Services logic
             "logEvent" -> logEvent(call, result)
             "validateInAppPurchase" -> validateInAppPurchase(call, result)
+            //Custom endpoint
+            "setEndpoint" -> setEndpoint(call, result)
+            "getEndpoint" -> getEndpoint(call, result)
             //Bidon self hosted
             "setBidonEndpoint" -> setBidonEndpoint(call, result)
             "getBidonEndpoint" -> getBidonEndpoint(call, result)
@@ -418,6 +421,17 @@ internal class AppodealFlutterPlugin : AppodealBaseFlutterPlugin() {
                 ) = channel.invokeMethod("onInAppPurchaseValidateSuccess", errors?.toArg())
             })
         result.success(null)
+    }
+
+    private fun setEndpoint(call: MethodCall, result: Result) {
+        val args = call.arguments as Map<*, *>
+        val endpoint = args["endpoint"] as String
+        Appodeal.setEndpoint(endpoint)
+        result.success(null)
+    }
+
+    private fun getEndpoint(call: MethodCall, result: Result) {
+        result.success(Appodeal.getEndpoint())
     }
 
     private fun setBidonEndpoint(call: MethodCall, result: Result) {
