@@ -53,7 +53,7 @@ Add the dependency to the `pubspec.yaml` file in your project:
 
 ```yaml
 dependencies:
-  stack_appodeal_flutter: 4.3.0
+  stack_appodeal_flutter: 4.3.1
 ```
 
 Install the plugin by running the command below in the terminal:
@@ -607,6 +607,29 @@ Appodeal.setChildDirectedTreatment(false); //default - false
 // Disable network for specific ad type
 Appodeal.disableNetwork("admob");
 Appodeal.disableNetwork("admob", AppodealAdType.Interstitial);
+```
+
+* Custom endpoint
+
+In some regions the default Appodeal endpoint may be unreachable. Starting from Appodeal SDK
+4.1.0 you can override it with a custom endpoint URL provided by Appodeal support (do not set
+arbitrary URLs). `setEndpoint` must be called before `Appodeal.initialize`, a call made after
+initialization is ignored. `getEndpoint` returns the currently active endpoint and is meant for
+debugging. See the [Custom SDK Endpoint](https://docs.appodeal.com/faq-and-troubleshooting/troubleshooting/general/custom-endpoint)
+guide for details, including how to deliver the URL via a remote config.
+
+```dart
+// Set custom endpoint before initialization
+await Appodeal.setEndpoint("https://provided-endpoint.example.com");
+
+// Initialize SDK as usual
+Appodeal.initialize(
+    appKey: "YOUR_APPODEAL_APP_KEY",
+    adTypes: [AppodealAdType.Interstitial],
+    onInitializationFinished: (errors) => {});
+
+// Verify the current endpoint (optional)
+final endpoint = await Appodeal.getEndpoint();
 ```
 
 * Segments and targeting.

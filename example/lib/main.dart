@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:appodeal_flutter_example/banner.dart';
 import 'package:appodeal_flutter_example/banner_view.dart';
 import 'package:appodeal_flutter_example/consent_view.dart';
+import 'package:appodeal_flutter_example/endpoint_view.dart';
 import 'package:appodeal_flutter_example/interstitial.dart';
 import 'package:appodeal_flutter_example/mrec_view.dart';
 import 'package:appodeal_flutter_example/rewarded_video.dart';
@@ -83,6 +84,26 @@ class _AppodealDemoAppState extends State<AppodealDemoApp> {
                   initialization();
                 },
                 child: const Text('INITIALIZATION'),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 20),
+                    fixedSize: Size(300, 20)),
+                onPressed: () async {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => EndpointPage()),
+                  );
+                },
+                child: const Text('ENDPOINT'),
               ),
             ),
           ],

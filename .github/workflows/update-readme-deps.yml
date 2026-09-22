@@ -2,15 +2,18 @@ name: Update README dependencies
 
 # Keeps the Appodeal dependency lists in README.md in sync with the live
 # Dependencies Wizard API (URL from the APPODEAL_API_URL repository variable).
-# The SDK version comes from pubspec.yaml, so a version bump (push) refreshes the
-# lists; the daily schedule catches adapter-version changes published between releases.
+# The native SDK version comes from android/build.gradle and the podspec (not from
+# pubspec.yaml: a plugin patch release can ship on the same native SDK), so a native
+# SDK bump (push) refreshes the lists; the daily schedule catches adapter-version
+# changes published between releases.
 
 on:
   workflow_dispatch: {}
   push:
     branches: [main]
     paths:
-      - 'pubspec.yaml'
+      - 'android/build.gradle'
+      - 'ios/stack_appodeal_flutter.podspec'
       - 'scripts/update-readme-deps.mjs'
   schedule:
     # Daily at 06:00 UTC.
